@@ -46,6 +46,8 @@ struct SuperCornersApp: App {
     // Walkthrough
     
     init() {
+//        showWalkthrough()
+        
         let hasLaunchedBeforeKey = "hasLaunchedBefore"
         let userDefaults = UserDefaults.standard
 
