@@ -89,7 +89,7 @@ let Apps: [GalleryItem] = [
     GalleryItem(title: "Open Calendar", description: "Open the Calendar app.", iconName: "calendar"),
     GalleryItem(title: "Open Messages", description: "Start a conversation in Messages.", iconName: "message.fill"),
     GalleryItem(title: "Open Reminders", description: "Launch Reminders to manage tasks.", iconName: "checklist"),
-    GalleryItem(title: "Open Spotify", description: "Play music with the Spotify app.", iconName: "music.note")
+    GalleryItem(title: "Open Music", description: "Launch Apple Music to listen to music", iconName: "music.note")
 ]
 
 let SoundAndMedia: [GalleryItem] = [

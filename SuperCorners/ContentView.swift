@@ -9,14 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @State var showingPanel = false
-    @State private var selectedApp: AppInfo?
-    @State private var apps: [AppInfo] = []
-    private let appFetcher = AppFetcher()
-
-    init() {
-        _apps = State(initialValue: appFetcher.getOpenUserApps())
-    }
-    
     @State private var selectedCorner: String? = nil
 
     var body: some View {
@@ -126,9 +118,5 @@ struct ContentView: View {
                 Text("No item selected")
             }
         }
-    }
-
-    private func refreshApps() {
-        apps = appFetcher.getOpenUserApps()
     }
 }
