@@ -47,23 +47,18 @@ struct SuperCornersApp: App {
     
     init() {
         DispatchQueue.main.async {
-            NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
-                getMousePosition()
-                return event
-            }
-
-            NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
-                getMousePosition()
-            }
-
-            let hasLaunchedBeforeKey = "hasLaunchedBefore"
-            let userDefaults = UserDefaults.standard
-
-            if !userDefaults.bool(forKey: hasLaunchedBeforeKey) {
-                showWalkthrough()
-                userDefaults.set(true, forKey: hasLaunchedBeforeKey)
-            }
+            activateCornerHotkey()
         }
+        
+        showWalkthrough()
+        
+//        let hasLaunchedBeforeKey = "hasLaunchedBefore"
+//        let userDefaults = UserDefaults.standard
+//
+//        if !userDefaults.bool(forKey: hasLaunchedBeforeKey) {
+//            showWalkthrough()
+//            userDefaults.set(true, forKey: hasLaunchedBeforeKey)
+//        }
     }
     
     var body: some Scene {
