@@ -26,6 +26,7 @@ func getMousePosition() {
                 if corner != lastCorner {
                     print("Mouse is at \(corner)")
                     lastCorner = corner
+                    triggerCornerAction(for: corner)
                 }
                 return
             }
