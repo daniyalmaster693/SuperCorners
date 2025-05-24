@@ -2,10 +2,13 @@ import SwiftUI
 
 struct CornerView: View {
     @State private var showModal = false
+    let topLeftTitle = cornerActionBindings[.topLeft]?.title
+    let topRightTitle = cornerActionBindings[.topRight]?.title
+    let bottomLeftTitle = cornerActionBindings[.bottomLeft]?.title
+    let bottomRightTitle = cornerActionBindings[.bottomRight]?.title
     
     var body: some View {
         VStack {
-            // Top text section pinned at the top with padding
             VStack(alignment: .leading, spacing: 8) {
                 Text("Configure Your Super Corners")
                     .font(.title2)
@@ -17,12 +20,11 @@ struct CornerView: View {
                     .foregroundColor(.secondary)
                     .frame(maxWidth: 450, alignment: .leading)
             }
-            .padding(.top, 20)
+            .padding(.top, 25)
             .frame(maxWidth: 450)
             
             Spacer()
             
-            // Center wallpaper and buttons
             ZStack {
                 Image("SequoiaWallpaper")
                     .resizable()
@@ -30,44 +32,44 @@ struct CornerView: View {
                     .frame(width: 450, height: 275)
                     .clipped()
                     .cornerRadius(12)
-
-                Button("Add Action") {
-                    showModal = true
-                }
-                .buttonStyle(.bordered)
-                .padding(.top, 8)
-                .offset(x: -275, y: -130)
-
-                Button("Add Action") {
-                    showModal = true
-                }
-                .buttonStyle(.bordered)
-                .padding(.top, 8)
-                .offset(x: 275, y: -130)
-
-                Button("Add Action") {
-                    showModal = true
-                }
-                .buttonStyle(.bordered)
-                .padding(.top, 8)
-                .offset(x: -275, y: 125)
-
-                Button("Add Action") {
-                    showModal = true
-                }
-                .buttonStyle(.bordered)
-                .padding(.top, 8)
-                .offset(x: 275, y: 125)
+                    .overlay(alignment: .topLeading) {
+                        Button(topLeftTitle ?? "Add Action") {
+                            showModal = true
+                        }
+                        .buttonStyle(.bordered)
+                        .padding(8)
+                    }
+                    .overlay(alignment: .topTrailing) {
+                        Button(topRightTitle ?? "Add Action") {
+                            showModal = true
+                        }
+                        .buttonStyle(.bordered)
+                        .padding(8)
+                    }
+                    .overlay(alignment: .bottomLeading) {
+                        Button(bottomLeftTitle ?? "Add Action") {
+                            showModal = true
+                        }
+                        .buttonStyle(.bordered)
+                        .padding(8)
+                    }
+                    .overlay(alignment: .bottomTrailing) {
+                        Button(bottomRightTitle ?? "Add Action") {
+                            showModal = true
+                        }
+                        .buttonStyle(.bordered)
+                        .padding(8)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 275)
+                
+                Spacer()
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 275)
-            
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
-        .sheet(isPresented: $showModal) {
-            ActionLibraryView()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
+            .sheet(isPresented: $showModal) {
+                ActionLibraryView()
+            }
         }
     }
 }
