@@ -46,14 +46,23 @@ struct SuperCornersApp: App {
     // Walkthrough
     
     init() {
-//        showWalkthrough()
-        
-        let hasLaunchedBeforeKey = "hasLaunchedBefore"
-        let userDefaults = UserDefaults.standard
+        DispatchQueue.main.async {
+            NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
+                getMousePosition()
+                return event
+            }
 
-        if !userDefaults.bool(forKey: hasLaunchedBeforeKey) {
-            showWalkthrough()
-            userDefaults.set(true, forKey: hasLaunchedBeforeKey)
+            NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
+                getMousePosition()
+            }
+
+            let hasLaunchedBeforeKey = "hasLaunchedBefore"
+            let userDefaults = UserDefaults.standard
+
+            if !userDefaults.bool(forKey: hasLaunchedBeforeKey) {
+                showWalkthrough()
+                userDefaults.set(true, forKey: hasLaunchedBeforeKey)
+            }
         }
     }
     
