@@ -78,4 +78,104 @@ let cornerActions: [CornerAction] = [
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
+    
+    CornerAction(
+        title: "Open Clock",
+        description: "Open the Clock application.",
+        iconName: "clock",
+        perform: {
+            let path = "/System/Applications/Clock.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Calculator",
+        description: "Open the Calculator application.",
+        iconName: "plus.slash.minus",
+        perform: {
+            let path = "/System/Applications/Calculator.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Reminders",
+        description: "Open the Reminders application.",
+        iconName: "list.bullet",
+        perform: {
+            let path = "/System/Applications/Reminders.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Safari",
+        description: "Open the Safari web browser.",
+        iconName: "safari",
+        perform: {
+            let path = "/System/Applications/Safari.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Finder",
+        description: "Open a new Finder window.",
+        iconName: "folder",
+        perform: {
+            let path = "/System/Library/CoreServices/Finder.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Terminal",
+        description: "Open the Terminal application.",
+        iconName: "terminal",
+        perform: {
+            let path = "/System/Applications/Utilities/Terminal.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Calendar",
+        description: "Open the Calendar application.",
+        iconName: "calendar",
+        perform: {
+            let path = "/System/Applications/Calendar.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Messages",
+        description: "Open the Messages application.",
+        iconName: "message",
+        perform: {
+            let path = "/System/Applications/Messages.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Mail",
+        description: "Open the Mail application.",
+        iconName: "envelope",
+        perform: {
+            let path = "/System/Applications/Mail.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open iPhone Mirroring",
+        description: "Open the iPhone Mirroring feature.",
+        iconName: "iphone",
+        perform: {
+            let path = "/System/Applications/Phone Mirroring.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
 ]
