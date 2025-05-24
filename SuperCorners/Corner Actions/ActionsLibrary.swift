@@ -10,14 +10,16 @@ import SwiftUI
 struct CornerAction: Identifiable {
     let id = UUID()
     let title: String
+    let description: String
     let iconName: String
     let perform: () -> Void
 }
 
-let availableCornerActions: [CornerAction] = [
+let cornerActions: [CornerAction] = [
     CornerAction(
         title: "Start Screen Saver",
-        iconName: "playpause",
+        description: "Activate the screen saver",
+        iconName: "display",
         perform: {
             let path = "/System/Library/CoreServices/ScreenSaverEngine.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
@@ -26,7 +28,8 @@ let availableCornerActions: [CornerAction] = [
     
     CornerAction(
         title: "Trigger Hotkey",
-        iconName: "playpause",
+        description: "Simulate a custom hotkey press.",
+        iconName: "keyboard",
         perform: {
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeO: CGKeyCode = 31
@@ -45,7 +48,8 @@ let availableCornerActions: [CornerAction] = [
     
     CornerAction(
         title: "Put Display to Sleep",
-        iconName: "display",
+        description: "Sleep your Mac",
+        iconName: "moon.fill",
         perform: {
             let task = Process()
             task.launchPath = "/usr/bin/pmset"
@@ -56,7 +60,8 @@ let availableCornerActions: [CornerAction] = [
     
     CornerAction(
         title: "Open Website",
-        iconName: "globe",
+        description: "Launch a website in your default browser.",
+        iconName: "safari",
         perform: {
             if let url = URL(string: "https://apple.com") {
                 NSWorkspace.shared.open(url)
@@ -66,7 +71,8 @@ let availableCornerActions: [CornerAction] = [
     
     CornerAction(
         title: "Open Apple Music",
-        iconName: "music",
+        description: "Open the Apple Music application.",
+        iconName: "music.note",
         perform: {
             let path = "/System/Applications/Music.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))

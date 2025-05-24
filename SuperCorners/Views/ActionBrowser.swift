@@ -16,12 +16,12 @@ struct ActionItem: Identifiable {
 
 struct ActionCard: View {
     
-    let item: ActionItem
+    let action: CornerAction
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                Image(systemName: item.iconName)
+                Image(systemName: action.iconName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 28, height: 28)
@@ -31,7 +31,7 @@ struct ActionCard: View {
                 Spacer()
 
                 Button(action: {}) {
-                    Image(systemName: "plus")
+                    Image(systemName: "pencil")
                         .font(.system(size: 12, weight: .bold))
                         .foregroundColor(.purple)
                         .padding(6)
@@ -41,12 +41,12 @@ struct ActionCard: View {
                 .buttonStyle(.plain)
             }
 
-            Text(item.title)
+            Text(action.title)
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.top, 8)
-
-            Text(item.description)
+            
+            Text(action.description)
                 .font(.caption)
                 .foregroundColor(.white.opacity(0.85))
                 .lineLimit(2)
@@ -61,31 +61,17 @@ struct ActionCard: View {
     }
 }
 
-let actionLibrary: [ActionItem] = [
-    ActionItem(title: "Lock Screen", description: "Lock your Mac screen immediately.", iconName: "lock.fill"),
-    ActionItem(title: "Put Display to Sleep", description: "Turn off your display without sleeping.", iconName: "display"),
-    ActionItem(title: "Start Screen Saver", description: "Activate your screen saver.", iconName: "playpause"),
-    ActionItem(title: "Disable Screen Saver", description: "Prevent the screen saver from starting.", iconName: "pause.circle"),
-    ActionItem(title: "Show Desktop", description: "Hide all windows to show desktop.", iconName: "desktopcomputer"),
-    ActionItem(title: "Restart Mac", description: "Prompt a system restart immediately.", iconName: "arrow.clockwise.circle.fill"),
-    ActionItem(title: "Shutdown Mac", description: "Quickly initiate a system shutdown.", iconName: "power"),
-    ActionItem(title: "Toggle Dark Mode", description: "Switch between light and dark appearance.", iconName: "moon.fill"),
-    ActionItem(title: "Open Notification Center", description: "Show the macOS Notification Center.", iconName: "bell"),
-    ActionItem(title: "Open Mission Control", description: "Show all open windows and spaces.", iconName: "rectangle.stack.fill"),
-    ActionItem(title: "Show Application Windows", description: "View all windows of the active application.", iconName: "app.badge"),
-    ActionItem(title: "Open Launchpad", description: "Open the Launchpad to see your apps.", iconName: "square.grid.2x2")
-]
 
 struct ActionBrowserView: View {
     @State private var searchText = ""
     
-    func filteredItems(_ items: [ActionItem]) -> [ActionItem] {
+    func filteredItems(_ items: [CornerAction]) -> [CornerAction] {
         if searchText.isEmpty {
             return items
         } else {
-            return items.filter { item in
-                item.title.localizedCaseInsensitiveContains(searchText) ||
-                item.description.localizedCaseInsensitiveContains(searchText)
+            return items.filter { action in
+                action.title.localizedCaseInsensitiveContains(searchText) ||
+                action.description.localizedCaseInsensitiveContains(searchText)
             }
         }
     }
@@ -109,8 +95,8 @@ struct ActionBrowserView: View {
                 }
                 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 240))], spacing: 16) {
-                    ForEach(filteredItems(actionLibrary)) { item in
-                        ActionCard(item: item)
+                    ForEach(filteredItems(cornerActions)) { action in
+                        ActionCard(action: action)
                     }
                 }
                 .padding(.vertical)

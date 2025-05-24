@@ -128,9 +128,5 @@ struct SettingsView: View {
             .padding(.vertical, 8)
         }
         .frame(maxWidth: 500, minHeight: 480, idealHeight: 800, maxHeight: .infinity)
-        .onDisappear {
-            NSApp.setActivationPolicy(.accessory)
-            NSApp.deactivate()
-        }
     }
 }
