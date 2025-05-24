@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var showingPanel = false
-    @State private var selectedItem: String? = nil
+    @State private var selectedItem: String? = "corners"
 
     var body: some View {
         NavigationSplitView {

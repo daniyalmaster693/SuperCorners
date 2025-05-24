@@ -74,7 +74,7 @@ struct ActionLibraryView: View {
                                     .fill(selectedActionID == action.id ? Color.white.opacity(0.1) : Color.clear)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 12)
-                                            .stroke(Color.secondary.opacity(0.2), lineWidth: 1.25)
+                                            .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
                                     )
                             )
                         }
