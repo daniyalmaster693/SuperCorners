@@ -8,14 +8,17 @@
 import SwiftUI
 import AppKit
 
+var cornerActionBindings: [CornerPosition.Corner: CornerAction] = [
+    .topLeft: availableCornerActions[0], 
+    .topRight: availableCornerActions[1],
+    .bottomLeft: availableCornerActions[2],
+    .bottomRight: availableCornerActions[3]
+]
+
 func triggerCornerAction(for corner: CornerPosition.Corner) {
-    switch corner {
-    case .topLeft:
-        
-    case .topRight:
-        
-    case .bottomLeft:
-        
-    case .bottomRight:
+    if let action = cornerActionBindings[corner] {
+        action.perform()
+    } else {
+        print("No action assigned for \(corner)")
     }
 }
