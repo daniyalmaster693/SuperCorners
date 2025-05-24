@@ -24,7 +24,6 @@ func getMousePosition() {
 
             if hitZone.contains(mousePosition) {
                 if corner != lastCorner {
-                    print("Mouse is at \(corner)")
                     lastCorner = corner
                     triggerCornerAction(for: corner)
                 }

@@ -15,7 +15,7 @@ struct CornerView: View {
                     .bold()
                     .frame(maxWidth: 450, alignment: .leading)
                 
-                Text("Assign custom actions to your Mac’s screen corners. Click a corner’s “Add Action” button to choose an action to assign.")
+                Text("Assign custom actions to your Mac’s screen corners. Click the button found at every corner to assign an action.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: 450, alignment: .leading)
@@ -70,6 +70,6 @@ struct CornerView: View {
             .sheet(isPresented: $showModal) {
                 ActionLibraryView()
             }
-        }
+        }  .navigationTitle("Corners")
     }
 }
