@@ -9,72 +9,68 @@ import SwiftUI
 import LaunchAtLogin
 
 struct SettingsView: View {
-    @AppStorage("notiGameStart") private var notiGameStart = false
-    @AppStorage("notiGameComplete") private var notiGameComplete = false
-    
-    @AppStorage("refreshInterval") private var selectedOption = "15 seconds"
-    let refreshOptions = ["10 seconds", "15 seconds","20 seconds", "30 seconds", "40 seconds", "50 seconds", "1 minute", "2 minutes", "5 minutes"]
-    
-    var refreshInterval: Double {
-        switch selectedOption {
-        case "10 seconds": return 10
-        case "15 seconds": return 15
-        case "20 seconds": return 20
-        case "30 seconds": return 30
-        case "40 seconds": return 40
-        case "50 seconds": return 50
-        case "1 minute": return 60
-        case "2 minutes": return 120
-        case "5 minutes": return 300
-        default: return 15
+    @AppStorage("modifier1") private var selectedModifier1 = "Control"
+    @AppStorage("modifier2") private var selectedModifier2 = "Shift"
+    @AppStorage("hotkeyLetter") private var selectedLetter = "C"
+    @AppStorage("enableCorners") private var enableCorners = true
+    @AppStorage("enableZones") private var enableZones = true
+    @AppStorage("enableSound") private var enableSound = false
+    @AppStorage("disableInFullScreen") private var disableInFullScreen = true
+    @AppStorage("disableWhenTyping") private var disableWhenTyping = true
+    @AppStorage("showIconInDock") private var showInDock = true
+
+    let letters = (65...90).map { String(UnicodeScalar($0)!) }
+    let modifier1Options = ["Command", "Option", "Control"]
+    let modifier2Options = ["Shift", "Function", "Caps Lock"]
+
+    var modifierKey1: NSEvent.ModifierFlags {
+        switch selectedModifier1 {
+        case "Command": return .command
+        case "Option": return .option
+        case "Control": return .control
+        default: return []
         }
     }
-    
-    @AppStorage("enableNHL") private var enableNHL = true
-    @AppStorage("enableNBA") private var enableNBA = true
-    @AppStorage("enableWNBA") private var enableWNBA = true
-    @AppStorage("enableNCAAM") private var enableNCAAM = true
-    @AppStorage("enableNCAAF") private var enableNCAAF = true
-    @AppStorage("enableNFL") private var enableNFL = true
-    @AppStorage("enableMLB") private var enableMLB = true
-    @AppStorage("enableF1") private var enableF1 = true
-    @AppStorage("enablePGA") private var enablePGA = true
-    @AppStorage("enableLPGA") private var enableLPGA = true
-    @AppStorage("enableUEFA") private var enableUEFA = true
-    @AppStorage("enableEPL") private var enableEPL = true
-    @AppStorage("enableESP") private var enableESP = true
-    @AppStorage("enableGER") private var enableGER = true
-    @AppStorage("enableITA") private var enableITA = true
-    @AppStorage("enableNLL") private var enableNLL = true
+
+    var modifierKey2: NSEvent.ModifierFlags {
+        switch selectedModifier2 {
+        case "Shift": return .shift
+        case "Function": return .function
+        case "Caps Lock": return .capsLock
+        default: return []
+        }
+    }
     
     var body: some View {
         Form {
             VStack(alignment: .leading, spacing: 40) {
-                LabeledContent("Notifications") {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Toggle("Enable notifications for game start", isOn: $notiGameStart)
-                        Text("Recieve notifications when games start")
-                            .font(.callout)
-                            .foregroundColor(.secondary)
-                        
-                        Toggle("Enable notifications for completed games", isOn: $notiGameComplete)
-                        Text("Receive notifications when a game ends with its final score")
-                            .font(.callout)
-                            .foregroundColor(.secondary)
-                    }
-                }
-                
-                LabeledContent("Auto Refresh Interval") {
+                LabeledContent("Activation") {
                     VStack(alignment: .leading, spacing: 4) {
-                        Picker("", selection: $selectedOption) {
-                            ForEach(refreshOptions, id: \.self) {
-                                Text($0)
+                        Picker("", selection: $selectedModifier1) {
+                            ForEach(modifier1Options, id: \.self) { modifier in
+                                Text(modifier)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .frame(width: 140, alignment: .leading)
+
+                        Picker("", selection: $selectedModifier2) {
+                            ForEach(modifier2Options, id: \.self) { modifier in
+                                Text(modifier)
                             }
                         }
                         .pickerStyle(.menu)
                         .frame(width: 140, alignment: .leading)
                         
-                        Text("Control how often games and scores will update")
+                        Picker("", selection: $selectedLetter) {
+                            ForEach(letters, id: \.self) { letter in
+                                Text(letter)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .frame(width: 140, alignment: .leading)
+                        
+                        Text("Set the modifiers and the key used for activation")
                             .font(.callout)
                             .foregroundColor(.secondary)
                             .padding(.leading, 8)
@@ -82,39 +78,33 @@ struct SettingsView: View {
                     }
                 }
                 
-                LabeledContent("Enabled Leagues") {
-                    HStack(alignment: .top, spacing: 25) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Toggle("NHL", isOn: $enableNHL)
-                            Toggle("NBA", isOn: $enableNBA)
-                            Toggle("WNBA", isOn: $enableWNBA)
-                            Toggle("NCAA M", isOn: $enableNCAAM)
-                            Toggle("NCAA F", isOn: $enableNCAAF)
-                            Toggle("NFL", isOn: $enableNFL)
-                            
-                        }
+                LabeledContent("Screen Triggers") {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Toggle("Enable Activation Using Corners", isOn: $enableCorners)
+                        Toggle("Enable Activation Using Zones", isOn: $enableZones)
                         
-                        VStack(alignment: .leading, spacing: 8) {
-                            Toggle("MLB", isOn: $enableMLB)
-                            Toggle("F1", isOn: $enableF1)
-                            Toggle("PGA", isOn: $enablePGA)
-                            Toggle("LPGA", isOn: $enableLPGA)
-                            Toggle("UEFA", isOn: $enableUEFA)
-                            Toggle("EPL", isOn: $enableEPL)
-                        }
-                        
-                        VStack(alignment: .leading, spacing: 8) {
-                            Toggle("ESP", isOn: $enableESP)
-                            Toggle("GER", isOn: $enableGER)
-                            Toggle("ITA", isOn: $enableITA)
-                            Toggle("NLL", isOn: $enableNLL)
-                            
-                        }
+                        Text("Enable where you can activate actions")
+                            .font(.callout)
+                            .foregroundColor(.secondary)
                     }
                 }
                 
+                LabeledContent("Behaviour") {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Toggle("Play sound on trigger", isOn: $enableSound)
+                        Toggle("Disable in full screen", isOn: $disableInFullScreen)
+                        Toggle("Disable when typing", isOn: $disableWhenTyping)
+                        
+                        Text("Configure activation behaviours")
+                            .font(.callout)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                
                 LabeledContent("Application") {
                     VStack(alignment: .leading, spacing: 8) {
+                        Toggle("Show Icon In Dock", isOn: $showInDock)
                         LaunchAtLogin.Toggle()
                         
                         Button("Check for Updates") {

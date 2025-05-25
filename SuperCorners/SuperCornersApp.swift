@@ -50,13 +50,15 @@ struct SuperCornersApp: App {
             activateCornerHotkey()
         }
         
-        let hasLaunchedBeforeKey = "hasLaunchedBefore"
-        let userDefaults = UserDefaults.standard
-
-        if !userDefaults.bool(forKey: hasLaunchedBeforeKey) {
-            showWalkthrough()
-            userDefaults.set(true, forKey: hasLaunchedBeforeKey)
-        }
+        showWalkthrough()
+        
+//        let hasLaunchedBeforeKey = "hasLaunchedBefore"
+//        let userDefaults = UserDefaults.standard
+//
+//        if !userDefaults.bool(forKey: hasLaunchedBeforeKey) {
+//            showWalkthrough()
+//            userDefaults.set(true, forKey: hasLaunchedBeforeKey)
+//        }
     }
     
     var body: some Scene {

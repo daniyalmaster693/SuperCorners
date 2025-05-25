@@ -10,34 +10,45 @@ import UserNotifications
 
 struct WalkthroughView: View {
     @State private var currentPage = 0
-    @State private var notificationStatusMessage: String?
+    @State private var accesibilityStatusMessage: String?
 
-    let totalPages = 5
+    let totalPages = 7
     let titles = [
         "Welcome to SuperCorners!",
-        "Menu Bar Actions",
-        "Notifications",
+        "Activation",
+        "Assigning Actions",
+        "Creating and Editing Actions",
         "Privacy & Security",
+        "Permissions",
         "Ready to Start"
     ]
     
     let welcomeDescription = "This walkthrough will guide you through the main features and details of the app."
     
-    let menuBarHelpSections = [
-        ("Selecting a Game", "Select a game from any league to pin it."),
-        ("Refreshing Scores", "Scores update automatically, but you can adjust how often they refresh from the settings window."),
-        ("Clearing Selection", "Use the 'Clear Set Game' option to remove the pinned score from the menubar, or simply select a different game.")
+    let activation = [
+        ("Activating Corners", "Hold the Control + Option + C hotkey (customizable in settings), then move your mouse to any screen corner to trigger assigned actions."),
+        ("Using Zones", "You can also trigger Zones, which let you assign actions to the top, bottom, left, and right edges of the screen."),
+        ("Hotkey Customization", "In the settings menu, you can change which modifier keys and activation key are used to detect movement to corners or zones.")
     ]
     
-    let notificationsSections = [
-        ("Game Start Alerts", "Receive notifications when games start, so you never miss a moment."),
-        ("Game Completion", "Receive alerts when games end with final scores.")
+    let assigningActions = [
+        ("Assigning Corners", "Open the configuriatino menu and click any corner or zone in the interface to assign a custom action."),
+        ("Using the Action Library", "Choose from built-in actions or create your own using the Action Editor."),
+    ]
+    
+    let creatingAndEditingActions = [
+        ("Creating Actions", "Click the plus icon in the corners or zones menu to open the action editor. From there you can choose a premade template or create a custom action."),
+        ("Editing Actions", "Clcik the actions tab to view the action library. Click the edit icon on an action to open it in the action editor."),
     ]
     
     let privacySections = [
         ("Data Collection", "We respect your privacy and do not collect any data."),
-        ("Network Access", "Internet access is used solely for fetching games and score data."),
-        ("API", "All data is sourced directly from the unofficial ESPN Sports API. The accuracy of the data depends on ESPN's public APIs."),
+        ("Network Access", "Internet access is not required, but is only used for actions that require it."),
+    ]
+    
+    let permissionsSection = [
+        ("Accessibility", "Accessibility permission is required in order for the app to record mouse and keyboard input, and to trigger actions."),
+        ("Mouse and Keyboard Input", "Inputs are only recorded for the sole function of the app, and are not stored. Mouse input is only recorded when the hotkey is activated."),
     ]
     
     let readyDescription = "You're all set! Enjoy using the app."
@@ -66,7 +77,7 @@ struct WalkthroughView: View {
                 } else if currentPage == 1 {
                     HStack(alignment: .top, spacing: 20) {
                         VStack(alignment: .leading, spacing: 16) {
-                            Image(systemName: "menubar.rectangle")
+                            Image(systemName: "bolt.circle")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
@@ -79,7 +90,7 @@ struct WalkthroughView: View {
                         .frame(width: 180, alignment: .leading)
 
                         VStack(alignment: .leading, spacing: 12) {
-                            ForEach(menuBarHelpSections, id: \.0) { section in
+                            ForEach(activation, id: \.0) { section in
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(section.0)
                                         .font(.headline)
@@ -98,7 +109,7 @@ struct WalkthroughView: View {
                 } else if currentPage == 2 {
                     HStack(alignment: .top, spacing: 20) {
                         VStack(alignment: .leading, spacing: 16) {
-                            Image(systemName: "bell.badge")
+                            Image(systemName: "cursorarrow.click.2")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
@@ -107,36 +118,11 @@ struct WalkthroughView: View {
                             Text(titles[currentPage])
                                 .font(.title)
                                 .bold()
-                            
-                            
-                            Button("Enable Notifications") {
-                                let center = UNUserNotificationCenter.current()
-                                center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-                                    DispatchQueue.main.async {
-                                        if let error = error {
-                                            notificationStatusMessage = "Error: \(error.localizedDescription)"
-                                        } else if granted {
-                                            notificationStatusMessage = "Notifications granted!"
-                                        } else {
-                                            notificationStatusMessage = "Notifications were not allowed."
-                                        }
-                                    }
-                                }
-                            }
-                            .buttonStyle(.bordered)
-                            .padding(.top, 4)
-                            
-                            if let message = notificationStatusMessage {
-                                Text(message)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .padding(.top, 2)
-                            }
                         }
                         .frame(width: 180, alignment: .leading)
 
                         VStack(alignment: .leading, spacing: 12) {
-                            ForEach(notificationsSections, id: \.0) { section in
+                            ForEach(assigningActions, id: \.0) { section in
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(section.0)
                                         .font(.headline)
@@ -155,7 +141,7 @@ struct WalkthroughView: View {
                 } else if currentPage == 3 {
                     HStack(alignment: .top, spacing: 20) {
                         VStack(alignment: .leading, spacing: 16) {
-                            Image(systemName: "lock.shield")
+                            Image(systemName: "hammer")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
@@ -167,6 +153,39 @@ struct WalkthroughView: View {
                         }
                         .frame(width: 180, alignment: .leading)
 
+                        VStack(alignment: .leading, spacing: 12) {
+                            ForEach(creatingAndEditingActions, id: \.0) { section in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(section.0)
+                                        .font(.headline)
+                                    
+                                    Text(section.1)
+                                        .font(.body)
+                                        .multilineTextAlignment(.leading)
+                                        .padding(.top, 2)
+                                }
+                                .padding(.vertical, 6)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .frame(maxWidth: 600)
+                    
+                } else if currentPage == 4 {
+                    HStack(alignment: .top, spacing: 20) {
+                        VStack(alignment: .leading, spacing: 16) {
+                            Image(systemName: "lock.shield")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
+                                .foregroundColor(.accentColor)
+                            
+                            Text(titles[currentPage])
+                                .font(.title)
+                                .bold()
+                        }
+                        .frame(width: 180, alignment: .leading)
+                        
                         VStack(alignment: .leading, spacing: 12) {
                             ForEach(privacySections, id: \.0) { section in
                                 VStack(alignment: .leading, spacing: 4) {
@@ -184,8 +203,54 @@ struct WalkthroughView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     .frame(maxWidth: 600)
-                    
-                } else {
+                } else if currentPage == 5 {
+                        HStack(alignment: .top, spacing: 20) {
+                            VStack(alignment: .leading, spacing: 16) {
+                                Image(systemName: "shield.lefthalf.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(.accentColor)
+
+                                Text(titles[currentPage])
+                                    .font(.title)
+                                    .bold()
+                                
+                                Button("Grant Accessibility") {
+                                    let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true]
+                                    let accessEnabled = AXIsProcessTrustedWithOptions(options)
+                                    accesibilityStatusMessage = accessEnabled ? "Accessibility permissions granted!" : "Accessibility permissions were not granted."
+                                }
+                                .buttonStyle(.bordered)
+                                .padding(.top, 4)
+                                
+                                if let message = accesibilityStatusMessage {
+                                    Text(message)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .padding(.top, 2)
+                                }
+                            }
+                            .frame(width: 180, alignment: .leading)
+
+                            VStack(alignment: .leading, spacing: 12) {
+                                ForEach(permissionsSection, id: \.0) { section in
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(section.0)
+                                            .font(.headline)
+                                        
+                                        Text(section.1)
+                                            .font(.body)
+                                            .multilineTextAlignment(.leading)
+                                            .padding(.top, 2)
+                                    }
+                                    .padding(.vertical, 6)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .frame(maxWidth: 600)
+                } else if currentPage == 6 {
                     VStack(alignment: .center, spacing: 16) {
                         Image(systemName: "hands.clap.fill")
                             .resizable()
@@ -196,7 +261,7 @@ struct WalkthroughView: View {
                         Text(titles[currentPage])
                             .font(.title)
                             .bold()
-                        
+
                         Text(readyDescription)
                             .font(.body)
                             .multilineTextAlignment(.center)
