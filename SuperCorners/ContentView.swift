@@ -55,7 +55,7 @@ struct ContentView: View {
                 CornerView()
 
             case "zones":
-                CornerView()
+                ZoneView()
 
             default:
                 Text("No item selected")
