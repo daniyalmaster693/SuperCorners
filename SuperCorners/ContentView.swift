@@ -13,41 +13,63 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(selection: $selectedItem) {
-                HStack {
-                    Image(systemName: "rectangle.stack")
-                        .frame(width: 18, height: 18)
-                    Text("Gallery")
+            VStack {
+                List(selection: $selectedItem) {
+                    HStack {
+                        Image(systemName: "square.grid.2x2")
+                            .frame(width: 18, height: 18)
+                        Text("Corners")
+                    }
+                    .tag("corners")
+                    
+                    HStack {
+                        Image(systemName: "rectangle.leftthird.inset.filled")
+                            .frame(width: 18, height: 18)
+                        Text("Zones")
+                    }
+                    .tag("zones")
+                    
+                    HStack {
+                        Image(systemName: "bolt.circle")
+                            .frame(width: 18, height: 18)
+                        Text("Actions")
+                    }
+                    .tag("actions")
                 }
-                .tag("gallery")
+                .listStyle(.sidebar)
                 
-                HStack {
-                    Image(systemName: "bolt.circle")
-                        .frame(width: 18, height: 18)
-                    Text("Actions")
-                }
-                .tag("actions")
+                Spacer()
                 
-                HStack {
-                    Image(systemName: "square.grid.2x2")
-                        .frame(width: 18, height: 18)
-                    Text("Corners")
+                HStack(spacing: 8) {
+                    if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
+                       let nsImage = NSImage(contentsOfFile: iconPath) {
+                        Image(nsImage: nsImage)
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .cornerRadius(6)
+                    } else {
+                        Image(systemName: "app.fill")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                            .cornerRadius(6)
+                    }
+
+                    VStack(alignment: .leading) {
+                        Text("SuperCorners")
+                            .font(.footnote)
+                            .bold()
+
+                        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                            Text("Version (\(version))")
+                                .font(.footnote)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
-                .tag("corners")
-                
-                HStack {
-                    Image(systemName: "rectangle.leftthird.inset.filled")
-                        .frame(width: 18, height: 18)
-                    Text("Zones")
-                }
-                .tag("zones")
+                .padding()
             }
-            .listStyle(.sidebar)
         } detail: {
             switch selectedItem {
-            case "gallery":
-                GalleryView()
-                
             case "actions":
                 ActionBrowserView()
                 

@@ -55,7 +55,7 @@ struct ActionCard: View {
         }
         .padding()
         .frame(width: 220, height: 130)
-        .background(Color.blue.opacity(0.75))
+        .background(Color.purple.opacity(0.75))
         .cornerRadius(14)
         .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
     }
@@ -80,29 +80,104 @@ struct ActionBrowserView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
                 VStack {
-                    Text("Action Browser")
+                    Text("System Actions")
                         .font(.title2)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
                         .padding(.top)
+                        .padding(.horizontal)
                     
-                    Text("Browse a list of actions you can assign to corners or zones.")
+                    Text("Browse a curated list of system actions you can assign to corners or zones.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "System" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .padding(.top, 6)
                 }
+                .padding(.bottom, 24)
                 
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 240))], spacing: 16) {
-                    ForEach(filteredItems(cornerActions)) { action in
-                        ActionCard(action: action)
+                Divider()
+                    .padding(.horizontal)
+                
+                VStack {
+                    Text("Apps")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    Text("Browse a curated list of opening app actions you can assign to corners or zones.")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "App" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .padding(.top, 6)
+                }
+                .padding(.bottom, 24)
+                
+                Divider()
+                    .padding(.horizontal)
+                
+                VStack {
+                    Text("Web")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    Text("Browse a curated list of web based actions you can assign to corners or zones.")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Web" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 6)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Divider()
+                        .padding(.horizontal)
+                    
+                }
+                .navigationTitle("Actions")
+                .searchable(text: $searchText)
+                .toolbar {
+                    ToolbarItem(placement: .automatic) {
+                        Button(action: {
+                        }) {
+                            Image(systemName: "plus")
+                        }
+                        .help("Create New Action")
                     }
                 }
-                .padding(.vertical)
             }
-            .navigationTitle("Actions")
-            .searchable(text: $searchText)
         }
     }
 }
