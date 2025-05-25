@@ -63,12 +63,216 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
-        title: "Open Website",
-        description: "Launch a website in your default browser.",
-        iconName: "safari",
+        title: "Open YouTube",
+        description: "Launch YouTube in your default browser.",
+        iconName: "play.rectangle",
         tag: "Web",
         perform: {
-            if let url = URL(string: "https://apple.com") {
+            if let url = URL(string: "https://youtube.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Gmail",
+        description: "Launch Gmail in your default browser.",
+        iconName: "envelope",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://mail.google.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Reddit",
+        description: "Launch Reddit in your default browser.",
+        iconName: "bubble.left.and.bubble.right",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://reddit.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Twitter",
+        description: "Launch Twitter in your default browser.",
+        iconName: "bird",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://twitter.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Discord",
+        description: "Launch Discord in your default browser.",
+        iconName: "bubble.left.and.exclamationmark.bubble.right",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://discord.com/app") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Slack",
+        description: "Launch Slack in your default browser.",
+        iconName: "number",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://slack.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open ChatGPT",
+        description: "Launch ChatGPT in your default browser.",
+        iconName: "brain.head.profile",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://chat.openai.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Gemini",
+        description: "Launch Google Gemini in your default browser.",
+        iconName: "sparkles",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://gemini.google.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Figma",
+        description: "Launch Figma in your default browser.",
+        iconName: "paintpalette",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://www.figma.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Notion",
+        description: "Launch Notion in your default browser.",
+        iconName: "square.and.pencil",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://www.notion.so") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Todoist",
+        description: "Launch Todoist in your default browser.",
+        iconName: "checkmark.circle",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://todoist.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Google Calendar",
+        description: "Launch Google Calendar in your default browser.",
+        iconName: "calendar",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://calendar.google.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Hacker News",
+        description: "Launch Hacker News in your default browser.",
+        iconName: "newspaper",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://news.ycombinator.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open GitHub",
+        description: "Launch GitHub in your default browser.",
+        iconName: "chevron.left.slash.chevron.right",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://github.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Stack Overflow",
+        description: "Launch Stack Overflow in your default browser.",
+        iconName: "questionmark.circle",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://stackoverflow.com") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Wikipedia",
+        description: "Launch Wikipedia in your default browser.",
+        iconName: "book",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://en.wikipedia.org") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Claude AI",
+        description: "Launch Claude AI in your default browser.",
+        iconName: "bubble.left.and.text.bubble.right",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://claude.ai") {
+                NSWorkspace.shared.open(url)
+            }
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Perplexity",
+        description: "Launch Perplexity in your default browser.",
+        iconName: "questionmark.circle",
+        tag: "Web",
+        perform: {
+            if let url = URL(string: "https://www.perplexity.ai") {
                 NSWorkspace.shared.open(url)
             }
         }
@@ -81,6 +285,17 @@ let cornerActions: [CornerAction] = [
         tag: "App",
         perform: {
             let path = "/System/Applications/Music.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Spotify",
+        description: "Open the Spotify application.",
+        iconName: "music.note.list",
+        tag: "App",
+        perform: {
+            let path = "/Applications/Spotify.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
@@ -147,6 +362,39 @@ let cornerActions: [CornerAction] = [
         tag: "App",
         perform: {
             let path = "/System/Applications/Utilities/Terminal.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Xcode",
+        description: "Open the Xcode application.",
+        iconName: "hammer",
+        tag: "App",
+        perform: {
+            let path = "/Applications/Xcode.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Visual Studio Code",
+        description: "Open the Visual Studio Code application.",
+        iconName: "curlybraces",
+        tag: "App",
+        perform: {
+            let path = "/Applications/Visual Studio Code.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+    
+    CornerAction(
+        title: "Open Obsidian",
+        description: "Open the Obsidian application.",
+        iconName: "circle.lefthalf.fill",
+        tag: "App",
+        perform: {
+            let path = "/Applications/Obsidian.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
