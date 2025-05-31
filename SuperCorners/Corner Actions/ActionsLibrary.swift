@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CornerAction: Identifiable {
-    let id = UUID()
+    let id: String 
     let title: String
     let description: String
     let iconName: String
@@ -18,6 +18,7 @@ struct CornerAction: Identifiable {
 
 let cornerActions: [CornerAction] = [
     CornerAction(
+        id: "0",
         title: "Start Screen Saver",
         description: "Activate the screen saver",
         iconName: "display",
@@ -29,6 +30,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "1",
         title: "Trigger Hotkey",
         description: "Simulate a custom hotkey press.",
         iconName: "keyboard",
@@ -50,6 +52,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "2",
         title: "Put Display to Sleep",
         description: "Sleep your Mac",
         iconName: "moon.fill",
@@ -63,6 +66,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "3",
         title: "Open YouTube",
         description: "Launch YouTube in your default browser.",
         iconName: "play.rectangle",
@@ -75,6 +79,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "4",
         title: "Open Gmail",
         description: "Launch Gmail in your default browser.",
         iconName: "envelope",
@@ -87,6 +92,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "5",
         title: "Open Reddit",
         description: "Launch Reddit in your default browser.",
         iconName: "bubble.left.and.bubble.right",
@@ -99,6 +105,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "6",
         title: "Open Twitter",
         description: "Launch Twitter in your default browser.",
         iconName: "bird",
@@ -111,6 +118,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "7",
         title: "Open Discord",
         description: "Launch Discord in your default browser.",
         iconName: "bubble.left.and.exclamationmark.bubble.right",
@@ -123,6 +131,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "8",
         title: "Open Slack",
         description: "Launch Slack in your default browser.",
         iconName: "number",
@@ -135,6 +144,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "9",
         title: "Open ChatGPT",
         description: "Launch ChatGPT in your default browser.",
         iconName: "brain.head.profile",
@@ -147,6 +157,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "10",
         title: "Open Gemini",
         description: "Launch Google Gemini in your default browser.",
         iconName: "sparkles",
@@ -159,6 +170,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "11",
         title: "Open Figma",
         description: "Launch Figma in your default browser.",
         iconName: "paintpalette",
@@ -171,6 +183,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "12",
         title: "Open Notion",
         description: "Launch Notion in your default browser.",
         iconName: "square.and.pencil",
@@ -183,6 +196,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "13",
         title: "Open Todoist",
         description: "Launch Todoist in your default browser.",
         iconName: "checkmark.circle",
@@ -195,6 +209,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "14",
         title: "Open Google Calendar",
         description: "Launch Google Calendar in your default browser.",
         iconName: "calendar",
@@ -207,6 +222,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "15",
         title: "Open Hacker News",
         description: "Launch Hacker News in your default browser.",
         iconName: "newspaper",
@@ -219,6 +235,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "16",
         title: "Open GitHub",
         description: "Launch GitHub in your default browser.",
         iconName: "chevron.left.slash.chevron.right",
@@ -231,6 +248,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "17",
         title: "Open Stack Overflow",
         description: "Launch Stack Overflow in your default browser.",
         iconName: "questionmark.circle",
@@ -243,6 +261,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "18",
         title: "Open Wikipedia",
         description: "Launch Wikipedia in your default browser.",
         iconName: "book",
@@ -255,6 +274,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "19",
         title: "Open Claude AI",
         description: "Launch Claude AI in your default browser.",
         iconName: "bubble.left.and.text.bubble.right",
@@ -267,6 +287,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "20",
         title: "Open Perplexity",
         description: "Launch Perplexity in your default browser.",
         iconName: "questionmark.circle",
@@ -279,6 +300,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "21",
         title: "Open Apple Music",
         description: "Open the Apple Music application.",
         iconName: "music.note",
@@ -290,6 +312,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "22",
         title: "Open Spotify",
         description: "Open the Spotify application.",
         iconName: "music.note.list",
@@ -301,6 +324,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "23",
         title: "Open Clock",
         description: "Open the Clock application.",
         iconName: "clock",
@@ -312,6 +336,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "24",
         title: "Open Calculator",
         description: "Open the Calculator application.",
         iconName: "plus.slash.minus",
@@ -323,6 +348,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "25",
         title: "Open Reminders",
         description: "Open the Reminders application.",
         iconName: "list.bullet",
@@ -334,6 +360,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "26",
         title: "Open Safari",
         description: "Open the Safari web browser.",
         iconName: "safari",
@@ -345,6 +372,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "27",
         title: "Open Finder",
         description: "Open a new Finder window.",
         iconName: "folder",
@@ -356,6 +384,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "28",
         title: "Open Terminal",
         description: "Open the Terminal application.",
         iconName: "terminal",
@@ -367,6 +396,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "29",
         title: "Open Xcode",
         description: "Open the Xcode application.",
         iconName: "hammer",
@@ -378,6 +408,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "30",
         title: "Open Visual Studio Code",
         description: "Open the Visual Studio Code application.",
         iconName: "curlybraces",
@@ -389,6 +420,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "31",
         title: "Open Obsidian",
         description: "Open the Obsidian application.",
         iconName: "circle.lefthalf.fill",
@@ -400,6 +432,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "32",
         title: "Open Calendar",
         description: "Open the Calendar application.",
         iconName: "calendar",
@@ -411,6 +444,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "33",
         title: "Open Messages",
         description: "Open the Messages application.",
         iconName: "message",
@@ -422,6 +456,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "34",
         title: "Open Mail",
         description: "Open the Mail application.",
         iconName: "envelope",
@@ -433,6 +468,7 @@ let cornerActions: [CornerAction] = [
     ),
     
     CornerAction(
+        id: "35",
         title: "Open iPhone Mirroring",
         description: "Open the iPhone Mirroring feature.",
         iconName: "iphone",

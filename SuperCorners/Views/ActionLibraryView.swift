@@ -10,15 +10,17 @@ import SwiftUI
 struct ActionLibraryView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
-    @State private var selectedActionID: UUID?
+    @State private var selectedActionID: String?
 
     var filteredActions: [CornerAction] {
         if searchText.isEmpty {
             return cornerActions
         } else {
+            let lowercasedSearch = searchText.lowercased()
             return cornerActions.filter { action in
-                action.title.localizedCaseInsensitiveContains(searchText) ||
-                action.description.localizedCaseInsensitiveContains(searchText)
+                let titleContains = action.title.lowercased().contains(lowercasedSearch)
+                let descriptionContains = action.description.lowercased().contains(lowercasedSearch)
+                return titleContains || descriptionContains
             }
         }
     }
@@ -85,8 +87,15 @@ struct ActionLibraryView: View {
             .frame(maxWidth: 375, maxHeight: 220)
 
             Button("Done") {
+                if let selectedID = selectedActionID,
+                   let selectedAction = cornerActions.first(where: { $0.id == selectedID }) {
+                    
+                    cornerActionBindings[.topLeft] = selectedAction  // ✅ this actually assigns the action
+                    print("Assigned:", cornerActionBindings[.topLeft]!)
+                }
                 dismiss()
-            }         .padding(.top, 15)
+            }
+            .padding(.top, 15)
         }
         .frame(minWidth: 200, minHeight: 425)
         .padding()
