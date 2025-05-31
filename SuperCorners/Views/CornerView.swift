@@ -2,6 +2,8 @@ import SwiftUI
 
 struct CornerView: View {
     @State private var showModal = false
+    @State private var refreshID = UUID()
+    
     
     var body: some View {
         let topLeftTitle = cornerActionBindings[.topLeft]?.title
@@ -83,9 +85,13 @@ struct CornerView: View {
             .padding()
             .sheet(isPresented: $showModal) {
                 if let selected = currentlySelectedCorner {
-                       ActionLibraryView(corner: mapSelectedToCorner(selected))
-                   }
+                    ActionLibraryView(corner: mapSelectedToCorner(selected)) {
+                        refreshID = UUID()
+                    }
+                }
             }
-        }  .navigationTitle("Corners")
+        }
+        .id(refreshID)
+        .navigationTitle("Corners")
     }
 }

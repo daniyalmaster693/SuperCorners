@@ -11,7 +11,9 @@ struct ActionLibraryView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
     @State private var selectedActionID: String?
+    
     let corner: CornerPosition.Corner
+    var onUpdate: () -> Void
     
     var filteredActions: [CornerAction] {
         if searchText.isEmpty {
@@ -27,6 +29,7 @@ struct ActionLibraryView: View {
     }
 
     var body: some View {
+        
         VStack(spacing: 8) {
             Text("Action Library")
                 .font(.title)
@@ -48,7 +51,6 @@ struct ActionLibraryView: View {
                     ForEach(filteredActions) { action in
                         Button(action: {
                             selectedActionID = action.id
-                            print("Selected action: \(action.title)")
                         }) {
                             HStack(spacing: 12) {
                                 Image(systemName: action.iconName)
@@ -90,8 +92,9 @@ struct ActionLibraryView: View {
             Button("Done") {
                 if let selectedID = selectedActionID,
                    let selectedAction = cornerActions.first(where: { $0.id == selectedID }) {
-                    
                     cornerActionBindings[corner] = selectedAction
+                    
+                    onUpdate()
                 }
                 dismiss()
             }
