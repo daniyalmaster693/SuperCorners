@@ -466,16 +466,4 @@ let cornerActions: [CornerAction] = [
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
-    
-    CornerAction(
-        id: "35",
-        title: "Open iPhone Mirroring",
-        description: "Open the iPhone Mirroring feature.",
-        iconName: "iphone",
-        tag: "App",
-        perform: {
-            let path = "/System/Applications/Phone Mirroring.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-        }
-    ),
 ]
