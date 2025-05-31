@@ -2,13 +2,23 @@ import SwiftUI
 
 struct CornerView: View {
     @State private var showModal = false
-    let topLeftTitle = cornerActionBindings[.topLeft]?.title
-    let topRightTitle = cornerActionBindings[.topRight]?.title
-    let bottomLeftTitle = cornerActionBindings[.bottomLeft]?.title
-    let bottomRightTitle = cornerActionBindings[.bottomRight]?.title
     
     var body: some View {
-        VStack {
+        let topLeftTitle = cornerActionBindings[.topLeft]?.title
+        let topRightTitle = cornerActionBindings[.topRight]?.title
+        let bottomLeftTitle = cornerActionBindings[.bottomLeft]?.title
+        let bottomRightTitle = cornerActionBindings[.bottomRight]?.title
+        
+        func mapSelectedToCorner(_ selected: SelectedCornerPosition) -> CornerPosition.Corner {
+            switch selected {
+            case .topLeft: return .topLeft
+            case .topRight: return .topRight
+            case .bottomLeft: return .bottomLeft
+            case .bottomRight: return .bottomRight
+            }
+        }
+        
+        return VStack {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Configure Your Super Corners")
                     .font(.title2)
@@ -34,6 +44,7 @@ struct CornerView: View {
                     .cornerRadius(12)
                     .overlay(alignment: .topLeading) {
                         Button(topLeftTitle ?? "Add Action") {
+                            currentlySelectedCorner = .topLeft
                             showModal = true
                         }
                         .buttonStyle(.bordered)
@@ -41,6 +52,7 @@ struct CornerView: View {
                     }
                     .overlay(alignment: .topTrailing) {
                         Button(topRightTitle ?? "Add Action") {
+                            currentlySelectedCorner = .topRight
                             showModal = true
                         }
                         .buttonStyle(.bordered)
@@ -48,6 +60,7 @@ struct CornerView: View {
                     }
                     .overlay(alignment: .bottomLeading) {
                         Button(bottomLeftTitle ?? "Add Action") {
+                            currentlySelectedCorner = .bottomLeft
                             showModal = true
                         }
                         .buttonStyle(.bordered)
@@ -55,6 +68,7 @@ struct CornerView: View {
                     }
                     .overlay(alignment: .bottomTrailing) {
                         Button(bottomRightTitle ?? "Add Action") {
+                            currentlySelectedCorner = .bottomRight
                             showModal = true
                         }
                         .buttonStyle(.bordered)
@@ -68,7 +82,9 @@ struct CornerView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
             .sheet(isPresented: $showModal) {
-                ActionLibraryView()
+                if let selected = currentlySelectedCorner {
+                       ActionLibraryView(corner: mapSelectedToCorner(selected))
+                   }
             }
         }  .navigationTitle("Corners")
     }

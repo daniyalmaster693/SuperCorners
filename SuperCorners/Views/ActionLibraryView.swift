@@ -11,7 +11,8 @@ struct ActionLibraryView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
     @State private var selectedActionID: String?
-
+    let corner: CornerPosition.Corner
+    
     var filteredActions: [CornerAction] {
         if searchText.isEmpty {
             return cornerActions
@@ -90,8 +91,7 @@ struct ActionLibraryView: View {
                 if let selectedID = selectedActionID,
                    let selectedAction = cornerActions.first(where: { $0.id == selectedID }) {
                     
-                    cornerActionBindings[.topLeft] = selectedAction  // ✅ this actually assigns the action
-                    print("Assigned:", cornerActionBindings[.topLeft]!)
+                    cornerActionBindings[corner] = selectedAction
                 }
                 dismiss()
             }
@@ -99,11 +99,5 @@ struct ActionLibraryView: View {
         }
         .frame(minWidth: 200, minHeight: 425)
         .padding()
-    }
-}
-
-struct ActionLibraryView_Previews: PreviewProvider {
-    static var previews: some View {
-        ActionLibraryView()
     }
 }

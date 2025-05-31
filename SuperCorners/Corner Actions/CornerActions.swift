@@ -8,16 +8,11 @@
 import SwiftUI
 import AppKit
 
-var topLeftAction = 0
-var topRightAction = 1
-var bottomLeftAction = 2
-var bottomRightAction = 3
-
 var cornerActionBindings: [CornerPosition.Corner: CornerAction] = [
-    .topLeft: cornerActions[topLeftAction],
-    .topRight: cornerActions[topRightAction],
-    .bottomLeft: cornerActions[bottomLeftAction],
-    .bottomRight: cornerActions[bottomRightAction]
+    .topLeft: cornerActions[0],
+    .topRight: cornerActions[1],
+    .bottomLeft: cornerActions[2],
+    .bottomRight: cornerActions[3]
 ]
 
 func triggerCornerAction(for corner: CornerPosition.Corner) {
