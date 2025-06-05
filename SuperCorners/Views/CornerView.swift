@@ -4,7 +4,6 @@ struct CornerView: View {
     @State private var showModal = false
     @State private var refreshID = UUID()
     
-    
     var body: some View {
         let topLeftTitle = cornerActionBindings[.topLeft]?.title
         let topRightTitle = cornerActionBindings[.topRight]?.title

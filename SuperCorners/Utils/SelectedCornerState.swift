@@ -11,4 +11,4 @@ enum SelectedCornerPosition {
     case topLeft, topRight, bottomLeft, bottomRight
 }
 
-var currentlySelectedCorner: SelectedCornerPosition? = nil
+var currentlySelectedCorner: SelectedCornerPosition?

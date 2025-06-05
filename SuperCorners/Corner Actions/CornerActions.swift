@@ -5,8 +5,8 @@
 //  Created by Daniyal Master on 2025-05-24.
 //
 
-import SwiftUI
 import AppKit
+import SwiftUI
 
 var cornerActionBindings: [CornerPosition.Corner: CornerAction] = [
     .topLeft: cornerActions[0],

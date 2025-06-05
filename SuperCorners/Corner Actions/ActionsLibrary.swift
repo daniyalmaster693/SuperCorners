@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CornerAction: Identifiable {
-    let id: String 
+    let id: String
     let title: String
     let description: String
     let iconName: String

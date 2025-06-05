@@ -5,10 +5,10 @@
 //  Created by Daniyal Master on 2025-05-24.
 //
 
-import SwiftUI
 import HotKey
+import SwiftUI
 
-let cornerHotKey = HotKey(key: .c, modifiers: [.control, .shift])
+let cornerHotKey = HotKey(key: .c, modifiers: [.control, .option])
 var localMonitor: Any?
 var globalMonitor: Any?
 
@@ -29,7 +29,7 @@ func activateCornerHotkey() {
             NSEvent.removeMonitor(local)
             localMonitor = nil
         }
-        
+
         if let global = globalMonitor {
             NSEvent.removeMonitor(global)
             globalMonitor = nil

@@ -21,14 +21,14 @@ struct ContentView: View {
                         Text("Corners")
                     }
                     .tag("corners")
-                    
+
 //                    HStack {
 //                        Image(systemName: "rectangle.leftthird.inset.filled")
 //                            .frame(width: 18, height: 18)
 //                        Text("Zones")
 //                    }
 //                    .tag("zones")
-                    
+
                     HStack {
                         Image(systemName: "bolt.circle")
                             .frame(width: 18, height: 18)
@@ -37,12 +37,13 @@ struct ContentView: View {
                     .tag("actions")
                 }
                 .listStyle(.sidebar)
-                
+
                 Spacer()
-                
+
                 HStack(spacing: 8) {
                     if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
-                       let nsImage = NSImage(contentsOfFile: iconPath) {
+                       let nsImage = NSImage(contentsOfFile: iconPath)
+                    {
                         Image(nsImage: nsImage)
                             .resizable()
                             .frame(width: 32, height: 32)
@@ -72,12 +73,12 @@ struct ContentView: View {
             switch selectedItem {
             case "actions":
                 ActionBrowserView()
-                
+
             case "corners":
                 CornerView()
 
 //            case "zones":
-//                ZoneView()
+//                CornerView()
 
             default:
                 Text("No item selected")

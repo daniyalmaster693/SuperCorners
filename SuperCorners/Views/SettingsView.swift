@@ -5,12 +5,12 @@
 //  Created by Daniyal Master on 2025-05-22.
 //
 
-import SwiftUI
 import LaunchAtLogin
+import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("modifier1") private var selectedModifier1 = "Control"
-    @AppStorage("modifier2") private var selectedModifier2 = "Shift"
+    @AppStorage("modifier2") private var selectedModifier2 = "Option"
     @AppStorage("hotkeyLetter") private var selectedLetter = "C"
     @AppStorage("enableCorners") private var enableCorners = true
     @AppStorage("enableZones") private var enableZones = true
@@ -19,7 +19,7 @@ struct SettingsView: View {
     @AppStorage("disableWhenTyping") private var disableWhenTyping = true
     @AppStorage("showIconInDock") private var showInDock = true
 
-    let letters = (65...90).map { String(UnicodeScalar($0)!) }
+    let letters = (65 ... 90).map { String(UnicodeScalar($0)!) }
     let modifier1Options = ["Command", "Option", "Control"]
     let modifier2Options = ["Shift", "Function", "Caps Lock"]
 
@@ -100,7 +100,6 @@ struct SettingsView: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                
                 
                 LabeledContent("Application") {
                     VStack(alignment: .leading, spacing: 8) {

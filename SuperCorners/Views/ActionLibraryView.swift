@@ -11,10 +11,10 @@ struct ActionLibraryView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
     @State private var selectedActionID: String?
-    
+
     let corner: CornerPosition.Corner
     var onUpdate: () -> Void
-    
+
     var filteredActions: [CornerAction] {
         if searchText.isEmpty {
             return cornerActions
@@ -29,7 +29,6 @@ struct ActionLibraryView: View {
     }
 
     var body: some View {
-        
         VStack(spacing: 8) {
             Text("Action Library")
                 .font(.title)
@@ -65,7 +64,6 @@ struct ActionLibraryView: View {
                                         .fontWeight(.semibold)
                                         .foregroundColor(.primary)
 
-
                                     Text(action.description)
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
@@ -91,9 +89,10 @@ struct ActionLibraryView: View {
 
             Button("Done") {
                 if let selectedID = selectedActionID,
-                   let selectedAction = cornerActions.first(where: { $0.id == selectedID }) {
+                   let selectedAction = cornerActions.first(where: { $0.id == selectedID })
+                {
                     cornerActionBindings[corner] = selectedAction
-                    
+
                     onUpdate()
                 }
                 dismiss()
