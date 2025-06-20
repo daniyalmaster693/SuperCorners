@@ -28,16 +28,6 @@ struct ActionCard: View {
                     .padding(.top, 16)
 
                 Spacer()
-
-                Button(action: {}) {
-                    Image(systemName: "pencil")
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.purple)
-                        .padding(6)
-                        .background(Color.white)
-                        .clipShape(Circle())
-                }
-                .buttonStyle(.plain)
             }
 
             Text(action.title)
@@ -223,14 +213,6 @@ struct ActionBrowserView: View {
                 }
                 .navigationTitle("Actions")
                 .searchable(text: $searchText)
-                .toolbar {
-                    ToolbarItem(placement: .automatic) {
-                        Button(action: {}) {
-                            Image(systemName: "plus")
-                        }
-                        .help("Create New Action")
-                    }
-                }
             }
         }
     }
