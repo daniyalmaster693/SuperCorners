@@ -69,7 +69,7 @@ let cornerActions: [CornerAction] = [
         title: "Trigger Hotkey",
         description: "Simulate a custom hotkey press.",
         iconName: "keyboard",
-        tag: "System",
+        tag: "Template Action",
         perform: {
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeO: CGKeyCode = 31
@@ -113,6 +113,39 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "6",
+        title: "Run Shortcut",
+        description: "Run an Apple Shortcut.",
+        iconName: "sparkles",
+        tag: "Template Action",
+        perform: {
+            let shortcutName = "Start Pomodoro"
+
+            let task = Process()
+            task.launchPath = "/usr/bin/shortcuts"
+            task.arguments = ["run", shortcutName]
+
+            do {
+                try task.run()
+            } catch {
+                print("❌ Failed to run shortcut: \(error)")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "7",
+        title: "Open a Folder",
+        description: "Open a folder in Finder.",
+        iconName: "folder.fill",
+        tag: "Template Action",
+        perform: {
+            let path = "/Applications"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+
+    CornerAction(
+        id: "8",
         title: "Open Launchpad",
         description: "Open the Launchpad to see your apps.",
         iconName: "square.grid.2x2",
@@ -124,7 +157,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "7",
+        id: "9",
         title: "Show Mission Control",
         description: "Display all open windows and spaces.",
         iconName: "rectangle.stack.fill",
@@ -136,7 +169,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "8",
+        id: "10",
         title: "Open Screenshot Utility",
         description: "Launch the macOS Screenshot utility.",
         iconName: "camera.viewfinder",
@@ -148,7 +181,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "9",
+        id: "11",
         title: "Capture Entire Screen",
         description: "Captures the entire screen.",
         iconName: "rectangle.on.rectangle",
@@ -169,7 +202,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "10",
+        id: "12",
         title: "Capture Selected Area",
         description: "Captures a custom area of the screen.",
         iconName: "selection.pin.in.out",
@@ -190,7 +223,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "11",
+        id: "13",
         title: "Start Screen Recording",
         description: "Open QuickTime screen recording window.",
         iconName: "video.fill",
@@ -212,7 +245,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "12",
+        id: "14",
         title: "Start Movie Recording",
         description: "Open QuickTime movie recording window.",
         iconName: "film.fill",
@@ -234,19 +267,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "13",
-        title: "Open a Folder",
-        description: "Open a folder in Finder.",
-        iconName: "folder.fill",
-        tag: "System",
-        perform: {
-            let path = "/Applications"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-        }
-    ),
-
-    CornerAction(
-        id: "14",
+        id: "15",
         title: "Volume Up",
         description: "Increase system volume by one step.",
         iconName: "speaker.wave.2.fill",
@@ -260,7 +281,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "15",
+        id: "16",
         title: "Volume Down",
         description: "Decrease system volume by one step.",
         iconName: "speaker.wave.1.fill",
@@ -274,7 +295,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "16",
+        id: "17",
         title: "Unmute Volume",
         description: "Unmute system volume.",
         iconName: "speaker.wave.2.fill",
@@ -288,7 +309,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "17",
+        id: "18",
         title: "Mute Volume",
         description: "Mute system volume.",
         iconName: "speaker.slash.fill",
@@ -302,7 +323,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "18",
+        id: "19",
         title: "Emoji & Symbol Viewer",
         description: "Open the Emoji and Symbol viewer.",
         iconName: "smiley.fill",
@@ -320,7 +341,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "19",
+        id: "20",
         title: "Open Camera",
         description: "Launch the Camera (Photo Booth) app.",
         iconName: "camera.fill",
@@ -332,7 +353,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "20",
+        id: "21",
         title: "Maximize Window",
         description: "Expand active window to fill desktop.",
         iconName: "arrow.up.left.and.arrow.down.right.square",
@@ -350,7 +371,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "21",
+        id: "22",
         title: "Return to Previous Size",
         description: "Restore window to its previous size before tiling.",
         iconName: "arrow.uturn.left.circle",
