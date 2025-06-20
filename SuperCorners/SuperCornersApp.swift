@@ -40,7 +40,6 @@ func showWalkthrough() {
     NSApp.activate(ignoringOtherApps: true)
 }
  
-
 @main
 struct SuperCornersApp: App {
     // Walkthrough
@@ -63,9 +62,94 @@ struct SuperCornersApp: App {
         WindowGroup {
             ContentView()
         }
+        
+        MenuBarExtra("Menu", systemImage: "rectangle.3.group") {
+            Menu("Corners") {
+                Button {
+                    // Action
+                } label: {
+                    HStack {
+                        Image(systemName: "inset.filled.topleft.rectangle")
+                        Text("Top Left Corner")
+                    }
+                }
 
+                Button {
+                    // Action
+                } label: {
+                    HStack {
+                        Image(systemName: "inset.filled.topright.rectangle")
+                        Text("Top Right Corner")
+                    }
+                }
+
+                Button {
+                    // Action
+                } label: {
+                    HStack {
+                        Image(systemName: "inset.filled.bottomleft.rectangle")
+                        Text("Bottom Left Corner")
+                    }
+                }
+
+                Button {
+                    // Action
+                } label: {
+                    HStack {
+                        Image(systemName: "inset.filled.bottomright.rectangle")
+                        Text("Bottom Right Corner")
+                    }
+                }
+            }
+
+            Menu("Zones") {
+                Button {
+                    // Action
+                } label: {
+                    HStack {
+                        Image(systemName: "rectangle.topthird.inset.filled")
+                        Text("Top Zone")
+                    }
+                }
+
+                Button {
+                    // Action
+                } label: {
+                    HStack {
+                        Image(systemName: "rectangle.leadingthird.inset.filled")
+                        Text("Left Zone")
+                    }
+                }
+
+                Button {
+                    // Action
+                } label: {
+                    HStack {
+                        Image(systemName: "rectangle.trailingthird.inset.filled")
+                        Text("Right Zone")
+                    }
+                }
+
+                Button {
+                    // Action
+                } label: {
+                    HStack {
+                        Image(systemName: "rectangle.bottomthird.inset.filled")
+                        Text("Bottom Zone")
+                    }
+                }
+            }
+            
+            Divider()
+
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
+            }
+            .keyboardShortcut("q")
+        }
+    
         Settings {
-           SettingsView()
-       }
+            SettingsView()
+        }
     }
 }
