@@ -15,7 +15,6 @@ struct ActionItem: Identifiable {
 }
 
 struct ActionCard: View {
-    
     let action: CornerAction
     
     var body: some View {
@@ -61,7 +60,6 @@ struct ActionCard: View {
     }
 }
 
-
 struct ActionBrowserView: View {
     @State private var searchText = ""
     
@@ -71,7 +69,7 @@ struct ActionBrowserView: View {
         } else {
             return items.filter { action in
                 action.title.localizedCaseInsensitiveContains(searchText) ||
-                action.description.localizedCaseInsensitiveContains(searchText)
+                    action.description.localizedCaseInsensitiveContains(searchText)
             }
         }
     }
@@ -87,7 +85,7 @@ struct ActionBrowserView: View {
                         .padding(.top)
                         .padding(.horizontal)
                     
-                    Text("Browse a curated list of system actions you can assign to corners or zones.")
+                    Text("Browse a set of essential system utilities and controls you can trigger instantly.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -109,14 +107,14 @@ struct ActionBrowserView: View {
                     .padding(.horizontal)
                 
                 VStack {
-                    Text("Apps")
+                    Text("Template Actions")
                         .font(.title2)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top)
                         .padding(.horizontal)
                     
-                    Text("Browse a curated list of opening app actions you can assign to corners or zones.")
+                    Text("Configure these actions for custom websites, apps, and more.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -124,7 +122,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "App" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Template Action" }) { action in
                                 ActionCard(action: action)
                             }
                         }
@@ -138,14 +136,14 @@ struct ActionBrowserView: View {
                     .padding(.horizontal)
                 
                 VStack {
-                    Text("Web")
+                    Text("Capture")
                         .font(.title2)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.top)
                         .padding(.horizontal)
                     
-                    Text("Browse a curated list of web based actions you can assign to corners or zones.")
+                    Text("Capture your screen with screenshot tools.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -153,7 +151,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Web" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Capture" }) { action in
                                 ActionCard(action: action)
                             }
                         }
@@ -164,14 +162,70 @@ struct ActionBrowserView: View {
                     
                     Divider()
                         .padding(.horizontal)
+                }
+                
+                VStack {
+                    Text("Media")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
                     
+                    Text("Control your Mac’s sound and playback settings with one click.")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Media" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 6)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Divider()
+                        .padding(.horizontal)
+                }
+                
+                VStack {
+                    Text("Window Management")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    Text("Organize, move, or resize windows to improve your multitasking flow.")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Window Management" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 6)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Divider()
+                        .padding(.horizontal)
                 }
                 .navigationTitle("Actions")
                 .searchable(text: $searchText)
                 .toolbar {
                     ToolbarItem(placement: .automatic) {
-                        Button(action: {
-                        }) {
+                        Button(action: {}) {
                             Image(systemName: "plus")
                         }
                         .help("Create New Action")

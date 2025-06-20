@@ -22,12 +22,12 @@ struct ContentView: View {
                     }
                     .tag("corners")
 
-//                    HStack {
-//                        Image(systemName: "rectangle.leftthird.inset.filled")
-//                            .frame(width: 18, height: 18)
-//                        Text("Zones")
-//                    }
-//                    .tag("zones")
+                    HStack {
+                        Image(systemName: "rectangle.leftthird.inset.filled")
+                            .frame(width: 18, height: 18)
+                        Text("Zones")
+                    }
+                    .tag("zones")
 
                     HStack {
                         Image(systemName: "bolt.circle")
@@ -77,8 +77,8 @@ struct ContentView: View {
             case "corners":
                 CornerView()
 
-//            case "zones":
-//                CornerView()
+            case "zones":
+                ZoneView()
 
             default:
                 Text("No item selected")

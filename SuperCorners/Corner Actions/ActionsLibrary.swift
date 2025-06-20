@@ -22,19 +22,54 @@ let cornerActions: [CornerAction] = [
         title: "Start Screen Saver",
         description: "Activate the screen saver",
         iconName: "display",
-        tag: "system",
+        tag: "System",
         perform: {
             let path = "/System/Library/CoreServices/ScreenSaverEngine.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
-    
+
     CornerAction(
         id: "1",
+        title: "Put Display to Sleep",
+        description: "Sleep your Mac",
+        iconName: "moon.fill",
+        tag: "System",
+        perform: {
+            let task = Process()
+            task.launchPath = "/usr/bin/pmset"
+            task.arguments = ["displaysleepnow"]
+            try? task.run()
+        }
+    ),
+
+    CornerAction(
+        id: "2",
+        title: "Lock Screen",
+        description: "Locks your Mac and returns to the login screen.",
+        iconName: "lock.fill",
+        tag: "System",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: 12, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskControl]
+
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: 12, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskControl]
+
+            let loc = CGEventTapLocation.cghidEventTap
+            keyDown?.post(tap: loc)
+            keyUp?.post(tap: loc)
+        }
+    ),
+
+    CornerAction(
+        id: "3",
         title: "Trigger Hotkey",
         description: "Simulate a custom hotkey press.",
         iconName: "keyboard",
-        tag: "system",
+        tag: "System",
         perform: {
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeO: CGKeyCode = 31
@@ -50,420 +85,285 @@ let cornerActions: [CornerAction] = [
             keyUp?.post(tap: loc)
         }
     ),
-    
-    CornerAction(
-        id: "2",
-        title: "Put Display to Sleep",
-        description: "Sleep your Mac",
-        iconName: "moon.fill",
-        tag: "System",
-        perform: {
-            let task = Process()
-            task.launchPath = "/usr/bin/pmset"
-            task.arguments = ["displaysleepnow"]
-            try? task.run()
-        }
-    ),
-    
-    CornerAction(
-        id: "3",
-        title: "Open YouTube",
-        description: "Launch YouTube in your default browser.",
-        iconName: "play.rectangle",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://youtube.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
+
     CornerAction(
         id: "4",
-        title: "Open Gmail",
-        description: "Launch Gmail in your default browser.",
-        iconName: "envelope",
-        tag: "Web",
+        title: "Open a Website",
+        description: "Open a website in your default browser.",
+        iconName: "globe",
+        tag: "Template Action",
         perform: {
-            if let url = URL(string: "https://mail.google.com") {
+            if let url = URL(string: "https://apple.com") {
                 NSWorkspace.shared.open(url)
             }
         }
     ),
-    
+
     CornerAction(
         id: "5",
-        title: "Open Reddit",
-        description: "Launch Reddit in your default browser.",
-        iconName: "bubble.left.and.bubble.right",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://reddit.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "6",
-        title: "Open Twitter",
-        description: "Launch Twitter in your default browser.",
-        iconName: "bird",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://twitter.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "7",
-        title: "Open Discord",
-        description: "Launch Discord in your default browser.",
-        iconName: "bubble.left.and.exclamationmark.bubble.right",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://discord.com/app") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "8",
-        title: "Open Slack",
-        description: "Launch Slack in your default browser.",
-        iconName: "number",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://slack.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "9",
-        title: "Open ChatGPT",
-        description: "Launch ChatGPT in your default browser.",
-        iconName: "brain.head.profile",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://chat.openai.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "10",
-        title: "Open Gemini",
-        description: "Launch Google Gemini in your default browser.",
-        iconName: "sparkles",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://gemini.google.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "11",
-        title: "Open Figma",
-        description: "Launch Figma in your default browser.",
-        iconName: "paintpalette",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://www.figma.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "12",
-        title: "Open Notion",
-        description: "Launch Notion in your default browser.",
-        iconName: "square.and.pencil",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://www.notion.so") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "13",
-        title: "Open Todoist",
-        description: "Launch Todoist in your default browser.",
-        iconName: "checkmark.circle",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://todoist.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "14",
-        title: "Open Google Calendar",
-        description: "Launch Google Calendar in your default browser.",
-        iconName: "calendar",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://calendar.google.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "15",
-        title: "Open Hacker News",
-        description: "Launch Hacker News in your default browser.",
-        iconName: "newspaper",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://news.ycombinator.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "16",
-        title: "Open GitHub",
-        description: "Launch GitHub in your default browser.",
-        iconName: "chevron.left.slash.chevron.right",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://github.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "17",
-        title: "Open Stack Overflow",
-        description: "Launch Stack Overflow in your default browser.",
-        iconName: "questionmark.circle",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://stackoverflow.com") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "18",
-        title: "Open Wikipedia",
-        description: "Launch Wikipedia in your default browser.",
-        iconName: "book",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://en.wikipedia.org") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "19",
-        title: "Open Claude AI",
-        description: "Launch Claude AI in your default browser.",
-        iconName: "bubble.left.and.text.bubble.right",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://claude.ai") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "20",
-        title: "Open Perplexity",
-        description: "Launch Perplexity in your default browser.",
-        iconName: "questionmark.circle",
-        tag: "Web",
-        perform: {
-            if let url = URL(string: "https://www.perplexity.ai") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    ),
-    
-    CornerAction(
-        id: "21",
-        title: "Open Apple Music",
-        description: "Open the Apple Music application.",
-        iconName: "music.note",
-        tag: "App",
-        perform: {
-            let path = "/System/Applications/Music.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-        }
-    ),
-    
-    CornerAction(
-        id: "22",
-        title: "Open Spotify",
-        description: "Open the Spotify application.",
-        iconName: "music.note.list",
-        tag: "App",
-        perform: {
-            let path = "/Applications/Spotify.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-        }
-    ),
-    
-    CornerAction(
-        id: "23",
-        title: "Open Clock",
-        description: "Open the Clock application.",
-        iconName: "clock",
-        tag: "App",
-        perform: {
-            let path = "/System/Applications/Clock.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-        }
-    ),
-    
-    CornerAction(
-        id: "24",
-        title: "Open Calculator",
-        description: "Open the Calculator application.",
-        iconName: "plus.slash.minus",
-        tag: "App",
-        perform: {
-            let path = "/System/Applications/Calculator.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-        }
-    ),
-    
-    CornerAction(
-        id: "25",
-        title: "Open Reminders",
-        description: "Open the Reminders application.",
-        iconName: "list.bullet",
-        tag: "App",
-        perform: {
-            let path = "/System/Applications/Reminders.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-        }
-    ),
-    
-    CornerAction(
-        id: "26",
-        title: "Open Safari",
-        description: "Open the Safari web browser.",
-        iconName: "safari",
-        tag: "App",
+        title: "Launch an Application",
+        description: "Launch an application.",
+        iconName: "square.grid.3x3",
+        tag: "Template Action",
         perform: {
             let path = "/System/Applications/Safari.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
-    
+
     CornerAction(
-        id: "27",
-        title: "Open Finder",
-        description: "Open a new Finder window.",
-        iconName: "folder",
-        tag: "App",
+        id: "6",
+        title: "Open Launchpad",
+        description: "Open the Launchpad to see your apps.",
+        iconName: "square.grid.2x2",
+        tag: "System",
         perform: {
-            let path = "/System/Library/CoreServices/Finder.app"
+            let path = "/System/Applications/Launchpad.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
-    
+
     CornerAction(
-        id: "28",
-        title: "Open Terminal",
-        description: "Open the Terminal application.",
-        iconName: "terminal",
-        tag: "App",
+        id: "7",
+        title: "Show Mission Control",
+        description: "Display all open windows and spaces.",
+        iconName: "rectangle.stack.fill",
+        tag: "System",
         perform: {
-            let path = "/System/Applications/Utilities/Terminal.app"
+            let path = "/System/Applications/Mission Control.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
-    
+
     CornerAction(
-        id: "29",
-        title: "Open Xcode",
-        description: "Open the Xcode application.",
-        iconName: "hammer",
-        tag: "App",
+        id: "8",
+        title: "Open Screenshot Utility",
+        description: "Launch the macOS Screenshot utility.",
+        iconName: "camera.viewfinder",
+        tag: "Capture",
         perform: {
-            let path = "/Applications/Xcode.app"
+            let path = "/System/Applications/Utilities/Screenshot.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
-    
+
     CornerAction(
-        id: "30",
-        title: "Open Visual Studio Code",
-        description: "Open the Visual Studio Code application.",
-        iconName: "curlybraces",
-        tag: "App",
+        id: "9",
+        title: "Capture Entire Screen",
+        description: "Captures the entire screen.",
+        iconName: "rectangle.on.rectangle",
+        tag: "Capture",
         perform: {
-            let path = "/Applications/Visual Studio Code.app"
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCode: CGKeyCode = 20
+
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskShift]
+
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskShift]
+
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "10",
+        title: "Capture Selected Area",
+        description: "Captures a custom area of the screen.",
+        iconName: "selection.pin.in.out",
+        tag: "Capture",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCode: CGKeyCode = 21
+
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskShift]
+
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskShift]
+
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "11",
+        title: "Start Screen Recording",
+        description: "Open QuickTime screen recording window.",
+        iconName: "video.fill",
+        tag: "Capture",
+        perform: {
+            let quickTimePath = "/System/Applications/QuickTime Player.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: quickTimePath))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let src = CGEventSource(stateID: .hidSystemState)
+                let keyCodeN: CGKeyCode = 45
+                let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                keyDown?.flags = [.maskCommand, .maskControl]
+                let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                keyUp?.flags = [.maskCommand, .maskControl]
+                keyDown?.post(tap: .cghidEventTap)
+                keyUp?.post(tap: .cghidEventTap)
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "12",
+        title: "Start Movie Recording",
+        description: "Open QuickTime movie recording window.",
+        iconName: "film.fill",
+        tag: "Capture",
+        perform: {
+            let quickTimePath = "/System/Applications/QuickTime Player.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: quickTimePath))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let src = CGEventSource(stateID: .hidSystemState)
+                let keyCodeN: CGKeyCode = 45
+                let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                keyDown?.flags = [.maskCommand, .maskAlternate]
+                let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                keyUp?.flags = [.maskCommand, .maskAlternate]
+                keyDown?.post(tap: .cghidEventTap)
+                keyUp?.post(tap: .cghidEventTap)
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "13",
+        title: "Open a Folder",
+        description: "Open a folder in Finder.",
+        iconName: "folder.fill",
+        tag: "System",
+        perform: {
+            let path = "/Applications"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
-    
+
     CornerAction(
-        id: "31",
-        title: "Open Obsidian",
-        description: "Open the Obsidian application.",
-        iconName: "circle.lefthalf.fill",
-        tag: "App",
+        id: "14",
+        title: "Volume Up",
+        description: "Increase system volume by one step.",
+        iconName: "speaker.wave.2.fill",
+        tag: "Media",
         perform: {
-            let path = "/Applications/Obsidian.app"
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = ["-e", "set volume output volume ((output volume of (get volume settings)) + 10) --100% max"]
+            try? task.run()
+        }
+    ),
+
+    CornerAction(
+        id: "15",
+        title: "Volume Down",
+        description: "Decrease system volume by one step.",
+        iconName: "speaker.wave.1.fill",
+        tag: "Media",
+        perform: {
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = ["-e", "set volume output volume ((output volume of (get volume settings)) - 10) --0% min"]
+            try? task.run()
+        }
+    ),
+
+    CornerAction(
+        id: "16",
+        title: "Unmute Volume",
+        description: "Unmute system volume.",
+        iconName: "speaker.wave.2.fill",
+        tag: "Media",
+        perform: {
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = ["-e", "set volume without output muted"]
+            try? task.run()
+        }
+    ),
+
+    CornerAction(
+        id: "17",
+        title: "Mute Volume",
+        description: "Mute system volume.",
+        iconName: "speaker.slash.fill",
+        tag: "Media",
+        perform: {
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = ["-e", "set volume with output muted"]
+            try? task.run()
+        }
+    ),
+
+    CornerAction(
+        id: "18",
+        title: "Emoji & Symbol Viewer",
+        description: "Open the Emoji and Symbol viewer.",
+        iconName: "smiley.fill",
+        tag: "System",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCode: CGKeyCode = 49 // Space key
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
+            keyDown?.flags = [.maskControl, .maskCommand]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: false)
+            keyUp?.flags = [.maskControl, .maskCommand]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "19",
+        title: "Open Camera",
+        description: "Launch the Camera (Photo Booth) app.",
+        iconName: "camera.fill",
+        tag: "System",
+        perform: {
+            let path = "/System/Applications/Photo Booth.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
         }
     ),
-    
+
     CornerAction(
-        id: "32",
-        title: "Open Calendar",
-        description: "Open the Calendar application.",
-        iconName: "calendar",
-        tag: "App",
+        id: "20",
+        title: "Maximize Window",
+        description: "Expand active window to fill desktop.",
+        iconName: "arrow.up.left.and.arrow.down.right.square",
+        tag: "Window Management",
         perform: {
-            let path = "/System/Applications/Calendar.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeF: CGKeyCode = 3
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeF, keyDown: true)
+            keyDown?.flags = [.maskControl, .maskSecondaryFn]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeF, keyDown: false)
+            keyUp?.flags = [.maskControl, .maskSecondaryFn]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
         }
     ),
-    
+
     CornerAction(
-        id: "33",
-        title: "Open Messages",
-        description: "Open the Messages application.",
-        iconName: "message",
-        tag: "App",
+        id: "21",
+        title: "Return to Previous Size",
+        description: "Restore window to its previous size before tiling.",
+        iconName: "arrow.uturn.left.circle",
+        tag: "Window Management",
         perform: {
-            let path = "/System/Applications/Messages.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-        }
-    ),
-    
-    CornerAction(
-        id: "34",
-        title: "Open Mail",
-        description: "Open the Mail application.",
-        iconName: "envelope",
-        tag: "App",
-        perform: {
-            let path = "/System/Applications/Mail.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeR: CGKeyCode = 15
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeR, keyDown: true)
+            keyDown?.flags = [.maskControl, .maskSecondaryFn]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeR, keyDown: false)
+            keyUp?.flags = [.maskControl, .maskSecondaryFn]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
         }
     ),
 ]

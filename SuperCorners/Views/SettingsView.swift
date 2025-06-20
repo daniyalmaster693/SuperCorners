@@ -46,35 +46,7 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: 40) {
                 LabeledContent("Activation") {
                     VStack(alignment: .leading, spacing: 4) {
-                        Picker("", selection: $selectedModifier1) {
-                            ForEach(modifier1Options, id: \.self) { modifier in
-                                Text(modifier)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .frame(width: 140, alignment: .leading)
-
-                        Picker("", selection: $selectedModifier2) {
-                            ForEach(modifier2Options, id: \.self) { modifier in
-                                Text(modifier)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .frame(width: 140, alignment: .leading)
-                        
-                        Picker("", selection: $selectedLetter) {
-                            ForEach(letters, id: \.self) { letter in
-                                Text(letter)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .frame(width: 140, alignment: .leading)
-                        
-                        Text("Set the modifiers and the key used for activation")
-                            .font(.callout)
-                            .foregroundColor(.secondary)
-                            .padding(.leading, 8)
-                            .padding(.top, 2)
+                        HStack(spacing: 4) {}
                     }
                 }
                 

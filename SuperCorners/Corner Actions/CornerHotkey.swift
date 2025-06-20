@@ -8,7 +8,7 @@
 import HotKey
 import SwiftUI
 
-let cornerHotKey = HotKey(key: .c, modifiers: [.control, .option])
+let cornerHotKey = HotKey(key: .c, modifiers: [.command, .option])
 var localMonitor: Any?
 var globalMonitor: Any?
 
