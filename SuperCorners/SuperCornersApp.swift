@@ -76,7 +76,7 @@ struct SuperCornersApp: App {
                 
                 Menu("Corners") {
                     Button {
-                        // Action
+                        triggerCornerAction(for: .topLeft)
                     } label: {
                         HStack {
                             Image(systemName: "inset.filled.topleft.rectangle")
@@ -85,7 +85,7 @@ struct SuperCornersApp: App {
                     }
 
                     Button {
-                        // Action
+                        triggerCornerAction(for: .topRight)
                     } label: {
                         HStack {
                             Image(systemName: "inset.filled.topright.rectangle")
@@ -94,7 +94,7 @@ struct SuperCornersApp: App {
                     }
 
                     Button {
-                        // Action
+                        triggerCornerAction(for: .bottomLeft)
                     } label: {
                         HStack {
                             Image(systemName: "inset.filled.bottomleft.rectangle")
@@ -103,7 +103,7 @@ struct SuperCornersApp: App {
                     }
 
                     Button {
-                        // Action
+                        triggerCornerAction(for: .bottomRight)
                     } label: {
                         HStack {
                             Image(systemName: "inset.filled.bottomright.rectangle")
