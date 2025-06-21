@@ -169,6 +169,7 @@ struct SuperCornersApp: App {
 
         Settings {
             SettingsView()
+                .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
         }
     }
 }

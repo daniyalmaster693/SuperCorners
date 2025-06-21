@@ -1,0 +1,155 @@
+//
+//  ActivationSettings.swift
+//  SuperCorners
+//
+//  Created by Daniyal Master on 2025-06-21.
+//
+
+import KeyboardShortcuts
+import SwiftUI
+
+struct ActivationSettingsView: View {
+    @AppStorage("showMenuBarIcon") private var showMenuBarIcon = true
+    @AppStorage("showInDock") private var showInDock = false
+
+    // Shortcut placeholders
+    @State private var cornerShortcut = "None"
+    @State private var zoneShortcut = "None"
+
+    // Enabled corners toggles
+    @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
+    @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
+    @AppStorage("enableBottomLeftCorner") private var enableBottomLeftCorner = true
+    @AppStorage("enableBottomRightCorner") private var enableBottomRightCorner = true
+
+    // Enabled zones toggles
+    @AppStorage("enableTopZone") private var enableTopZone = true
+    @AppStorage("enableLeftZone") private var enableLeftZone = true
+    @AppStorage("enableRightZone") private var enableRightZone = true
+    @AppStorage("enableBottomZone") private var enableBottomZone = true
+
+    // Ignored applications list
+    @State private var ignoredApps: [String] = []
+
+    var body: some View {
+        VStack(spacing: 8) {
+            Text("Activation")
+                .font(.title2)
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .center)
+
+            Form {
+                Section(header: Text("Shortcuts")) {
+                    HStack {
+                        Label("Corner Activation Shortcut", systemImage: "square.grid.2x2")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        KeyboardShortcuts.Recorder(for: .cornerActivation)
+                    }
+
+                    HStack {
+                        Label("Zone Activation Shortcut", systemImage: "rectangle.leftthird.inset.filled")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        KeyboardShortcuts.Recorder(for: .zoneActivation)
+                    }
+                }
+
+                Section(header: Text("Enabled Corners")) {
+                    Toggle(isOn: $enableTopLeftCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.topleft.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Top Left Corner")
+                        }
+                    }
+                    Toggle(isOn: $enableTopRightCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.topright.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Top Right Corner")
+                        }
+                    }
+                    Toggle(isOn: $enableBottomLeftCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.bottomleft.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Bottom Left Corner")
+                        }
+                    }
+                    Toggle(isOn: $enableBottomRightCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.bottomright.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Bottom Right Corner")
+                        }
+                    }
+                }
+
+                Section(header: Text("Enabled Zones")) {
+                    Toggle(isOn: $enableTopZone) {
+                        HStack {
+                            Image(systemName: "rectangle.topthird.inset.filled")
+                                .foregroundColor(.secondary)
+                            Text("Top Zone")
+                        }
+                    }
+                    Toggle(isOn: $enableLeftZone) {
+                        HStack {
+                            Image(systemName: "rectangle.leadingthird.inset.filled")
+                                .foregroundColor(.secondary)
+                            Text("Left Zone")
+                        }
+                    }
+                    Toggle(isOn: $enableRightZone) {
+                        HStack {
+                            Image(systemName: "rectangle.trailingthird.inset.filled")
+                                .foregroundColor(.secondary)
+                            Text("Right Zone")
+                        }
+                    }
+                    Toggle(isOn: $enableBottomZone) {
+                        HStack {
+                            Image(systemName: "rectangle.bottomthird.inset.filled")
+                                .foregroundColor(.secondary)
+                            Text("Bottom Zone")
+                        }
+                    }
+                }
+
+                Section(header: Text("Ignored Applications")) {
+                    VStack(alignment: .leading) {
+                        ForEach(ignoredApps.indices, id: \.self) { index in
+                            HStack {
+                                TextField("Application Bundle ID", text: $ignoredApps[index])
+                                    .textFieldStyle(.roundedBorder)
+
+                                Button(action: {
+                                    ignoredApps.remove(at: index)
+                                }) {
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(.red)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                            .padding(.vertical, 2)
+                        }
+
+                        Button(action: {
+                            ignoredApps.append("")
+                        }) {
+                            HStack {
+                                Image(systemName: "plus.circle.fill")
+                                Text("Add Application")
+                            }
+                        }
+                        .buttonStyle(.bordered)
+                        .padding(.top, 4)
+                    }
+                }
+            }
+            .formStyle(.grouped)
+            .frame(maxWidth: 700)
+        }
+    }
+}
