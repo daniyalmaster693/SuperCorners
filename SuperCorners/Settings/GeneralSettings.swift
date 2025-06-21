@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GeneralSettingsView: View {
     @AppStorage("showMenuBarIcon") private var showMenuBarIcon = true
-    @AppStorage("showInDock") private var showInDock = false
+    @AppStorage("showInDock") private var showInDock = true
 
     var body: some View {
         VStack(spacing: 4) {
