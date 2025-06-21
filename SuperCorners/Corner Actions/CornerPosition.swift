@@ -17,7 +17,7 @@ struct CornerPosition {
 
     var coordinate: CGPoint {
         let frame = screen.frame
-        
+
         switch corner {
         case .topLeft:
             return CGPoint(x: frame.minX, y: frame.maxY)

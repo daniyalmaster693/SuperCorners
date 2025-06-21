@@ -1,5 +1,5 @@
 //
-//  Corners.swift
+//  CornerMousePosition.swift
 //  SuperCorners
 //
 //  Created by Daniyal Master on 2025-05-24.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-private var lastCorner: CornerPosition.Corner? = nil
+private var lastCorner: CornerPosition.Corner?
 
-func getMousePosition() {
+func getCornerMousePosition() {
     let mousePosition: NSPoint = NSEvent.mouseLocation
 
     for screen in NSScreen.screens {

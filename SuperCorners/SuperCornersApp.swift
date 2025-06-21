@@ -76,6 +76,11 @@ struct SuperCornersApp: App {
                 let bottomLeftTitle = cornerActionBindings[.bottomLeft]?.title
                 let bottomRightTitle = cornerActionBindings[.bottomRight]?.title
                 
+                let topTitle = zoneActionBindings[.top]?.title
+                let rightTitle = zoneActionBindings[.right]?.title
+                let leftTitle = zoneActionBindings[.left]?.title
+                let bottomTitle = zoneActionBindings[.bottom]?.title
+                
                 Menu("Corners") {
                     Button {
                         triggerCornerAction(for: .topLeft)
@@ -116,38 +121,38 @@ struct SuperCornersApp: App {
 
                 Menu("Zones") {
                     Button {
-                        // Action
+                        triggerZoneAction(for: .top)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.topthird.inset.filled")
-                            Text("Top Zone")
+                            Text(topTitle ?? "Add Action")
                         }
                     }
 
                     Button {
-                        // Action
+                        triggerZoneAction(for: .left)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.leadingthird.inset.filled")
-                            Text("Left Zone")
+                            Text(leftTitle ?? "Add Action")
                         }
                     }
 
                     Button {
-                        // Action
+                        triggerZoneAction(for: .right)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.trailingthird.inset.filled")
-                            Text("Right Zone")
+                            Text(rightTitle ?? "Add Action")
                         }
                     }
 
                     Button {
-                        // Action
+                        triggerZoneAction(for: .bottom)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.bottomthird.inset.filled")
-                            Text("Bottom Zone")
+                            Text(bottomTitle ?? "Add Action")
                         }
                     }
                 }

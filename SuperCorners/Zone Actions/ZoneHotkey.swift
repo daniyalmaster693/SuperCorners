@@ -1,28 +1,28 @@
 //
-//  CornerHotkey.swift
+//  ZoneHotkey.swift
 //  SuperCorners
 //
-//  Created by Daniyal Master on 2025-05-24.
+//  Created by Daniyal Master on 2025-06-21.
 //
 
 import KeyboardShortcuts
 import SwiftUI
 
-func activateCornerHotkey() {
-    KeyboardShortcuts.setShortcut(.init(.c, modifiers: [.command, .option]), for: .cornerActivation)
+func activateZoneHotkey() {
+    KeyboardShortcuts.setShortcut(.init(.z, modifiers: [.command, .option]), for: .zoneActivation)
 
-    KeyboardShortcuts.onKeyDown(for: .cornerActivation) {
+    KeyboardShortcuts.onKeyDown(for: .zoneActivation) {
         localMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
-            getCornerMousePosition()
+            getZoneMousePosition()
             return event
         }
 
         globalMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
-            getCornerMousePosition()
+            getZoneMousePosition()
         }
     }
 
-    KeyboardShortcuts.onKeyUp(for: .cornerActivation) {
+    KeyboardShortcuts.onKeyUp(for: .zoneActivation) {
         if let local = localMonitor {
             NSEvent.removeMonitor(local)
             localMonitor = nil
