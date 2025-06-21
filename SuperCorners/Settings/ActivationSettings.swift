@@ -9,13 +9,6 @@ import KeyboardShortcuts
 import SwiftUI
 
 struct ActivationSettingsView: View {
-    @AppStorage("showMenuBarIcon") private var showMenuBarIcon = true
-    @AppStorage("showInDock") private var showInDock = false
-
-    // Shortcut placeholders
-    @State private var cornerShortcut = "None"
-    @State private var zoneShortcut = "None"
-
     // Enabled corners toggles
     @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
     @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
@@ -45,6 +38,7 @@ struct ActivationSettingsView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         KeyboardShortcuts.Recorder(for: .cornerActivation)
+                            .frame(width: 150)
                     }
 
                     HStack {
@@ -52,6 +46,7 @@ struct ActivationSettingsView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         KeyboardShortcuts.Recorder(for: .zoneActivation)
+                            .frame(width: 150)
                     }
                 }
 

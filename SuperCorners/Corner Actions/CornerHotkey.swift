@@ -5,15 +5,16 @@
 //  Created by Daniyal Master on 2025-05-24.
 //
 
-import HotKey
+import KeyboardShortcuts
 import SwiftUI
 
-let cornerHotKey = HotKey(key: .c, modifiers: [.command, .option])
 var localMonitor: Any?
 var globalMonitor: Any?
 
 func activateCornerHotkey() {
-    cornerHotKey.keyDownHandler = {
+    KeyboardShortcuts.setShortcut(.init(.c, modifiers: [.command, .option]), for: .cornerActivation)
+
+    KeyboardShortcuts.onKeyDown(for: .cornerActivation) {
         localMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
             getMousePosition()
             return event
@@ -24,7 +25,7 @@ func activateCornerHotkey() {
         }
     }
 
-    cornerHotKey.keyUpHandler = {
+    KeyboardShortcuts.onKeyUp(for: .cornerActivation) {
         if let local = localMonitor {
             NSEvent.removeMonitor(local)
             localMonitor = nil

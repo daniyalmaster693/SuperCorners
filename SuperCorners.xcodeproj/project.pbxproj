@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D2B6A8B2DE213CB00AC6A93 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 0D2B6A8A2DE213CB00AC6A93 /* HotKey */; };
 		0DA0E51A2DDF9812006576E1 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 0DA0E5192DDF9812006576E1 /* LaunchAtLogin */; };
+		0DDDAF652E0740550089C5C2 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 0DDDAF642E0740550089C5C2 /* KeyboardShortcuts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D2B6A8B2DE213CB00AC6A93 /* HotKey in Frameworks */,
 				0DA0E51A2DDF9812006576E1 /* LaunchAtLogin in Frameworks */,
+				0DDDAF652E0740550089C5C2 /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +120,7 @@
 			name = SuperCorners;
 			packageProductDependencies = (
 				0DA0E5192DDF9812006576E1 /* LaunchAtLogin */,
-				0D2B6A8A2DE213CB00AC6A93 /* HotKey */,
+				0DDDAF642E0740550089C5C2 /* KeyboardShortcuts */,
 			);
 			productName = SuperCorners;
 			productReference = 0DA0E4DB2DDF8C82006576E1 /* SuperCorners.app */;
@@ -206,7 +206,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				0DA0E5182DDF9812006576E1 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
-				0D2B6A892DE213CB00AC6A93 /* XCRemoteSwiftPackageReference "HotKey" */,
+				0DDDAF632E0740550089C5C2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0DA0E4DC2DDF8C82006576E1 /* Products */;
@@ -564,14 +564,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0D2B6A892DE213CB00AC6A93 /* XCRemoteSwiftPackageReference "HotKey" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/soffes/HotKey";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		0DA0E5182DDF9812006576E1 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin-Modern";
@@ -580,18 +572,26 @@
 				kind = branch;
 			};
 		};
+		0DDDAF632E0740550089C5C2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0D2B6A8A2DE213CB00AC6A93 /* HotKey */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0D2B6A892DE213CB00AC6A93 /* XCRemoteSwiftPackageReference "HotKey" */;
-			productName = HotKey;
-		};
 		0DA0E5192DDF9812006576E1 /* LaunchAtLogin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0DA0E5182DDF9812006576E1 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;
 			productName = LaunchAtLogin;
+		};
+		0DDDAF642E0740550089C5C2 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0DDDAF632E0740550089C5C2 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
