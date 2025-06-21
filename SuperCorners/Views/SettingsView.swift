@@ -40,7 +40,7 @@ struct SettingsView: View {
         default: return []
         }
     }
-    
+
     var body: some View {
         Form {
             VStack(alignment: .leading, spacing: 40) {
@@ -49,35 +49,35 @@ struct SettingsView: View {
                         HStack(spacing: 4) {}
                     }
                 }
-                
+
                 LabeledContent("Screen Triggers") {
                     VStack(alignment: .leading, spacing: 8) {
                         Toggle("Enable Activation Using Corners", isOn: $enableCorners)
                         Toggle("Enable Activation Using Zones", isOn: $enableZones)
-                        
+
                         Text("Enable where you can activate actions")
                             .font(.callout)
                             .foregroundColor(.secondary)
                     }
                 }
-                
+
                 LabeledContent("Behaviour") {
                     VStack(alignment: .leading, spacing: 8) {
                         Toggle("Play sound on trigger", isOn: $enableSound)
                         Toggle("Disable in full screen", isOn: $disableInFullScreen)
                         Toggle("Disable when typing", isOn: $disableWhenTyping)
-                        
+
                         Text("Configure activation behaviours")
                             .font(.callout)
                             .foregroundColor(.secondary)
                     }
                 }
-                
+
                 LabeledContent("Application") {
                     VStack(alignment: .leading, spacing: 8) {
                         Toggle("Show Icon In Dock", isOn: $showInDock)
                         LaunchAtLogin.Toggle()
-                        
+
                         Button("Check for Updates") {
                             checkForUpdates()
                         }

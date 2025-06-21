@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State var showingPanel = false
     @State private var selectedItem: String? = "corners"
+    @State private var isHovered = false
+    @State private var showingAboutModal = false
 
     var body: some View {
         NavigationSplitView {
@@ -40,34 +42,47 @@ struct ContentView: View {
 
                 Spacer()
 
-                HStack(spacing: 8) {
-                    if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
-                       let nsImage = NSImage(contentsOfFile: iconPath)
-                    {
-                        Image(nsImage: nsImage)
-                            .resizable()
-                            .frame(width: 32, height: 32)
-                            .cornerRadius(6)
-                    } else {
-                        Image(systemName: "app.fill")
-                            .resizable()
-                            .frame(width: 32, height: 32)
-                            .cornerRadius(6)
-                    }
-
-                    VStack(alignment: .leading) {
-                        Text("SuperCorners")
-                            .font(.footnote)
-                            .bold()
-
-                        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                            Text("Version (\(version))")
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
+                Button {
+                    showingAboutModal = true
+                } label: {
+                    HStack(spacing: 8) {
+                        if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
+                           let nsImage = NSImage(contentsOfFile: iconPath)
+                        {
+                            Image(nsImage: nsImage)
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                                .cornerRadius(6)
+                        } else {
+                            Image(systemName: "app.fill")
+                                .resizable()
+                                .frame(width: 32, height: 32)
+                                .cornerRadius(6)
                         }
-                    }
+
+                        VStack(alignment: .leading) {
+                            Text("SuperCorners")
+                                .font(.footnote)
+                                .bold()
+
+                            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                                Text("Version (\(version))")
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }.frame(maxWidth: .infinity, alignment: .center)
                 }
+                .buttonStyle(.plain)
                 .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)
+                        .padding(8)
+                )
+                .onHover { hovering in
+                    isHovered = hovering
+                }
             }
         } detail: {
             switch selectedItem {
@@ -83,6 +98,9 @@ struct ContentView: View {
             default:
                 Text("No item selected")
             }
+        }
+        .sheet(isPresented: $showingAboutModal) {
+            AppLinksView()
         }
     }
 }
