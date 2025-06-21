@@ -39,6 +39,7 @@ struct ContentView: View {
                     .tag("actions")
                 }
                 .listStyle(.sidebar)
+                .padding(.top, 7)
 
                 Spacer()
 
@@ -84,20 +85,23 @@ struct ContentView: View {
                     isHovered = hovering
                 }
             }
+            .frame(minWidth: 150)
         } detail: {
-            switch selectedItem {
-            case "actions":
-                ActionBrowserView()
-
-            case "corners":
-                CornerView()
-
-            case "zones":
-                ZoneView()
-
-            default:
-                Text("No item selected")
+            Group {
+                switch selectedItem {
+                case "actions":
+                    ActionBrowserView()
+                case "corners":
+                    CornerView()
+                case "zones":
+                    ZoneView()
+                default:
+                    Text("No item selected")
+                }
             }
+            .navigationTitle("")
+            .toolbar(.hidden)
+            .toolbar(removing: .sidebarToggle)
         }
         .sheet(isPresented: $showingAboutModal) {
             AppLinksView()

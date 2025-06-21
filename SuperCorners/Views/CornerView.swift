@@ -91,6 +91,5 @@ struct CornerView: View {
             }
         }
         .id(refreshID)
-        .navigationTitle("Corners")
     }
 }

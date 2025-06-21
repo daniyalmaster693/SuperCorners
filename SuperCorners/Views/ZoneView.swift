@@ -74,9 +74,9 @@ struct ZoneView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
-//            .sheet(isPresented: $showModal) {
-//                ActionLibraryView()
-//            }
-        }.navigationTitle("Zones")
+            //            .sheet(isPresented: $showModal) {
+            //                ActionLibraryView()
+            //            }
+        }
     }
 }

@@ -211,9 +211,8 @@ struct ActionBrowserView: View {
                     Divider()
                         .padding(.horizontal)
                 }
-                .navigationTitle("Actions")
-                .searchable(text: $searchText)
             }
+            .padding(.leading, 6)
         }
     }
 }
