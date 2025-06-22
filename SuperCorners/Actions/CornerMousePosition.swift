@@ -19,7 +19,7 @@ func getCornerMousePosition() {
             let position = CornerPosition(screen: screen, corner: corner)
             let cornerPoint = position.coordinate
 
-            let tolerance: CGFloat = 10.0
+            let tolerance: CGFloat = 50.0
             let hitZone = CGRect(x: cornerPoint.x - tolerance/2, y: cornerPoint.y - tolerance/2, width: tolerance, height: tolerance)
 
             if hitZone.contains(mousePosition) {

@@ -28,13 +28,13 @@ struct CornerPosition {
         case .bottomRight:
             return CGPoint(x: frame.maxX, y: frame.minY)
         case .top:
-            return CGPoint(x: frame.maxX / 2, y: frame.maxY)
+            return CGPoint(x: frame.midX, y: frame.maxY)
         case .left:
-            return CGPoint(x: frame.minX, y: frame.maxY / 2)
+            return CGPoint(x: frame.minX, y: frame.midY)
         case .right:
-            return CGPoint(x: frame.maxX, y: frame.maxY / 2)
+            return CGPoint(x: frame.maxX, y: frame.midY)
         case .bottom:
-            return CGPoint(x: frame.maxX / 2, y: frame.minY)
+            return CGPoint(x: frame.midX, y: frame.minY)
         }
     }
 }
