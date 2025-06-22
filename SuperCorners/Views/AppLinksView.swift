@@ -57,7 +57,7 @@ struct AppLinksView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         Button("Check for Updates") {
-                            // Add Action
+                            checkForUpdates()
                         }
                         .buttonStyle(.bordered)
                     }
