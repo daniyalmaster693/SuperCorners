@@ -32,20 +32,12 @@ struct ActivationSettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
 
             Form {
-                Section(header: Text("Shortcuts")) {
+                Section {
                     HStack {
                         Label("Corner Activation Shortcut", systemImage: "square.grid.2x2")
                             .foregroundColor(.primary)
                         Spacer()
                         KeyboardShortcuts.Recorder(for: .cornerActivation)
-                            .frame(width: 150)
-                    }
-
-                    HStack {
-                        Label("Zone Activation Shortcut", systemImage: "rectangle.leftthird.inset.filled")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        KeyboardShortcuts.Recorder(for: .zoneActivation)
                             .frame(width: 150)
                     }
                 }

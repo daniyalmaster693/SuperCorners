@@ -64,6 +64,14 @@ struct ZoneView: View {
                             .padding(8)
                         }
                         .overlay(alignment: .bottom) {
+                            Button(bottomTitle ?? "Add Action") {
+                                currentlySelectedCorner = .bottom
+                                showModal = true
+                            }
+                            .buttonStyle(.bordered)
+                            .padding(8)
+                        }
+                        .overlay(alignment: .leading) {
                             Button(leftTitle ?? "Add Action") {
                                 currentlySelectedCorner = .left
                                 showModal = true
@@ -71,17 +79,9 @@ struct ZoneView: View {
                             .buttonStyle(.bordered)
                             .padding(8)
                         }
-                        .overlay(alignment: .leading) {
+                        .overlay(alignment: .trailing) {
                             Button(rightTitle ?? "Add Action") {
                                 currentlySelectedCorner = .right
-                                showModal = true
-                            }
-                            .buttonStyle(.bordered)
-                            .padding(8)
-                        }
-                        .overlay(alignment: .trailing) {
-                            Button(bottomTitle ?? "Add Action") {
-                                currentlySelectedCorner = .bottom
                                 showModal = true
                             }
                             .buttonStyle(.bordered)

@@ -75,11 +75,11 @@ struct SuperCornersApp: App {
                 let bottomLeftTitle = cornerActionBindings[.bottomLeft]?.title
                 let bottomRightTitle = cornerActionBindings[.bottomRight]?.title
                 
-                let topTitle = zoneActionBindings[.top]?.title
-                let rightTitle = zoneActionBindings[.right]?.title
-                let leftTitle = zoneActionBindings[.left]?.title
-                let bottomTitle = zoneActionBindings[.bottom]?.title
-                
+                let topTitle = cornerActionBindings[.top]?.title
+                let leftTitle = cornerActionBindings[.left]?.title
+                let rightTitle = cornerActionBindings[.right]?.title
+                let bottomTitle = cornerActionBindings[.bottom]?.title
+
                 Menu("Corners") {
                     Button {
                         triggerCornerAction(for: .topLeft)
@@ -120,7 +120,7 @@ struct SuperCornersApp: App {
 
                 Menu("Zones") {
                     Button {
-                        triggerZoneAction(for: .top)
+                        triggerCornerAction(for: .top)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.topthird.inset.filled")
@@ -129,7 +129,7 @@ struct SuperCornersApp: App {
                     }
 
                     Button {
-                        triggerZoneAction(for: .left)
+                        triggerCornerAction(for: .left)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.leadingthird.inset.filled")
@@ -138,7 +138,7 @@ struct SuperCornersApp: App {
                     }
 
                     Button {
-                        triggerZoneAction(for: .right)
+                        triggerCornerAction(for: .right)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.trailingthird.inset.filled")
@@ -147,7 +147,7 @@ struct SuperCornersApp: App {
                     }
 
                     Button {
-                        triggerZoneAction(for: .bottom)
+                        triggerCornerAction(for: .bottom)
                     } label: {
                         HStack {
                             Image(systemName: "rectangle.bottomthird.inset.filled")
