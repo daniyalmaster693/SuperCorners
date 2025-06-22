@@ -13,7 +13,7 @@ func getCornerMousePosition() {
     let mousePosition: NSPoint = NSEvent.mouseLocation
 
     for screen in NSScreen.screens {
-        let corners: [CornerPosition.Corner] = [.topLeft, .topRight, .bottomLeft, .bottomRight]
+        let corners: [CornerPosition.Corner] = [.topLeft, .topRight, .bottomLeft, .bottomRight, .top, .left, .right, .bottom]
 
         for corner in corners {
             let position = CornerPosition(screen: screen, corner: corner)

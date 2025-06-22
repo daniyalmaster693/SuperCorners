@@ -9,7 +9,7 @@ import AppKit
 
 struct CornerPosition {
     enum Corner {
-        case topLeft, topRight, bottomLeft, bottomRight
+        case topLeft, topRight, bottomLeft, bottomRight, top, left, right, bottom
     }
 
     let screen: NSScreen
@@ -27,6 +27,14 @@ struct CornerPosition {
             return CGPoint(x: frame.minX, y: frame.minY)
         case .bottomRight:
             return CGPoint(x: frame.maxX, y: frame.minY)
+        case .top:
+            return CGPoint(x: frame.maxX / 2, y: frame.maxY)
+        case .left:
+            return CGPoint(x: frame.minX, y: frame.maxY / 2)
+        case .right:
+            return CGPoint(x: frame.maxX, y: frame.maxY / 2)
+        case .bottom:
+            return CGPoint(x: frame.maxX / 2, y: frame.minY)
         }
     }
 }

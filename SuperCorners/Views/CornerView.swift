@@ -23,6 +23,10 @@ struct CornerView: View {
             case .topRight: return .topRight
             case .bottomLeft: return .bottomLeft
             case .bottomRight: return .bottomRight
+            case .top: return .top
+            case .left: return .left
+            case .right: return .right
+            case .bottom: return .bottom
             }
         }
         

@@ -65,7 +65,6 @@ struct SuperCornersApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-//                .containerBackground(.regularMaterial, for: .window)
                 .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
         }
         

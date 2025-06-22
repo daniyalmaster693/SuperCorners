@@ -8,7 +8,7 @@
 import Foundation
 
 enum SelectedCornerPosition {
-    case topLeft, topRight, bottomLeft, bottomRight
+    case topLeft, topRight, bottomLeft, bottomRight, top, left, right, bottom
 }
 
 var currentlySelectedCorner: SelectedCornerPosition?

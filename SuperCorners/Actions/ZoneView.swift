@@ -12,10 +12,10 @@ struct ZoneView: View {
     @State private var refreshID = UUID()
     
     var body: some View {
-        let topTitle = zoneActionBindings[.top]?.title
-        let leftTitle = zoneActionBindings[.left]?.title
-        let rightTitle = zoneActionBindings[.right]?.title
-        let bottomTitle = zoneActionBindings[.bottom]?.title
+        let topTitle = cornerActionBindings[.top]?.title
+        let leftTitle = cornerActionBindings[.left]?.title
+        let rightTitle = cornerActionBindings[.right]?.title
+        let bottomTitle = cornerActionBindings[.bottom]?.title
         
         func mapSelectedToCorner(_ selected: SelectedCornerPosition) -> CornerPosition.Corner {
             switch selected {
@@ -23,6 +23,10 @@ struct ZoneView: View {
             case .topRight: return .topRight
             case .bottomLeft: return .bottomLeft
             case .bottomRight: return .bottomRight
+            case .top: return .top
+            case .left: return .left
+            case .right: return .right
+            case .bottom: return .bottom
             }
         }
         
@@ -53,6 +57,7 @@ struct ZoneView: View {
                         .cornerRadius(12)
                         .overlay(alignment: .top) {
                             Button(topTitle ?? "Add Action") {
+                                currentlySelectedCorner = .top
                                 showModal = true
                             }
                             .buttonStyle(.bordered)
@@ -60,6 +65,7 @@ struct ZoneView: View {
                         }
                         .overlay(alignment: .bottom) {
                             Button(leftTitle ?? "Add Action") {
+                                currentlySelectedCorner = .left
                                 showModal = true
                             }
                             .buttonStyle(.bordered)
@@ -67,6 +73,7 @@ struct ZoneView: View {
                         }
                         .overlay(alignment: .leading) {
                             Button(rightTitle ?? "Add Action") {
+                                currentlySelectedCorner = .right
                                 showModal = true
                             }
                             .buttonStyle(.bordered)
@@ -74,6 +81,7 @@ struct ZoneView: View {
                         }
                         .overlay(alignment: .trailing) {
                             Button(bottomTitle ?? "Add Action") {
+                                currentlySelectedCorner = .bottom
                                 showModal = true
                             }
                             .buttonStyle(.bordered)
