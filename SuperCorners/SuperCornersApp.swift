@@ -42,7 +42,7 @@ func showWalkthrough() {
  
 @main
 struct SuperCornersApp: App {
-    // Menubar Refresh Variable
+    // Menubar Variables
     
     @State private var refreshID = UUID()
     

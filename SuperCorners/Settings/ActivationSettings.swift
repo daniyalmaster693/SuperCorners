@@ -40,6 +40,16 @@ struct ActivationSettingsView: View {
                         KeyboardShortcuts.Recorder(for: .cornerActivation)
                             .frame(width: 150)
                     }
+
+                    HStack {
+                        Label("Ignored Applications", systemImage: "rectangle.slash")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Configure") {
+                            // Add Action
+                        }
+                        .buttonStyle(.bordered)
+                    }
                 }
 
                 Section(header: Text("Enabled Corners")) {
@@ -101,37 +111,6 @@ struct ActivationSettingsView: View {
                                 .foregroundColor(.secondary)
                             Text("Bottom Zone")
                         }
-                    }
-                }
-
-                Section(header: Text("Ignored Applications")) {
-                    VStack(alignment: .leading) {
-                        ForEach(ignoredApps.indices, id: \.self) { index in
-                            HStack {
-                                TextField("Application Bundle ID", text: $ignoredApps[index])
-                                    .textFieldStyle(.roundedBorder)
-
-                                Button(action: {
-                                    ignoredApps.remove(at: index)
-                                }) {
-                                    Image(systemName: "minus.circle.fill")
-                                        .foregroundColor(.red)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                            .padding(.vertical, 2)
-                        }
-
-                        Button(action: {
-                            ignoredApps.append("")
-                        }) {
-                            HStack {
-                                Image(systemName: "plus.circle.fill")
-                                Text("Add Application")
-                            }
-                        }
-                        .buttonStyle(.bordered)
-                        .padding(.top, 4)
                     }
                 }
             }
