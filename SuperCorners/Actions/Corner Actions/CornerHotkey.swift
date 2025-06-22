@@ -8,29 +8,32 @@
 import KeyboardShortcuts
 import SwiftUI
 
+var localCornerMonitor: Any?
+var globalCornerMonitor: Any?
+
 func activateCornerHotkey() {
     KeyboardShortcuts.setShortcut(.init(.c, modifiers: [.command, .option]), for: .cornerActivation)
 
     KeyboardShortcuts.onKeyDown(for: .cornerActivation) {
-        localMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
+        localCornerMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
             getCornerMousePosition()
             return event
         }
 
-        globalMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
+        globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
             getCornerMousePosition()
         }
     }
 
     KeyboardShortcuts.onKeyUp(for: .cornerActivation) {
-        if let local = localMonitor {
+        if let local = localCornerMonitor {
             NSEvent.removeMonitor(local)
-            localMonitor = nil
+            localCornerMonitor = nil
         }
 
-        if let global = globalMonitor {
+        if let global = globalCornerMonitor {
             NSEvent.removeMonitor(global)
-            globalMonitor = nil
+            globalCornerMonitor = nil
         }
     }
 }

@@ -8,29 +8,32 @@
 import KeyboardShortcuts
 import SwiftUI
 
+var localZoneMonitor: Any?
+var globalZoneMonitor: Any?
+
 func activateZoneHotkey() {
     KeyboardShortcuts.setShortcut(.init(.z, modifiers: [.command, .option]), for: .zoneActivation)
 
     KeyboardShortcuts.onKeyDown(for: .zoneActivation) {
-        localMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
+        localZoneMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
             getZoneMousePosition()
             return event
         }
 
-        globalMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
+        globalZoneMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
             getZoneMousePosition()
         }
     }
 
     KeyboardShortcuts.onKeyUp(for: .zoneActivation) {
-        if let local = localMonitor {
+        if let local = localZoneMonitor {
             NSEvent.removeMonitor(local)
-            localMonitor = nil
+            localZoneMonitor = nil
         }
 
-        if let global = globalMonitor {
+        if let global = globalZoneMonitor {
             NSEvent.removeMonitor(global)
-            globalMonitor = nil
+            globalZoneMonitor = nil
         }
     }
 }

@@ -9,89 +9,101 @@ import SwiftUI
 
 struct AppLinksView: View {
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
+    @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
+    @AppStorage("enableBottomLeftCorner") private var enableBottomLeftCorner = true
+    @AppStorage("enableBottomRightCorner") private var enableBottomRightCorner = true
 
     var body: some View {
-        VStack(spacing: 20) {
-            VStack(spacing: 8) {
-                if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
-                   let nsImage = NSImage(contentsOfFile: iconPath)
-                {
-                    Image(nsImage: nsImage)
-                        .resizable()
-                        .frame(width: 76, height: 76)
-                        .cornerRadius(12)
-                } else {
-                    Image(systemName: "app.fill")
-                        .resizable()
-                        .frame(width: 76, height: 76)
-                        .cornerRadius(12)
+        VStack(spacing: 8) {
+            if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
+               let nsImage = NSImage(contentsOfFile: iconPath)
+            {
+                Image(nsImage: nsImage)
+                    .resizable()
+                    .frame(width: 80, height: 80)
+                    .cornerRadius(12)
+            } else {
+                Image(systemName: "app.fill")
+                    .resizable()
+                    .frame(width: 80, height: 80)
+                    .cornerRadius(12)
+            }
+
+            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+                Text("SuperCorners ")
+                    .font(.title2)
+                    .bold()
+                    .foregroundColor(.primary)
+                    +
+                    Text(version)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.secondary)
+            }
+
+            Form {
+                Section {
+                    HStack {
+                        Text("Version")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Text("1.0")
+                            .foregroundColor(.secondary)
+                    }
+
+                    HStack {
+                        Text("Updates")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Check for Updates") {
+                            // Add Action
+                        }
+                        .buttonStyle(.bordered)
+                    }
                 }
 
-                if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                    Text("SuperCorners ")
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(.primary)
-                        +
-                        Text(version)
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
+                Section(header: Text("Links")) {
+                    ForEach(
+                        [
+                            ("GitHub Repository", "https://github.com"),
+                            ("License", "https://github.com"),
+                            ("Privacy Policy", "https://github.com"),
+                            ("Terms & Conditions", "https://github.com")
+                        ],
+                        id: \.0
+                    ) { item in
+                        Button(action: {
+                            if let url = URL(string: item.1) {
+                                NSWorkspace.shared.open(url)
+                            }
+                        }) {
+                            HStack {
+                                Text(item.0)
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
                 }
             }
+            .formStyle(.grouped)
+            .frame(maxWidth: 725)
+            .padding(.top, 7)
 
             Divider()
-
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Links")
-                    .font(.headline)
-                    .padding(.horizontal, 4)
-
-                VStack(spacing: 0) {
-                    self.linkRow("GitHub Repository", url: URL(string: "https://github.com")!)
-                    self.linkRow("Privacy Policy", url: URL(string: "https://example.com/privacy")!)
-                    self.linkRow("Terms and Conditions", url: URL(string: "https://example.com/terms")!)
-                    self.linkRow("License", url: URL(string: "https://example.com/license")!)
-                }
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                )
-            }
-            .padding(.horizontal)
-
-            Spacer()
 
             Button("Done") {
                 dismiss()
             }
             .keyboardShortcut(.cancelAction)
+            .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding()
-        .frame(width: 375, height: 500)
-    }
-}
-
-private extension AppLinksView {
-    func linkRow(_ title: String, url: URL) -> some View {
-        VStack(spacing: 0) {
-            Button(action: {
-                NSWorkspace.shared.open(url)
-            }) {
-                HStack {
-                    Text(title)
-                        .foregroundColor(.primary)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .foregroundColor(.secondary)
-                }
-                .contentShape(Rectangle()) // makes whole row clickable
-                .padding()
-            }
-            .buttonStyle(PlainButtonStyle())
-
-            Divider()
-                .padding(.leading)
-        }
+        .padding(.top, 7)
+        .frame(width: 400, height: 510)
     }
 }
