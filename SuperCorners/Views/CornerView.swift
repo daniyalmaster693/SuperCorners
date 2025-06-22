@@ -37,7 +37,7 @@ struct CornerView: View {
                     .bold()
                     .frame(maxWidth: 450, alignment: .leading)
                 
-                Text("Assign custom actions to your Mac’s screen corners. Click the button found at every corner to assign an action.")
+                Text("Assign custom actions to your Mac’s screen corners. Click the button found at every corner to assign an action through the action picker.")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: 450, alignment: .leading)

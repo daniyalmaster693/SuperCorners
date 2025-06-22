@@ -38,7 +38,7 @@ struct ZoneView: View {
                         .bold()
                         .frame(maxWidth: 450, alignment: .leading)
                     
-                    Text("Assign custom actions to your Mac’s screen edges. Click the button found at every edge to assign an action.")
+                    Text("Assign custom actions to your Mac’s screen edges. Click the button found at every edge to assign an action through the action picker.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .frame(maxWidth: 450, alignment: .leading)
