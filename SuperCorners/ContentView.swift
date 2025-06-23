@@ -23,14 +23,14 @@ struct ContentView: View {
                         Text("Corners")
                     }
                     .tag("corners")
-
+                    
                     HStack {
                         Image(systemName: "rectangle.leftthird.inset.filled")
                             .frame(width: 18, height: 18)
                         Text("Zones")
                     }
                     .tag("zones")
-
+                    
                     HStack {
                         Image(systemName: "bolt.circle")
                             .frame(width: 18, height: 18)
@@ -40,9 +40,9 @@ struct ContentView: View {
                 }
                 .listStyle(.sidebar)
                 .padding(.top, 7)
-
+                
                 Spacer()
-
+                
                 Button {
                     showingAboutModal = true
                 } label: {
@@ -60,27 +60,27 @@ struct ContentView: View {
                                 .frame(width: 32, height: 32)
                                 .cornerRadius(6)
                         }
-
+                        
                         VStack(alignment: .leading) {
                             Text("SuperCorners")
                                 .font(.footnote)
                                 .bold()
-
+                            
                             if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
                                 Text("Version (\(version))")
                                     .font(.footnote)
                                     .foregroundColor(.secondary)
                             }
                         }
-                    }.frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    .padding()
+                    .frame(maxWidth: 150, alignment: .center)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)
+                    )
                 }
                 .buttonStyle(.plain)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)
-                        .padding(8)
-                )
                 .onHover { hovering in
                     isHovered = hovering
                 }
