@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BehaviorSettingsView: View {
     @AppStorage("delayTimer") private var delayTimer: Double = 0.0
+    @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 2.0
     @AppStorage("playSoundEffect") private var playSoundEffect = false
     @AppStorage("disableInFullScreen") private var disableInFullScreen = false
     @AppStorage("sensitivity") private var sensitivity: Double = 5.0
@@ -36,6 +37,24 @@ struct BehaviorSettingsView: View {
                             .padding(.bottom, 10)
 
                         Slider(value: $delayTimer, in: 0 ... 2, step: 0.1)
+                    }
+                }
+
+                Section {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "dot.circle.and.cursorarrow")
+                                .foregroundColor(.secondary)
+                            Text("Trigger Sensitivity: \(String(format: "%.1f", triggerSensitivity))")
+                        }
+
+                        Text("Controls how close you must your mouse must be to a corner or zone to trigger it")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 20)
+                            .padding(.bottom, 10)
+
+                        Slider(value: $triggerSensitivity, in: 1 ... 2.0, step: 0.1)
                     }
                 }
 
