@@ -907,4 +907,32 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "43",
+        title: "Empty Trash",
+        description: "Opens Finder and Asks to Empty Trash",
+        iconName: "trash",
+        tag: "System",
+        perform: {
+            let finderPath = "/System/Library/CoreServices/Finder.app"
+            let url = URL(fileURLWithPath: finderPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Finder").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let deleteKeyCode: CGKeyCode = 51 // Delete key code
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: deleteKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskShift]
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: deleteKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskShift]
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
 ]
