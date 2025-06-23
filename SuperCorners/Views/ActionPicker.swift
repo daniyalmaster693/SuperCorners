@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ActionLibraryView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) var colorScheme
+
     @State private var searchText = ""
     @State private var selectedActionID: String?
 
@@ -75,7 +77,11 @@ struct ActionLibraryView: View {
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 14)
-                                    .fill(selectedActionID == action.id ? Color.white.opacity(0.1) : Color.clear)
+                                    .fill(
+                                        selectedActionID == action.id
+                                            ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.06))
+                                            : Color.clear
+                                    )
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 14)
                                             .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
