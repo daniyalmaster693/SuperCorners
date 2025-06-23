@@ -97,6 +97,35 @@ struct ActionBrowserView: View {
                     .padding(.horizontal)
                 
                 VStack {
+                    Text("App Actions")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    Text("Trigger in App Actions")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "App Actions" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 6)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Divider()
+                        .padding(.horizontal)
+                }
+                
+                VStack {
                     Text("Template Actions")
                         .font(.title2)
                         .bold()

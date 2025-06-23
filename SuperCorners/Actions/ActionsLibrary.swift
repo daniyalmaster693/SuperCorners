@@ -355,8 +355,8 @@ let cornerActions: [CornerAction] = [
     CornerAction(
         id: "21",
         title: "Maximize Window",
-        description: "Expand active window to fill desktop.",
-        iconName: "arrow.up.left.and.arrow.down.right.square",
+        description: "Expand the active window to fill the desktop.",
+        iconName: "rectangle.inset.fill",
         tag: "Window Management",
         perform: {
             let src = CGEventSource(stateID: .hidSystemState)
@@ -373,7 +373,7 @@ let cornerActions: [CornerAction] = [
     CornerAction(
         id: "22",
         title: "Return to Previous Size",
-        description: "Restore window to its previous size before tiling.",
+        description: "Restore the active window to it's previous size",
         iconName: "arrow.uturn.left.circle",
         tag: "Window Management",
         perform: {
@@ -385,6 +385,526 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskControl, .maskSecondaryFn]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "23",
+        title: "Center Window",
+        description: "Center the active window on the desktop.",
+        iconName: "rectangle.center.inset.fill",
+        tag: "Window Management",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeC: CGKeyCode = 8
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeC, keyDown: true)
+            keyDown?.flags = [.maskControl, .maskSecondaryFn]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeC, keyDown: false)
+            keyUp?.flags = [.maskControl, .maskSecondaryFn]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "24",
+        title: "Minimize Window",
+        description: "Minimize the active window.",
+        iconName: "minus.square.fill",
+        tag: "Window Management",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCode: CGKeyCode = 46 // M key
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
+            keyDown?.flags = [.maskCommand]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: false)
+            keyUp?.flags = [.maskCommand]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "25",
+        title: "Minimize All Windows",
+        description: "Minimize all windows of the current app.",
+        iconName: "rectangle.compress.vertical",
+        tag: "Window Management",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCode: CGKeyCode = 46 // M key
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskAlternate]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskAlternate]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "26",
+        title: "Hide App",
+        description: "Hide the active app.",
+        iconName: "eye.slash.fill",
+        tag: "Window Management",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCode: CGKeyCode = 4 // H key
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
+            keyDown?.flags = [.maskCommand]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: false)
+            keyUp?.flags = [.maskCommand]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "27",
+        title: "Hide Other Apps",
+        description: "Hide all apps except the active one.",
+        iconName: "eye.slash.circle.fill",
+        tag: "Window Management",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCode: CGKeyCode = 4 // H key
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskAlternate]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskAlternate]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "28",
+        title: "Open AirDrop",
+        description: "Open AirDrop in Finder.",
+        iconName: "square.and.arrow.up",
+        tag: "System",
+        perform: {
+            let path = "/System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+        }
+    ),
+
+    CornerAction(
+        id: "29",
+        title: "Start a Voice Recording",
+        description: "Start a voice recording in voice memos",
+        iconName: "waveform",
+        tag: "App Actions",
+        perform: {
+            let voiceMemosPath = "/System/Applications/VoiceMemos.app"
+            let url = URL(fileURLWithPath: voiceMemosPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.VoiceMemos").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeN: CGKeyCode = 45
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    keyDown?.flags = [.maskCommand]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    keyUp?.flags = [.maskCommand]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "30",
+        title: "Create a New Note",
+        description: "Create a New Note in Apple Notes",
+        iconName: "note.text",
+        tag: "App Actions",
+        perform: {
+            let appPath = "/System/Applications/Notes.app"
+            let url = URL(fileURLWithPath: appPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Notes").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeN: CGKeyCode = 45
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    keyDown?.flags = [.maskCommand]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    keyUp?.flags = [.maskCommand]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "31",
+        title: "Compose a New Email",
+        description: "Compose a New Email in Mail",
+        iconName: "envelope",
+        tag: "App Actions",
+        perform: {
+            let appPath = "/System/Applications/Mail.app"
+            let url = URL(fileURLWithPath: appPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.mail").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeN: CGKeyCode = 45
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    keyDown?.flags = [.maskCommand]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    keyUp?.flags = [.maskCommand]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "32",
+        title: "Create a New Event",
+        description: "Create a New Event in Calendar",
+        iconName: "calendar.badge.plus",
+        tag: "App Actions",
+        perform: {
+            let appPath = "/System/Applications/Calendar.app"
+            let url = URL(fileURLWithPath: appPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.calendar").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeN: CGKeyCode = 45
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    keyDown?.flags = [.maskCommand]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    keyUp?.flags = [.maskCommand]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "33",
+        title: "Create a New Reminder",
+        description: "Create a New Reminder in Reminders",
+        iconName: "list.bullet",
+        tag: "App Actions",
+        perform: {
+            let appPath = "/System/Applications/Reminder.app"
+            let url = URL(fileURLWithPath: appPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.reminder.calendar").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeN: CGKeyCode = 45
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    keyDown?.flags = [.maskCommand]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    keyUp?.flags = [.maskCommand]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "34",
+        title: "Take a Photo",
+        description: "Take a photo in PhotoBooth",
+        iconName: "photo",
+        tag: "App Actions",
+        perform: {
+            let appPath = "/System/Applications/Photo Booth.app"
+            let url = URL(fileURLWithPath: appPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.photobooth").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeReturn: CGKeyCode = 36 // Enter/Return key
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeReturn, keyDown: true)
+                    keyDown?.flags = [.maskCommand]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeReturn, keyDown: false)
+                    keyUp?.flags = [.maskCommand]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "35",
+        title: "Open Spotlight Search",
+        description: "Open the Spotlight Search Window",
+        iconName: "magnifyingglass",
+        tag: "System",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let spaceKeyCode: CGKeyCode = 49 // Space key code
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: spaceKeyCode, keyDown: true)
+            keyDown?.flags = [.maskCommand]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: spaceKeyCode, keyDown: false)
+            keyUp?.flags = [.maskCommand]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "36",
+        title: "Play/Pause Apple Music",
+        description: "Opens Msuic and toggles Playback",
+        iconName: "playpause",
+        tag: "Media",
+        perform: {
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let spaceKey: CGKeyCode = 49 // spacebar
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: spaceKey, keyDown: true)
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: spaceKey, keyDown: false)
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "37",
+        title: "Stop Playback Apple Music",
+        description: "Stops Playback in Apple Music",
+        iconName: "play.slash",
+        tag: "Media",
+        perform: {
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let periodKeyCode: CGKeyCode = 47 // '.' key
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: periodKeyCode, keyDown: true)
+                    keyDown?.flags = .maskCommand
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: periodKeyCode, keyDown: false)
+                    keyUp?.flags = .maskCommand
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "38",
+        title: "Go to Current Song",
+        description: "Opens album for currently playing song in Apple Music",
+        iconName: "cursorarrow.click",
+        tag: "Media",
+        perform: {
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let lKeyCode: CGKeyCode = 37 // 'L' key
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
+                    keyDown?.flags = .maskCommand
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
+                    keyUp?.flags = .maskCommand
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "39",
+        title: "Open Visualizer",
+        description: "Opens Visualizer in Apple Music",
+        iconName: "waveform.path",
+        tag: "Media",
+        perform: {
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let lKeyCode: CGKeyCode = 17
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
+                    keyDown?.flags = .maskCommand
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
+                    keyUp?.flags = .maskCommand
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "40",
+        title: "Open Miniplayer",
+        description: "Opens Miniplayer in Apple Music",
+        iconName: "rectangle.inset.bottomleading.filled",
+        tag: "Media",
+        perform: {
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let lKeyCode: CGKeyCode = 46
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskAlternate]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskAlternate]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "41",
+        title: "Open Fullscreen Player",
+        description: "Opens Fullscreen Player in Apple Music",
+        iconName: "arrow.up.left.and.arrow.down.right",
+        tag: "Media",
+        perform: {
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let lKeyCode: CGKeyCode = 3
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskShift]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskShift]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "42",
+        title: "Open Equalizer",
+        description: "Opens Equalizer in Apple Music",
+        iconName: "slider.horizontal.3",
+        tag: "Media",
+        perform: {
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let lKeyCode: CGKeyCode = 14
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskAlternate]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskAlternate]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
         }
     ),
 ]
