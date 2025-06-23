@@ -175,5 +175,41 @@ struct SuperCornersApp: App {
             SettingsView()
                 .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
         }
+        
+        .commands {
+            CommandGroup(replacing: .help) {
+                Button("SuperCorners Help") {
+                    if let url = URL(string: "https://github.com") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                
+                Divider()
+                
+                Button("Github Repository") {
+                    if let url = URL(string: "https://github.com") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                
+                Button("License") {
+                    if let url = URL(string: "https://github.com") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                
+                Button("Privacy Policy") {
+                    if let url = URL(string: "https://github.com") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                
+                Button("Terms & Conditions") {
+                    if let url = URL(string: "https://github.com") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
+        }
     }
 }
