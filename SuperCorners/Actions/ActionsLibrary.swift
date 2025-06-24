@@ -134,13 +134,25 @@ let cornerActions: [CornerAction] = [
             task.launchPath = "/usr/bin/shortcuts"
             task.arguments = ["run", shortcutName]
 
+            let errorPipe = Pipe()
+            task.standardError = errorPipe
+
             do {
                 try task.run()
-            } catch {
-                showErrorToast("Failed to Run Shortcut")
-            }
+                task.waitUntilExit()
 
-            showSuccessToast()
+                let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                if let errorOutput = String(data: errorData, encoding: .utf8),
+                   errorOutput.lowercased().contains("error")
+                {
+                    showErrorToast("Failed to Run Shortcut")
+                } else {
+                    showSuccessToast()
+                }
+
+            } catch {
+                showErrorToast("Failed to Launch Shortcut Process")
+            }
         }
     ),
 
