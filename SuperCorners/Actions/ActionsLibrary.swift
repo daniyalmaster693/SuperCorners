@@ -1078,7 +1078,7 @@ let cornerActions: [CornerAction] = [
                         let pasteboard = NSPasteboard.general
                         pasteboard.clearContents()
                         pasteboard.setString(recognizedText, forType: .string)
-                        showErrorToast("Copied Text to Clipboard")
+                        showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                     }
                 }
 
@@ -1087,8 +1087,6 @@ let cornerActions: [CornerAction] = [
             } else {
                 showErrorToast("OCR Failed - No Text was captured.")
             }
-
-            showSuccessToast()
         }
     ),
 
