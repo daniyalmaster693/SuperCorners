@@ -9,66 +9,93 @@ import AppKit
 import SwiftUI
 
 struct FloatingPanelContentView: View {
+    var message: String
+
     var body: some View {
-        Text("This is a floating panel")
-            .frame(width: 300, height: 200)
-            .padding()
+        ScrollView {
+            Text(self.message)
+                .padding(.top, 12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(width: 300, height: 200)
     }
 }
 
 class FloatingPanel: NSPanel {
-    init() {
+    private var hostingView: NSHostingView<FloatingPanelContentView>
+    
+    init(initialMessage: String) {
+        self.hostingView = NSHostingView(rootView: FloatingPanelContentView(message: initialMessage))
+        
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 450, height: 350),
+            contentRect: NSRect(x: 0, y: 0, width: 375, height: 230),
             styleMask: [.nonactivatingPanel, .titled, .closable, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
-
+        
         self.isFloatingPanel = true
         self.level = .floating
         self.titleVisibility = .hidden
         self.titlebarAppearsTransparent = true
-        self.standardWindowButton(.miniaturizeButton)?.isEnabled = false
-        self.standardWindowButton(.zoomButton)?.isEnabled = false
+        self.standardWindowButton(.miniaturizeButton)?.isHidden = true
+        self.standardWindowButton(.zoomButton)?.isHidden = true
         self.isMovableByWindowBackground = true
-
-        titlebarAppearsTransparent = true
-        isMovableByWindowBackground = true
-        hasShadow = true
-
+        
         let visualEffectView = NSVisualEffectView(frame: self.contentView!.bounds)
         visualEffectView.autoresizingMask = [.width, .height]
         visualEffectView.material = .sidebar
         visualEffectView.state = .active
         visualEffectView.blendingMode = .behindWindow
-
-        let hostingView = NSHostingView(rootView: FloatingPanelContentView())
-        hostingView.frame = self.contentView!.bounds
-        hostingView.autoresizingMask = [.width, .height]
-
+        
+        self.hostingView.frame = self.contentView!.bounds
+        self.hostingView.autoresizingMask = [.width, .height]
+        
         let containerView = NSView(frame: self.contentView!.bounds)
         containerView.autoresizingMask = [.width, .height]
         containerView.addSubview(visualEffectView, positioned: .below, relativeTo: nil)
-        containerView.addSubview(hostingView)
-
+        containerView.addSubview(self.hostingView)
+        
         self.contentView = containerView
+        self.center()
+        self.alphaValue = 0
+    }
+    
+    func updateMessage(_ newMessage: String) {
+        self.hostingView.rootView = FloatingPanelContentView(message: newMessage)
+    }
+       
+    func show() {
+        self.makeKeyAndOrderFront(nil)
+           
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.25
+            self.animator().alphaValue = 1
+        }
     }
 }
 
 struct FloatingPanelView: View {
     @State private var floatingPanel: FloatingPanel?
-
+    @State private var message: String = "Initial message"
+    
     var body: some View {
-        Button("Toggle Floating Panel") {
-            if self.floatingPanel == nil {
-                let panel = FloatingPanel()
-                panel.center()
-                panel.makeKeyAndOrderFront(nil)
-                self.floatingPanel = panel
-            } else {
-                self.floatingPanel?.close()
-                self.floatingPanel = nil
+        VStack {
+            Button("Toggle Floating Panel") {
+                if self.floatingPanel == nil {
+                    let panel = FloatingPanel(initialMessage: message)
+                    panel.show()
+                    self.floatingPanel = panel
+                } else {
+                    self.floatingPanel?.close()
+                    self.floatingPanel = nil
+                }
+            }
+            
+            Button("Update Message") {
+                let newMessage = "Updated message at \(Date())"
+                self.message = newMessage
+                self.floatingPanel?.updateMessage(newMessage)
             }
         }
     }

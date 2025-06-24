@@ -1294,7 +1294,10 @@ let cornerActions: [CornerAction] = [
 
                 let data = pipe.fileHandleForReading.readDataToEndOfFile()
                 if let batteryInfo = String(data: data, encoding: .utf8) {
-                    print("Battery Info:\n\(batteryInfo)")
+                    DispatchQueue.main.async {
+                        let panel = FloatingPanel(initialMessage: "Battery Info:\n\(batteryInfo)")
+                        panel.show()
+                    }
                 }
             } catch {
                 print("Failed to get battery info: \(error)")
@@ -1321,7 +1324,10 @@ let cornerActions: [CornerAction] = [
 
                 let data = pipe.fileHandleForReading.readDataToEndOfFile()
                 if let uptime = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                    print("System Uptime: \(uptime)")
+                    DispatchQueue.main.async {
+                        let panel = FloatingPanel(initialMessage: "System Uptime:\n\(uptime)")
+                        panel.show()
+                    }
                 }
             } catch {
                 print("Failed to get system uptime: \(error)")
@@ -1331,29 +1337,6 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "61",
-        title: "Show Disk Usage",
-        description: "Displays disk usage stats.",
-        iconName: "externaldrive.fill",
-        tag: "Diagnostics",
-        perform: {
-            let task = Process()
-            task.launchPath = "/bin/df"
-            task.arguments = ["-h"]
-            let pipe = Pipe()
-            task.standardOutput = pipe
-
-            task.launch()
-            task.waitUntilExit()
-
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            if let output = String(data: data, encoding: .utf8) {
-                print("Disk Usage:\n\(output)")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "62",
         title: "Show System Information",
         description: "Displays information about your Mac",
         iconName: "desktopcomputer",
@@ -1378,7 +1361,10 @@ let cornerActions: [CornerAction] = [
             Low Power Mode: \(lowPowerModeStatus)
             """
 
-            print(systemInfo)
+            DispatchQueue.main.async {
+                let panel = FloatingPanel(initialMessage: systemInfo)
+                panel.show()
+            }
         }
     )
 ]
