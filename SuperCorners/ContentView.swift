@@ -105,6 +105,7 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingAboutModal) {
             AppLinksView()
+            FloatingPanelView()
         }
     }
 }
