@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Vision
 
 struct CornerAction: Identifiable {
     let id: String
@@ -933,6 +934,71 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+        }
+    ),
+
+    CornerAction(
+        id: "44",
+        title: "Open Color Picker",
+        description: "Displays the macOS system color picker",
+        iconName: "eyedropper",
+        tag: "System",
+        perform: {
+            NSColorPanel.shared.makeKeyAndOrderFront(nil)
+        }
+    ),
+
+    CornerAction(
+        id: "45",
+        title: "Extract Text (OCR)",
+        description: "Select a region of the screen to extract text",
+        iconName: "text.viewfinder",
+        tag: "System",
+        perform: {
+            let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("ocr_capture.png")
+            let captureTask = Process()
+            captureTask.launchPath = "/usr/sbin/screencapture"
+            captureTask.arguments = ["-i", tempURL.path]
+            captureTask.launch()
+            captureTask.waitUntilExit()
+
+            if FileManager.default.fileExists(atPath: tempURL.path),
+               let image = NSImage(contentsOfFile: tempURL.path),
+               let tiffData = image.tiffRepresentation,
+               let ciImage = CIImage(data: tiffData)
+            {
+                let handler = VNImageRequestHandler(ciImage: ciImage, options: [:])
+                let request = VNRecognizeTextRequest { request, _ in
+                    guard let observations = request.results as? [VNRecognizedTextObservation] else { return }
+
+                    let recognizedText = observations.compactMap {
+                        $0.topCandidates(1).first?.string
+                    }.joined(separator: "\n")
+
+                    DispatchQueue.main.async {
+                        let pasteboard = NSPasteboard.general
+                        pasteboard.clearContents()
+                        pasteboard.setString(recognizedText, forType: .string)
+                        print("✅ Copied recognized text to clipboard.")
+                    }
+                }
+
+                request.recognitionLevel = .accurate
+                try? handler.perform([request])
+            } else {
+                print("❌ OCR failed — no image was captured.")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "46",
+        title: "Open Font Panel",
+        description: "Opens the macOS font panel to preview fonts",
+        iconName: "character.circle",
+        tag: "System",
+        perform: {
+            NSFontPanel.shared.makeKeyAndOrderFront(nil)
         }
     ),
 ]
