@@ -30,6 +30,12 @@ func triggerCornerAction(for corner: CornerPosition.Corner) {
             )
         }
     } else {
-        print("No action assigned for \(corner)")
+        DispatchQueue.main.async {
+            let toast = ToastWindowController()
+            toast.showToast(
+                message: "No Action Assigned",
+                icon: Image(systemName: "x.circle.fill")
+            )
+        }
     }
 }
