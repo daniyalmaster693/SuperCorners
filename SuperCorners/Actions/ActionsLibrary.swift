@@ -1272,5 +1272,113 @@ let cornerActions: [CornerAction] = [
                 }
             }
         }
+    ),
+
+    CornerAction(
+        id: "59",
+        title: "Show Battery Info",
+        description: "Display detailed battery status and health.",
+        iconName: "battery.100",
+        tag: "Dev Tool",
+        perform: {
+            let task = Process()
+            task.launchPath = "/usr/sbin/system_profiler"
+            task.arguments = ["SPPowerDataType"]
+
+            let pipe = Pipe()
+            task.standardOutput = pipe
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                if let batteryInfo = String(data: data, encoding: .utf8) {
+                    print("Battery Info:\n\(batteryInfo)")
+                }
+            } catch {
+                print("Failed to get battery info: \(error)")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "60",
+        title: "Show System Uptime",
+        description: "Display how long your Mac has been running.",
+        iconName: "timer",
+        tag: "Dev Tool",
+        perform: {
+            let task = Process()
+            task.launchPath = "/usr/bin/uptime"
+
+            let pipe = Pipe()
+            task.standardOutput = pipe
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                if let uptime = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    print("System Uptime: \(uptime)")
+                }
+            } catch {
+                print("Failed to get system uptime: \(error)")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "61",
+        title: "Show Disk Usage",
+        description: "Displays disk usage stats.",
+        iconName: "externaldrive.fill",
+        tag: "Dev Tool",
+        perform: {
+            let task = Process()
+            task.launchPath = "/bin/df"
+            task.arguments = ["-h"]
+            let pipe = Pipe()
+            task.standardOutput = pipe
+
+            task.launch()
+            task.waitUntilExit()
+
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            if let output = String(data: data, encoding: .utf8) {
+                print("Disk Usage:\n\(output)")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "62",
+        title: "Show System Information",
+        description: "Displays information about your Mac",
+        iconName: "desktopcomputer",
+        tag: "Dev Tool",
+        perform: {
+            let info = ProcessInfo.processInfo
+            let hostname = info.hostName
+            let osVersion = info.operatingSystemVersion
+            let osVersionString = "\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)"
+            let cpuCount = info.processorCount
+            let memoryGB = Double(info.physicalMemory) / 1024 / 1024 / 1024
+            var lowPowerModeStatus = "Unknown"
+            if #available(macOS 12.0, *) {
+                lowPowerModeStatus = info.isLowPowerModeEnabled ? "Enabled" : "Disabled"
+            }
+
+            let systemInfo = """
+            Hostname: \(hostname)
+            OS Version: macOS \(osVersionString)
+            CPU Cores: \(cpuCount)
+            RAM: \(String(format: "%.2f", memoryGB)) GB
+            Low Power Mode: \(lowPowerModeStatus)
+            """
+
+            print(systemInfo)
+        }
     )
 ]

@@ -213,6 +213,35 @@ struct ActionBrowserView: View {
                 }
                 
                 VStack {
+                    Text("Dev Tools")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    Text("A collection of built in utilites for quick access to system info")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Dev Tool" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 6)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Divider()
+                        .padding(.horizontal)
+                }
+                
+                VStack {
                     Text("Capture")
                         .font(.title2)
                         .bold()
@@ -249,7 +278,7 @@ struct ActionBrowserView: View {
                         .padding(.top)
                         .padding(.horizontal)
                     
-                    Text("Control your Mac’s sound and playback settings with one click.")
+                    Text("Control your Mac’s sound and playback settings.")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
