@@ -22,20 +22,5 @@ var cornerActionBindings: [CornerPosition.Corner: CornerAction] = [
 func triggerCornerAction(for corner: CornerPosition.Corner) {
     if let action = cornerActionBindings[corner] {
         action.perform()
-        DispatchQueue.main.async {
-            let toast = ToastWindowController()
-            toast.showToast(
-                message: "Action Completed",
-                icon: Image(systemName: "checkmark.circle.fill")
-            )
-        }
-    } else {
-        DispatchQueue.main.async {
-            let toast = ToastWindowController()
-            toast.showToast(
-                message: "No Action Assigned",
-                icon: Image(systemName: "x.circle.fill")
-            )
-        }
-    }
+    } else { return }
 }

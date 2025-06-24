@@ -29,6 +29,7 @@ let cornerActions: [CornerAction] = [
         perform: {
             let path = "/System/Library/CoreServices/ScreenSaverEngine.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
+            showSuccessToast()
         }
     ),
 
@@ -43,6 +44,7 @@ let cornerActions: [CornerAction] = [
             task.launchPath = "/usr/bin/pmset"
             task.arguments = ["displaysleepnow"]
             try? task.run()
+            showSuccessToast()
         }
     ),
 
@@ -64,6 +66,7 @@ let cornerActions: [CornerAction] = [
             let loc = CGEventTapLocation.cghidEventTap
             keyDown?.post(tap: loc)
             keyUp?.post(tap: loc)
+            showSuccessToast()
         }
     ),
 
@@ -86,6 +89,7 @@ let cornerActions: [CornerAction] = [
             let loc = CGEventTapLocation.cghidEventTap
             keyDown?.post(tap: loc)
             keyUp?.post(tap: loc)
+            showSuccessToast()
         }
     ),
 
@@ -99,6 +103,8 @@ let cornerActions: [CornerAction] = [
             if let url = URL(string: "https://apple.com") {
                 NSWorkspace.shared.open(url)
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -111,6 +117,7 @@ let cornerActions: [CornerAction] = [
         perform: {
             let path = "/System/Applications/Safari.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
+            showSuccessToast()
         }
     ),
 
@@ -130,8 +137,10 @@ let cornerActions: [CornerAction] = [
             do {
                 try task.run()
             } catch {
-                print("❌ Failed to run shortcut: \(error)")
+                showErrorToast("Failed to Run Shortcut")
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -144,6 +153,8 @@ let cornerActions: [CornerAction] = [
         perform: {
             let path = "/Applications"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
+
+            showSuccessToast()
         }
     ),
 
@@ -156,6 +167,8 @@ let cornerActions: [CornerAction] = [
         perform: {
             let path = "/System/Applications/Launchpad.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
+
+            showSuccessToast()
         }
     ),
 
@@ -168,6 +181,8 @@ let cornerActions: [CornerAction] = [
         perform: {
             let path = "/System/Applications/Mission Control.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
+
+            showSuccessToast()
         }
     ),
 
@@ -180,6 +195,8 @@ let cornerActions: [CornerAction] = [
         perform: {
             let path = "/System/Applications/Utilities/Screenshot.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
+
+            showSuccessToast()
         }
     ),
 
@@ -201,6 +218,8 @@ let cornerActions: [CornerAction] = [
 
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -222,6 +241,8 @@ let cornerActions: [CornerAction] = [
 
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -244,6 +265,8 @@ let cornerActions: [CornerAction] = [
                 keyDown?.post(tap: .cghidEventTap)
                 keyUp?.post(tap: .cghidEventTap)
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -266,6 +289,8 @@ let cornerActions: [CornerAction] = [
                 keyDown?.post(tap: .cghidEventTap)
                 keyUp?.post(tap: .cghidEventTap)
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -280,6 +305,8 @@ let cornerActions: [CornerAction] = [
             task.launchPath = "/usr/bin/osascript"
             task.arguments = ["-e", "set volume output volume ((output volume of (get volume settings)) + 10) --100% max"]
             try? task.run()
+
+            showSuccessToast()
         }
     ),
 
@@ -294,6 +321,8 @@ let cornerActions: [CornerAction] = [
             task.launchPath = "/usr/bin/osascript"
             task.arguments = ["-e", "set volume output volume ((output volume of (get volume settings)) - 10) --0% min"]
             try? task.run()
+
+            showSuccessToast()
         }
     ),
 
@@ -308,6 +337,8 @@ let cornerActions: [CornerAction] = [
             task.launchPath = "/usr/bin/osascript"
             task.arguments = ["-e", "set volume without output muted"]
             try? task.run()
+
+            showSuccessToast()
         }
     ),
 
@@ -322,6 +353,8 @@ let cornerActions: [CornerAction] = [
             task.launchPath = "/usr/bin/osascript"
             task.arguments = ["-e", "set volume with output muted"]
             try? task.run()
+
+            showSuccessToast()
         }
     ),
 
@@ -340,6 +373,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskControl, .maskCommand]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -352,6 +387,8 @@ let cornerActions: [CornerAction] = [
         perform: {
             let path = "/System/Applications/Photo Booth.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
+
+            showSuccessToast()
         }
     ),
 
@@ -370,6 +407,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskControl, .maskSecondaryFn]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -388,6 +427,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskControl, .maskSecondaryFn]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -406,6 +447,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskControl, .maskSecondaryFn]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -424,6 +467,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskCommand]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -442,6 +487,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskCommand, .maskAlternate]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -460,6 +507,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskCommand]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -478,6 +527,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskCommand, .maskAlternate]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -490,6 +541,8 @@ let cornerActions: [CornerAction] = [
         perform: {
             let path = "/System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
+
+            showSuccessToast()
         }
     ),
 
@@ -521,6 +574,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -552,6 +607,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -583,6 +640,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -614,6 +673,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -645,6 +706,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -676,6 +739,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -694,6 +759,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskCommand]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -722,6 +789,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -753,6 +822,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -784,6 +855,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -815,6 +888,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -846,6 +921,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -877,6 +954,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -908,6 +987,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -936,6 +1017,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -947,6 +1030,8 @@ let cornerActions: [CornerAction] = [
         tag: "Tool",
         perform: {
             NSColorPanel.shared.makeKeyAndOrderFront(nil)
+
+            showSuccessToast()
         }
     ),
 
@@ -981,15 +1066,17 @@ let cornerActions: [CornerAction] = [
                         let pasteboard = NSPasteboard.general
                         pasteboard.clearContents()
                         pasteboard.setString(recognizedText, forType: .string)
-                        print("✅ Copied recognized text to clipboard.")
+                        showErrorToast("Copied Text to Clipboard")
                     }
                 }
 
                 request.recognitionLevel = .accurate
                 try? handler.perform([request])
             } else {
-                print("❌ OCR failed — no image was captured.")
+                showErrorToast("OCR Failed - No Text was captured.")
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -1003,7 +1090,7 @@ let cornerActions: [CornerAction] = [
             let pasteboard = NSPasteboard.general
 
             guard let text = pasteboard.string(forType: .string), !text.isEmpty else {
-                print("Clipboard is empty or does not contain text.")
+                showErrorToast("Clipboard is Empty or Does not Contain Text")
                 return
             }
 
@@ -1040,7 +1127,12 @@ let cornerActions: [CornerAction] = [
             Estimated Speaking Time: \(speakingTimeString)
             """
 
-            print(notificationText)
+            DispatchQueue.main.async {
+                let panel = FloatingPanel(initialMessage: "\n\(notificationText)")
+                panel.show()
+            }
+
+            showSuccessToast()
         }
     ),
 
@@ -1052,6 +1144,8 @@ let cornerActions: [CornerAction] = [
         tag: "Tool",
         perform: {
             NSFontPanel.shared.makeKeyAndOrderFront(nil)
+
+            showSuccessToast()
         }
     ),
 
@@ -1070,6 +1164,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskCommand, .maskAlternate]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -1088,6 +1184,8 @@ let cornerActions: [CornerAction] = [
             keyUp?.flags = [.maskCommand, .maskAlternate]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -1101,6 +1199,8 @@ let cornerActions: [CornerAction] = [
             let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
                 .appendingPathComponent("Downloads/Resume.pdf").path
             NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
+
+            showSuccessToast()
         }
     ),
 
@@ -1114,6 +1214,8 @@ let cornerActions: [CornerAction] = [
             let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
                 .appendingPathComponent("Downloads/Resume.pdf").path
             NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
+
+            showSuccessToast()
         }
     ),
 
@@ -1127,6 +1229,8 @@ let cornerActions: [CornerAction] = [
             let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
                 .appendingPathComponent("Downloads/Resume.pdf").path
             NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
+
+            showSuccessToast()
         }
     ),
 
@@ -1148,6 +1252,8 @@ let cornerActions: [CornerAction] = [
                 keyDown.post(tap: .cghidEventTap)
                 keyUp.post(tap: .cghidEventTap)
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -1169,6 +1275,8 @@ let cornerActions: [CornerAction] = [
 
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 
@@ -1197,6 +1305,8 @@ let cornerActions: [CornerAction] = [
                     keyUp?.post(tap: .cghidEventTap)
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -1214,6 +1324,8 @@ let cornerActions: [CornerAction] = [
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.TextEdit").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -1246,6 +1358,8 @@ let cornerActions: [CornerAction] = [
                     }
                 }
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -1259,16 +1373,16 @@ let cornerActions: [CornerAction] = [
             if let existingProcess = caffeinateProcess, existingProcess.isRunning {
                 existingProcess.terminate()
                 caffeinateProcess = nil
-                print("Caffeinate turned OFF")
+                showSuccessToast("Caffeinate Turned Off", icon: Image(systemName: "powerplug.fill"))
             } else {
                 let newProcess = Process()
                 newProcess.launchPath = "/usr/bin/caffeinate"
                 do {
                     try newProcess.run()
                     caffeinateProcess = newProcess
-                    print("Caffeinate turned ON")
+                    showSuccessToast("Caffeinate Turned On", icon: Image(systemName: "powerplug.fill"))
                 } catch {
-                    print("Failed to launch caffeinate: \(error)")
+                    showErrorToast("Failed to Launch Caffeinate")
                 }
             }
         }
@@ -1300,8 +1414,10 @@ let cornerActions: [CornerAction] = [
                     }
                 }
             } catch {
-                print("Failed to get battery info: \(error)")
+                showErrorToast("Failed to get Battery Info")
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -1330,8 +1446,10 @@ let cornerActions: [CornerAction] = [
                     }
                 }
             } catch {
-                print("Failed to get system uptime: \(error)")
+                showErrorToast("Failed to Get System Uptime")
             }
+
+            showSuccessToast()
         }
     ),
 
@@ -1365,6 +1483,8 @@ let cornerActions: [CornerAction] = [
                 let panel = FloatingPanel(initialMessage: systemInfo)
                 panel.show()
             }
+
+            showSuccessToast()
         }
     )
 ]
