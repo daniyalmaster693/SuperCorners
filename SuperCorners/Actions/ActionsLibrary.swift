@@ -8,6 +8,8 @@
 import SwiftUI
 import Vision
 
+var caffeinateProcess: Process?
+
 struct CornerAction: Identifiable {
     let id: String
     let title: String
@@ -328,7 +330,7 @@ let cornerActions: [CornerAction] = [
         title: "Emoji & Symbol Viewer",
         description: "Open the Emoji and Symbol viewer.",
         iconName: "smiley.fill",
-        tag: "System",
+        tag: "Tool",
         perform: {
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 49 // Space key
@@ -914,7 +916,7 @@ let cornerActions: [CornerAction] = [
         title: "Empty Trash",
         description: "Opens Finder and Asks to Empty Trash",
         iconName: "trash",
-        tag: "System",
+        tag: "Finder",
         perform: {
             let finderPath = "/System/Library/CoreServices/Finder.app"
             let url = URL(fileURLWithPath: finderPath)
@@ -942,7 +944,7 @@ let cornerActions: [CornerAction] = [
         title: "Open Color Picker",
         description: "Displays the macOS system color picker",
         iconName: "eyedropper",
-        tag: "System",
+        tag: "Tool",
         perform: {
             NSColorPanel.shared.makeKeyAndOrderFront(nil)
         }
@@ -953,7 +955,7 @@ let cornerActions: [CornerAction] = [
         title: "Extract Text (OCR)",
         description: "Select a region of the screen to extract text",
         iconName: "text.viewfinder",
-        tag: "System",
+        tag: "Tool",
         perform: {
             let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("ocr_capture.png")
             let captureTask = Process()
@@ -993,12 +995,282 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "46",
+        title: "Clipboard Text Count",
+        description: "Receive count statistics for your last copied text.",
+        iconName: "text.magnifyingglass",
+        tag: "Tool",
+        perform: {
+            let pasteboard = NSPasteboard.general
+
+            guard let text = pasteboard.string(forType: .string), !text.isEmpty else {
+                print("Clipboard is empty or does not contain text.")
+                return
+            }
+
+            let words = text.split { !$0.isLetter && !$0.isNumber }
+            let wordCount = words.count
+            let characters = text.filter { !$0.isWhitespace }
+            let characterCount = characters.count
+            let sentenceCount = text.split { ".!?".contains($0) }.count
+
+            let readingSpeed = 90.0
+            let speakingSpeed = 65.0
+
+            let readingTimeMinutes = Double(wordCount) / readingSpeed
+            let speakingTimeMinutes = Double(wordCount) / speakingSpeed
+
+            func formatTime(_ time: Double) -> String {
+                let minutes = Int(time)
+                let seconds = Int((time - Double(minutes)) * 60)
+                if minutes > 0 {
+                    return "\(minutes)m \(seconds)s"
+                } else {
+                    return "\(seconds)s"
+                }
+            }
+
+            let readingTimeString = formatTime(readingTimeMinutes)
+            let speakingTimeString = formatTime(speakingTimeMinutes)
+
+            let notificationText = """
+            Words: \(wordCount)
+            Characters (no spaces): \(characterCount)
+            Sentences: \(sentenceCount)
+            Estimated Reading Time: \(readingTimeString)
+            Estimated Speaking Time: \(speakingTimeString)
+            """
+
+            print(notificationText)
+        }
+    ),
+
+    CornerAction(
+        id: "47",
         title: "Open Font Panel",
         description: "Opens the macOS font panel to preview fonts",
         iconName: "character.circle",
-        tag: "System",
+        tag: "Tool",
         perform: {
             NSFontPanel.shared.makeKeyAndOrderFront(nil)
         }
     ),
+
+    CornerAction(
+        id: "48",
+        title: "Zoom In",
+        description: "Trigger the Zoom In Keyboard Shortcut.",
+        iconName: "plus.magnifyingglass",
+        tag: "Accessibility",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeEqual: CGKeyCode = 24 // '=' key
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeEqual, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskAlternate]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeEqual, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskAlternate]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "49",
+        title: "Zoom Out",
+        description: "Trigger the Zoom Out keyboard shortcut.",
+        iconName: "minus.magnifyingglass",
+        tag: "Accessibility",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeMinus: CGKeyCode = 27 // '-' key
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeMinus, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskAlternate]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeMinus, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskAlternate]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "50",
+        title: "Open a File",
+        description: "Open a file in Finder.",
+        iconName: "doc",
+        tag: "Template Action",
+        perform: {
+            let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
+                .appendingPathComponent("Downloads/Resume.pdf").path
+            NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
+        }
+    ),
+
+    CornerAction(
+        id: "51",
+        title: "Run an Apple Script",
+        description: "Run an Apple Script file.",
+        iconName: "curlybraces",
+        tag: "Template Action",
+        perform: {
+            let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
+                .appendingPathComponent("Downloads/Resume.pdf").path
+            NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
+        }
+    ),
+
+    CornerAction(
+        id: "52",
+        title: "Run a Bash Script",
+        description: "Run a Bash Script file.",
+        iconName: "terminal",
+        tag: "Template Action",
+        perform: {
+            let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
+                .appendingPathComponent("Downloads/Resume.pdf").path
+            NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
+        }
+    ),
+
+    CornerAction(
+        id: "53",
+        title: "Reveal Desktop",
+        description: "Show the desktop by hiding all windows.",
+        iconName: "desktopcomputer",
+        tag: "Window Management",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeH: CGKeyCode = 4 // 'H' key
+
+            if let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeH, keyDown: true),
+               let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeH, keyDown: false)
+            {
+                keyDown.flags = [.maskSecondaryFn] // fn key
+                keyUp.flags = [.maskSecondaryFn]
+                keyDown.post(tap: .cghidEventTap)
+                keyUp.post(tap: .cghidEventTap)
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "54",
+        title: "Toggle Hidden Files",
+        description: "Show or hide hidden files in Finder.",
+        iconName: "doc",
+        tag: "Finder",
+        perform: {
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodePeriod: CGKeyCode = 47 // '.' key
+
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodePeriod, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskShift]
+
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodePeriod, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskShift]
+
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+        }
+    ),
+
+    CornerAction(
+        id: "55",
+        title: "Create New Folder",
+        description: "Creates a new folder in Finder.",
+        iconName: "folder.badge.plus",
+        tag: "Finder",
+        perform: {
+            let finderPath = "/System/Library/CoreServices/Finder.app"
+            let url = URL(fileURLWithPath: finderPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Finder").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let nKeyCode: CGKeyCode = 45 // 'N' key
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: nKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskShift]
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: nKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskShift]
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "56",
+        title: "Create New File",
+        description: "Open TextEdit to create a new file.",
+        iconName: "doc.text",
+        tag: "Finder",
+        perform: {
+            let textEditPath = "/System/Applications/TextEdit.app"
+            let url = URL(fileURLWithPath: textEditPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.TextEdit").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "57",
+        title: "Open Go To Folder",
+        description: "Open the Go To Folder dialog in Finder.",
+        iconName: "folder",
+        tag: "Finder",
+        perform: {
+            let finderPath = "/System/Library/CoreServices/Finder.app"
+            let url = URL(fileURLWithPath: finderPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Finder").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeG: CGKeyCode = 5 // 'G' key
+
+                    if let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: true),
+                       let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: false)
+                    {
+                        keyDown.flags = [.maskCommand, .maskShift]
+                        keyUp.flags = [.maskCommand, .maskShift]
+
+                        keyDown.post(tap: .cghidEventTap)
+                        keyUp.post(tap: .cghidEventTap)
+                    }
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "58",
+        title: "Toggle Keep Awake",
+        description: "Toggle the caffinate feature.",
+        iconName: "powerplug.fill",
+        tag: "System",
+        perform: {
+            if let existingProcess = caffeinateProcess, existingProcess.isRunning {
+                existingProcess.terminate()
+                caffeinateProcess = nil
+                print("Caffeinate turned OFF")
+            } else {
+                let newProcess = Process()
+                newProcess.launchPath = "/usr/bin/caffeinate"
+                do {
+                    try newProcess.run()
+                    caffeinateProcess = newProcess
+                    print("Caffeinate turned ON")
+                } catch {
+                    print("Failed to launch caffeinate: \(error)")
+                }
+            }
+        }
+    )
 ]

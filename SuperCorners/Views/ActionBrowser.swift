@@ -126,6 +126,35 @@ struct ActionBrowserView: View {
                 }
                 
                 VStack {
+                    Text("Finder")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    Text("Quick access to essential Finder tools and commands.")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Finder" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 6)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Divider()
+                        .padding(.horizontal)
+                }
+                
+                VStack {
                     Text("Template Actions")
                         .font(.title2)
                         .bold()
@@ -153,6 +182,35 @@ struct ActionBrowserView: View {
                 
                 Divider()
                     .padding(.horizontal)
+                
+                VStack {
+                    Text("Tools")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    Text("A collection of built in utilites for quick access to useful system features")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Tool" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 6)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Divider()
+                        .padding(.horizontal)
+                }
                 
                 VStack {
                     Text("Capture")
@@ -229,6 +287,35 @@ struct ActionBrowserView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Window Management" }) { action in
+                                ActionCard(action: action)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 6)
+                    }
+                    .padding(.bottom, 24)
+                    
+                    Divider()
+                        .padding(.horizontal)
+                }
+                
+                VStack {
+                    Text("Accessibility")
+                        .font(.title2)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top)
+                        .padding(.horizontal)
+                    
+                    Text("Quickly enable essential accessibility features")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Accessibility" }) { action in
                                 ActionCard(action: action)
                             }
                         }
