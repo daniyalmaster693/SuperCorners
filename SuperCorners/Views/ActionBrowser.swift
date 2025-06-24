@@ -213,7 +213,7 @@ struct ActionBrowserView: View {
                 }
                 
                 VStack {
-                    Text("Dev Tools")
+                    Text("Diagnostics")
                         .font(.title2)
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -228,7 +228,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Dev Tool" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Diagnostics" }) { action in
                                 ActionCard(action: action)
                             }
                         }

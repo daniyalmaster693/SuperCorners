@@ -1279,7 +1279,7 @@ let cornerActions: [CornerAction] = [
         title: "Show Battery Info",
         description: "Display detailed battery status and health.",
         iconName: "battery.100",
-        tag: "Dev Tool",
+        tag: "Diagnostics",
         perform: {
             let task = Process()
             task.launchPath = "/usr/sbin/system_profiler"
@@ -1307,7 +1307,7 @@ let cornerActions: [CornerAction] = [
         title: "Show System Uptime",
         description: "Display how long your Mac has been running.",
         iconName: "timer",
-        tag: "Dev Tool",
+        tag: "Diagnostics",
         perform: {
             let task = Process()
             task.launchPath = "/usr/bin/uptime"
@@ -1334,7 +1334,7 @@ let cornerActions: [CornerAction] = [
         title: "Show Disk Usage",
         description: "Displays disk usage stats.",
         iconName: "externaldrive.fill",
-        tag: "Dev Tool",
+        tag: "Diagnostics",
         perform: {
             let task = Process()
             task.launchPath = "/bin/df"
@@ -1357,7 +1357,7 @@ let cornerActions: [CornerAction] = [
         title: "Show System Information",
         description: "Displays information about your Mac",
         iconName: "desktopcomputer",
-        tag: "Dev Tool",
+        tag: "Diagnostics",
         perform: {
             let info = ProcessInfo.processInfo
             let hostname = info.hostName
