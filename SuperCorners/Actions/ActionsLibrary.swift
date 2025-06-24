@@ -1252,7 +1252,7 @@ let cornerActions: [CornerAction] = [
     CornerAction(
         id: "58",
         title: "Toggle Keep Awake",
-        description: "Toggle the caffinate feature.",
+        description: "Toggle system sleep prevention indefinitely on or off.",
         iconName: "powerplug.fill",
         tag: "System",
         perform: {
