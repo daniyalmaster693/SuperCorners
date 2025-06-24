@@ -12,7 +12,6 @@ struct BehaviorSettingsView: View {
     @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 2.0
     @AppStorage("playSoundEffect") private var playSoundEffect = false
     @AppStorage("disableInFullScreen") private var disableInFullScreen = false
-    @AppStorage("sensitivity") private var sensitivity: Double = 5.0
 
     var body: some View {
         VStack(spacing: 8) {

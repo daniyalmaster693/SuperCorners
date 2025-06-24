@@ -21,30 +21,6 @@ struct AdvancedSettingsView: View {
             Form {
                 Section {
                     HStack {
-                        Label("Scripts Location", systemImage: "folder")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Button("Choose Location") {
-                            let panel = NSOpenPanel()
-                            panel.title = "Select a Folder"
-                            panel.showsHiddenFiles = false
-                            panel.canChooseFiles = false
-                            panel.canChooseDirectories = true
-                            panel.allowsMultipleSelection = false
-
-                            if panel.runModal() == .OK {
-                                if let url = panel.url {
-                                    print("Selected folder: \(url.path)")
-                                    // TODO: Store or use the folder URL
-                                }
-                            }
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                }
-
-                Section {
-                    HStack {
                         Label("Reset all Settings", systemImage: "exclamationmark.triangle")
                             .foregroundColor(.primary)
                         Spacer()
