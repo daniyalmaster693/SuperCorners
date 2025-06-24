@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var showingPanel = false
     @State private var selectedItem: String? = "corners"
     @State private var isHovered = false
     @State private var showingAboutModal = false
@@ -105,7 +104,6 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingAboutModal) {
             AppLinksView()
-            FloatingPanelView()
         }
     }
 }
