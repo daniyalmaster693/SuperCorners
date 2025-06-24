@@ -74,7 +74,7 @@ struct ToastView: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
-        .background(.ultraThinMaterial)
+        .background(.ultraThickMaterial)
         .cornerRadius(20)
         .overlay(
             RoundedRectangle(cornerRadius: 20)
