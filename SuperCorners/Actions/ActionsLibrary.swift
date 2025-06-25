@@ -1036,8 +1036,8 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "44",
-        title: "Open Color Picker",
-        description: "Displays the macOS system color picker",
+        title: "Color Picker",
+        description: "Pick a color and copy its hex code",
         iconName: "eyedropper",
         tag: "Tool",
         perform: {
@@ -1418,7 +1418,7 @@ let cornerActions: [CornerAction] = [
         title: "Show Battery Info",
         description: "Display detailed battery status and health.",
         iconName: "battery.100",
-        tag: "Diagnostics",
+        tag: "Developer",
         perform: {
             let task = Process()
             task.launchPath = "/usr/sbin/system_profiler"
@@ -1451,7 +1451,7 @@ let cornerActions: [CornerAction] = [
         title: "Show System Uptime",
         description: "Display how long your Mac has been running.",
         iconName: "timer",
-        tag: "Diagnostics",
+        tag: "Developer",
         perform: {
             let task = Process()
             task.launchPath = "/usr/bin/uptime"
@@ -1483,7 +1483,7 @@ let cornerActions: [CornerAction] = [
         title: "Show System Information",
         description: "Displays information about your Mac",
         iconName: "desktopcomputer",
-        tag: "Diagnostics",
+        tag: "Developer",
         perform: {
             let info = ProcessInfo.processInfo
             let hostname = info.hostName
@@ -1522,6 +1522,45 @@ let cornerActions: [CornerAction] = [
         perform: {
             let notePanel = FloatingNotePanel()
             notePanel.show()
+        }
+    ),
+
+    CornerAction(
+        id: "63",
+        title: "Get App Info",
+        description: "Get info about the currently running app.",
+        iconName: "i.circle",
+        tag: "Developer",
+        perform: {
+            if let app = NSWorkspace.shared.frontmostApplication,
+               let bundleURL = app.bundleURL,
+               let bundle = Bundle(url: bundleURL)
+            {
+                let appName = app.localizedName ?? "Unknown"
+                let bundleID = app.bundleIdentifier ?? "Unknown"
+                let version = bundle.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+                let build = bundle.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+                let path = bundleURL.path
+
+                let infoText = """
+                App Name: \(appName)
+                Bundle ID: \(bundleID)
+                Version: \(version) (Build \(build))
+                Path: \(path)
+                """
+
+                DispatchQueue.main.async {
+                    let panel = FloatingPanel(initialMessage: infoText)
+                    panel.show()
+
+                    showSuccessToast()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    let toast = ToastWindowController()
+                    toast.showToast(message: "No active app found", icon: Image(systemName: "exclamationmark.triangle.fill"))
+                }
+            }
         }
     ),
 ]

@@ -10,7 +10,7 @@ import SwiftUI
 
 var cornerActionBindings: [CornerPosition.Corner: CornerAction] = [
     .topLeft: cornerActions[0],
-    .topRight: cornerActions[30],
+    .topRight: cornerActions[62],
     .bottomLeft: cornerActions[44],
     .bottomRight: cornerActions[45],
     .top: cornerActions[4],
