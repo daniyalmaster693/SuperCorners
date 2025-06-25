@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct BehaviorSettingsView: View {
-    @AppStorage("delayTimer") private var delayTimer: Double = 0.0
     @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 5.0
     @AppStorage("playSoundEffect") private var playSoundEffect = false
     @AppStorage("disableInFullScreen") private var disableInFullScreen = false
@@ -21,24 +20,6 @@ struct BehaviorSettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
 
             Form {
-                Section {
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Image(systemName: "timer")
-                                .foregroundColor(.secondary)
-                            Text("Delay Timer: \(String(format: "%.1f", delayTimer))s")
-                        }
-
-                        Text("Time before an action is triggered after reaching a corner or zone.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .padding(.leading, 20)
-                            .padding(.bottom, 10)
-
-                        Slider(value: $delayTimer, in: 0 ... 2, step: 0.1)
-                    }
-                }
-
                 Section {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {

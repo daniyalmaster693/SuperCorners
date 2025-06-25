@@ -11,6 +11,7 @@ private var lastCorner: CornerPosition.Corner?
 
 func getCornerMousePosition() {
     @AppStorage("triggerSensitivity") var triggerSensitivity = 5.0
+    @AppStorage("playSoundEffect") var playSoundEffect = false
     @AppStorage("disableInFullScreen") var disableInFullScreen = false
 
     let mousePosition: NSPoint = NSEvent.mouseLocation
@@ -41,6 +42,9 @@ func getCornerMousePosition() {
                 if corner != lastCorner {
                     lastCorner = corner
                     triggerCornerAction(for: corner)
+                    if playSoundEffect {
+                        NSSound(named: NSSound.Name("Purr"))?.play()
+                    }
                 }
                 return
             }
