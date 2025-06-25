@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct ZoneView: View {
+    // Action Picker Variables
+
     @State private var showModal = false
     @State private var refreshID = UUID()
+
+    // Zone Variables
+
+    @AppStorage("enableTopZone") var enableTopZone = true
+    @AppStorage("enableLeftZone") var enableLeftZone = true
+    @AppStorage("enableRightZone") var enableRightZone = true
+    @AppStorage("enableBottomZone") var enableBottomZone = true
 
     var body: some View {
         let topTitle = cornerActionBindings[.top]?.title
@@ -54,43 +63,51 @@ struct ZoneView: View {
                                 .aspectRatio(16 / 9, contentMode: .fit)
                                 .cornerRadius(12)
                                 .overlay(alignment: .top) {
-                                    Button(topTitle ?? "Add Action") {
-                                        currentlySelectedCorner = .top
-                                        showModal = true
-                                    }
-                                    .buttonStyle(.bordered)
-                                    .padding(8)
-                                }
-                                .overlay(alignment: .bottom) {
-                                    Button(bottomTitle ?? "Add Action") {
-                                        currentlySelectedCorner = .bottom
-                                        showModal = true
-                                    }
-                                    .buttonStyle(.bordered)
-                                    .padding(8)
-                                }
-                                .overlay(alignment: .leading) {
-                                    VStack {
-                                        Spacer()
-                                        Button(leftTitle ?? "Add Action") {
-                                            currentlySelectedCorner = .left
+                                    if enableTopZone {
+                                        Button(topTitle ?? "Add Action") {
+                                            currentlySelectedCorner = .top
                                             showModal = true
                                         }
                                         .buttonStyle(.bordered)
                                         .padding(8)
-                                        Spacer()
+                                    }
+                                }
+                                .overlay(alignment: .bottom) {
+                                    if enableBottomZone {
+                                        Button(bottomTitle ?? "Add Action") {
+                                            currentlySelectedCorner = .bottom
+                                            showModal = true
+                                        }
+                                        .buttonStyle(.bordered)
+                                        .padding(8)
+                                    }
+                                }
+                                .overlay(alignment: .leading) {
+                                    if enableLeftZone {
+                                        VStack {
+                                            Spacer()
+                                            Button(leftTitle ?? "Add Action") {
+                                                currentlySelectedCorner = .left
+                                                showModal = true
+                                            }
+                                            .buttonStyle(.bordered)
+                                            .padding(8)
+                                            Spacer()
+                                        }
                                     }
                                 }
                                 .overlay(alignment: .trailing) {
-                                    VStack {
-                                        Spacer()
-                                        Button(rightTitle ?? "Add Action") {
-                                            currentlySelectedCorner = .right
-                                            showModal = true
+                                    if enableRightZone {
+                                        VStack {
+                                            Spacer()
+                                            Button(rightTitle ?? "Add Action") {
+                                                currentlySelectedCorner = .right
+                                                showModal = true
+                                            }
+                                            .buttonStyle(.bordered)
+                                            .padding(8)
+                                            Spacer()
                                         }
-                                        .buttonStyle(.bordered)
-                                        .padding(8)
-                                        Spacer()
                                     }
                                 }
                                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)

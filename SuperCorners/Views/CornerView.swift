@@ -8,8 +8,17 @@
 import SwiftUI
 
 struct CornerView: View {
+    // Action Picker Variables
+
     @State private var showModal = false
     @State private var refreshID = UUID()
+
+    // Corner Variables
+
+    @AppStorage("enableTopLeftCorner") var enableTopLeftCorner = true
+    @AppStorage("enableTopRightCorner") var enableTopRightCorner = true
+    @AppStorage("enableBottomLeftCorner") var enableBottomLeftCorner = true
+    @AppStorage("enableBottomRightCorner") var enableBottomRightCorner = true
 
     var body: some View {
         let topLeftTitle = cornerActionBindings[.topLeft]?.title
@@ -56,33 +65,41 @@ struct CornerView: View {
                                 .overlay(
                                     GeometryReader { geo in
                                         ZStack {
-                                            Button(topLeftTitle ?? "Add Action") {
-                                                currentlySelectedCorner = .topLeft
-                                                showModal = true
+                                            if enableTopLeftCorner {
+                                                Button(topLeftTitle ?? "Add Action") {
+                                                    currentlySelectedCorner = .topLeft
+                                                    showModal = true
+                                                }
+                                                .buttonStyle(.bordered)
+                                                .position(x: 0 + 75, y: 0 + 20)
                                             }
-                                            .buttonStyle(.bordered)
-                                            .position(x: 0 + 75, y: 0 + 20)
 
-                                            Button(topRightTitle ?? "Add Action") {
-                                                currentlySelectedCorner = .topRight
-                                                showModal = true
+                                            if enableTopRightCorner {
+                                                Button(topRightTitle ?? "Add Action") {
+                                                    currentlySelectedCorner = .topRight
+                                                    showModal = true
+                                                }
+                                                .buttonStyle(.bordered)
+                                                .position(x: geo.size.width - 75, y: 0 + 20)
                                             }
-                                            .buttonStyle(.bordered)
-                                            .position(x: geo.size.width - 75, y: 0 + 20)
 
-                                            Button(bottomLeftTitle ?? "Add Action") {
-                                                currentlySelectedCorner = .bottomLeft
-                                                showModal = true
+                                            if enableBottomLeftCorner {
+                                                Button(bottomLeftTitle ?? "Add Action") {
+                                                    currentlySelectedCorner = .bottomLeft
+                                                    showModal = true
+                                                }
+                                                .buttonStyle(.bordered)
+                                                .position(x: 0 + 75, y: geo.size.height - 20)
                                             }
-                                            .buttonStyle(.bordered)
-                                            .position(x: 0 + 75, y: geo.size.height - 20)
 
-                                            Button(bottomRightTitle ?? "Add Action") {
-                                                currentlySelectedCorner = .bottomRight
-                                                showModal = true
+                                            if enableBottomRightCorner {
+                                                Button(bottomRightTitle ?? "Add Action") {
+                                                    currentlySelectedCorner = .bottomRight
+                                                    showModal = true
+                                                }
+                                                .buttonStyle(.bordered)
+                                                .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                             }
-                                            .buttonStyle(.bordered)
-                                            .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                         }
                                     }
                                 )

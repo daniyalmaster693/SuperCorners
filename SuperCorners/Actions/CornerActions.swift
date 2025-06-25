@@ -20,7 +20,36 @@ var cornerActionBindings: [CornerPosition.Corner: CornerAction] = [
 ]
 
 func triggerCornerAction(for corner: CornerPosition.Corner) {
+    @AppStorage("enableTopLeftCorner") var enableTopLeftCorner = true
+    @AppStorage("enableTopRightCorner") var enableTopRightCorner = true
+    @AppStorage("enableBottomLeftCorner") var enableBottomLeftCorner = true
+    @AppStorage("enableBottomRightCorner") var enableBottomRightCorner = true
+
+    @AppStorage("enableTopZone") var enableTopZone = true
+    @AppStorage("enableLeftZone") var enableLeftZone = true
+    @AppStorage("enableRightZone") var enableRightZone = true
+    @AppStorage("enableBottomZone") var enableBottomZone = true
+
+    switch corner {
+    case .topLeft:
+        guard enableTopLeftCorner else { return }
+    case .topRight:
+        guard enableTopRightCorner else { return }
+    case .bottomLeft:
+        guard enableBottomLeftCorner else { return }
+    case .bottomRight:
+        guard enableBottomRightCorner else { return }
+    case .top:
+        guard enableTopZone else { return }
+    case .left:
+        guard enableLeftZone else { return }
+    case .right:
+        guard enableRightZone else { return }
+    case .bottom:
+        guard enableBottomZone else { return }
+    }
+
     if let action = cornerActionBindings[corner] {
         action.perform()
-    } else { return }
+    }
 }
