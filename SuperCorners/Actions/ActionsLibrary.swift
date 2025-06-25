@@ -1041,10 +1041,24 @@ let cornerActions: [CornerAction] = [
         iconName: "eyedropper",
         tag: "Tool",
         perform: {
-            NSApp.activate(ignoringOtherApps: true)
-            NSColorPanel.shared.makeKeyAndOrderFront(nil)
+            let sampler = NSColorSampler()
+            sampler.show { pickedColor in
+                guard let color = pickedColor?.usingColorSpace(.displayP3) else { return }
 
-            showSuccessToast()
+                let red = Int(color.redComponent * 255)
+                let green = Int(color.greenComponent * 255)
+                let blue = Int(color.blueComponent * 255)
+                let hexString = String(format: "#%02X%02X%02X", red, green, blue)
+
+                let pasteboard = NSPasteboard.general
+                pasteboard.clearContents()
+                pasteboard.setString(hexString, forType: .string)
+
+                DispatchQueue.main.async {
+                    let toast = ToastWindowController()
+                    toast.showToast(message: "Copied \(hexString) to clipboard", icon: Image(systemName: "eyedropper"))
+                }
+            }
         }
     ),
 
