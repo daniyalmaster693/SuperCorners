@@ -1497,5 +1497,17 @@ let cornerActions: [CornerAction] = [
 
             showSuccessToast()
         }
-    )
+    ),
+
+    CornerAction(
+        id: "62",
+        title: "Floating Note Window",
+        description: "Opens a floating note window",
+        iconName: "note",
+        tag: "Tool",
+        perform: {
+            let notePanel = FloatingNotePanel()
+            notePanel.show()
+        }
+    ),
 ]
