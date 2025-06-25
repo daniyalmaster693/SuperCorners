@@ -12,7 +12,9 @@ var localCornerMonitor: Any?
 var globalCornerMonitor: Any?
 
 func activateCornerHotkey() {
-    KeyboardShortcuts.setShortcut(.init(.space, modifiers: [.control, .shift]), for: .cornerActivation)
+    if KeyboardShortcuts.Name.cornerActivation.shortcut == nil {
+        KeyboardShortcuts.setShortcut(.init(.space, modifiers: [.control, .shift]), for: .cornerActivation)
+    }
 
     KeyboardShortcuts.onKeyDown(for: .cornerActivation) {
         localCornerMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
