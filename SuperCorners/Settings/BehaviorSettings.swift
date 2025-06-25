@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BehaviorSettingsView: View {
     @AppStorage("delayTimer") private var delayTimer: Double = 0.0
-    @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 2.0
+    @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 5.0
     @AppStorage("playSoundEffect") private var playSoundEffect = false
     @AppStorage("disableInFullScreen") private var disableInFullScreen = false
 
@@ -53,7 +53,7 @@ struct BehaviorSettingsView: View {
                             .padding(.leading, 20)
                             .padding(.bottom, 10)
 
-                        Slider(value: $triggerSensitivity, in: 1 ... 2.0, step: 0.1)
+                        Slider(value: $triggerSensitivity, in: 1 ... 5.0, step: 0.5)
                     }
                 }
 

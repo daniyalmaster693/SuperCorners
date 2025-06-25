@@ -10,6 +10,8 @@ import SwiftUI
 private var lastCorner: CornerPosition.Corner?
 
 func getCornerMousePosition() {
+    @AppStorage("triggerSensitivity") var triggerSensitivity = 5.0
+
     let mousePosition: NSPoint = NSEvent.mouseLocation
 
     for screen in NSScreen.screens {
@@ -19,7 +21,7 @@ func getCornerMousePosition() {
             let position = CornerPosition(screen: screen, corner: corner)
             let cornerPoint = position.coordinate
 
-            let tolerance: CGFloat = 50.0
+            let tolerance: CGFloat = triggerSensitivity * 10
             let hitZone = CGRect(x: cornerPoint.x - tolerance/2, y: cornerPoint.y - tolerance/2, width: tolerance, height: tolerance)
 
             if hitZone.contains(mousePosition) {
