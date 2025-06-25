@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AdvancedSettingsView: View {
-    @AppStorage("iCloudSyncEnabled") private var iCloudSyncEnabled = false
     @State private var showResetConfirmation = false
 
     var body: some View {
