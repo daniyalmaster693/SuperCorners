@@ -92,6 +92,7 @@ struct CornerView: View {
                 }
                 .padding()
                 .padding(.leading, 25)
+                .padding(.bottom, 10)
                 .sheet(isPresented: $showModal) {
                     if let selected = currentlySelectedCorner {
                         ActionLibraryView(corner: mapSelectedToCorner(selected)) {
