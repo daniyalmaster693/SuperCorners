@@ -9,16 +9,25 @@ import AppKit
 import SwiftUI
 
 struct FloatingNoteContentView: View {
-    @State private var message: String = "Start Writing..."
+    @AppStorage("floatingNoteMessage") private var textInput: String = ""
 
     var body: some View {
-        ScrollView {
-            TextEditor(text: self.$message)
-                .font(.system(size: 15))
-                .padding(.top, 12)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .scrollContentBackground(.hidden)
-                .background(Color.clear)
+        ZStack(alignment: .topLeading) {
+            if self.textInput.isEmpty {
+                Text("Click to Start Writing...")
+                    .foregroundColor(Color.gray.opacity(0.6))
+                    .padding(.top, 12)
+                    .padding(.leading, 5)
+            }
+            
+            ScrollView {
+                TextEditor(text: self.$textInput)
+                    .font(.system(size: 14))
+                    .padding(.top, 12)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .scrollContentBackground(.hidden)
+                    .background(Color.clear)
+            }
         }
         .frame(width: 300, height: 200)
     }

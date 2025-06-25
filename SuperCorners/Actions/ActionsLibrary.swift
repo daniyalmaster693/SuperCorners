@@ -1522,6 +1522,7 @@ let cornerActions: [CornerAction] = [
         perform: {
             let notePanel = FloatingNotePanel()
             notePanel.show()
+            showSuccessToast()
         }
     ),
 
@@ -1558,7 +1559,7 @@ let cornerActions: [CornerAction] = [
             } else {
                 DispatchQueue.main.async {
                     let toast = ToastWindowController()
-                    toast.showToast(message: "No active app found", icon: Image(systemName: "exclamationmark.triangle.fill"))
+                    showErrorToast()
                 }
             }
         }
