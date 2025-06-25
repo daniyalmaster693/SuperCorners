@@ -1041,6 +1041,7 @@ let cornerActions: [CornerAction] = [
         iconName: "eyedropper",
         tag: "Tool",
         perform: {
+            NSApp.activate(ignoringOtherApps: true)
             NSColorPanel.shared.makeKeyAndOrderFront(nil)
 
             showSuccessToast()
