@@ -9,21 +9,9 @@
 <br>
 <br>
 
-<div style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; align-items: center;">
-
-  <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/daniyalmaster693/SuperCorners" alt="License" />
-  </a>
-
-  <a href="https://github.com/daniyalmaster693/SuperCorners/releases">
-    <img src="https://img.shields.io/github/downloads/daniyalmaster693/SuperCorners/total.svg" alt="Downloads" />
-  </a>
-
-  <a href="https://www.apple.com/macos/">
-    <img src="https://img.shields.io/badge/macOS-13.0%2B-blue.svg" alt="macOS Version" />
-  </a>
-
-</div>
+[![GitHub License](https://img.shields.io/github/license/daniyalmaster693/SuperCorners)](LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/daniyalmaster693/SuperCorners/total.svg)](https://github.com/daniyalmaster693/SuperCorners/releases)
+[![macOS Version](https://img.shields.io/badge/macOS-13.0%2B-blue.svg)](https://www.apple.com/macos/)
 
 <br>
 <br>
