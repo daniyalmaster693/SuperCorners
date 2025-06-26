@@ -8,16 +8,25 @@
 import AppKit
 import SwiftUI
 
-var cornerActionBindings: [CornerPosition.Corner: CornerAction] = [
-    .topLeft: cornerActions[0],
-    .topRight: cornerActions[62],
-    .bottomLeft: cornerActions[44],
-    .bottomRight: cornerActions[45],
-    .top: cornerActions[4],
-    .left: cornerActions[46],
-    .right: cornerActions[6],
-    .bottom: cornerActions[58]
-]
+var cornerActionBindings: [CornerPosition.Corner: CornerAction] {
+    var bindings: [CornerPosition.Corner: CornerAction] = [:]
+
+    func action(forKey key: String, defaultIndex: Int) -> CornerAction {
+        let savedID = UserDefaults.standard.string(forKey: key)
+        return cornerActions.first(where: { $0.id == savedID }) ?? cornerActions[defaultIndex]
+    }
+
+    bindings[.topLeft] = action(forKey: "cornerBinding_topLeft", defaultIndex: 0)
+    bindings[.topRight] = action(forKey: "cornerBinding_topRight", defaultIndex: 62)
+    bindings[.bottomLeft] = action(forKey: "cornerBinding_bottomLeft", defaultIndex: 44)
+    bindings[.bottomRight] = action(forKey: "cornerBinding_bottomRight", defaultIndex: 45)
+    bindings[.top] = action(forKey: "cornerBinding_top", defaultIndex: 4)
+    bindings[.left] = action(forKey: "cornerBinding_left", defaultIndex: 46)
+    bindings[.right] = action(forKey: "cornerBinding_right", defaultIndex: 6)
+    bindings[.bottom] = action(forKey: "cornerBinding_bottom", defaultIndex: 58)
+
+    return bindings
+}
 
 func triggerCornerAction(for corner: CornerPosition.Corner) {
     @AppStorage("enableTopLeftCorner") var enableTopLeftCorner = true

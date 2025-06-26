@@ -101,7 +101,7 @@ struct ActionLibraryView: View {
                 if let selectedID = selectedActionID,
                    let selectedAction = cornerActions.first(where: { $0.id == selectedID })
                 {
-                    cornerActionBindings[corner] = selectedAction
+                UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
                     onUpdate()
                 }
                 dismiss()

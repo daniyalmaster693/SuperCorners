@@ -42,7 +42,6 @@ struct ZoneView: View {
         return VStack {
             VStack(alignment: .leading, spacing: 8) {
                 GeometryReader { _ in
-                    let gridItem = GridItem(.flexible(), spacing: 16)
                     GeometryReader { geo in
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Configure Your Super Zones")

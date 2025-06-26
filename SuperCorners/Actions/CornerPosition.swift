@@ -8,7 +8,7 @@
 import AppKit
 
 struct CornerPosition {
-    enum Corner {
+    enum Corner: String, Codable {
         case topLeft, topRight, bottomLeft, bottomRight, top, left, right, bottom
     }
 
