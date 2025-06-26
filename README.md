@@ -1,9 +1,9 @@
 <div align="center">
-	<a href="https://noah-nuebling.github.io/mac-mouse-fix-website">
-		<img src="Markdown/Media/AppIconRound3.png" width="200" height="auto">
-	</a>
-	<h1>SuperCorners</h1>  
-    <p>Make your Mac's Corners Useful Again</p>
+	<img src="https://raw.githubusercontent.com/daniyalmaster693/SuperCorners/main/SuperCorners/Assets.xcassets/AppIcon.appiconset/Icon-256.png" width="200" alt="App Icon">
+
+  <h1>SuperCorners</h1>
+  <p>Make your Mac's Corners Useful Again</p>
+
 </div>
 
 <br>
