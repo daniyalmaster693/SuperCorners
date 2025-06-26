@@ -17,7 +17,7 @@
 <br>
 <br>
 
-<img src="/Assets/Screenshot 2025-06-26 at 4.12.47 PM.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/Screenshot 2025-06-26 at 4.11.23 PM.png" width="100%" alt="SuperCorners"/><br/>
 
 SuperCorners is a macOS app that takes your screen corners to the next level.
 
