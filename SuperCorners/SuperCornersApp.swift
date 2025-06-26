@@ -5,10 +5,19 @@
 //  Created by Daniyal Master on 2025-05-22.
 //
 
+import Sparkle
 import SwiftUI
 
 @main
 struct SuperCornersApp: App {
+    // Sparkle Updater Closure
+    
+    private let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
+    
     // Settings Variables
     
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
@@ -56,14 +65,14 @@ struct SuperCornersApp: App {
     var body: some Scene {
         WindowGroup {
             if #available(macOS 15.0, *) {
-                ContentView()
+                ContentView(updater: updaterController.updater)
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
                     .containerBackground(.ultraThickMaterial, for: .window)
                     .onAppear {
                         updateActivationPolicy()
                     }
             } else {
-                ContentView()
+                ContentView(updater: updaterController.updater)
                     .onAppear {
                         updateActivationPolicy()
                     }

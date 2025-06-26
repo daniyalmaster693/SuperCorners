@@ -5,14 +5,31 @@
 //  Created by Daniyal Master on 2025-06-21.
 //
 
+import Sparkle
 import SwiftUI
 
+final class CheckForUpdatesViewModel: ObservableObject {
+    @Published var canCheckForUpdates = false
+
+    init(updater: SPUUpdater) {
+        updater.publisher(for: \.canCheckForUpdates)
+            .assign(to: &$canCheckForUpdates)
+    }
+}
+
 struct AppLinksView: View {
+    let updater: SPUUpdater
+    @StateObject private var updateViewModel: CheckForUpdatesViewModel
     @Environment(\.dismiss) private var dismiss
     @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
     @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
     @AppStorage("enableBottomLeftCorner") private var enableBottomLeftCorner = true
     @AppStorage("enableBottomRightCorner") private var enableBottomRightCorner = true
+
+    init(updater: SPUUpdater) {
+        self.updater = updater
+        _updateViewModel = StateObject(wrappedValue: CheckForUpdatesViewModel(updater: updater))
+    }
 
     var body: some View {
         VStack(spacing: 8) {
@@ -57,9 +74,10 @@ struct AppLinksView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         Button("Check for Updates") {
-                            checkForUpdates()
+                            updater.checkForUpdates()
                         }
                         .buttonStyle(.bordered)
+                        .disabled(!updateViewModel.canCheckForUpdates)
                     }
                 }
 

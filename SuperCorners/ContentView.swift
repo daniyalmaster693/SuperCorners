@@ -5,9 +5,11 @@
 //  Created by Daniyal Master on 2025-05-22.
 //
 
+import Sparkle
 import SwiftUI
 
 struct ContentView: View {
+    let updater: SPUUpdater
     @State private var selectedItem: String? = "corners"
     @State private var isHovered = false
     @State private var showingAboutModal = false
@@ -103,7 +105,7 @@ struct ContentView: View {
         }
         .frame(minWidth: 880, minHeight: 460)
         .sheet(isPresented: $showingAboutModal) {
-            AppLinksView()
+            AppLinksView(updater: updater)
         }
     }
 }

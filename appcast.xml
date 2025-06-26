@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>SuperCorners Updates</title>
+    <item>
+      <title>Version 1.0.0</title>
+      <sparkle:releaseNotesLink>https://github.com/daniyalmaster693/SuperCorners/releases/tag/v1.0.0</sparkle:releaseNotesLink>
+      <pubDate>Wed, 26 Jun 2025 10:00:00 +0000</pubDate>
+      <enclosure
+        url="https://github.com/daniyalmaster693/SuperCorners/releases/download/v1.0.0/SuperCorners.zip"
+        sparkle:version="1000"
+        sparkle:shortVersionString="1.0.0"
+        length="12345678"
+        type="application/octet-stream"/>
+    </item>
+  </channel>
+</rss>
