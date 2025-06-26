@@ -76,9 +76,13 @@ struct SuperCornersApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-                .containerBackground(.ultraThickMaterial, for: .window)
+            if #available(macOS 15.0, *) {
+                ContentView()
+                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+                    .containerBackground(.ultraThickMaterial, for: .window)
+            } else {
+                ContentView()
+            }
         }
         
         MenuBarExtra("Menu", systemImage: "rectangle.3.group") {
@@ -201,9 +205,13 @@ struct SuperCornersApp: App {
         }
 
         Settings {
-            SettingsView()
-                .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-                .containerBackground(.ultraThickMaterial, for: .window)
+            if #available(macOS 15.0, *) {
+                SettingsView()
+                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+                    .containerBackground(.ultraThickMaterial, for: .window)
+            } else {
+                SettingsView()
+            }
         }
         
         .commands {

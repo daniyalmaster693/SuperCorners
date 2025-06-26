@@ -100,7 +100,6 @@ struct ContentView: View {
             }
             .navigationTitle("")
             .toolbar(.hidden)
-            .toolbar(removing: .sidebarToggle)
         }
         .frame(minWidth: 880, minHeight: 460)
         .sheet(isPresented: $showingAboutModal) {

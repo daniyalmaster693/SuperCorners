@@ -49,7 +49,6 @@ struct SettingsView: View {
             .padding()
             .navigationTitle("")
             .toolbar(.hidden)
-            .toolbar(removing: .sidebarToggle)
         }
         .frame(minWidth: 700, idealWidth: 700, maxWidth: 700)
     }
