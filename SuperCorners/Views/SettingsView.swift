@@ -12,7 +12,6 @@ struct SettingsView: View {
         case general = "General"
         case activation = "Activation"
         case behavior = "Behavior"
-        case advanced = "Advanced"
 
         var id: String { rawValue }
     }
@@ -39,8 +38,6 @@ struct SettingsView: View {
                     ActivationSettingsView()
                 case .behavior:
                     BehaviorSettingsView()
-                case .advanced:
-                    AdvancedSettingsView()
                 default:
                     Text("Select a tab")
                 }
@@ -60,7 +57,6 @@ private extension SettingsView.Tab {
         case .general: return "gearshape"
         case .activation: return "bolt.circle"
         case .behavior: return "hand.tap"
-        case .advanced: return "wrench.and.screwdriver"
         }
     }
 }
