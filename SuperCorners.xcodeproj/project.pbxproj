@@ -34,22 +34,9 @@
 		0DA0E4F62DDF8C83006576E1 /* SuperCornersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperCornersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		0DE1D66E2E0C8FAB006AE4EF /* Exceptions for "SuperCorners" folder in "SuperCorners" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 0DA0E4DA2DDF8C82006576E1 /* SuperCorners */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0DA0E4DD2DDF8C82006576E1 /* SuperCorners */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				0DE1D66E2E0C8FAB006AE4EF /* Exceptions for "SuperCorners" folder in "SuperCorners" target */,
-			);
 			path = SuperCorners;
 			sourceTree = "<group>";
 		};
@@ -432,7 +419,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SuperCorners/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = Automation;
-				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -464,7 +451,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SuperCorners/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = Automation;
-				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

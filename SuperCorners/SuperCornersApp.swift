@@ -42,6 +42,10 @@ func showWalkthrough() {
  
 @main
 struct SuperCornersApp: App {
+    // Dock Variable
+    
+    @AppStorage("showInDock") private var showInDock = true
+    
     // Corner and Zone Variables
     
     @AppStorage("enableTopLeftCorner") var enableTopLeftCorner = true
@@ -74,14 +78,27 @@ struct SuperCornersApp: App {
         }
     }
     
+    func updateActivationPolicy() {
+        DispatchQueue.main.async {
+            NSApp.setActivationPolicy(showInDock ? .regular : .accessory)
+            NSApp.activate(ignoringOtherApps: true)
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             if #available(macOS 15.0, *) {
                 ContentView()
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
                     .containerBackground(.ultraThickMaterial, for: .window)
+                    .onAppear {
+                        updateActivationPolicy()
+                    }
             } else {
                 ContentView()
+                    .onAppear {
+                        updateActivationPolicy()
+                    }
             }
         }
         

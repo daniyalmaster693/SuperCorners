@@ -47,6 +47,15 @@ struct GeneralSettingsView: View {
                                 Text("Show in Dock")
                             }
                         }
+                        .onChange(of: showInDock) { newValue in
+                            UserDefaults.standard.set(newValue, forKey: "showInDock")
+
+                            if newValue {
+                                NSApp.setActivationPolicy(.regular)
+                            } else {
+                                NSApp.setActivationPolicy(.accessory)
+                            }
+                        }
                     }
                 }
             }
