@@ -24,18 +24,18 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 
 ## Features
 
-- **Launch Apps** - Launch apps directly from corners and zones
-- **Run Shortcuts** - Run shortcuts directly from corners and zones
-- **Open Files and Folders** - Open Files and Folders directly from corners and zones
-- **Run Apple and Bash Scripts** - Run scripts directly from corners and zones
-- **Open Websites** - Open Websites directly from corners and zones
-- **In App Actions** - Trigger in app actions directly from corners and zones
-- **Simulate Hotkeys** - Trigger keyboard shortcuts directly from your screen corners and zones
-- **System Commands** - Run system commands directly from your screen corners and zones
-- **Tools** - Access useful tools from your screen corners and zones
+- **Launch Apps** - Launch apps directly from corners and zones.
+- **Run Shortcuts** - Run shortcuts directly from corners and zones.
+- **Open Files and Folders** - Open Files and Folders directly from corners and zones.
+- **Run Apple and Bash Scripts** - Run scripts directly from corners and zones.
+- **Open Websites** - Open Websites directly from corners and zones.
+- **In App Actions** - Trigger in app actions directly from corners and zones.
+- **Simulate Hotkeys** - Trigger keyboard shortcuts directly from your screen corners and zones.
+- **System Commands** - Run system commands directly from your screen corners and zones.
+- **Tools** - Access useful tools from your screen corners and zones.
 - **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
-- **Visual Feedback** - Subtle toast notifications appear briefly to provide visual feedback for actions
-- **Configurable** - Disable any corner or zone and control app behaviors
+- **Visual Feedback** - Subtle toast notifications appear briefly to provide visual feedback for actions.
+- **Configurable** - Disable any corner or zone and control app behaviors.
 - **Lightweight & Native** - Built with Swift and SwiftUI for native performance and modern macOS styling.
 
 ...and more...
@@ -44,18 +44,19 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 
 **Requires macOS 13.0 and later**
 
-1. Download the latest release
-2. Move the app to your **Applications folder**
-3. Run the app and grant necessary permissions when prompted
+1. Download the latest release.
+2. Move the app to your **Applications folder**.
+3. Run the app and grant necessary permissions when prompted.
 
 **Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
 
 ## Usage
 
-1. Launch **SuperCorners** after granting permissions
-2. A walkthrough will launch the first time you open the app, and explain how to use the app and ask you to set up a few things
-3. Use the activation hotkey (set in the settings window) to trigger corners and zones when moving your mouse to a corner or the middle of any screen edge.
-4. Enjoy the upgraded hot corners experience!
+1. Launch **SuperCorners**.
+2. Grant Necessary Permissions (**Accessibility permission must be enabled for the app to work correctly**).
+3. A walkthrough will launch the first time you open the app, and explain how to use the app and ask you to set up a few things.
+4. Use the activation hotkey (set in the settings window) to trigger corners and zones when moving your mouse to a corner or the middle of any screen edge.
+5. Enjoy the upgraded hot corners experience!
 
 ## Dependencies
 
