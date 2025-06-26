@@ -24,6 +24,21 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 
 ## Features
 
+- **Launch Apps** - Launch apps directly from corners and zones
+- **Run Shortcuts** - Run shortcuts directly from corners and zones
+- **Open Files and Folders** - Open Files and Folders directly from corners and zones
+- **Run Apple and Bash Scripts** - Run scripts directly from corners and zones
+- **Open Websites** - Open Websites directly from corners and zones
+- **In App Actions** - Trigger in app actions directly from corners and zones
+- **Simulate Hotkeys** - Trigger keyboard shortcuts directly from your screen corners and zones
+- **System Commands** - Run system commands directly from your screen corners and zones
+- **Tools** - Access useful tools from your screen corners and zones
+- **Non Intrusive** - A clean experience similar to the one provided by Apple's implementation
+- **Configurable** - Disable any corner or zone and control app behaviors
+- **Lightweight & Native** - Built with Swift and SwiftUI for native performance and modern macOS styling.
+
+...and more...
+
 ## Installation
 
 **Requires macOS 13.0 and later**
