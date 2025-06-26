@@ -9,9 +9,11 @@
 <br>
 <br>
 
+<div align="center">
 [![GitHub License](https://img.shields.io/github/license/monuk7735/mew-notch)](LICENSE)
 [![Downloads](https://img.shields.io/github/downloads/monuk7735/mew-notch/total.svg)](https://github.com/monuk7735/mew-notch/releases)
 [![macOS Version](https://img.shields.io/badge/macOS-13.0%2B-blue.svg)](https://www.apple.com/macos/)
+</div>
 
 SuperCorners is a macOS app that takes your screen corners to the next level.
 
