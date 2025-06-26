@@ -99,6 +99,7 @@ struct AppLinksView: View {
 
             Button("Done") {
                 dismiss()
+                showReleaseNotes()
             }
             .keyboardShortcut(.cancelAction)
             .frame(maxWidth: .infinity, alignment: .trailing)
