@@ -9,13 +9,19 @@
 <br>
 <br>
 
-<div align="center">
+<div style="display: flex; justify-content: center; gap: 10px;align-items: center;">
+  <!-- TODO: Updated Badges for SuperCorners on Release -->
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/monuk7735/mew-notch" alt="GitHub License" />
+  </a>
 
-[![GitHub License](https://img.shields.io/github/license/monuk7735/mew-notch)](LICENSE)
+  <a href="https://github.com/monuk7735/mew-notch/releases">
+    <img src="https://img.shields.io/github/downloads/monuk7735/mew-notch/total.svg" alt="Downloads" />
+  </a>
 
-[![Downloads](https://img.shields.io/github/downloads/monuk7735/mew-notch/total.svg)](https://github.com/monuk7735/mew-notch/releases)
-
-[![macOS Version](https://img.shields.io/badge/macOS-13.0%2B-blue.svg)](https://www.apple.com/macos/)
+  <a href="https://www.apple.com/macos/">
+    <img src="https://img.shields.io/badge/macOS-13.0%2B-blue.svg" alt="macOS Version" />
+  </a>
 
 </div>
 
