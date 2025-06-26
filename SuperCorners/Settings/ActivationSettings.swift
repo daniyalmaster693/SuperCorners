@@ -23,6 +23,7 @@ struct ActivationSettingsView: View {
 
     // Ignored applications list
     @State private var ignoredApps: [String] = []
+    @State private var showIgnoredAppsModal = false
 
     var body: some View {
         VStack(spacing: 8) {
@@ -46,7 +47,7 @@ struct ActivationSettingsView: View {
                             .foregroundColor(.primary)
                         Spacer()
                         Button("Configure") {
-                            // Add Action
+                            showIgnoredAppsModal = true
                         }
                         .buttonStyle(.bordered)
                     }
@@ -116,6 +117,9 @@ struct ActivationSettingsView: View {
             }
             .formStyle(.grouped)
             .frame(maxWidth: 700)
+        }
+        .sheet(isPresented: $showIgnoredAppsModal) {
+            IgnoredApplicationsView()
         }
     }
 }
