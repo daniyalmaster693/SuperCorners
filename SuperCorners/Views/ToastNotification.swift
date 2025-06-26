@@ -2,10 +2,13 @@ import AppKit
 import SwiftUI
 
 class ToastWindowController {
+    @AppStorage("showToastNotifications") var showToastNotifications = true
+
     private var panel: NSPanel?
     private var timer: Timer?
 
     func showToast(message: String, icon: Image? = nil, duration: TimeInterval = 3.0) {
+        guard showToastNotifications else { return }
         if panel == nil {
             let toastView = ToastView(message: message, icon: icon)
             let hostingView = NSHostingView(rootView: toastView)

@@ -11,6 +11,7 @@ struct BehaviorSettingsView: View {
     @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 5.0
     @AppStorage("playSoundEffect") private var playSoundEffect = false
     @AppStorage("disableInFullScreen") private var disableInFullScreen = false
+    @AppStorage("showToastNotifications") private var showToastNotification = true
 
     var body: some View {
         VStack(spacing: 8) {
@@ -39,6 +40,14 @@ struct BehaviorSettingsView: View {
                 }
 
                 Section {
+                    Toggle(isOn: $showToastNotification) {
+                        HStack {
+                            Image(systemName: "bell.badge")
+                                .foregroundColor(.secondary)
+                            Text("Show Toast Notifications")
+                        }
+                    }
+
                     Toggle(isOn: $playSoundEffect) {
                         HStack {
                             Image(systemName: "speaker.wave.2")
