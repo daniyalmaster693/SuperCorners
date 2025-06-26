@@ -22,7 +22,7 @@
 
 SuperCorners is a macOS app that takes your screen corners to the next level.
 
-I've always loved the Hot Corners feature on macOS, but it's always felt very limited. So I built SuperCorner, which aims to provide a more polished and powerful experience. It builds on Apple's built in Hot Corners with extra trigger zones while providing more control and smarter automation, transforming each corner and zone into a powerful part of your productivity system.
+I've always loved the Hot Corners feature on macOS, but it's always felt very limited. So I built SuperCorners, which aims to provide a more polished and powerful experience. It builds on Apple's built in Hot Corners with extra trigger zones while providing more control and smarter automation, transforming each corner and zone into a powerful part of your productivity system.
 
 ## Features
 
