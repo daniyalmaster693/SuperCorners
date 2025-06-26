@@ -78,6 +78,7 @@ struct SuperCornersApp: App {
         WindowGroup {
             ContentView()
                 .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+                .containerBackground(.ultraThickMaterial, for: .window)
         }
         
         MenuBarExtra("Menu", systemImage: "rectangle.3.group") {
@@ -202,6 +203,7 @@ struct SuperCornersApp: App {
         Settings {
             SettingsView()
                 .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+                .containerBackground(.ultraThickMaterial, for: .window)
         }
         
         .commands {
