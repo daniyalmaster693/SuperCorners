@@ -33,7 +33,8 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 - **Simulate Hotkeys** - Trigger keyboard shortcuts directly from your screen corners and zones
 - **System Commands** - Run system commands directly from your screen corners and zones
 - **Tools** - Access useful tools from your screen corners and zones
-- **Non Intrusive** - A clean experience similar to the one provided by Apple's implementation
+- **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
+- **Visual Feedback** - Subtle toast notifications appear briefly to provide visual feedback for actions
 - **Configurable** - Disable any corner or zone and control app behaviors
 - **Lightweight & Native** - Built with Swift and SwiftUI for native performance and modern macOS styling.
 
@@ -50,6 +51,11 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 **Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
 
 ## Usage
+
+1. Launch **SuperCorners** after granting permissions
+2. A walkthrough will launch the first time you open the app, and explain how to use the app and ask you to set up a few things
+3. Use the activation hotkey (set in the settings window) to trigger corners and zones when moving your mouse to a corner or the middle of any screen edge.
+4. Enjoy the upgraded hot corners experience!
 
 ## Dependencies
 
