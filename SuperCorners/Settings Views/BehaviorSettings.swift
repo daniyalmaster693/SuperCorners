@@ -10,7 +10,6 @@ import SwiftUI
 struct BehaviorSettingsView: View {
     @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 5.0
     @AppStorage("playSoundEffect") private var playSoundEffect = false
-    @AppStorage("disableInFullScreen") private var disableInFullScreen = false
     @AppStorage("showToastNotifications") private var showToastNotification = true
 
     var body: some View {
@@ -53,16 +52,6 @@ struct BehaviorSettingsView: View {
                             Image(systemName: "speaker.wave.2")
                                 .foregroundColor(.secondary)
                             Text("Play Sound Effect on Trigger")
-                        }
-                    }
-                }
-
-                Section {
-                    Toggle(isOn: $disableInFullScreen) {
-                        HStack {
-                            Image(systemName: "arrow.up.left.and.arrow.down.right")
-                                .foregroundColor(.secondary)
-                            Text("Disable in Full Screen")
                         }
                     }
                 }
