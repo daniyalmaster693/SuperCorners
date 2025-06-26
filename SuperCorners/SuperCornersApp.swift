@@ -235,33 +235,27 @@ struct SuperCornersApp: App {
         .commands {
             CommandGroup(replacing: .help) {
                 Button("SuperCorners Help") {
-                    if let url = URL(string: "https://github.com") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners") {
                         NSWorkspace.shared.open(url)
                     }
                 }
                 
                 Divider()
                 
-                Button("Github Repository") {
-                    if let url = URL(string: "https://github.com") {
+                Button("Feedback") {
+                    if let url = URL(string: "https://forms.gle/VdMdmpVyr1Cj4f6T8") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                
+                Button("Changelog") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/blob/main/CHANGELOG.md") {
                         NSWorkspace.shared.open(url)
                     }
                 }
                 
                 Button("License") {
-                    if let url = URL(string: "https://github.com") {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-                
-                Button("Privacy Policy") {
-                    if let url = URL(string: "https://github.com") {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-                
-                Button("Terms & Conditions") {
-                    if let url = URL(string: "https://github.com") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/blob/main/License") {
                         NSWorkspace.shared.open(url)
                     }
                 }

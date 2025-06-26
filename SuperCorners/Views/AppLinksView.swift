@@ -66,10 +66,11 @@ struct AppLinksView: View {
                 Section(header: Text("Links")) {
                     ForEach(
                         [
-                            ("GitHub Repository", "https://github.com"),
-                            ("License", "https://github.com"),
-                            ("Privacy Policy", "https://github.com"),
-                            ("Terms & Conditions", "https://github.com")
+                            ("SuperCorners Help", "https://github.com/daniyalmaster693/SuperCorners"),
+                            ("Feedback", "https://forms.gle/VdMdmpVyr1Cj4f6T8"),
+                            ("Changelog", "https://github.com/daniyalmaster693/SuperCorners/blob/main/CHANGELOG.md"),
+                            ("License", "https://github.com/daniyalmaster693/SuperCorners/blob/main/License"),
+
                         ],
                         id: \.0
                     ) { item in
