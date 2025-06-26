@@ -42,8 +42,9 @@ func showWalkthrough() {
  
 @main
 struct SuperCornersApp: App {
-    // Dock Variable
+    // Settings Variables
     
+    @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
     @AppStorage("showInDock") private var showInDock = true
     
     // Corner and Zone Variables
@@ -102,7 +103,7 @@ struct SuperCornersApp: App {
             }
         }
         
-        MenuBarExtra("Menu", systemImage: "rectangle.3.group") {
+        MenuBarExtra("Menu", systemImage: "rectangle.3.group", isInserted: $showMenuBarExtra) {
             VStack {
                 let topLeftTitle = cornerActionBindings[.topLeft]?.title
                 let topRightTitle = cornerActionBindings[.topRight]?.title

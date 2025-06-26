@@ -9,7 +9,7 @@ import LaunchAtLogin
 import SwiftUI
 
 struct GeneralSettingsView: View {
-    @AppStorage("showMenuBarIcon") private var showMenuBarIcon = true
+    @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
     @AppStorage("showInDock") private var showInDock = true
 
     var body: some View {
@@ -21,7 +21,7 @@ struct GeneralSettingsView: View {
             Form {
                 Section {
                     HStack {
-                        Toggle(isOn: $showMenuBarIcon) {
+                        Toggle(isOn: $showMenuBarExtra) {
                             HStack {
                                 Image(systemName: "menubar.rectangle")
                                     .foregroundColor(.secondary)
