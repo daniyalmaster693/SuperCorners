@@ -229,7 +229,7 @@ struct SuperCornersApp: App {
                 }
                 
                 Button("Changelog") {
-                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/blob/main/CHANGELOG.md") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/releases") {
                         NSWorkspace.shared.open(url)
                     }
                 }

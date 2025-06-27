@@ -86,7 +86,7 @@ struct AppLinksView: View {
                         [
                             ("SuperCorners Help", "https://github.com/daniyalmaster693/SuperCorners"),
                             ("Feedback", "https://forms.gle/VdMdmpVyr1Cj4f6T8"),
-                            ("Changelog", "https://github.com/daniyalmaster693/SuperCorners/blob/main/CHANGELOG.md"),
+                            ("Changelog", "https://github.com/daniyalmaster693/SuperCorners/releases"),
                             ("License", "https://github.com/daniyalmaster693/SuperCorners/blob/main/License"),
 
                         ],
