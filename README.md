@@ -37,7 +37,7 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 - **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
 - **Visual Feedback** - Subtle toast notifications appear briefly to provide visual feedback for actions.
 - **Configurable** - Disable any corner or zone and control app behaviors.
-- **Native** - Built with Swift and SwiftUI for native performance and modern macOS styling.
+- **Native** - Built with Swift and SwiftUI for a seamless experience that feels well integrated with macOS.
 
 ...and more...
 
