@@ -13,6 +13,8 @@ struct ActionLibraryView: View {
 
     @State private var searchText = ""
     @State private var selectedActionID: String?
+    @State private var showTemplateModal = false
+    @State private var templateInput = ""
 
     let corner: CornerPosition.Corner
     var onUpdate: () -> Void
@@ -99,12 +101,16 @@ struct ActionLibraryView: View {
 
             Button("Done") {
                 if let selectedID = selectedActionID,
-                   let selectedAction = cornerActions.first(where: { $0.id == selectedID })
-                {
-                UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
-                    onUpdate()
+                   let selectedAction = cornerActions.first(where: { $0.id == selectedID }) {
+                    
+                    if selectedAction.requiresInput {
+                        showTemplateModal = true
+                    } else {
+                        UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
+                        onUpdate()
+                        dismiss()
+                    }
                 }
-                dismiss()
             }
             .keyboardShortcut(.defaultAction)
             .frame(maxWidth: 375, alignment: .trailing)
@@ -112,5 +118,30 @@ struct ActionLibraryView: View {
         .padding(.top, 15)
         .frame(minWidth: 250, minHeight: 460)
         .padding()
+        .sheet(isPresented: $showTemplateModal) {
+            VStack(spacing: 12) {
+                Text(cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt ?? "Enter Input")
+                    .font(.headline)
+
+                TextField("Input", text: $templateInput)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+
+                Button("Assign") {
+                    if let selectedID = selectedActionID,
+                       let selectedAction = cornerActions.first(where: { $0.id == selectedID }) {
+                        UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
+                        UserDefaults.standard.set(templateInput, forKey: "cornerInput_\(corner.rawValue)")
+                        onUpdate()
+                        showTemplateModal = false
+                        dismiss()
+                    }
+                }
+                .keyboardShortcut(.defaultAction)
+                .disabled(templateInput.trimmingCharacters(in: .whitespaces).isEmpty)
+            }
+            .padding()
+            .frame(width: 350)
+        }
     }
 }

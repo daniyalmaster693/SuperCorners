@@ -16,7 +16,10 @@ struct CornerAction: Identifiable {
     let description: String
     let iconName: String
     let tag: String
-    let perform: () -> Void
+    let requiresInput: Bool
+    let inputKey: String? = nil
+    let inputPrompt: String? = nil
+    let perform: (_ input: String?) -> Void
 }
 
 let cornerActions: [CornerAction] = [
@@ -26,7 +29,8 @@ let cornerActions: [CornerAction] = [
         description: "Activate the screen saver",
         iconName: "display",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let path = "/System/Library/CoreServices/ScreenSaverEngine.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
             showSuccessToast()
@@ -39,7 +43,8 @@ let cornerActions: [CornerAction] = [
         description: "Sleep your Mac",
         iconName: "moon.fill",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/pmset"
             task.arguments = ["displaysleepnow"]
@@ -54,7 +59,8 @@ let cornerActions: [CornerAction] = [
         description: "Locks your Mac and returns to the login screen.",
         iconName: "lock.fill",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
 
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: 12, keyDown: true)
@@ -70,28 +76,30 @@ let cornerActions: [CornerAction] = [
         }
     ),
 
-    CornerAction(
-        id: "3",
-        title: "Trigger Hotkey",
-        description: "Simulate a custom hotkey press.",
-        iconName: "keyboard",
-        tag: "Template Action",
-        perform: {
-            let src = CGEventSource(stateID: .hidSystemState)
-            let keyCodeO: CGKeyCode = 31
-
-            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: true)
-            keyDown?.flags = [.maskCommand, .maskShift]
-
-            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: false)
-            keyUp?.flags = [.maskCommand, .maskShift]
-
-            let loc = CGEventTapLocation.cghidEventTap
-            keyDown?.post(tap: loc)
-            keyUp?.post(tap: loc)
-            showSuccessToast()
-        }
-    ),
+//    CornerAction(
+//        id: "3",
+//        title: "Trigger Hotkey",
+//        description: "Simulate a custom hotkey press.",
+//        iconName: "keyboard",
+//        tag: "Template Action",
+//        requiresInput: true,
+    ////        inputPrompt: "Record Hotkey",
+//        perform: {
+//            let src = CGEventSource(stateID: .hidSystemState)
+//            let keyCodeO: CGKeyCode = 31
+//
+//            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: true)
+//            keyDown?.flags = [.maskCommand, .maskShift]
+//
+//            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: false)
+//            keyUp?.flags = [.maskCommand, .maskShift]
+//
+//            let loc = CGEventTapLocation.cghidEventTap
+//            keyDown?.post(tap: loc)
+//            keyUp?.post(tap: loc)
+//            showSuccessToast()
+//        }
+//    ),
 
     CornerAction(
         id: "4",
@@ -99,12 +107,15 @@ let cornerActions: [CornerAction] = [
         description: "Open a website in your default browser.",
         iconName: "globe",
         tag: "Template Action",
-        perform: {
-            if let url = URL(string: "https://apple.com") {
+        requiresInput: true,
+//        inputPrompt: "Enter Website URL",
+        perform: { input in
+            if let urlStr = input, let url = URL(string: urlStr) {
                 NSWorkspace.shared.open(url)
+                showSuccessToast()
+            } else {
+                showErrorToast("Invalid URL")
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -114,8 +125,13 @@ let cornerActions: [CornerAction] = [
         description: "Launch an application.",
         iconName: "square.grid.3x3",
         tag: "Template Action",
-        perform: {
-            let path = "/System/Applications/Safari.app"
+        requiresInput: true,
+//        inputPrompt: "Enter Application Path",
+        perform: { input in
+            guard let path = input, !path.isEmpty else {
+                showErrorToast("No path provided")
+                return
+            }
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
             showSuccessToast()
         }
@@ -127,8 +143,13 @@ let cornerActions: [CornerAction] = [
         description: "Run an Apple Shortcut.",
         iconName: "sparkles",
         tag: "Template Action",
-        perform: {
-            let shortcutName = "Start Pomodoro"
+        requiresInput: true,
+//        inputPrompt: "Enter Shortcut Name",
+        perform: { input in
+            guard let shortcutName = input, !shortcutName.isEmpty else {
+                showErrorToast("No shortcut name provided")
+                return
+            }
 
             let task = Process()
             task.launchPath = "/usr/bin/shortcuts"
@@ -162,10 +183,14 @@ let cornerActions: [CornerAction] = [
         description: "Open a folder in Finder.",
         iconName: "folder.fill",
         tag: "Template Action",
-        perform: {
-            let path = "/Applications"
+        requiresInput: true,
+//        inputPrompt: "Enter Folder Path",
+        perform: { input in
+            guard let path = input, !path.isEmpty else {
+                showErrorToast("No folder path provided")
+                return
+            }
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
-
             showSuccessToast()
         }
     ),
@@ -176,7 +201,8 @@ let cornerActions: [CornerAction] = [
         description: "Open the Launchpad to see your apps.",
         iconName: "square.grid.2x2",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let path = "/System/Applications/Launchpad.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
 
@@ -190,7 +216,8 @@ let cornerActions: [CornerAction] = [
         description: "Display all open windows and spaces.",
         iconName: "rectangle.stack.fill",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let path = "/System/Applications/Mission Control.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
 
@@ -204,7 +231,8 @@ let cornerActions: [CornerAction] = [
         description: "Launch the macOS Screenshot utility.",
         iconName: "camera.viewfinder",
         tag: "Capture",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let path = "/System/Applications/Utilities/Screenshot.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
 
@@ -218,7 +246,8 @@ let cornerActions: [CornerAction] = [
         description: "Captures the entire screen.",
         iconName: "rectangle.on.rectangle",
         tag: "Capture",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 20
 
@@ -241,7 +270,8 @@ let cornerActions: [CornerAction] = [
         description: "Captures a custom area of the screen.",
         iconName: "selection.pin.in.out",
         tag: "Capture",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 21
 
@@ -264,7 +294,8 @@ let cornerActions: [CornerAction] = [
         description: "Open QuickTime screen recording window.",
         iconName: "video.fill",
         tag: "Capture",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let quickTimePath = "/System/Applications/QuickTime Player.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: quickTimePath))
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -288,7 +319,8 @@ let cornerActions: [CornerAction] = [
         description: "Open QuickTime movie recording window.",
         iconName: "film.fill",
         tag: "Capture",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let quickTimePath = "/System/Applications/QuickTime Player.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: quickTimePath))
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -312,7 +344,8 @@ let cornerActions: [CornerAction] = [
         description: "Increase system volume by one step.",
         iconName: "speaker.wave.2.fill",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/osascript"
             task.arguments = ["-e", "set volume output volume ((output volume of (get volume settings)) + 10) --100% max"]
@@ -328,7 +361,8 @@ let cornerActions: [CornerAction] = [
         description: "Decrease system volume by one step.",
         iconName: "speaker.wave.1.fill",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/osascript"
             task.arguments = ["-e", "set volume output volume ((output volume of (get volume settings)) - 10) --0% min"]
@@ -344,7 +378,8 @@ let cornerActions: [CornerAction] = [
         description: "Unmute system volume.",
         iconName: "speaker.wave.2.fill",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/osascript"
             task.arguments = ["-e", "set volume without output muted"]
@@ -360,7 +395,8 @@ let cornerActions: [CornerAction] = [
         description: "Mute system volume.",
         iconName: "speaker.slash.fill",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/osascript"
             task.arguments = ["-e", "set volume with output muted"]
@@ -376,7 +412,8 @@ let cornerActions: [CornerAction] = [
         description: "Open the Emoji and Symbol viewer.",
         iconName: "smiley.fill",
         tag: "Tool",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 49 // Space key
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
@@ -396,7 +433,8 @@ let cornerActions: [CornerAction] = [
         description: "Launch the Camera (Photo Booth) app.",
         iconName: "camera.fill",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let path = "/System/Applications/Photo Booth.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
 
@@ -410,7 +448,8 @@ let cornerActions: [CornerAction] = [
         description: "Expand the active window to fill the desktop.",
         iconName: "rectangle.inset.fill",
         tag: "Window Management",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeF: CGKeyCode = 3
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeF, keyDown: true)
@@ -430,7 +469,8 @@ let cornerActions: [CornerAction] = [
         description: "Restore the active window to it's previous size",
         iconName: "arrow.uturn.left.circle",
         tag: "Window Management",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeR: CGKeyCode = 15
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeR, keyDown: true)
@@ -450,7 +490,8 @@ let cornerActions: [CornerAction] = [
         description: "Center the active window on the desktop.",
         iconName: "rectangle.center.inset.fill",
         tag: "Window Management",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeC: CGKeyCode = 8
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeC, keyDown: true)
@@ -470,7 +511,8 @@ let cornerActions: [CornerAction] = [
         description: "Minimize the active window.",
         iconName: "minus.square.fill",
         tag: "Window Management",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 46 // M key
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
@@ -490,7 +532,8 @@ let cornerActions: [CornerAction] = [
         description: "Minimize all windows of the current app.",
         iconName: "rectangle.compress.vertical",
         tag: "Window Management",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 46 // M key
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
@@ -510,7 +553,8 @@ let cornerActions: [CornerAction] = [
         description: "Hide the active app.",
         iconName: "eye.slash.fill",
         tag: "Window Management",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 4 // H key
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
@@ -530,7 +574,8 @@ let cornerActions: [CornerAction] = [
         description: "Hide all apps except the active one.",
         iconName: "eye.slash.circle.fill",
         tag: "Window Management",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 4 // H key
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCode, keyDown: true)
@@ -550,7 +595,8 @@ let cornerActions: [CornerAction] = [
         description: "Open AirDrop in Finder.",
         iconName: "square.and.arrow.up",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let path = "/System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
 
@@ -564,7 +610,8 @@ let cornerActions: [CornerAction] = [
         description: "Start a voice recording in voice memos",
         iconName: "waveform",
         tag: "App Actions",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let voiceMemosPath = "/System/Applications/VoiceMemos.app"
             let url = URL(fileURLWithPath: voiceMemosPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -597,7 +644,8 @@ let cornerActions: [CornerAction] = [
         description: "Create a New Note in Apple Notes",
         iconName: "note.text",
         tag: "App Actions",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let appPath = "/System/Applications/Notes.app"
             let url = URL(fileURLWithPath: appPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -630,7 +678,8 @@ let cornerActions: [CornerAction] = [
         description: "Compose a New Email in Mail",
         iconName: "envelope",
         tag: "App Actions",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let appPath = "/System/Applications/Mail.app"
             let url = URL(fileURLWithPath: appPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -663,7 +712,8 @@ let cornerActions: [CornerAction] = [
         description: "Create a New Event in Calendar",
         iconName: "calendar.badge.plus",
         tag: "App Actions",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let appPath = "/System/Applications/Calendar.app"
             let url = URL(fileURLWithPath: appPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -696,7 +746,8 @@ let cornerActions: [CornerAction] = [
         description: "Create a New Reminder in Reminders",
         iconName: "list.bullet",
         tag: "App Actions",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let appPath = "/System/Applications/Reminder.app"
             let url = URL(fileURLWithPath: appPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -729,7 +780,8 @@ let cornerActions: [CornerAction] = [
         description: "Take a photo in PhotoBooth",
         iconName: "photo",
         tag: "App Actions",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let appPath = "/System/Applications/Photo Booth.app"
             let url = URL(fileURLWithPath: appPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -762,7 +814,8 @@ let cornerActions: [CornerAction] = [
         description: "Open the Spotlight Search Window",
         iconName: "magnifyingglass",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let spaceKeyCode: CGKeyCode = 49 // Space key code
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: spaceKeyCode, keyDown: true)
@@ -782,7 +835,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens Msuic and toggles Playback",
         iconName: "playpause",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -812,7 +866,8 @@ let cornerActions: [CornerAction] = [
         description: "Stops Playback in Apple Music",
         iconName: "play.slash",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -845,7 +900,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens album for currently playing song in Apple Music",
         iconName: "cursorarrow.click",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -878,7 +934,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens Visualizer in Apple Music",
         iconName: "waveform.path",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -911,7 +968,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens Miniplayer in Apple Music",
         iconName: "rectangle.inset.bottomleading.filled",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -944,7 +1002,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens Fullscreen Player in Apple Music",
         iconName: "arrow.up.left.and.arrow.down.right",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -977,7 +1036,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens Equalizer in Apple Music",
         iconName: "slider.horizontal.3",
         tag: "Media",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -1010,7 +1070,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens Finder and Asks to Empty Trash",
         iconName: "trash",
         tag: "Finder",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
             let url = URL(fileURLWithPath: finderPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -1040,7 +1101,8 @@ let cornerActions: [CornerAction] = [
         description: "Pick a color and copy its hex code",
         iconName: "eyedropper",
         tag: "Tool",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let sampler = NSColorSampler()
             sampler.show { pickedColor in
                 guard let color = pickedColor?.usingColorSpace(.displayP3) else { return }
@@ -1068,7 +1130,8 @@ let cornerActions: [CornerAction] = [
         description: "Select a region of the screen to extract text",
         iconName: "text.viewfinder",
         tag: "Tool",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("ocr_capture.png")
             let captureTask = Process()
             captureTask.launchPath = "/usr/sbin/screencapture"
@@ -1111,7 +1174,8 @@ let cornerActions: [CornerAction] = [
         description: "Receive count statistics for your last copied text.",
         iconName: "text.magnifyingglass",
         tag: "Tool",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let pasteboard = NSPasteboard.general
 
             guard let text = pasteboard.string(forType: .string), !text.isEmpty else {
@@ -1167,7 +1231,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens the macOS font panel to preview fonts",
         iconName: "character.circle",
         tag: "Tool",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             NSFontPanel.shared.makeKeyAndOrderFront(nil)
 
             showSuccessToast()
@@ -1180,7 +1245,8 @@ let cornerActions: [CornerAction] = [
         description: "Trigger the Zoom In Keyboard Shortcut.",
         iconName: "plus.magnifyingglass",
         tag: "Accessibility",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeEqual: CGKeyCode = 24 // '=' key
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeEqual, keyDown: true)
@@ -1200,7 +1266,8 @@ let cornerActions: [CornerAction] = [
         description: "Trigger the Zoom Out keyboard shortcut.",
         iconName: "minus.magnifyingglass",
         tag: "Accessibility",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeMinus: CGKeyCode = 27 // '-' key
             let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeMinus, keyDown: true)
@@ -1220,7 +1287,9 @@ let cornerActions: [CornerAction] = [
         description: "Open a file in Finder.",
         iconName: "doc",
         tag: "Template Action",
-        perform: {
+        requiresInput: true,
+//        inputPrompt: "Enter File Path",
+        perform: { _ in
             let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
                 .appendingPathComponent("Downloads/Resume.pdf").path
             NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
@@ -1232,30 +1301,71 @@ let cornerActions: [CornerAction] = [
     CornerAction(
         id: "51",
         title: "Run an Apple Script",
-        description: "Run an Apple Script file.",
+        description: "Run an AppleScript file.",
         iconName: "curlybraces",
         tag: "Template Action",
-        perform: {
-            let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
-                .appendingPathComponent("Downloads/Resume.pdf").path
-            NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
+        requiresInput: true,
+//        inputPrompt: "Enter AppleScript File Path",
+        perform: { input in
+            guard let scriptPath = input, !scriptPath.isEmpty else {
+                showErrorToast("No script path provided")
+                return
+            }
 
-            showSuccessToast()
+            let scriptURL = URL(fileURLWithPath: scriptPath)
+            if let script = try? String(contentsOf: scriptURL),
+               let appleScript = NSAppleScript(source: script)
+            {
+                var errorDict: NSDictionary?
+                appleScript.executeAndReturnError(&errorDict)
+
+                if let error = errorDict {
+                    showErrorToast("AppleScript Error: \(error)")
+                } else {
+                    showSuccessToast()
+                }
+            } else {
+                showErrorToast("Invalid AppleScript path or file")
+            }
         }
     ),
 
     CornerAction(
         id: "52",
         title: "Run a Bash Script",
-        description: "Run a Bash Script file.",
+        description: "Run a Bash script file.",
         iconName: "terminal",
         tag: "Template Action",
-        perform: {
-            let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
-                .appendingPathComponent("Downloads/Resume.pdf").path
-            NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
+        requiresInput: true,
+//        inputPrompt: "Enter Bash Script File Path",
+        perform: { input in
+            guard let scriptPath = input, !scriptPath.isEmpty else {
+                showErrorToast("No script path provided")
+                return
+            }
 
-            showSuccessToast()
+            let task = Process()
+            task.launchPath = "/bin/bash"
+            task.arguments = [scriptPath]
+
+            let errorPipe = Pipe()
+            task.standardError = errorPipe
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                if let errorOutput = String(data: errorData, encoding: .utf8),
+                   errorOutput.lowercased().contains("error")
+                {
+                    showErrorToast("Script Error: \(errorOutput)")
+                } else {
+                    showSuccessToast()
+                }
+            } catch {
+                showErrorToast("Failed to run script")
+            }
         }
     ),
 
@@ -1265,7 +1375,8 @@ let cornerActions: [CornerAction] = [
         description: "Show the desktop by hiding all windows.",
         iconName: "desktopcomputer",
         tag: "Window Management",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeH: CGKeyCode = 4 // 'H' key
 
@@ -1288,7 +1399,8 @@ let cornerActions: [CornerAction] = [
         description: "Show or hide hidden files in Finder.",
         iconName: "doc",
         tag: "Finder",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodePeriod: CGKeyCode = 47 // '.' key
 
@@ -1311,7 +1423,8 @@ let cornerActions: [CornerAction] = [
         description: "Creates a new folder in Finder.",
         iconName: "folder.badge.plus",
         tag: "Finder",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
             let url = URL(fileURLWithPath: finderPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -1341,7 +1454,8 @@ let cornerActions: [CornerAction] = [
         description: "Open TextEdit to create a new file.",
         iconName: "doc.text",
         tag: "Finder",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let textEditPath = "/System/Applications/TextEdit.app"
             let url = URL(fileURLWithPath: textEditPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -1360,7 +1474,8 @@ let cornerActions: [CornerAction] = [
         description: "Open the Go To Folder dialog in Finder.",
         iconName: "folder",
         tag: "Finder",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
             let url = URL(fileURLWithPath: finderPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
@@ -1394,7 +1509,8 @@ let cornerActions: [CornerAction] = [
         description: "Toggle system sleep prevention indefinitely on or off.",
         iconName: "powerplug.fill",
         tag: "System",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             if let existingProcess = caffeinateProcess, existingProcess.isRunning {
                 existingProcess.terminate()
                 caffeinateProcess = nil
@@ -1419,7 +1535,8 @@ let cornerActions: [CornerAction] = [
         description: "Display detailed battery status and health.",
         iconName: "battery.100",
         tag: "Developer",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let task = Process()
             task.launchPath = "/usr/sbin/system_profiler"
             task.arguments = ["SPPowerDataType"]
@@ -1452,7 +1569,8 @@ let cornerActions: [CornerAction] = [
         description: "Display how long your Mac has been running.",
         iconName: "timer",
         tag: "Developer",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/uptime"
 
@@ -1484,7 +1602,8 @@ let cornerActions: [CornerAction] = [
         description: "Displays information about your Mac",
         iconName: "desktopcomputer",
         tag: "Developer",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let info = ProcessInfo.processInfo
             let hostname = info.hostName
             let osVersion = info.operatingSystemVersion
@@ -1519,7 +1638,8 @@ let cornerActions: [CornerAction] = [
         description: "Opens a floating note window",
         iconName: "note",
         tag: "Tool",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             let notePanel = FloatingNotePanel()
             notePanel.show()
             showSuccessToast()
@@ -1532,7 +1652,8 @@ let cornerActions: [CornerAction] = [
         description: "Get info about the currently running app.",
         iconName: "i.circle",
         tag: "Developer",
-        perform: {
+        requiresInput: false,
+        perform: { _ in
             if let app = NSWorkspace.shared.frontmostApplication,
                let bundleURL = app.bundleURL,
                let bundle = Bundle(url: bundleURL)

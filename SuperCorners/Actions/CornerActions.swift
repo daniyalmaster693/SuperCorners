@@ -70,6 +70,7 @@ func triggerCornerAction(for corner: CornerPosition.Corner) {
             }
         }
 
-        action.perform()
+        let input = UserDefaults.standard.string(forKey: "cornerInput_\(corner.rawValue)")
+        action.perform(input)
     }
 }
