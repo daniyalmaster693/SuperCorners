@@ -101,9 +101,13 @@ struct ActionLibraryView: View {
 
             Button("Done") {
                 if let selectedID = selectedActionID,
-                   let selectedAction = cornerActions.first(where: { $0.id == selectedID }) {
-                    
+                   let selectedAction = cornerActions.first(where: { $0.id == selectedID })
+                {
                     if selectedAction.requiresInput {
+                        if selectedAction.requiresInput {
+                            templateInput = ""
+                            showTemplateModal = true
+                        }
                         showTemplateModal = true
                     } else {
                         UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
@@ -121,15 +125,28 @@ struct ActionLibraryView: View {
         .sheet(isPresented: $showTemplateModal) {
             VStack(spacing: 12) {
                 Text(cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt ?? "Enter Input")
-                    .font(.headline)
+                    .font(.title2)
+                    .padding(.top, 15)
+                    .padding(.bottom, 2)
+                    .bold()
 
-                TextField("Input", text: $templateInput)
+                Text("Enter a valid input for the action to assign it")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 20)
+                    .frame(maxWidth: 350)
+
+                TextField("Enter Action Input...", text: $templateInput)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                    .frame(maxWidth: 350, maxHeight: 230)
+                    .padding(.bottom, 25)
+
+                Divider().frame(maxWidth: 350)
 
                 Button("Assign") {
                     if let selectedID = selectedActionID,
-                       let selectedAction = cornerActions.first(where: { $0.id == selectedID }) {
+                       let selectedAction = cornerActions.first(where: { $0.id == selectedID })
+                    {
                         UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
                         UserDefaults.standard.set(templateInput, forKey: "cornerInput_\(corner.rawValue)")
                         onUpdate()
@@ -139,9 +156,31 @@ struct ActionLibraryView: View {
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(templateInput.trimmingCharacters(in: .whitespaces).isEmpty)
+                .keyboardShortcut(.defaultAction)
+                .frame(maxWidth: 375, alignment: .trailing)
             }
+            .frame(width: 325)
+            .padding(.top, 15)
             .padding()
-            .frame(width: 350)
+            .onAppear {
+                guard templateInput.isEmpty,
+                      let inputPrompt = cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt
+                else {
+                    return
+                }
+
+                switch inputPrompt {
+                case "Enter Application Path":
+                    templateInput = "Applications/"
+                case "Enter Website URL":
+                    templateInput = "https://"
+                case "Enter Folder Path", "Enter File Path", "Enter AppleScript File Path", "Enter Bash Script File Path":
+                    let homePath = FileManager.default.homeDirectoryForCurrentUser.path
+                    templateInput = "\(homePath)/"
+                default:
+                    break
+                }
+            }
         }
     }
 }

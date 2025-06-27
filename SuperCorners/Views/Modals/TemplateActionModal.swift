@@ -10,32 +10,36 @@ import SwiftUI
 struct TemplateModalView: View {
     @Environment(\.dismiss) var dismiss
     @State private var inputText: String = ""
+    let inputPrompt: String
 
     var body: some View {
         VStack(spacing: 8) {
-            Text("Enter Action Input")
-                .font(.title2)
-                .bold()
-                .frame(maxWidth: .infinity, alignment: .center)
+            Text(inputPrompt)
+                .font(.title)
                 .padding(.top, 15)
-                .padding(.bottom, 7)
+                .bold()
+
+            Text("Enter a valid input for the action to assign it")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .padding(.bottom, 27)
+                .frame(maxWidth: 300)
 
             TextField("Enter Action Input...", text: $inputText)
-                .textFieldStyle(.roundedBorder)
-                .frame(maxWidth: 300)
-                .padding(.bottom, 14)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(maxWidth: 375, maxHeight: 230)
+                .padding(.bottom, 25)
 
-            Divider().frame(maxWidth: 300)
+            Divider().frame(maxWidth: 375)
 
             Button("Done") {
                 dismiss()
             }
             .keyboardShortcut(.defaultAction)
-            .frame(maxWidth: 300, alignment: .trailing)
-            .padding(.top, 10)
+            .frame(maxWidth: 375, alignment: .trailing)
         }
+        .padding(.top, 15)
+        .frame(minWidth: 250, minHeight: 460)
         .padding()
-        .frame(width: 325)
-        .formStyle(.grouped)
     }
 }
