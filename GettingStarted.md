@@ -6,11 +6,7 @@
 - You can customize the hotkey and trigger sensitivity in the Settings Menu under "Behavior".
 - **Note (as of v1.0.0)**: Actions are applied globally across all displays and cannot be configured per display. This means you can trigger any assigned action from any connected screen.
 
-**Corner Demo**  
-[Download/View Corner Demo](./Assets/SuperCorners-Corner-Demo.mov)
-
-**Zone Demo**  
-[Download/View Zone Demo](./Assets/SuperCorners-Zone-Demo.mov)
+<img src="/Assets/SuperCorners-Dark-1.png" width="100%" alt="SuperCorners"/><br/>
 
 ### 2. Assigning Actions
 
