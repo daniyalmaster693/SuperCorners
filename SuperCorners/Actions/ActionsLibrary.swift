@@ -86,7 +86,7 @@ let cornerActions: [CornerAction] = [
 //        iconName: "keyboard",
 //        tag: "Template Action",
 //        requiresInput: true,
-    ////        inputPrompt: "Record Hotkey",
+//        inputPrompt: "Record Hotkey",
 //        perform: {
 //            let src = CGEventSource(stateID: .hidSystemState)
 //            let keyCodeO: CGKeyCode = 31

@@ -9,5 +9,4 @@ import KeyboardShortcuts
 
 extension KeyboardShortcuts.Name {
     static let cornerActivation = Self("cornerActivation")
-    static let zoneActivation = Self("zoneActivation")
 }
