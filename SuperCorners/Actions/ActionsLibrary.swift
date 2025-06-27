@@ -79,30 +79,30 @@ let cornerActions: [CornerAction] = [
         }
     ),
 
-//    CornerAction(
-//        id: "3",
-//        title: "Trigger Hotkey",
-//        description: "Simulate a custom hotkey press.",
-//        iconName: "keyboard",
-//        tag: "Template Action",
-//        requiresInput: true,
-//        inputPrompt: "Record Hotkey",
-//        perform: {
-//            let src = CGEventSource(stateID: .hidSystemState)
-//            let keyCodeO: CGKeyCode = 31
-//
-//            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: true)
-//            keyDown?.flags = [.maskCommand, .maskShift]
-//
-//            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: false)
-//            keyUp?.flags = [.maskCommand, .maskShift]
-//
-//            let loc = CGEventTapLocation.cghidEventTap
-//            keyDown?.post(tap: loc)
-//            keyUp?.post(tap: loc)
-//            showSuccessToast()
-//        }
-//    ),
+    CornerAction(
+        id: "3",
+        title: "Trigger Hotkey",
+        description: "Simulate a custom hotkey press.",
+        iconName: "keyboard",
+        tag: "Template Action",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeO: CGKeyCode = 31
+
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: true)
+            keyDown?.flags = [.maskCommand, .maskShift]
+
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: false)
+            keyUp?.flags = [.maskCommand, .maskShift]
+
+            let loc = CGEventTapLocation.cghidEventTap
+            keyDown?.post(tap: loc)
+            keyUp?.post(tap: loc)
+            showSuccessToast()
+        }
+    ),
 
     CornerAction(
         id: "4",
