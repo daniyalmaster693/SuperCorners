@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ZoneView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     // Action Picker Variables
 
     @State private var showModal = false
@@ -57,7 +59,7 @@ struct ZoneView: View {
 
                             Spacer()
 
-                            Image("SequoiaWallpaper")
+                            Image(colorScheme == .dark ? "ClassicWallpaperDark" : "ClassicWallpaperLight")
                                 .resizable()
                                 .aspectRatio(16 / 9, contentMode: .fit)
                                 .cornerRadius(12)

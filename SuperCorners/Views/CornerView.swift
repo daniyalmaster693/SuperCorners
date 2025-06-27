@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CornerView: View {
+    @Environment(\.colorScheme) var colorScheme
+
     // Action Picker Variables
 
     @State private var showModal = false
@@ -57,7 +59,7 @@ struct CornerView: View {
 
                             Spacer()
 
-                            Image("SequoiaWallpaper")
+                            Image(colorScheme == .dark ? "ClassicWallpaperDark" : "ClassicWallpaperLight")
                                 .resizable()
                                 .aspectRatio(16 / 9, contentMode: .fit)
                                 .cornerRadius(12)
@@ -70,6 +72,7 @@ struct CornerView: View {
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.bordered)
+                                                .tint(.white)
                                                 .position(x: 0 + 75, y: 0 + 20)
                                             }
 
