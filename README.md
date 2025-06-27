@@ -55,9 +55,10 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 
 1. Launch **SuperCorners**.
 2. Grant Necessary Permissions (**Accessibility permission must be enabled for the app to work correctly**).
-3. A walkthrough will launch the first time you open the app, and explain how to use the app and ask you to set up a few things.
-4. Use the activation hotkey (set in the settings window) to trigger corners and zones when moving your mouse to a corner or the middle of any screen edge.
-5. Enjoy the upgraded hot corners experience!
+3. Use the activation hotkey (set in the settings window) to trigger corners and zones when moving your mouse to a corner or the middle of any screen edge.
+4. Enjoy the upgraded hot corners experience!
+
+For more information visit the [Getting Started Guide](./GettingStarted.md)
 
 ## Dependencies
 
