@@ -40,7 +40,7 @@ struct SuperCornersApp: App {
     @State private var refreshID = UUID()
     
     // Walkthrough
-    
+
     init() {
         DispatchQueue.main.async {
             activateCornerHotkey()
