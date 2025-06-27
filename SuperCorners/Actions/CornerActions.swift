@@ -59,6 +59,17 @@ func triggerCornerAction(for corner: CornerPosition.Corner) {
     }
 
     if let action = cornerActionBindings[corner] {
+        if let frontApp = NSWorkspace.shared.frontmostApplication,
+           let frontAppPath = frontApp.bundleURL?.path
+        {
+            if let data = UserDefaults.standard.data(forKey: "ignoredAppPaths"),
+               let ignoredPaths = try? JSONDecoder().decode([String].self, from: data),
+               ignoredPaths.contains(frontAppPath)
+            {
+                return
+            }
+        }
+
         action.perform()
     }
 }
