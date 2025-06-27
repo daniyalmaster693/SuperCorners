@@ -45,14 +45,6 @@ struct SuperCornersApp: App {
         DispatchQueue.main.async {
             activateCornerHotkey()
         }
-        
-        let hasLaunchedBeforeKey = "hasLaunchedBefore"
-        let userDefaults = UserDefaults.standard
-
-        if !userDefaults.bool(forKey: hasLaunchedBeforeKey) {
-            showWalkthrough()
-            userDefaults.set(true, forKey: hasLaunchedBeforeKey)
-        }
     }
     
     func updateActivationPolicy() {
