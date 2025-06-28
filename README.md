@@ -31,7 +31,6 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 - **Run Apple and Bash Scripts** - Run scripts directly from corners and zones.
 - **Open Websites** - Open Websites directly from corners and zones.
 - **In App Actions** - Trigger in app actions directly from corners and zones.
-- **Simulate Hotkeys** - Trigger keyboard shortcuts directly from your screen corners and zones.
 - **System Commands** - Run system commands directly from your screen corners and zones.
 - **Tools** - Access useful tools from your screen corners and zones.
 - **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
