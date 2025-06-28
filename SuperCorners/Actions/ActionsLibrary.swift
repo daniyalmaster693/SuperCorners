@@ -1753,4 +1753,27 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "64",
+        title: "Restart Dock",
+        description: "Restarts the macOS Dock process.",
+        iconName: "rectangle.dock",
+        tag: "Developer",
+        requiresInput: false,
+        inputPrompt: nil,
+        perform: { _ in
+            let task = Process()
+            task.launchPath = "/usr/bin/killall"
+            task.arguments = ["Dock"]
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+                showSuccessToast()
+            } catch {
+                showErrorToast("Failed to restart Dock")
+            }
+        }
+    )
 ]
