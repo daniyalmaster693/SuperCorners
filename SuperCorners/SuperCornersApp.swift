@@ -42,6 +42,21 @@ struct SuperCornersApp: App {
     // Walkthrough
 
     init() {
+        if !AXIsProcessTrusted() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let alert = NSAlert()
+                alert.messageText = "Accessibility Permission Required"
+                alert.informativeText = "SuperCorners needs accessibility access to function correctly. Please enable it in System Settings > Privacy & Security > Accessibility."
+                alert.addButton(withTitle: "Open Settings")
+                alert.addButton(withTitle: "Cancel")
+                let response = alert.runModal()
+                if response == .alertFirstButtonReturn {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+            }
+        }
         DispatchQueue.main.async {
             activateCornerHotkey()
         }
