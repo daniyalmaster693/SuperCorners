@@ -25,6 +25,7 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 
 ## Features
 
+- **Additional Zones** - Trigger actions when moving your mouse the middle of any screen edge.
 - **Launch Apps** - Launch apps directly from corners and zones.
 - **Run Shortcuts** - Run shortcuts directly from corners and zones.
 - **Open Files and Folders** - Open Files and Folders directly from corners and zones.
@@ -67,8 +68,7 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [ ] Allow assigning actions per app
 - [ ] Ability to use different hotkeys to switch between action sets.
 - [ ] Template action to trigger a hotkey
-- [ ] Apple Script for in app actions
-- [ ] Running Bash Scripts (might not be possible)
+- [ ] Apple Script for completing actions in other apps
 - [ ] Action List for the Menubar Command (a seperate menu to trigger more actions)
 - [ ] Radial Menu to Trigger Actions for Corners or Zones
 
