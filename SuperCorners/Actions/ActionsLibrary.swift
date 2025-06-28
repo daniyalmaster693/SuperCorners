@@ -206,7 +206,7 @@ let cornerActions: [CornerAction] = [
                 return
             }
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
-            showSuccessToast()
+            showSuccessToast("Opened Folder")
         }
     ),
 
@@ -1346,12 +1346,13 @@ let cornerActions: [CornerAction] = [
         tag: "Template Action",
         requiresInput: true,
         inputPrompt: "Enter File Path",
-        perform: { _ in
-            let downloadsPath = FileManager.default.homeDirectoryForCurrentUser
-                .appendingPathComponent("Downloads/Resume.pdf").path
-            NSWorkspace.shared.open(URL(fileURLWithPath: downloadsPath))
-
-            showSuccessToast()
+        perform: { input in
+            guard let path = input, !path.isEmpty else {
+                showErrorToast("No folder path provided")
+                return
+            }
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+            showSuccessToast("Opened File")
         }
     ),
 
@@ -1362,48 +1363,16 @@ let cornerActions: [CornerAction] = [
         iconName: "curlybraces",
         tag: "Template Action",
         requiresInput: true,
-        inputPrompt: "Enter AppleScript File Path",
+        inputPrompt: "Enter File Path",
         perform: { input in
-            guard let scriptPath = input, !scriptPath.isEmpty else {
-                showErrorToast("No script path provided")
-                return
-            }
-
-            let scriptURL = URL(fileURLWithPath: scriptPath)
-            if let script = try? String(contentsOf: scriptURL),
-               let appleScript = NSAppleScript(source: script)
-            {
-                var errorDict: NSDictionary?
-                appleScript.executeAndReturnError(&errorDict)
-
-                if let error = errorDict {
-                    showErrorToast("AppleScript Error: \(error)")
-                } else {
-                    showSuccessToast()
-                }
-            } else {
-                showErrorToast("Invalid AppleScript path or file")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "52",
-        title: "Run a Bash Script",
-        description: "Run a Bash script file.",
-        iconName: "terminal",
-        tag: "Template Action",
-        requiresInput: true,
-        inputPrompt: "Enter Bash Script File Path",
-        perform: { input in
-            guard let scriptPath = input, !scriptPath.isEmpty else {
-                showErrorToast("No script path provided")
+            guard let path = input, !path.isEmpty else {
+                showErrorToast("No file path provided")
                 return
             }
 
             let task = Process()
-            task.launchPath = "/bin/bash"
-            task.arguments = [scriptPath]
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = [path]
 
             let errorPipe = Pipe()
             task.standardError = errorPipe
@@ -1414,20 +1383,20 @@ let cornerActions: [CornerAction] = [
 
                 let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
                 if let errorOutput = String(data: errorData, encoding: .utf8),
-                   errorOutput.lowercased().contains("error")
+                   !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                 {
-                    showErrorToast("Script Error: \(errorOutput)")
+                    showErrorToast("AppleScript error: \(errorOutput)")
                 } else {
-                    showSuccessToast()
+                    showSuccessToast("AppleScript executed")
                 }
             } catch {
-                showErrorToast("Failed to run script")
+                showErrorToast("Failed to run AppleScript: \(error.localizedDescription)")
             }
         }
     ),
 
     CornerAction(
-        id: "53",
+        id: "52",
         title: "Reveal Desktop",
         description: "Show the desktop by hiding all windows.",
         iconName: "desktopcomputer",
@@ -1452,7 +1421,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "54",
+        id: "53",
         title: "Toggle Hidden Files",
         description: "Show or hide hidden files in Finder.",
         iconName: "doc",
@@ -1477,7 +1446,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "55",
+        id: "54",
         title: "Create New Folder",
         description: "Creates a new folder in Finder.",
         iconName: "folder.badge.plus",
@@ -1509,7 +1478,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "56",
+        id: "55",
         title: "Create New File",
         description: "Open TextEdit to create a new file.",
         iconName: "doc.text",
@@ -1530,7 +1499,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "57",
+        id: "56",
         title: "Open Go To Folder",
         description: "Open the Go To Folder dialog in Finder.",
         iconName: "folder",
@@ -1566,7 +1535,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "58",
+        id: "57",
         title: "Toggle Keep Awake",
         description: "Toggle system sleep prevention indefinitely on or off.",
         iconName: "powerplug.fill",
@@ -1593,7 +1562,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "59",
+        id: "58",
         title: "Show Battery Info",
         description: "Display detailed battery status and health.",
         iconName: "battery.100",
@@ -1628,7 +1597,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "60",
+        id: "59",
         title: "Show System Uptime",
         description: "Display how long your Mac has been running.",
         iconName: "timer",
@@ -1662,7 +1631,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "61",
+        id: "60",
         title: "Show System Information",
         description: "Displays information about your Mac",
         iconName: "desktopcomputer",
@@ -1699,7 +1668,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "62",
+        id: "61",
         title: "Floating Note Window",
         description: "Opens a floating note window",
         iconName: "note",
@@ -1714,7 +1683,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "63",
+        id: "62",
         title: "Get App Info",
         description: "Get info about the currently running app.",
         iconName: "i.circle",
@@ -1755,7 +1724,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "64",
+        id: "63",
         title: "Restart Dock",
         description: "Restarts the macOS Dock process.",
         iconName: "rectangle.dock",
@@ -1770,7 +1739,7 @@ let cornerActions: [CornerAction] = [
             do {
                 try task.run()
                 task.waitUntilExit()
-                showSuccessToast()
+                showSuccessToast("Restarted Dockr")
             } catch {
                 showErrorToast("Failed to restart Dock")
             }
