@@ -62,7 +62,7 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 
 ## Roadmap
 
-- [ ] Fix toast messages not showing up when app is not active
+- [x] ~~Fix toast messages not showing up when app is not active~~
 - [ ] Improve toast success and error logic
 - [ ] Allow assigning seperate actions per monitor
 - [ ] Allow assigning actions per app
