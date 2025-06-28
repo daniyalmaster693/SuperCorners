@@ -15,7 +15,7 @@ class ToastWindowController {
             hostingView.frame = NSRect(x: 0, y: 0, width: 300, height: 50)
 
             panel = NSPanel(contentRect: hostingView.frame,
-                            styleMask: [.borderless],
+                            styleMask: [.nonactivatingPanel],
                             backing: .buffered,
                             defer: false)
             panel?.contentView = hostingView
@@ -25,6 +25,8 @@ class ToastWindowController {
             panel?.isOpaque = false
             panel?.hasShadow = true
             panel?.ignoresMouseEvents = true
+            panel?.hidesOnDeactivate = false
+            panel?.collectionBehavior = [.canJoinAllSpaces, .transient, .ignoresCycle]
         } else {
             if let hostingView = panel?.contentView as? NSHostingView<ToastView> {
                 hostingView.rootView = ToastView(message: message, icon: icon)

@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>SuFeedURL</key>
+	<key>SUFeedURL</key>
 	<string>https://daniyalmaster693.github.io/SuperCorners/appcast.xml</string>
 </dict>
 </plist>
