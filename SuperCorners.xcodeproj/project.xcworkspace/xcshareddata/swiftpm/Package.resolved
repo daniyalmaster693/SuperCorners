@@ -1,5 +1,5 @@
 {
-  "originHash" : "2e3e50ba024e1415badbdeefa38500f20d20ffc3c6d18b3f7c94daa971b6355c",
+  "originHash" : "d429369469656cb43eac81fa203d9faacb4580efb6b71d86dbef25524e748b9e",
   "pins" : [
     {
       "identity" : "keyboardshortcuts",
@@ -17,6 +17,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "a04ec1c363be3627734f6dad757d82f5d4fa8fcc"
+      }
+    },
+    {
+      "identity" : "soulvercore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/soulverteam/SoulverCore",
+      "state" : {
+        "revision" : "649996596de41172a4c67ffb801fe875a03b3c86",
+        "version" : "3.1.0"
       }
     },
     {

@@ -1744,5 +1744,20 @@ let cornerActions: [CornerAction] = [
                 showErrorToast("Failed to restart Dock")
             }
         }
-    )
+    ),
+
+    CornerAction(
+        id: "64",
+        title: "NL Calculator",
+        description: "Perform Calcuations using Natural Language",
+        iconName: "captions.bubble",
+        tag: "Tool",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let calculatorPanel = FloatingCalculatorPanel()
+            calculatorPanel.show()
+            showSuccessToast()
+        }
+    ),
 ]
