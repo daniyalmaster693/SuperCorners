@@ -81,26 +81,38 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "3",
-        title: "Trigger Hotkey",
-        description: "Simulate a custom hotkey press.",
-        iconName: "keyboard",
+        title: "Open Last File in Folder",
+        description: "Opens the newest file in a folder you specify.",
+        iconName: "folder",
         tag: "Template Action",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let src = CGEventSource(stateID: .hidSystemState)
-            let keyCodeO: CGKeyCode = 31
+        requiresInput: true,
+        inputPrompt: "Enter Folder Path",
+        perform: { input in
+            guard let folderPath = input, !folderPath.isEmpty else {
+                showErrorToast("Please enter a valid folder path")
+                return
+            }
 
-            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: true)
-            keyDown?.flags = [.maskCommand, .maskShift]
+            let folderURL = URL(fileURLWithPath: folderPath)
+            let fileManager = FileManager.default
 
-            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeO, keyDown: false)
-            keyUp?.flags = [.maskCommand, .maskShift]
+            guard let files = try? fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: [.creationDateKey], options: [.skipsHiddenFiles]) else {
+                showErrorToast("Could not access folder")
+                return
+            }
 
-            let loc = CGEventTapLocation.cghidEventTap
-            keyDown?.post(tap: loc)
-            keyUp?.post(tap: loc)
-            showSuccessToast()
+            let sortedFiles = files.sorted {
+                let date1 = (try? $0.resourceValues(forKeys: [.creationDateKey]).creationDate) ?? Date.distantPast
+                let date2 = (try? $1.resourceValues(forKeys: [.creationDateKey]).creationDate) ?? Date.distantPast
+                return date1 > date2
+            }
+
+            if let latestFile = sortedFiles.first {
+                NSWorkspace.shared.open(latestFile)
+                showSuccessToast()
+            } else {
+                showErrorToast("No files found in folder")
+            }
         }
     ),
 
