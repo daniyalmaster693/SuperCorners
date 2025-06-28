@@ -59,6 +59,19 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 
 For more information visit the [Getting Started Guide](./GettingStarted.md)
 
+## Roadmap
+
+- [ ] Fix toast messages not showing up when app is not active
+- [ ] Improve toast success and error logic
+- [ ] Allow assigning seperate actions per monitor
+- [ ] Allow assigning actions per app
+- [ ] Ability to use different hotkeys to switch between action sets.
+- [ ] Template action to trigger a hotkey
+- [ ] Apple Script for in app actions
+- [ ] Running Bash Scripts (might not be possible)
+- [ ] Action List for the Menubar Command (a seperate menu to trigger more actions)
+- [ ] Radial Menu to Trigger Actions for Corners or Zones
+
 ## Dependencies
 
 - [Keyboard Shortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
