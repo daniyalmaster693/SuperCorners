@@ -8,7 +8,7 @@
 
 <div align="center">
 
-[![GitHub License](https://img.shields.io/github/license/daniyalmaster693/SuperCorners)](LICENSE)
+[![GitHub License](https://img.shields.io/github/license/daniyalmaster693/SuperCorners)](License)
 [![Downloads](https://img.shields.io/github/downloads/daniyalmaster693/SuperCorners/total.svg)](https://github.com/daniyalmaster693/SuperCorners/releases)
 [![macOS Version](https://img.shields.io/badge/macOS-13.0%2B-blue.svg)](https://www.apple.com/macos/)
 
@@ -84,4 +84,4 @@ Any contributions and feedback is welcome! Feel free to open issues or submit pu
 
 ## License
 
-This project is licensed under the [GPLv3 License](LICENSE).
+This project is licensed under the [GPLv3 License](License).

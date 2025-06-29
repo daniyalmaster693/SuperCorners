@@ -99,25 +99,35 @@ struct ActionLibraryView: View {
 
             Divider().frame(maxWidth: 375)
 
-            Button("Done") {
-                if let selectedID = selectedActionID,
-                   let selectedAction = cornerActions.first(where: { $0.id == selectedID })
-                {
-                    if selectedAction.requiresInput {
+            HStack {
+                Button("Cancel") {
+                    dismiss()
+                }
+                .keyboardShortcut(.cancelAction)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Button("Done") {
+                    if let selectedID = selectedActionID,
+                       let selectedAction = cornerActions.first(where: { $0.id == selectedID })
+                    {
                         if selectedAction.requiresInput {
-                            templateInput = ""
+                            if selectedAction.requiresInput {
+                                templateInput = ""
+                                showTemplateModal = true
+                            }
                             showTemplateModal = true
+                        } else {
+                            UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
+                            onUpdate()
+                            dismiss()
                         }
-                        showTemplateModal = true
-                    } else {
-                        UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
-                        onUpdate()
-                        dismiss()
                     }
                 }
+                .keyboardShortcut(.defaultAction)
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .keyboardShortcut(.defaultAction)
-            .frame(maxWidth: 375, alignment: .trailing)
+            .padding(.horizontal, 3)
+            .frame(maxWidth: 375)
         }
         .padding(.top, 15)
         .frame(minWidth: 250, minHeight: 460)

@@ -32,6 +32,7 @@ struct AppLinksView: View {
     }
 
     var body: some View {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
         VStack(spacing: 8) {
             if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
                let nsImage = NSImage(contentsOfFile: iconPath)
@@ -47,17 +48,15 @@ struct AppLinksView: View {
                     .cornerRadius(12)
             }
 
-            if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-                Text("SuperCorners ")
-                    .font(.title2)
-                    .bold()
-                    .foregroundColor(.primary)
-                    +
-                    Text(version)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.secondary)
-            }
+            Text("SuperCorners ")
+                .font(.title2)
+                .bold()
+                .foregroundColor(.primary)
+                +
+                Text(version)
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundColor(.secondary)
 
             Form {
                 Section {
@@ -65,7 +64,7 @@ struct AppLinksView: View {
                         Text("Version")
                             .foregroundColor(.primary)
                         Spacer()
-                        Text("1.0")
+                        Text(version)
                             .foregroundColor(.secondary)
                     }
 
@@ -118,7 +117,7 @@ struct AppLinksView: View {
             Button("Done") {
                 dismiss()
             }
-            .keyboardShortcut(.cancelAction)
+            .keyboardShortcut(.defaultAction)
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding()
