@@ -24,7 +24,6 @@ struct FloatingCalculatorContentView: View {
             if self.calculatorInput.isEmpty {
                 Text("Use the = sign to calculate")
                     .foregroundColor(Color.gray.opacity(0.6))
-                    .padding(.top, 12)
                     .padding(.leading, 5)
             }
 
@@ -32,7 +31,6 @@ struct FloatingCalculatorContentView: View {
                 ScrollView {
                     TextEditor(text: self.$calculatorInput)
                         .font(.system(size: 14))
-                        .padding(.top, 12)
                         .scrollContentBackground(.hidden)
                         .background(Color.clear)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -55,13 +53,12 @@ struct FloatingCalculatorContentView: View {
                             }
                         }
                     }
-                    .padding(.top, 12)
                     .frame(width: 120, alignment: .leading)
                 }
             }
         }
         .padding()
-        .frame(width: 425, height: 260)
+        .frame(minWidth: 425, minHeight: 260)
     }
 }
 

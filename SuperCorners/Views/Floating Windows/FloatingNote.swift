@@ -24,7 +24,6 @@ struct FloatingNoteContentView: View {
             if self.textInput.isEmpty {
                 Text("Click to Start Writing...")
                     .foregroundColor(Color.gray.opacity(0.6))
-                    .padding(.top, 12)
                     .padding(.leading, 5)
             }
 
@@ -32,12 +31,12 @@ struct FloatingNoteContentView: View {
                 ScrollView {
                     TextEditor(text: self.$textInput)
                         .font(.system(size: 14))
-                        .padding(.top, 12)
                         .padding(.bottom, 12)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                         .scrollContentBackground(.hidden)
                         .background(Color.clear)
                 }
+                .frame(maxHeight: .infinity)
 
                 HStack {
                     Text("Words: \(self.wordCount)")
@@ -50,8 +49,10 @@ struct FloatingNoteContentView: View {
                 .padding(.top, 8)
                 .padding(.bottom, 8)
             }
+            .frame(maxHeight: .infinity)
         }
-        .frame(width: 300, height: 200)
+        .padding()
+        .frame(minWidth: 300, minHeight: 200)
     }
 }
 
