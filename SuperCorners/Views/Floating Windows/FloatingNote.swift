@@ -11,6 +11,14 @@ import SwiftUI
 struct FloatingNoteContentView: View {
     @AppStorage("floatingNoteMessage") private var textInput: String = ""
 
+    var wordCount: Int {
+        self.textInput.split { $0.isWhitespace || $0.isNewline }.count
+    }
+
+    var characterCount: Int {
+        self.textInput.count
+    }
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             if self.textInput.isEmpty {
@@ -19,14 +27,28 @@ struct FloatingNoteContentView: View {
                     .padding(.top, 12)
                     .padding(.leading, 5)
             }
-            
-            ScrollView {
-                TextEditor(text: self.$textInput)
-                    .font(.system(size: 14))
-                    .padding(.top, 12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .scrollContentBackground(.hidden)
-                    .background(Color.clear)
+
+            VStack(spacing: 0) {
+                ScrollView {
+                    TextEditor(text: self.$textInput)
+                        .font(.system(size: 14))
+                        .padding(.top, 12)
+                        .padding(.bottom, 12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
+                }
+
+                HStack {
+                    Text("Words: \(self.wordCount)")
+                    Spacer()
+                    Text("Characters: \(self.characterCount)")
+                }
+                .font(.footnote)
+                .foregroundColor(.secondary)
+                .padding(.horizontal)
+                .padding(.top, 8)
+                .padding(.bottom, 8)
             }
         }
         .frame(width: 300, height: 200)
