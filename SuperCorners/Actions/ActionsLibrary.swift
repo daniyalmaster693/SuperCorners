@@ -1480,21 +1480,48 @@ let cornerActions: [CornerAction] = [
     CornerAction(
         id: "55",
         title: "Create New File",
-        description: "Open TextEdit to create a new file.",
+        description: "Creates a new file in a user selected folder.",
         iconName: "doc.text",
         tag: "Finder",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
-            let textEditPath = "/System/Applications/TextEdit.app"
-            let url = URL(fileURLWithPath: textEditPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+            let panel = NSOpenPanel()
+            panel.canChooseDirectories = true
+            panel.canChooseFiles = false
+            panel.allowsMultipleSelection = false
+            panel.prompt = "Select Folder"
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.TextEdit").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+            panel.begin { result in
+                guard result == .OK, let folderURL = panel.url else {
+                    showErrorToast("No folder selected.")
+                    return
+                }
+
+                let task = Process()
+                task.launchPath = "/usr/bin/touch"
+                task.arguments = ["file.txt"]
+                task.currentDirectoryURL = folderURL
+
+                let errorPipe = Pipe()
+                task.standardError = errorPipe
+
+                do {
+                    try task.run()
+                    task.waitUntilExit()
+
+                    let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                    if let errorOutput = String(data: errorData, encoding: .utf8),
+                       !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                    {
+                        showErrorToast("Error creating file: \(errorOutput)")
+                    } else {
+                        showSuccessToast("Created file.txt in \(folderURL.path)")
+                    }
+                } catch {
+                    showErrorToast("Failed to create new file: \(error.localizedDescription)")
+                }
             }
-
-            showSuccessToast()
         }
     ),
 
