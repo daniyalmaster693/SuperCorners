@@ -1787,4 +1787,201 @@ let cornerActions: [CornerAction] = [
             showSuccessToast()
         }
     ),
+
+    CornerAction(
+        id: "65",
+        title: "Open Notification Center",
+        description: "Open Notification Center",
+        iconName: "bell.badge",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeN: CGKeyCode = 45
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+            keyDown?.flags = [.maskSecondaryFn]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+            keyUp?.flags = [.maskSecondaryFn]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
+        }
+    ),
+
+    CornerAction(
+        id: "66",
+        title: "Toggle Wi-Fi",
+        description: "Toggles Wi-Fi on or off based on current state.",
+        iconName: "wifi",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: nil,
+        perform: { _ in
+            let statusTask = Process()
+            statusTask.launchPath = "/usr/sbin/networksetup"
+            statusTask.arguments = ["-getairportpower", "en0"]
+
+            let outputPipe = Pipe()
+            statusTask.standardOutput = outputPipe
+
+            do {
+                try statusTask.run()
+                statusTask.waitUntilExit()
+
+                let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                guard let output = String(data: outputData, encoding: .utf8) else {
+                    showErrorToast("Could not read Wi-Fi status.")
+                    return
+                }
+
+                let isOn = output.contains("On")
+                let newState = isOn ? "off" : "on"
+
+                let toggleTask = Process()
+                toggleTask.launchPath = "/usr/sbin/networksetup"
+                toggleTask.arguments = ["-setairportpower", "en0", newState]
+
+                let errorPipe = Pipe()
+                toggleTask.standardError = errorPipe
+
+                try toggleTask.run()
+                toggleTask.waitUntilExit()
+
+                let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+
+                if !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    showErrorToast("Failed to toggle Wi-Fi: \(errorOutput)")
+                } else {
+                    showSuccessToast("Wi-Fi turned \(newState.uppercased()) successfully")
+                }
+
+            } catch {
+                showErrorToast("Failed to toggle Wi-Fi: \(error.localizedDescription)")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "67",
+        title: "List Network Services",
+        description: "Shows the system's network service order",
+        iconName: "list.bullet.rectangle",
+        tag: "Developer",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let task = Process()
+            task.launchPath = "/usr/sbin/networksetup"
+            task.arguments = ["-listnetworkserviceorder"]
+
+            let outputPipe = Pipe()
+            task.standardOutput = outputPipe
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: data, encoding: .utf8) ?? "No output"
+
+                DispatchQueue.main.async {
+                    let panel = FloatingPanel(initialMessage: output)
+                    panel.show()
+                    showSuccessToast("Service order listed")
+                }
+            } catch {
+                showErrorToast("Failed to list services: \(error.localizedDescription)")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "69",
+        title: "Get Web Proxy",
+        description: "Displays current web proxy settings for Wi-Fi",
+        iconName: "network",
+        tag: "Developer",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let task = Process()
+            task.launchPath = "/usr/sbin/networksetup"
+            task.arguments = ["-getwebproxy", "Wi-Fi"]
+
+            let outputPipe = Pipe()
+            task.standardOutput = outputPipe
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: data, encoding: .utf8) ?? "No output"
+
+                DispatchQueue.main.async {
+                    let panel = FloatingPanel(initialMessage: output)
+                    panel.show()
+                    showSuccessToast("Web proxy status retrieved")
+                }
+            } catch {
+                showErrorToast("Failed to get web proxy status: \(error.localizedDescription)")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "70",
+        title: "Toggle Web Proxy",
+        description: "Toggles the web proxy on or off based on current status.",
+        iconName: "network.badge.shield.half.filled",
+        tag: "Developer",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let statusTask = Process()
+            statusTask.launchPath = "/usr/sbin/networksetup"
+            statusTask.arguments = ["-getwebproxy", "Wi-Fi"]
+
+            let statusPipe = Pipe()
+            statusTask.standardOutput = statusPipe
+
+            do {
+                try statusTask.run()
+                statusTask.waitUntilExit()
+
+                let data = statusPipe.fileHandleForReading.readDataToEndOfFile()
+                guard let output = String(data: data, encoding: .utf8) else {
+                    showErrorToast("Could not read web proxy status")
+                    return
+                }
+
+                let isEnabled = output.contains("Enabled: Yes")
+                let newState = isEnabled ? "off" : "on"
+                let toggleTask = Process()
+                toggleTask.launchPath = "/usr/sbin/networksetup"
+                toggleTask.arguments = ["-setwebproxystate", "Wi-Fi", newState]
+
+                let errorPipe = Pipe()
+                toggleTask.standardError = errorPipe
+
+                try toggleTask.run()
+                toggleTask.waitUntilExit()
+
+                let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
+                let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
+
+                if !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    showErrorToast("Failed to toggle Web Proxy: \(errorOutput)")
+                } else {
+                    showSuccessToast("Web Proxy turned \(newState.uppercased())")
+                }
+
+            } catch {
+                showErrorToast("Failed to toggle Web Proxy: \(error.localizedDescription)")
+            }
+        }
+    ),
 ]
