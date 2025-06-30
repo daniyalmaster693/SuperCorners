@@ -16,7 +16,7 @@ var cornerActionBindings: [CornerPosition.Corner: CornerAction] {
         return cornerActions.first(where: { $0.id == savedID }) ?? cornerActions[defaultIndex]
     }
 
-    bindings[.topLeft] = action(forKey: "cornerBinding_topLeft", defaultIndex: 0)
+    bindings[.topLeft] = action(forKey: "cornerBinding_topLeft", defaultIndex: 64)
     bindings[.topRight] = action(forKey: "cornerBinding_topRight", defaultIndex: 62)
     bindings[.bottomLeft] = action(forKey: "cornerBinding_bottomLeft", defaultIndex: 44)
     bindings[.bottomRight] = action(forKey: "cornerBinding_bottomRight", defaultIndex: 45)
