@@ -1899,6 +1899,40 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
+        id: "68",
+        title: "Get DNS Server",
+        description: "Displays current DNS servers for Wi-Fi",
+        iconName: "globe",
+        tag: "Developer",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let task = Process()
+            task.launchPath = "/usr/sbin/networksetup"
+            task.arguments = ["-getdnsservers", "Wi-Fi"]
+
+            let outputPipe = Pipe()
+            task.standardOutput = outputPipe
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: data, encoding: .utf8) ?? "No output"
+
+                DispatchQueue.main.async {
+                    let panel = FloatingPanel(initialMessage: output)
+                    panel.show()
+                    showSuccessToast("DNS retrieved")
+                }
+            } catch {
+                showErrorToast("Failed to get DNS: \(error.localizedDescription)")
+            }
+        }
+    ),
+
+    CornerAction(
         id: "69",
         title: "Get Web Proxy",
         description: "Displays current web proxy settings for Wi-Fi",
@@ -1935,7 +1969,7 @@ let cornerActions: [CornerAction] = [
     CornerAction(
         id: "70",
         title: "Toggle Web Proxy",
-        description: "Toggles the web proxy on or off based on current status.",
+        description: "Toggles the web proxy on or off",
         iconName: "network.badge.shield.half.filled",
         tag: "Developer",
         requiresInput: false,
