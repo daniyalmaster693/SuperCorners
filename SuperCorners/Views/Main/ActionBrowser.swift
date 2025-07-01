@@ -44,7 +44,7 @@ struct ActionCard: View {
         }
         .padding()
         .frame(width: 220, height: 130)
-        .background(Color.purple.opacity(0.75))
+        .background(Color.accentColor)
         .cornerRadius(14)
         .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
     }
