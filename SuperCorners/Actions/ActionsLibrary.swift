@@ -398,37 +398,73 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "17",
-        title: "Unmute Volume",
-        description: "Unmute system volume.",
-        iconName: "speaker.wave.2.fill",
+        title: "Toggle Mute",
+        description: "Toggles system volume mute state.",
+        iconName: "speaker.slash.circle.fill",
         tag: "Media",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/bin/osascript"
-            task.arguments = ["-e", "set volume without output muted"]
-            try? task.run()
+            let getTask = Process()
+            getTask.launchPath = "/usr/bin/osascript"
+            getTask.arguments = ["-e", "output muted of (get volume settings)"]
 
-            showSuccessToast()
+            let outputPipe = Pipe()
+            getTask.standardOutput = outputPipe
+
+            do {
+                try getTask.run()
+                getTask.waitUntilExit()
+
+                let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
+                let isMuted = output.lowercased() == "true"
+
+                let toggleTask = Process()
+                toggleTask.launchPath = "/usr/bin/osascript"
+                toggleTask.arguments = [
+                    "-e",
+                    isMuted ? "set volume without output muted" : "set volume with output muted",
+                ]
+
+                try toggleTask.run()
+                toggleTask.waitUntilExit()
+
+                showSuccessToast(isMuted ? "Unmuted Volume" : "Muted Volume")
+            } catch {
+                showErrorToast("Failed to toggle mute: \(error.localizedDescription)")
+            }
         }
     ),
 
     CornerAction(
         id: "18",
-        title: "Mute Volume",
-        description: "Mute system volume.",
-        iconName: "speaker.slash.fill",
-        tag: "Media",
+        title: "Year In Progress",
+        description: "Get the current year progress",
+        iconName: "clock.arrow.2.circlepath",
+        tag: "Tool",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/bin/osascript"
-            task.arguments = ["-e", "set volume with output muted"]
-            try? task.run()
+            let calendar = Calendar.current
+            let now = Date()
 
-            showSuccessToast()
+            guard
+                let startOfYear = calendar.date(from: calendar.dateComponents([.year], from: now)),
+                let endOfYear = calendar.date(from: DateComponents(year: calendar.component(.year, from: now) + 1))
+            else {
+                showErrorToast("Failed to calculate year progress")
+                return
+            }
+
+            let totalDays = calendar.dateComponents([.day], from: startOfYear, to: endOfYear).day ?? 365
+            let daysPassed = calendar.dateComponents([.day], from: startOfYear, to: now).day ?? 0
+
+            let percentage = (Double(daysPassed) / Double(totalDays)) * 100
+            let formattedPercentage = String(format: "%.1f", percentage)
+
+            showSuccessToast("Year Progress: \(formattedPercentage)% - \(daysPassed) / \(totalDays)", icon: Image(systemName: "clock.fill"))
         }
     ),
 
