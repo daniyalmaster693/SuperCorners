@@ -37,6 +37,7 @@ func activateCornerHotkey() {
     // Activation Using Modifier Key
 
     @AppStorage("selectedModifierKey") var selectedModifier: ModifierKey = .command
+    @AppStorage("enableModifierKey") var enableModifierKey = true
 
     var modifierKeyPressed = false
 
@@ -44,29 +45,31 @@ func activateCornerHotkey() {
         let selectedRaw = UserDefaults.standard.string(forKey: "selectedModifierKey") ?? "Command"
         let selectedModifier = ModifierKey(rawValue: selectedRaw) ?? .command
 
-        if let modifierFlag = selectedModifier.flag {
-            let modifierPressed = event.modifierFlags.contains(modifierFlag)
+        if enableModifierKey {
+            if let modifierFlag = selectedModifier.flag {
+                let modifierPressed = event.modifierFlags.contains(modifierFlag)
 
-            if modifierPressed, !modifierKeyPressed {
-                modifierKeyPressed = true
-                localCornerMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
-                    getCornerMousePosition()
-                    return event
-                }
+                if modifierPressed, !modifierKeyPressed {
+                    modifierKeyPressed = true
+                    localCornerMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
+                        getCornerMousePosition()
+                        return event
+                    }
 
-                globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
-                    getCornerMousePosition()
-                }
-            } else if !modifierPressed, modifierKeyPressed {
-                modifierKeyPressed = false
-                if let local = localCornerMonitor {
-                    NSEvent.removeMonitor(local)
-                    localCornerMonitor = nil
-                }
+                    globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
+                        getCornerMousePosition()
+                    }
+                } else if !modifierPressed, modifierKeyPressed {
+                    modifierKeyPressed = false
+                    if let local = localCornerMonitor {
+                        NSEvent.removeMonitor(local)
+                        localCornerMonitor = nil
+                    }
 
-                if let global = globalCornerMonitor {
-                    NSEvent.removeMonitor(global)
-                    globalCornerMonitor = nil
+                    if let global = globalCornerMonitor {
+                        NSEvent.removeMonitor(global)
+                        globalCornerMonitor = nil
+                    }
                 }
             }
         }

@@ -90,12 +90,12 @@ struct ContentView: View {
         } detail: {
             Group {
                 switch selectedItem {
-                case "actions":
-                    ActionBrowserView()
                 case "corners":
                     CornerView()
                 case "zones":
                     ZoneView()
+                case "actions":
+                    ActionBrowserView()
                 default:
                     Text("No item selected")
                 }

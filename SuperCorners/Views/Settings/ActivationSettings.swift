@@ -23,6 +23,7 @@ struct ActivationSettingsView: View {
 
     // Modifier Key Picker
 
+    @AppStorage("enableModifierKey") private var enableModifierKey = true
     @AppStorage("selectedModifierKey") private var selectedModifier: ModifierKey = .command
 
     enum ModifierKey: String, CaseIterable, Identifiable {
@@ -48,6 +49,14 @@ struct ActivationSettingsView: View {
 
             Form {
                 Section {
+                    Toggle(isOn: $enableModifierKey) {
+                        HStack {
+                            Image(systemName: "command")
+                                .foregroundColor(.secondary)
+                            Text("Modifier Key")
+                        }
+                    }
+
                     HStack {
                         Label("Activation Modifier", systemImage: "square.grid.2x2")
                             .foregroundColor(.primary)
@@ -58,9 +67,12 @@ struct ActivationSettingsView: View {
                             }
                         }
                         .pickerStyle(.menu)
+                        .disabled(!enableModifierKey)
                         .frame(width: 150)
                     }
+                }
 
+                Section {
                     HStack {
                         Label("Activation Shortcut", systemImage: "rectangle.leftthird.inset.filled")
                             .foregroundColor(.primary)
@@ -68,9 +80,7 @@ struct ActivationSettingsView: View {
                         KeyboardShortcuts.Recorder(for: .cornerActivation)
                             .frame(width: 130)
                     }
-                }
 
-                Section {
                     HStack {
                         Label("Ignored Applications", systemImage: "rectangle.slash")
                             .foregroundColor(.primary)
