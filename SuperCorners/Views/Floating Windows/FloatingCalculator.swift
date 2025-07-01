@@ -10,7 +10,7 @@ import SoulverCore
 import SwiftUI
 
 struct FloatingCalculatorContentView: View {
-    @AppStorage("floatingNoteMessage") private var calculatorInput: String = ""
+    @AppStorage("floatingCalculatorMessage") private var calculatorInput: String = ""
     
     let calculator = Calculator(customization: .standard)
        
@@ -128,12 +128,6 @@ struct FloatingCalculatorPanelView: View {
                     self.floatingPanel?.close()
                     self.floatingPanel = nil
                 }
-            }
-            
-            Button("Update Message") {
-                let newMessage = "Updated message at \(Date())"
-                self.message = newMessage
-                self.floatingPanel?.updateMessage(newMessage)
             }
         }
     }

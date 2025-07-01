@@ -58,17 +58,17 @@ struct FloatingNoteContentView: View {
 
 class FloatingNotePanel: NSPanel {
     private var hostingView: NSHostingView<FloatingNoteContentView>
-    
+
     init() {
         self.hostingView = NSHostingView(rootView: FloatingNoteContentView())
-        
+
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: 375, height: 230),
             styleMask: [.nonactivatingPanel, .titled, .closable, .fullSizeContentView, .resizable],
             backing: .buffered,
             defer: false
         )
-        
+
         self.minSize = NSSize(width: 375, height: 230)
         self.isFloatingPanel = true
         self.level = .floating
@@ -77,29 +77,29 @@ class FloatingNotePanel: NSPanel {
         self.standardWindowButton(.miniaturizeButton)?.isHidden = true
         self.standardWindowButton(.zoomButton)?.isHidden = true
         self.isMovableByWindowBackground = true
-        
+
         let visualEffectView = NSVisualEffectView(frame: self.contentView!.bounds)
         visualEffectView.autoresizingMask = [.width, .height]
         visualEffectView.material = .sidebar
         visualEffectView.state = .active
         visualEffectView.blendingMode = .behindWindow
-        
+
         self.hostingView.frame = self.contentView!.bounds
         self.hostingView.autoresizingMask = [.width, .height]
-        
+
         let containerView = NSView(frame: self.contentView!.bounds)
         containerView.autoresizingMask = [.width, .height]
         containerView.addSubview(visualEffectView, positioned: .below, relativeTo: nil)
         containerView.addSubview(self.hostingView)
-        
+
         self.contentView = containerView
         self.center()
         self.alphaValue = 0
     }
-       
+
     func show() {
         self.makeKeyAndOrderFront(nil)
-           
+
         NSAnimationContext.runAnimationGroup { context in
             context.duration = 0.25
             self.animator().alphaValue = 1
@@ -110,7 +110,7 @@ class FloatingNotePanel: NSPanel {
 struct FloatingNotePanelView: View {
     @State private var floatingPanel: FloatingPanel?
     @State private var message: String = "Initial message"
-    
+
     var body: some View {
         VStack {
             Button("Toggle Floating Panel") {
@@ -122,12 +122,6 @@ struct FloatingNotePanelView: View {
                     self.floatingPanel?.close()
                     self.floatingPanel = nil
                 }
-            }
-            
-            Button("Update Message") {
-                let newMessage = "Updated message at \(Date())"
-                self.message = newMessage
-                self.floatingPanel?.updateMessage(newMessage)
             }
         }
     }

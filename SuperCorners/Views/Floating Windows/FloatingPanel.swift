@@ -91,12 +91,6 @@ struct FloatingPanelView: View {
                     self.floatingPanel = nil
                 }
             }
-            
-            Button("Update Message") {
-                let newMessage = "Updated message at \(Date())"
-                self.message = newMessage
-                self.floatingPanel?.updateMessage(newMessage)
-            }
         }
     }
 }
