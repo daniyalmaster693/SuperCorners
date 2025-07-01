@@ -153,21 +153,29 @@ struct ActionLibraryView: View {
 
                 Divider().frame(maxWidth: 350)
 
-                Button("Assign") {
-                    if let selectedID = selectedActionID,
-                       let selectedAction = cornerActions.first(where: { $0.id == selectedID })
-                    {
-                        UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
-                        UserDefaults.standard.set(templateInput, forKey: "cornerInput_\(corner.rawValue)")
-                        onUpdate()
-                        showTemplateModal = false
+                HStack {
+                    Button("Cancel") {
                         dismiss()
                     }
+                    .keyboardShortcut(.cancelAction)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Button("Assign") {
+                        if let selectedID = selectedActionID,
+                           let selectedAction = cornerActions.first(where: { $0.id == selectedID })
+                        {
+                            UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
+                            UserDefaults.standard.set(templateInput, forKey: "cornerInput_\(corner.rawValue)")
+                            onUpdate()
+                            showTemplateModal = false
+                            dismiss()
+                        }
+                    }
+                    .keyboardShortcut(.defaultAction)
+                    .disabled(templateInput.trimmingCharacters(in: .whitespaces).isEmpty)
+                    .keyboardShortcut(.defaultAction)
+                    .frame(maxWidth: 375, alignment: .trailing)
                 }
-                .keyboardShortcut(.defaultAction)
-                .disabled(templateInput.trimmingCharacters(in: .whitespaces).isEmpty)
-                .keyboardShortcut(.defaultAction)
-                .frame(maxWidth: 375, alignment: .trailing)
             }
             .frame(width: 325)
             .padding(.top, 15)
