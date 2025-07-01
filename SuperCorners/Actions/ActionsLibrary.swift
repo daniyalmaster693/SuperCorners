@@ -1857,8 +1857,8 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "66",
-        title: "Toggle Wi-Fi",
-        description: "Toggles Wi-Fi on or off based on current state.",
+        title: "Toggle WiFi",
+        description: "Toggles WiFi on or off based on current state.",
         iconName: "wifi",
         tag: "System",
         requiresInput: false,
