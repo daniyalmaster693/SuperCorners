@@ -34,6 +34,7 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 - **In App Actions** - Trigger in app actions directly from corners and zones.
 - **System Commands** - Run system commands directly from your screen corners and zones.
 - **Tools** - Access useful tools from your screen corners and zones.
+- **Developer Utilities** - Access useful developer related info directly from your screen corners and zones.
 - **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
 - **Visual Feedback** - Subtle toast notifications appear briefly to provide visual feedback for actions.
 - **Configurable** - Disable any corner or zone and control app behaviors.
@@ -74,12 +75,13 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [ ] Action List for the Menubar Command (a seperate menu to trigger more actions)
 - [ ] Radial Menu to Trigger Actions for Corners or Zones
 
-...and more...
+...and more to come...
 
 ## Dependencies
 
 - [Keyboard Shortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
 - [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
+- [SoulverCore](https://github.com/soulverteam/SoulverCore)
 - [Sparkle](https://github.com/sparkle-project/Sparkle)
 
 ## Contributions
