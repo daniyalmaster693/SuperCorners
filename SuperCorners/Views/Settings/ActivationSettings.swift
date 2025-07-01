@@ -30,6 +30,7 @@ struct ActivationSettingsView: View {
         case option = "Option"
         case control = "Control"
         case shift = "Shift"
+        case none = "None"
 
         var id: String { rawValue }
     }
