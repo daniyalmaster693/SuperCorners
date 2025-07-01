@@ -64,6 +64,8 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 
 - [x] ~~Fix toast messages not showing up when app is not active~~
 - [ ] Improve toast success and error logic
+- [ ] Additional trigger methods for corners and zones
+- [ ] Additional Action Modal that can be used for actions when triggered
 - [ ] Allow assigning seperate actions per monitor
 - [ ] Allow assigning actions per app
 - [ ] Ability to use different hotkeys to switch between action sets.
@@ -71,6 +73,8 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [ ] Apple Script for completing actions in other apps
 - [ ] Action List for the Menubar Command (a seperate menu to trigger more actions)
 - [ ] Radial Menu to Trigger Actions for Corners or Zones
+
+...and more...
 
 ## Dependencies
 
