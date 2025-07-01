@@ -238,7 +238,7 @@ struct SuperCornersApp: App {
                 Divider()
                 
                 Button("Feedback") {
-                    if let url = URL(string: "https://forms.gle/VdMdmpVyr1Cj4f6T8") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/issues/new") {
                         NSWorkspace.shared.open(url)
                     }
                 }
