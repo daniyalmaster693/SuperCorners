@@ -8,39 +8,69 @@
 import KeyboardShortcuts
 import SwiftUI
 
+enum ModifierKey: String, CaseIterable, Identifiable {
+    case command = "Command"
+    case option = "Option"
+    case control = "Control"
+    case shift = "Shift"
+    case capsLock = "CapsLock"
+
+    var id: String { rawValue }
+}
+
+extension ModifierKey {
+    var flag: NSEvent.ModifierFlags? {
+        switch self {
+        case .command: return .command
+        case .option: return .option
+        case .control: return .control
+        case .shift: return .shift
+        case .capsLock: return .capsLock
+        }
+    }
+}
+
 var localCornerMonitor: Any?
 var globalCornerMonitor: Any?
 
 func activateCornerHotkey() {
     // Activation Using Modifier Key
 
+    @AppStorage("selectedModifierKey") var selectedModifier: ModifierKey = .command
+
     var modifierKeyPressed = false
 
     NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged]) { event in
-        let modifierPressed = event.modifierFlags.contains(.command)
+        let selectedRaw = UserDefaults.standard.string(forKey: "selectedModifierKey") ?? "Command"
+        let selectedModifier = ModifierKey(rawValue: selectedRaw) ?? .command
 
-        if modifierPressed, !modifierKeyPressed {
-            modifierKeyPressed = true
-            localCornerMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
-                getCornerMousePosition()
-                return event
-            }
+        if let modifierFlag = selectedModifier.flag {
+            let modifierPressed = event.modifierFlags.contains(modifierFlag)
 
-            globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
-                getCornerMousePosition()
-            }
-        } else if !modifierPressed, modifierKeyPressed {
-            modifierKeyPressed = false
-            if let local = localCornerMonitor {
-                NSEvent.removeMonitor(local)
-                localCornerMonitor = nil
-            }
+            if modifierPressed, !modifierKeyPressed {
+                modifierKeyPressed = true
+                localCornerMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
+                    getCornerMousePosition()
+                    return event
+                }
 
-            if let global = globalCornerMonitor {
-                NSEvent.removeMonitor(global)
-                globalCornerMonitor = nil
+                globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
+                    getCornerMousePosition()
+                }
+            } else if !modifierPressed, modifierKeyPressed {
+                modifierKeyPressed = false
+                if let local = localCornerMonitor {
+                    NSEvent.removeMonitor(local)
+                    localCornerMonitor = nil
+                }
+
+                if let global = globalCornerMonitor {
+                    NSEvent.removeMonitor(global)
+                    globalCornerMonitor = nil
+                }
             }
         }
+
         return event
     }
 
