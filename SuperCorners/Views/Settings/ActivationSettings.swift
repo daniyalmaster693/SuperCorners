@@ -21,6 +21,19 @@ struct ActivationSettingsView: View {
     @AppStorage("enableRightZone") private var enableRightZone = true
     @AppStorage("enableBottomZone") private var enableBottomZone = true
 
+    // Modifier Key Picker
+
+    @State private var selectedModifier: ModifierKey = .command
+
+    enum ModifierKey: String, CaseIterable, Identifiable {
+        case command = "Command"
+        case option = "Option"
+        case control = "Control"
+        case shift = "Shift"
+
+        var id: String { rawValue }
+    }
+
     // Ignored applications list
     @State private var ignoredApps: [String] = []
     @State private var showIgnoredAppsModal = false
@@ -35,13 +48,28 @@ struct ActivationSettingsView: View {
             Form {
                 Section {
                     HStack {
-                        Label("Corner Activation Shortcut", systemImage: "square.grid.2x2")
+                        Label("Activation Modifier", systemImage: "square.grid.2x2")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: $selectedModifier) {
+                            ForEach(ModifierKey.allCases) { key in
+                                Text(key.rawValue).tag(key)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .frame(width: 150)
+                    }
+
+                    HStack {
+                        Label("Activation Shortcut", systemImage: "rectangle.leftthird.inset.filled")
                             .foregroundColor(.primary)
                         Spacer()
                         KeyboardShortcuts.Recorder(for: .cornerActivation)
-                            .frame(width: 150)
+                            .frame(width: 130)
                     }
+                }
 
+                Section {
                     HStack {
                         Label("Ignored Applications", systemImage: "rectangle.slash")
                             .foregroundColor(.primary)
