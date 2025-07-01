@@ -1239,8 +1239,15 @@ let cornerActions: [CornerAction] = [
 
             let words = text.split { !$0.isLetter && !$0.isNumber }
             let wordCount = words.count
-            let characters = text.filter { !$0.isWhitespace }
-            let characterCount = characters.count
+
+            let characterCountNoSpaces = text.filter { !$0.isWhitespace }.count
+            let characterCountWithSpaces = text.count
+
+            let paragraphCount = text
+                .split(separator: "\n", omittingEmptySubsequences: true)
+                .filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+                .count
+
             let sentenceCount = text.split { ".!?".contains($0) }.count
 
             let readingSpeed = 90.0
@@ -1250,25 +1257,27 @@ let cornerActions: [CornerAction] = [
             let speakingTimeMinutes = Double(wordCount) / speakingSpeed
 
             func formatTime(_ time: Double) -> String {
-                let minutes = Int(time)
-                let seconds = Int((time - Double(minutes)) * 60)
-                if minutes > 0 {
-                    return "\(minutes)m \(seconds)s"
-                } else {
-                    return "\(seconds)s"
-                }
+                let secondsTotal = max(Int((time * 60).rounded()), 1)
+                let minutes = secondsTotal / 60
+                let seconds = secondsTotal % 60
+                return minutes > 0 ? "\(minutes)m \(seconds)s" : "\(seconds)s"
             }
 
             let readingTimeString = formatTime(readingTimeMinutes)
             let speakingTimeString = formatTime(speakingTimeMinutes)
 
-            let notificationText = """
-            Words: \(wordCount)
-            Characters (no spaces): \(characterCount)
-            Sentences: \(sentenceCount)
-            Estimated Reading Time: \(readingTimeString)
-            Estimated Speaking Time: \(speakingTimeString)
-            """
+            let notificationText =
+                """
+                Words: \(wordCount)
+                Sentences: \(sentenceCount)
+                Paragraphs: \(paragraphCount)
+
+                Characters (no spaces): \(characterCountNoSpaces)
+                Characters (including spaces): \(characterCountWithSpaces)
+
+                Estimated Reading Time: \(readingTimeString)
+                Estimated Speaking Time: \(speakingTimeString)
+                """
 
             DispatchQueue.main.async {
                 let panel = FloatingPanel(initialMessage: "\n\(notificationText)")
