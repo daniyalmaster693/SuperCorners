@@ -23,7 +23,7 @@ struct ActivationSettingsView: View {
 
     // Modifier Key Picker
 
-    @State private var selectedModifier: ModifierKey = .command
+    @AppStorage("selectedModifierKey") private var selectedModifier: ModifierKey = .command
 
     enum ModifierKey: String, CaseIterable, Identifiable {
         case command = "Command"
