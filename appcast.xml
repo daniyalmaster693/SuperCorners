@@ -3,13 +3,13 @@
   <channel>
     <title>SuperCorners Updates</title>
     <item>
-      <title>Version 1.0.1</title>
-      <sparkle:releaseNotesLink>https://github.com/daniyalmaster693/SuperCorners/releases/tag/1.0.1</sparkle:releaseNotesLink>
-      <pubDate>Sat, 28 Jun 2025 11:15:00 +0000</pubDate>
+      <title>Version 1.1.0</title>
+      <sparkle:releaseNotesLink>https://github.com/daniyalmaster693/SuperCorners/releases/tag/1.1.0</sparkle:releaseNotesLink>
+      <pubDate>Wed, 2 July 2025 10:34:00 +0000</pubDate>
       <enclosure
-        url="https://github.com/daniyalmaster693/SuperCorners/releases/download/1.0.1/SuperCorners.zip"
+        url="https://github.com/daniyalmaster693/SuperCorners/releases/tag/1.1.0/SuperCorners.zip"
         sparkle:version="2"
-        sparkle:shortVersionString="1.0.1"
+        sparkle:shortVersionString="1.1.0"
         length="12345678"
         type="application/octet-stream"/>
     </item>
