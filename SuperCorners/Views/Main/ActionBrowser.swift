@@ -34,11 +34,13 @@ struct ActionCard: View {
                     isFavorite.toggle()
                     
                     if isFavorite {
-                        favoriteActions[action.id] = action
-                        print(favoriteActions)
+                        var updatedIDs = favoriteActionIDs
+                        updatedIDs[action.id] = action.id
+                        favoriteActionIDs = updatedIDs
                     } else {
-                        favoriteActions.removeValue(forKey: action.id)
-                        print(favoriteActions)
+                        var updatedIDs = favoriteActionIDs
+                        updatedIDs.removeValue(forKey: action.id)
+                        favoriteActionIDs = updatedIDs
                     }
                     
                     let toastMessage = isFavorite ? "Action Added to Favorites" : "Action Removed from Favorites"
