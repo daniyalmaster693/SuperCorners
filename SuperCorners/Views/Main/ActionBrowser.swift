@@ -16,8 +16,13 @@ struct ActionItem: Identifiable {
 
 struct ActionCard: View {
     let action: CornerAction
-    @State private var isFavorite = false
-    
+
+    @State private var refreshID = UUID()
+
+    private var isFavorite: Bool {
+        favoriteActionIDs[action.id] != nil
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -31,30 +36,32 @@ struct ActionCard: View {
                 Spacer()
 
                 Button(action: {
-                    isFavorite.toggle()
-                    
-                    if isFavorite {
-                        var updatedIDs = favoriteActionIDs
-                        updatedIDs[action.id] = action.id
-                        favoriteActionIDs = updatedIDs
-                    } else {
-                        var updatedIDs = favoriteActionIDs
+                    var updatedIDs = favoriteActionIDs
+                    let newIsFavorite: Bool
+
+                    if favoriteActionIDs[action.id] != nil {
                         updatedIDs.removeValue(forKey: action.id)
-                        favoriteActionIDs = updatedIDs
+                        newIsFavorite = false
+                    } else {
+                        updatedIDs[action.id] = action.id
+                        newIsFavorite = true
                     }
-                    
-                    let toastMessage = isFavorite ? "Action Added to Favorites" : "Action Removed from Favorites"
-                    let toastIcon = Image(systemName: isFavorite ? "star.fill" : "star.slash")
-                    
+
+                    favoriteActionIDs = updatedIDs
+                    refreshID = UUID()
+
+                    let toastMessage = newIsFavorite ? "Action Added to Favorites" : "Action Removed from Favorites"
+                    let toastIcon = Image(systemName: newIsFavorite ? "star.fill" : "star.slash")
                     showSuccessToast(toastMessage, icon: toastIcon)
                 }) {
-                    Image(systemName: isFavorite ? "star.fill" : "star")
+                    Image(systemName: favoriteActionIDs[action.id] != nil ? "star.fill" : "star")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 18, height: 18)
                         .padding(8)
                         .foregroundColor(.white)
                 }
+                .id(refreshID)
                 .buttonStyle(.plain)
             }
 
@@ -62,7 +69,7 @@ struct ActionCard: View {
                 .font(.headline)
                 .foregroundColor(.white)
                 .padding(.top, 8)
-            
+
             Text(action.description)
                 .font(.caption)
                 .foregroundColor(.white.opacity(0.85))

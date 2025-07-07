@@ -190,7 +190,7 @@ struct SuperCornersApp: App {
                     }
                 }
                 
-                Menu("Favorite Actions") {
+                Menu("Favorites") {
                     if favoriteActions.isEmpty {
                         Text("No Actions Favorited")
                             .foregroundColor(.secondary)
