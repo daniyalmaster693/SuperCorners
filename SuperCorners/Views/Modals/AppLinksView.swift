@@ -84,7 +84,7 @@ struct AppLinksView: View {
                     ForEach(
                         [
                             ("SuperCorners Help", "https://github.com/daniyalmaster693/SuperCorners"),
-                            ("Feedback", "https://forms.gle/VdMdmpVyr1Cj4f6T8"),
+                            ("Feedback", "https://github.com/daniyalmaster693/SuperCorners/issues/new"),
                             ("Changelog", "https://github.com/daniyalmaster693/SuperCorners/releases"),
                             ("License", "https://github.com/daniyalmaster693/SuperCorners/blob/main/License"),
 
