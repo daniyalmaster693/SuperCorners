@@ -33,6 +33,14 @@ struct ActionCard: View {
                 Button(action: {
                     isFavorite.toggle()
                     
+                    if isFavorite {
+                        favoriteActions[action.id] = action
+                        print(favoriteActions)
+                    } else {
+                        favoriteActions.removeValue(forKey: action.id)
+                        print(favoriteActions)
+                    }
+                    
                     let toastMessage = isFavorite ? "Action Added to Favorites" : "Action Removed from Favorites"
                     let toastIcon = Image(systemName: isFavorite ? "star.fill" : "star.slash")
                     
