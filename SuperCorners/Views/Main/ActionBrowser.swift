@@ -16,6 +16,7 @@ struct ActionItem: Identifiable {
 
 struct ActionCard: View {
     let action: CornerAction
+    @State private var isFavorite = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -28,6 +29,23 @@ struct ActionCard: View {
                     .padding(.top, 16)
 
                 Spacer()
+
+                Button(action: {
+                    isFavorite.toggle()
+                    
+                    let toastMessage = isFavorite ? "Action Added to Favorites" : "Action Removed from Favorites"
+                    let toastIcon = Image(systemName: isFavorite ? "star.fill" : "star.slash")
+                    
+                    showSuccessToast(toastMessage, icon: toastIcon)
+                }) {
+                    Image(systemName: isFavorite ? "star.fill" : "star")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                        .padding(8)
+                        .foregroundColor(.white)
+                }
+                .buttonStyle(.plain)
             }
 
             Text(action.title)
@@ -352,9 +370,6 @@ struct ActionBrowserView: View {
                         .padding(.top, 6)
                     }
                     .padding(.bottom, 24)
-                    
-                    Divider()
-                        .padding(.horizontal)
                 }
             }
             .padding(.leading, 6)
