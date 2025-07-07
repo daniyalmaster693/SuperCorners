@@ -1317,10 +1317,14 @@ let cornerActions: [CornerAction] = [
 
             DispatchQueue.main.async {
                 let panel = FloatingPanel(initialMessage: "\n\(notificationText)")
+
+                let pasteboard = NSPasteboard.general
+                pasteboard.clearContents()
+                pasteboard.setString(notificationText, forType: .string)
+                showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+
                 panel.show()
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -1658,13 +1662,16 @@ let cornerActions: [CornerAction] = [
                     DispatchQueue.main.async {
                         let panel = FloatingPanel(initialMessage: "Battery Info:\n\(batteryInfo)")
                         panel.show()
+
+                        let pasteboard = NSPasteboard.general
+                        pasteboard.clearContents()
+                        pasteboard.setString(batteryInfo, forType: .string)
+                        showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                     }
                 }
             } catch {
                 showErrorToast("Failed to get Battery Info")
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -1692,13 +1699,16 @@ let cornerActions: [CornerAction] = [
                     DispatchQueue.main.async {
                         let panel = FloatingPanel(initialMessage: "System Uptime:\n\(uptime)")
                         panel.show()
+
+                        let pasteboard = NSPasteboard.general
+                        pasteboard.clearContents()
+                        pasteboard.setString(uptime, forType: .string)
+                        showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                     }
                 }
             } catch {
                 showErrorToast("Failed to Get System Uptime")
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -1733,9 +1743,12 @@ let cornerActions: [CornerAction] = [
             DispatchQueue.main.async {
                 let panel = FloatingPanel(initialMessage: systemInfo)
                 panel.show()
-            }
 
-            showSuccessToast()
+                let pasteboard = NSPasteboard.general
+                pasteboard.clearContents()
+                pasteboard.setString(systemInfo, forType: .string)
+                showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+            }
         }
     ),
 
@@ -1784,7 +1797,10 @@ let cornerActions: [CornerAction] = [
                     let panel = FloatingPanel(initialMessage: infoText)
                     panel.show()
 
-                    showSuccessToast()
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(infoText, forType: .string)
+                    showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                 }
             } else {
                 DispatchQueue.main.async {
@@ -1935,7 +1951,11 @@ let cornerActions: [CornerAction] = [
                 DispatchQueue.main.async {
                     let panel = FloatingPanel(initialMessage: output)
                     panel.show()
-                    showSuccessToast("Service order listed")
+
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(output, forType: .string)
+                    showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                 }
             } catch {
                 showErrorToast("Failed to list services: \(error.localizedDescription)")
@@ -1969,7 +1989,11 @@ let cornerActions: [CornerAction] = [
                 DispatchQueue.main.async {
                     let panel = FloatingPanel(initialMessage: output)
                     panel.show()
-                    showSuccessToast("DNS retrieved")
+
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(output, forType: .string)
+                    showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                 }
             } catch {
                 showErrorToast("Failed to get DNS: \(error.localizedDescription)")
@@ -2003,7 +2027,11 @@ let cornerActions: [CornerAction] = [
                 DispatchQueue.main.async {
                     let panel = FloatingPanel(initialMessage: output)
                     panel.show()
-                    showSuccessToast("Web proxy status retrieved")
+
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(output, forType: .string)
+                    showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                 }
             } catch {
                 showErrorToast("Failed to get web proxy status: \(error.localizedDescription)")
