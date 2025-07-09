@@ -27,16 +27,16 @@ struct FloatingCalculatorContentView: View {
                     .padding(.leading, 5)
             }
 
-            HStack {
+            HSplitView {
                 ScrollView {
                     TextEditor(text: self.$calculatorInput)
                         .font(.system(size: 14))
                         .scrollContentBackground(.hidden)
                         .background(Color.clear)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(minWidth: 240, alignment: .leading)
+                        .padding(.trailing, 15)
                 }
-                
-                Divider()
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 4) {
@@ -53,9 +53,11 @@ struct FloatingCalculatorContentView: View {
                             }
                         }
                     }
-                    .frame(width: 120, alignment: .leading)
+                    .padding(.leading, 8)
+                    .frame(minWidth: 140, alignment: .leading)
                 }
             }
+            .frame(minHeight: 200)
         }
         .padding()
         .frame(minWidth: 425, minHeight: 260)
