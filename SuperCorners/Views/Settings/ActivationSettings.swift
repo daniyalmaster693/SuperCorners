@@ -9,21 +9,11 @@ import KeyboardShortcuts
 import SwiftUI
 
 struct ActivationSettingsView: View {
-    // Enabled corners toggles
-    @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
-    @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
-    @AppStorage("enableBottomLeftCorner") private var enableBottomLeftCorner = true
-    @AppStorage("enableBottomRightCorner") private var enableBottomRightCorner = true
-
-    // Enabled zones toggles
-    @AppStorage("enableTopZone") private var enableTopZone = true
-    @AppStorage("enableLeftZone") private var enableLeftZone = true
-    @AppStorage("enableRightZone") private var enableRightZone = true
-    @AppStorage("enableBottomZone") private var enableBottomZone = true
-
     // Modifier Key Picker
 
     @AppStorage("enableModifierKey") private var enableModifierKey = true
+    @AppStorage("enableCornerHover") private var enableCornerHover = true
+    @AppStorage("enableCornerClick") private var enableCornerClick = false
     @AppStorage("selectedModifierKey") private var selectedModifier: ModifierKey = .command
 
     enum ModifierKey: String, CaseIterable, Identifiable {
@@ -36,9 +26,17 @@ struct ActivationSettingsView: View {
         var id: String { rawValue }
     }
 
-    // Ignored applications list
-    @State private var ignoredApps: [String] = []
-    @State private var showIgnoredAppsModal = false
+    // Enabled corners toggles
+    @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
+    @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
+    @AppStorage("enableBottomLeftCorner") private var enableBottomLeftCorner = true
+    @AppStorage("enableBottomRightCorner") private var enableBottomRightCorner = true
+
+    // Enabled zones toggles
+    @AppStorage("enableTopZone") private var enableTopZone = true
+    @AppStorage("enableLeftZone") private var enableLeftZone = true
+    @AppStorage("enableRightZone") private var enableRightZone = true
+    @AppStorage("enableBottomZone") private var enableBottomZone = true
 
     var body: some View {
         VStack(spacing: 8) {
@@ -80,15 +78,35 @@ struct ActivationSettingsView: View {
                         KeyboardShortcuts.Recorder(for: .cornerActivation)
                             .frame(width: 130)
                     }
+                }
 
-                    HStack {
-                        Label("Ignored Applications", systemImage: "rectangle.slash")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Button("Configure") {
-                            showIgnoredAppsModal = true
+                Section {
+                    Toggle(isOn: Binding(
+                        get: { enableCornerHover },
+                        set: { newValue in
+                            enableCornerHover = newValue
+                            if newValue { enableCornerClick = false }
                         }
-                        .buttonStyle(.bordered)
+                    )) {
+                        HStack {
+                            Image(systemName: "hand.point.up.left")
+                                .foregroundColor(.secondary)
+                            Text("Trigger Actions on Corner Hover")
+                        }
+                    }
+
+                    Toggle(isOn: Binding(
+                        get: { enableCornerClick },
+                        set: { newValue in
+                            enableCornerClick = newValue
+                            if newValue { enableCornerHover = false }
+                        }
+                    )) {
+                        HStack {
+                            Image(systemName: "hand.tap")
+                                .foregroundColor(.secondary)
+                            Text("Trigger Actions on Corner Click")
+                        }
                     }
                 }
 
@@ -156,9 +174,6 @@ struct ActivationSettingsView: View {
             }
             .formStyle(.grouped)
             .frame(maxWidth: 700)
-        }
-        .sheet(isPresented: $showIgnoredAppsModal) {
-            IgnoredApplicationsView()
         }
     }
 }

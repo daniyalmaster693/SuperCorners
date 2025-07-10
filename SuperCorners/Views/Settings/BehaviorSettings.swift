@@ -10,6 +10,10 @@ import SwiftUI
 struct BehaviorSettingsView: View {
     @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 5.0
 
+    // Ignored applications list
+    @State private var ignoredApps: [String] = []
+    @State private var showIgnoredAppsModal = false
+
     @AppStorage("showToastNotifications") private var showToastNotification = true
     @AppStorage("dismissOnClick") private var dismissOnClick = true
     @AppStorage("autoDismissTimer") private var autoDismissTimer: DismissTimer = .seconds3
@@ -89,7 +93,19 @@ struct BehaviorSettingsView: View {
                     }
                 }
 
-                Section("Toast Notifications") {
+                Section {
+                    HStack {
+                        Label("Ignored Applications", systemImage: "rectangle.slash")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Configure") {
+                            self.showIgnoredAppsModal = true
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+
+                Section {
                     Toggle(isOn: self.$showToastNotification) {
                         HStack {
                             Image(systemName: "bell.badge")
@@ -123,7 +139,7 @@ struct BehaviorSettingsView: View {
                     .disabled(!self.showToastNotification)
                 }
 
-                Section("Sound Effects") {
+                Section {
                     Toggle(isOn: self.$playSoundEffect) {
                         HStack {
                             Image(systemName: "speaker.wave.2")
@@ -154,6 +170,8 @@ struct BehaviorSettingsView: View {
 
             .formStyle(.grouped)
             .frame(maxWidth: 700)
+        }.sheet(isPresented: self.$showIgnoredAppsModal) {
+            IgnoredApplicationsView()
         }
     }
 }

@@ -50,7 +50,7 @@ struct GeneralSettingsView: View {
                     }
                 }
 
-                Section("Menu Bar") {
+                Section {
                     Toggle(isOn: $showMenuBarExtra) {
                         HStack {
                             Image(systemName: "menubar.rectangle")
