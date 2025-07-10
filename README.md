@@ -66,14 +66,15 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [x] ~~Fix toast messages not showing up when app is not active~~
 - [ ] Improve toast success and error logic
 - [ ] Additional trigger methods for corners and zones
-- [ ] Additional Action Modal that can be used for actions when triggered
-- [ ] Allow assigning seperate actions per monitor
+- [ ] Action List for the Menubar Command (a seperate menu to trigger more actions)
 - [ ] Allow assigning actions per app
-- [ ] Ability to use different hotkeys to switch between action sets.
 - [ ] Template action to trigger a hotkey
 - [ ] Additional in app actions
-- [ ] Action List for the Menubar Command (a seperate menu to trigger more actions)
 - [ ] Recently used commands list for the Menubar Command
+- [ ] Additional Action Modal that can be used for actions when triggered
+- [ ] Allow assigning seperate actions per monitor
+- [ ] Allow assigning actions per focus mode
+- [ ] Allow creating different global action profiles
 - [ ] Radial Menu to Trigger Actions for Corners or Zones
 
 ...and more to come...
