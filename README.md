@@ -71,8 +71,9 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [ ] Allow assigning actions per app
 - [ ] Ability to use different hotkeys to switch between action sets.
 - [ ] Template action to trigger a hotkey
-- [ ] Apple Script for completing actions in other apps
+- [ ] Additional in app actions
 - [ ] Action List for the Menubar Command (a seperate menu to trigger more actions)
+- [ ] Recently used commands list for the Menubar Command
 - [ ] Radial Menu to Trigger Actions for Corners or Zones
 
 ...and more to come...
