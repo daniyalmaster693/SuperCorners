@@ -11,8 +11,33 @@ private var lastCorner: CornerPosition.Corner?
 
 func getCornerMousePosition() {
     @AppStorage("triggerSensitivity") var triggerSensitivity = 5.0
-    @AppStorage("playSoundEffect") var playSoundEffect = false
     @AppStorage("disableInFullScreen") var disableInFullScreen = false
+
+    @AppStorage("playSoundEffect") var playSoundEffect = false
+    @AppStorage("selectedSoundEffect") var selectedSound: SoundEffect = .purr
+
+    enum SoundEffect: String, CaseIterable, Identifiable {
+        case basso = "Basso"
+        case blow = "Blow"
+        case bottle = "Bottle"
+        case frog = "Frog"
+        case funk = "Funk"
+        case glass = "Glass"
+        case hero = "Hero"
+        case morse = "Morse"
+        case ping = "Ping"
+        case pop = "Pop"
+        case purr = "Purr"
+        case sosumi = "Sosumi"
+        case submarine = "Submarine"
+        case tink = "Tink"
+
+        var id: String { self.rawValue }
+
+        func play() {
+            NSSound(named: NSSound.Name(self.rawValue))?.play()
+        }
+    }
 
     let mousePosition: NSPoint = NSEvent.mouseLocation
 
@@ -43,7 +68,7 @@ func getCornerMousePosition() {
                     lastCorner = corner
                     triggerCornerAction(for: corner)
                     if playSoundEffect {
-                        NSSound(named: NSSound.Name("Purr"))?.play()
+                        NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
                     }
                 }
                 return
