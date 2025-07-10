@@ -60,6 +60,9 @@ struct BehaviorSettingsView: View {
         }
     }
 
+    @AppStorage("showToastsInDND") private var showToastsInDND = true
+    @AppStorage("playSoundsInDND") private var playSoundsInDND = true
+
     var body: some View {
         VStack(spacing: 8) {
             Text("Behavior")
@@ -86,7 +89,7 @@ struct BehaviorSettingsView: View {
                     }
                 }
 
-                Section {
+                Section("Toast Notifications") {
                     Toggle(isOn: self.$showToastNotification) {
                         HStack {
                             Image(systemName: "bell.badge")
@@ -101,6 +104,14 @@ struct BehaviorSettingsView: View {
                                 Image(systemName: "hand.tap")
                                     .foregroundColor(.secondary)
                                 Text("Dismiss on Click")
+                            }
+                        }
+
+                        Toggle(isOn: self.$showToastsInDND) {
+                            HStack {
+                                Image(systemName: "moon")
+                                    .foregroundColor(.secondary)
+                                Text("Show Toast Notifications in Do Not Disturb")
                             }
                         }
 
@@ -120,7 +131,7 @@ struct BehaviorSettingsView: View {
                     .disabled(!self.showToastNotification)
                 }
 
-                Section {
+                Section("Sound Effects") {
                     Toggle(isOn: self.$playSoundEffect) {
                         HStack {
                             Image(systemName: "speaker.wave.2")
@@ -129,25 +140,35 @@ struct BehaviorSettingsView: View {
                         }
                     }
 
-                    HStack {
-                        Label("Choose Sound Effect", systemImage: "waveform")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Picker("", selection: self.$selectedSound) {
-                            ForEach(SoundEffect.allCases) { sound in
-                                Text(sound.rawValue).tag(sound)
+                    Group {
+                        Toggle(isOn: self.$playSoundsInDND) {
+                            HStack {
+                                Image(systemName: "moon")
+                                    .foregroundColor(.secondary)
+                                Text("Play Sound Effects in Do Not Disturb")
                             }
                         }
-                        .pickerStyle(.menu)
-                        .disabled(!self.playSoundEffect)
-                        .frame(width: 150)
-                    }.onChange(of: self.selectedSound) { newSound in
-                        if self.playSoundEffect {
-                            newSound.play()
+
+                        HStack {
+                            Label("Choose Sound Effect", systemImage: "waveform")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Picker("", selection: self.$selectedSound) {
+                                ForEach(SoundEffect.allCases) { sound in
+                                    Text(sound.rawValue).tag(sound)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .frame(width: 150)
+                        }.onChange(of: self.selectedSound) { newSound in
+                            if self.playSoundEffect {
+                                newSound.play()
+                            }
                         }
-                    }
+                    }.disabled(!self.playSoundEffect)
                 }
             }
+
             .formStyle(.grouped)
             .frame(maxWidth: 700)
         }
