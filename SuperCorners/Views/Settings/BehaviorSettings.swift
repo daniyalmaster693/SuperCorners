@@ -10,6 +10,34 @@ import SwiftUI
 struct BehaviorSettingsView: View {
     @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 5.0
     @AppStorage("showToastNotifications") private var showToastNotification = true
+    @AppStorage("dismissOnClick") private var dismissOnClick = false
+    @AppStorage("autoDismissTimer") private var autoDismissTimer: DismissTimer = .seconds3
+
+    enum DismissTimer: String, CaseIterable, Identifiable {
+        case seconds1 = "1 Second"
+        case seconds2 = "2 Seconds"
+        case seconds3 = "3 Seconds"
+        case seconds4 = "4 Seconds"
+        case seconds5 = "5 Seconds"
+        case seconds10 = "10 Seconds"
+        case seconds15 = "15 Seconds"
+        case seconds30 = "30 Seconds"
+
+        var id: String { self.rawValue }
+
+        var duration: TimeInterval {
+            switch self {
+            case .seconds1: return 1
+            case .seconds2: return 2
+            case .seconds3: return 3
+            case .seconds4: return 4
+            case .seconds5: return 5
+            case .seconds10: return 10
+            case .seconds15: return 15
+            case .seconds30: return 30
+            }
+        }
+    }
 
     @AppStorage("playSoundEffect") private var playSoundEffect = false
     @AppStorage("selectedSoundEffect") private var selectedSound: SoundEffect = .purr
@@ -71,6 +99,30 @@ struct BehaviorSettingsView: View {
                             Text("Show Toast Notifications")
                         }
                     }
+
+                    Group {
+                        Toggle(isOn: self.$dismissOnClick) {
+                            HStack {
+                                Image(systemName: "hand.tap")
+                                    .foregroundColor(.secondary)
+                                Text("Dismiss on Click")
+                            }
+                        }
+
+                        HStack {
+                            Label("Auto Dismiss Timer", systemImage: "timer")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Picker("", selection: self.$autoDismissTimer) {
+                                ForEach(DismissTimer.allCases) { interval in
+                                    Text(interval.rawValue).tag(interval)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .frame(width: 150)
+                        }
+                    }
+                    .disabled(!self.showToastNotification)
                 }
 
                 Section {
