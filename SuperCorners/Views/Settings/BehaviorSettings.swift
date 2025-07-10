@@ -107,14 +107,6 @@ struct BehaviorSettingsView: View {
                             }
                         }
 
-                        Toggle(isOn: self.$showToastsInDND) {
-                            HStack {
-                                Image(systemName: "moon")
-                                    .foregroundColor(.secondary)
-                                Text("Show Toast Notifications in Do Not Disturb")
-                            }
-                        }
-
                         HStack {
                             Label("Auto Dismiss Timer", systemImage: "timer")
                                 .foregroundColor(.primary)
@@ -140,32 +132,23 @@ struct BehaviorSettingsView: View {
                         }
                     }
 
-                    Group {
-                        Toggle(isOn: self.$playSoundsInDND) {
-                            HStack {
-                                Image(systemName: "moon")
-                                    .foregroundColor(.secondary)
-                                Text("Play Sound Effects in Do Not Disturb")
+                    HStack {
+                        Label("Choose Sound Effect", systemImage: "waveform")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: self.$selectedSound) {
+                            ForEach(SoundEffect.allCases) { sound in
+                                Text(sound.rawValue).tag(sound)
                             }
                         }
-
-                        HStack {
-                            Label("Choose Sound Effect", systemImage: "waveform")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Picker("", selection: self.$selectedSound) {
-                                ForEach(SoundEffect.allCases) { sound in
-                                    Text(sound.rawValue).tag(sound)
-                                }
-                            }
-                            .pickerStyle(.menu)
-                            .frame(width: 150)
-                        }.onChange(of: self.selectedSound) { newSound in
-                            if self.playSoundEffect {
-                                newSound.play()
-                            }
+                        .pickerStyle(.menu)
+                        .disabled(!self.playSoundEffect)
+                        .frame(width: 150)
+                    }.onChange(of: self.selectedSound) { newSound in
+                        if self.playSoundEffect {
+                            newSound.play()
                         }
-                    }.disabled(!self.playSoundEffect)
+                    }
                 }
             }
 
