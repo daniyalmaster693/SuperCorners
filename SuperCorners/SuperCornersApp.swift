@@ -20,9 +20,13 @@ struct SuperCornersApp: App {
     
     // Settings Variables
     
-    @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
     @AppStorage("showInDock") private var showInDock = true
     
+    @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
+    @AppStorage("showCorners") private var showCorners = true
+    @AppStorage("showZones") private var showZones = true
+    @AppStorage("showFavorites") private var showFavorites = true
+
     // Corner and Zone Variables
     
     @AppStorage("enableTopLeftCorner") var enableTopLeftCorner = true
@@ -97,114 +101,120 @@ struct SuperCornersApp: App {
                 let leftTitle = cornerActionBindings[.left]?.title
                 let rightTitle = cornerActionBindings[.right]?.title
                 let bottomTitle = cornerActionBindings[.bottom]?.title
-
-                Menu("Corners") {
-                    if enableTopLeftCorner {
-                        Button {
-                            triggerCornerAction(for: .topLeft)
-                        } label: {
-                            HStack {
-                                Image(systemName: "inset.filled.topleft.rectangle")
-                                Text(topLeftTitle ?? "Add Action")
+                
+                if showCorners {
+                    Menu("Corners") {
+                        if enableTopLeftCorner {
+                            Button {
+                                triggerCornerAction(for: .topLeft)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "inset.filled.topleft.rectangle")
+                                    Text(topLeftTitle ?? "Add Action")
+                                }
                             }
                         }
-                    }
-
-                    if enableTopRightCorner {
-                        Button {
-                            triggerCornerAction(for: .topRight)
-                        } label: {
-                            HStack {
-                                Image(systemName: "inset.filled.topright.rectangle")
-                                Text(topRightTitle ?? "Add Action")
+                        
+                        if enableTopRightCorner {
+                            Button {
+                                triggerCornerAction(for: .topRight)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "inset.filled.topright.rectangle")
+                                    Text(topRightTitle ?? "Add Action")
+                                }
                             }
                         }
-                    }
-
-                    if enableBottomLeftCorner {
-                        Button {
-                            triggerCornerAction(for: .bottomLeft)
-                        } label: {
-                            HStack {
-                                Image(systemName: "inset.filled.bottomleft.rectangle")
-                                Text(bottomLeftTitle ?? "Add Action")
+                        
+                        if enableBottomLeftCorner {
+                            Button {
+                                triggerCornerAction(for: .bottomLeft)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "inset.filled.bottomleft.rectangle")
+                                    Text(bottomLeftTitle ?? "Add Action")
+                                }
                             }
                         }
-                    }
-
-                    if enableBottomRightCorner {
-                        Button {
-                            triggerCornerAction(for: .bottomRight)
-                        } label: {
-                            HStack {
-                                Image(systemName: "inset.filled.bottomright.rectangle")
-                                Text(bottomRightTitle ?? "Add Action")
+                        
+                        if enableBottomRightCorner {
+                            Button {
+                                triggerCornerAction(for: .bottomRight)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "inset.filled.bottomright.rectangle")
+                                    Text(bottomRightTitle ?? "Add Action")
+                                }
                             }
                         }
                     }
                 }
 
-                Menu("Zones") {
-                    if enableTopZone {
-                        Button {
-                            triggerCornerAction(for: .top)
-                        } label: {
-                            HStack {
-                                Image(systemName: "rectangle.topthird.inset.filled")
-                                Text(topTitle ?? "Add Action")
+                if showZones {
+                    Menu("Zones") {
+                        if enableTopZone {
+                            Button {
+                                triggerCornerAction(for: .top)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "rectangle.topthird.inset.filled")
+                                    Text(topTitle ?? "Add Action")
+                                }
                             }
                         }
-                    }
-
-                    if enableLeftZone {
-                        Button {
-                            triggerCornerAction(for: .left)
-                        } label: {
-                            HStack {
-                                Image(systemName: "rectangle.leadingthird.inset.filled")
-                                Text(leftTitle ?? "Add Action")
+                        
+                        if enableLeftZone {
+                            Button {
+                                triggerCornerAction(for: .left)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "rectangle.leadingthird.inset.filled")
+                                    Text(leftTitle ?? "Add Action")
+                                }
                             }
                         }
-                    }
-
-                    if enableRightZone {
-                        Button {
-                            triggerCornerAction(for: .right)
-                        } label: {
-                            HStack {
-                                Image(systemName: "rectangle.trailingthird.inset.filled")
-                                Text(rightTitle ?? "Add Action")
+                        
+                        if enableRightZone {
+                            Button {
+                                triggerCornerAction(for: .right)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "rectangle.trailingthird.inset.filled")
+                                    Text(rightTitle ?? "Add Action")
+                                }
                             }
                         }
-                    }
-
-                    if enableBottomZone {
-                        Button {
-                            triggerCornerAction(for: .bottom)
-                        } label: {
-                            HStack {
-                                Image(systemName: "rectangle.bottomthird.inset.filled")
-                                Text(bottomTitle ?? "Add Action")
+                        
+                        if enableBottomZone {
+                            Button {
+                                triggerCornerAction(for: .bottom)
+                            } label: {
+                                HStack {
+                                    Image(systemName: "rectangle.bottomthird.inset.filled")
+                                    Text(bottomTitle ?? "Add Action")
+                                }
                             }
                         }
                     }
                 }
                 
-                Menu("Favorites") {
-                    if favoriteActions.isEmpty {
-                        Text("No Actions Favorited")
-                            .foregroundColor(.secondary)
-                            .padding(.vertical, 8)
-                    } else {
-                        let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
-                               
-                        ForEach(sortedActions, id: \.id) { action in
-                            Button {
-                                action.perform(nil)
-                            } label: {
-                                HStack {
-                                    Image(systemName: action.iconName)
-                                    Text(action.title)
+                if showFavorites {
+                    Menu("Favorites") {
+                        if favoriteActions.isEmpty {
+                            Text("No Actions Favorited")
+                                .foregroundColor(.secondary)
+                                .padding(.vertical, 8)
+                        } else {
+                            let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
+                            
+                            ForEach(sortedActions, id: \.id) { action in
+                                Button {
+                                    action.perform(nil)
+                                } label: {
+                                    HStack {
+                                        Image(systemName: action.iconName)
+                                        Text(action.title)
+                                    }
                                 }
                             }
                         }

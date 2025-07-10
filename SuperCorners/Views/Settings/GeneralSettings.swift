@@ -9,8 +9,12 @@ import LaunchAtLogin
 import SwiftUI
 
 struct GeneralSettingsView: View {
-    @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
     @AppStorage("showInDock") private var showInDock = true
+
+    @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
+    @AppStorage("showCorners") private var showCorners = true
+    @AppStorage("showZones") private var showZones = true
+    @AppStorage("showFavorites") private var showFavorites = true
 
     var body: some View {
         VStack(spacing: 4) {
@@ -19,19 +23,6 @@ struct GeneralSettingsView: View {
                 .bold()
 
             Form {
-                Section {
-                    HStack {
-                        Toggle(isOn: $showMenuBarExtra) {
-                            HStack {
-                                Image(systemName: "menubar.rectangle")
-                                    .foregroundColor(.secondary)
-                                Text("Show in Menu Bar")
-                            }
-                        }
-                    }
-                }
-                .padding(.bottom, 4)
-
                 Section {
                     HStack {
                         Image(systemName: "person.crop.circle")
@@ -58,8 +49,44 @@ struct GeneralSettingsView: View {
                         }
                     }
                 }
+
+                Section("Menu Bar") {
+                    Toggle(isOn: $showMenuBarExtra) {
+                        HStack {
+                            Image(systemName: "menubar.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Show in Menu Bar")
+                        }
+                    }
+
+                    Group {
+                        Toggle(isOn: $showCorners) {
+                            HStack {
+                                Image(systemName: "square.grid.2x2")
+                                    .foregroundColor(.secondary)
+                                Text("Show Corners in Menu Bar")
+                            }
+                        }
+
+                        Toggle(isOn: $showZones) {
+                            HStack {
+                                Image(systemName: "rectangle.leftthird.inset.filled")
+                                    .foregroundColor(.secondary)
+                                Text("Show Zones in Menu Bar")
+                            }
+                        }
+
+                        Toggle(isOn: $showFavorites) {
+                            HStack {
+                                Image(systemName: "star")
+                                    .foregroundColor(.secondary)
+                                Text("Show Favorites in Menu Bar")
+                            }
+                        }
+                    }.disabled(!self.showMenuBarExtra)
+                }
             }
-            .formStyle(.grouped)
         }
+        .formStyle(.grouped)
     }
 }
