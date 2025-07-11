@@ -97,7 +97,7 @@ let cornerActions: [CornerAction] = [
             let fileManager = FileManager.default
 
             guard let files = try? fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: [.creationDateKey], options: [.skipsHiddenFiles]) else {
-                showErrorToast("Could not access folder")
+                showErrorToast("Error: Could not access folder")
                 return
             }
 
@@ -111,7 +111,7 @@ let cornerActions: [CornerAction] = [
                 NSWorkspace.shared.open(latestFile)
                 showSuccessToast()
             } else {
-                showErrorToast("No files found in folder")
+                showErrorToast("Error: No files found in folder")
             }
         }
     ),
@@ -129,7 +129,7 @@ let cornerActions: [CornerAction] = [
                 NSWorkspace.shared.open(url)
                 showSuccessToast()
             } else {
-                showErrorToast("Invalid URL")
+                showErrorToast("Error: Invalid URL")
             }
         }
     ),
@@ -144,7 +144,7 @@ let cornerActions: [CornerAction] = [
         inputPrompt: "Enter Application Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
-                showErrorToast("No path provided")
+                showErrorToast("Error: No path provided")
                 return
             }
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
@@ -162,7 +162,7 @@ let cornerActions: [CornerAction] = [
         inputPrompt: "Enter Shortcut Name",
         perform: { input in
             guard let shortcutName = input, !shortcutName.isEmpty else {
-                showErrorToast("No shortcut name provided")
+                showErrorToast("Error: No shortcut name provided")
                 return
             }
 
@@ -181,13 +181,13 @@ let cornerActions: [CornerAction] = [
                 if let errorOutput = String(data: errorData, encoding: .utf8),
                    errorOutput.lowercased().contains("error")
                 {
-                    showErrorToast("Failed to Run Shortcut")
+                    showErrorToast("Error: Failed to Run Shortcut")
                 } else {
                     showSuccessToast()
                 }
 
             } catch {
-                showErrorToast("Failed to Launch Shortcut Process")
+                showErrorToast("Error: Failed to Launch Shortcut Process")
             }
         }
     ),
@@ -202,11 +202,11 @@ let cornerActions: [CornerAction] = [
         inputPrompt: "Enter Folder Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
-                showErrorToast("No folder path provided")
+                showErrorToast("Error: No folder path provided")
                 return
             }
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
-            showSuccessToast("Opened Folder")
+            showSuccessToast()
         }
     ),
 
@@ -433,7 +433,7 @@ let cornerActions: [CornerAction] = [
 
                 showSuccessToast(isMuted ? "Unmuted Volume" : "Muted Volume")
             } catch {
-                showErrorToast("Failed to toggle mute: \(error.localizedDescription)")
+                showErrorToast("Error: Failed to toggle mute")
             }
         }
     ),
@@ -1193,7 +1193,12 @@ let cornerActions: [CornerAction] = [
         perform: { _ in
             let sampler = NSColorSampler()
             sampler.show { pickedColor in
-                guard let color = pickedColor?.usingColorSpace(.displayP3) else { return }
+                guard let color = pickedColor?.usingColorSpace(.displayP3) else {
+                    DispatchQueue.main.async {
+                        showErrorToast("Error: No color selected")
+                    }
+                    return
+                }
 
                 let red = Int(color.redComponent * 255)
                 let green = Int(color.greenComponent * 255)
@@ -1252,7 +1257,7 @@ let cornerActions: [CornerAction] = [
                 request.recognitionLevel = .accurate
                 try? handler.perform([request])
             } else {
-                showErrorToast("OCR Failed - No Text was captured.")
+                showErrorToast("Error: No Text was captured.")
             }
         }
     ),
@@ -1397,11 +1402,11 @@ let cornerActions: [CornerAction] = [
         inputPrompt: "Enter File Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
-                showErrorToast("No folder path provided")
+                showErrorToast("Error: No folder path provided")
                 return
             }
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
-            showSuccessToast("Opened File")
+            showSuccessToast()
         }
     ),
 
@@ -1415,7 +1420,7 @@ let cornerActions: [CornerAction] = [
         inputPrompt: "Enter File Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
-                showErrorToast("No file path provided")
+                showErrorToast("Error: No file path provided")
                 return
             }
 
@@ -1434,12 +1439,12 @@ let cornerActions: [CornerAction] = [
                 if let errorOutput = String(data: errorData, encoding: .utf8),
                    !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                 {
-                    showErrorToast("AppleScript error: \(errorOutput)")
+                    showErrorToast("AppleScript Error")
                 } else {
-                    showSuccessToast("AppleScript executed")
+                    showSuccessToast("")
                 }
             } catch {
-                showErrorToast("Failed to run AppleScript: \(error.localizedDescription)")
+                showErrorToast("Failed to run AppleScript")
             }
         }
     ),
@@ -1543,7 +1548,7 @@ let cornerActions: [CornerAction] = [
 
             panel.begin { result in
                 guard result == .OK, let folderURL = panel.url else {
-                    showErrorToast("No folder selected.")
+                    showErrorToast("Error: No folder selected.")
                     return
                 }
 
@@ -1563,12 +1568,12 @@ let cornerActions: [CornerAction] = [
                     if let errorOutput = String(data: errorData, encoding: .utf8),
                        !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                     {
-                        showErrorToast("Error creating file: \(errorOutput)")
+                        showErrorToast("Error creating file")
                     } else {
                         showSuccessToast("Created file.txt in \(folderURL.path)")
                     }
                 } catch {
-                    showErrorToast("Failed to create new file: \(error.localizedDescription)")
+                    showErrorToast("Failed to create new file")
                 }
             }
         }
@@ -1631,7 +1636,7 @@ let cornerActions: [CornerAction] = [
                     caffeinateProcess = newProcess
                     showSuccessToast("Caffeinate Turned On", icon: Image(systemName: "powerplug.fill"))
                 } catch {
-                    showErrorToast("Failed to Launch Caffeinate")
+                    showErrorToast("Failed to Toggle Caffeinate")
                 }
             }
         }
@@ -1805,7 +1810,7 @@ let cornerActions: [CornerAction] = [
             } else {
                 DispatchQueue.main.async {
                     let toast = ToastWindowController()
-                    showErrorToast()
+                    showErrorToast("Failed to get app info")
                 }
             }
         }
@@ -1827,7 +1832,7 @@ let cornerActions: [CornerAction] = [
             do {
                 try task.run()
                 task.waitUntilExit()
-                showSuccessToast("Restarted Dockr")
+                showSuccessToast()
             } catch {
                 showErrorToast("Failed to restart Dock")
             }
@@ -1914,13 +1919,13 @@ let cornerActions: [CornerAction] = [
                 let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
 
                 if !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    showErrorToast("Failed to toggle Wi-Fi: \(errorOutput)")
+                    showErrorToast("Failed to toggle Wi-Fi")
                 } else {
                     showSuccessToast("Wi-Fi turned \(newState.uppercased()) successfully")
                 }
 
             } catch {
-                showErrorToast("Failed to toggle Wi-Fi: \(error.localizedDescription)")
+                showErrorToast("Failed to toggle Wi-Fi")
             }
         }
     ),
@@ -1958,7 +1963,7 @@ let cornerActions: [CornerAction] = [
                     showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                 }
             } catch {
-                showErrorToast("Failed to list services: \(error.localizedDescription)")
+                showErrorToast("Failed to list network services")
             }
         }
     ),
@@ -1996,7 +2001,7 @@ let cornerActions: [CornerAction] = [
                     showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                 }
             } catch {
-                showErrorToast("Failed to get DNS: \(error.localizedDescription)")
+                showErrorToast("Failed to get DNS")
             }
         }
     ),
@@ -2034,7 +2039,7 @@ let cornerActions: [CornerAction] = [
                     showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                 }
             } catch {
-                showErrorToast("Failed to get web proxy status: \(error.localizedDescription)")
+                showErrorToast("Failed to get web proxy status")
             }
         }
     ),
@@ -2081,13 +2086,13 @@ let cornerActions: [CornerAction] = [
                 let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
 
                 if !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    showErrorToast("Failed to toggle Web Proxy: \(errorOutput)")
+                    showErrorToast("Failed to toggle Web Proxy")
                 } else {
                     showSuccessToast("Web Proxy turned \(newState.uppercased())")
                 }
 
             } catch {
-                showErrorToast("Failed to toggle Web Proxy: \(error.localizedDescription)")
+                showErrorToast("Failed to toggle Web Proxy")
             }
         }
     ),
