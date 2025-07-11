@@ -34,6 +34,7 @@
 - Each corner/zone has a corresponding button in the menu. Clicking a button triggers the assigned action instantly.
 - After assigning or updating actions, click the Refresh button (or press Command + R) in the Menubar Component to update the displayed action titles.
 - If your prefer, you can disable the Menubar Component from the "General" section in Settings Window.
+- Favorited Actions: You can access your actions added to your favorites (from the action browser) from your menubar component for easy access to useful actions.
 
 ## 5. Actions
 
