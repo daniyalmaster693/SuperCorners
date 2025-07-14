@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://raw.githubusercontent.com/daniyalmaster693/SuperCorners/main/SuperCorners/Assets.xcassets/AppIcon.appiconset/Icon-256.png" width="200" alt="App Icon">
+	<img src="/Assets/SuperCorners-macOS-Default-256x256@2x.png" width="200" alt="App Icon">
 
   <h1>SuperCorners</h1>
   <p>Make your Mac's Corners Useful Again</p>
