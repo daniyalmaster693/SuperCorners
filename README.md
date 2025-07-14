@@ -2,7 +2,7 @@
 	<img src="/Assets/SuperCorners-macOS-Default-256x256@2x.png" width="135" alt="App Icon">
 
   <h1>SuperCorners</h1>
-  <p>Make your Mac's Corners Useful Again</p>
+  <p>Supercharge your Mac's Corners</p>
 
 </div>
 
@@ -19,7 +19,7 @@
 
 <img src="/Assets/SuperCorners-Dark-1.png" width="100%" alt="SuperCorners"/><br/>
 
-SuperCorners is a macOS app that takes your screen corners to the next level.
+SuperCorners is a macOS app that supercharges your screen corners.
 
 I've always loved the Hot Corners feature on macOS, but it's always felt very limited. So I built SuperCorners, which aims to provide a more polished and powerful experience. It builds on Apple's built in Hot Corners with extra trigger zones while providing more control and smarter automation, transforming each corner and zone into a powerful part of your productivity system.
 
