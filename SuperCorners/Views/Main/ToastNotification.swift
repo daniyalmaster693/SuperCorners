@@ -55,10 +55,6 @@ class ToastWindowController {
 
                 hostingView.rootView = ToastView(message: message, icon: icon, panel: panel)
             }
-        } else {
-            if let hostingView = panel?.contentView as? NSHostingView<ToastView> {
-                hostingView.rootView = ToastView(message: message, icon: icon, panel: panel!)
-            }
         }
 
         if let screenFrame = NSScreen.main?.visibleFrame, let panel = panel {
@@ -86,8 +82,6 @@ class ToastWindowController {
                 }
             })
         }
-
-        timer?.invalidate()
     }
 }
 
