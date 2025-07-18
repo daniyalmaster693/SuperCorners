@@ -2258,4 +2258,47 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "75",
+        title: "Create Zip Archive",
+        description: "Create a zip archive for a specified folder.",
+        iconName: "doc.zipper",
+        tag: "File Tools",
+        requiresInput: true,
+        inputPrompt: "Enter Folder Path",
+        perform: { input in
+            guard let folderPath = input, !folderPath.isEmpty else {
+                showErrorToast("Error: Folder path is required")
+                return
+            }
+
+            let fileManager = FileManager.default
+            var isDirectory: ObjCBool = false
+            guard fileManager.fileExists(atPath: folderPath, isDirectory: &isDirectory), isDirectory.boolValue else {
+                showErrorToast("Error: Folder does not exist")
+                return
+            }
+
+            let folderURL = URL(fileURLWithPath: folderPath)
+            let archiveURL = folderURL.appendingPathExtension("zip")
+
+            let process = Process()
+            process.launchPath = "/usr/bin/zip"
+            process.currentDirectoryURL = folderURL.deletingLastPathComponent()
+            process.arguments = ["-r", archiveURL.lastPathComponent, folderURL.lastPathComponent]
+
+            do {
+                try process.run()
+                process.waitUntilExit()
+                if process.terminationStatus == 0 {
+                    showSuccessToast("Zip archive created!")
+                } else {
+                    showErrorToast("Failed to create zip archive")
+                }
+            } catch {
+                showErrorToast("Error running zip process")
+            }
+        }
+    ),
 ]
