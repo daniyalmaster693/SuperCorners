@@ -910,33 +910,43 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "36",
-        title: "Play/Pause Apple Music",
-        description: "Opens Msuic and toggles Playback",
+        title: "Toggle Media Playback",
+        description: "Toggle Media Playback",
         iconName: "playpause",
         tag: "Media",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
-            let musicAppPath = "/System/Applications/Music.app"
-            let url = URL(fileURLWithPath: musicAppPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+            let keyCodePlayPause = 16
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+            let eventDown = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xa00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodePlayPause << 16) | (0xa << 8),
+                data2: -1
+            )
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let spaceKey: CGKeyCode = 49 // spacebar
+            let eventUp = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xb00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodePlayPause << 16) | (0xb << 8),
+                data2: -1
+            )
 
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: spaceKey, keyDown: true)
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: spaceKey, keyDown: false)
+            eventDown?.cgEvent?.post(tap: .cghidEventTap)
+            eventUp?.cgEvent?.post(tap: .cghidEventTap)
 
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-                }
-            }
-
-            showSuccessToast()
+            showSuccessToast("Toggled Playback", icon: Image(systemName: "playpause"))
         }
     ),
 
@@ -2654,6 +2664,90 @@ let cornerActions: [CornerAction] = [
                     showErrorToast("Failed to show application windows")
                 }
             }
+        }
+    ),
+
+    CornerAction(
+        id: "83",
+        title: "Previous Track",
+        description: "Play previous media track",
+        iconName: "backward.fill",
+        tag: "Media",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let keyCodePrev = 18
+
+            let eventDown = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xa00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodePrev << 16) | (0xa << 8),
+                data2: -1
+            )
+
+            let eventUp = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xb00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodePrev << 16) | (0xb << 8),
+                data2: -1
+            )
+
+            eventDown?.cgEvent?.post(tap: .cghidEventTap)
+            eventUp?.cgEvent?.post(tap: .cghidEventTap)
+
+            showSuccessToast("Returned to Previous Track", icon: Image(systemName: "backward.fill"))
+        }
+    ),
+
+    CornerAction(
+        id: "84",
+        title: "Next Track",
+        description: "Play next media track",
+        iconName: "forward.fill",
+        tag: "Media",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let keyCodeNext = 17
+
+            let eventDown = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xa00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodeNext << 16) | (0xa << 8),
+                data2: -1
+            )
+
+            let eventUp = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xb00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodeNext << 16) | (0xb << 8),
+                data2: -1
+            )
+
+            eventDown?.cgEvent?.post(tap: .cghidEventTap)
+            eventUp?.cgEvent?.post(tap: .cghidEventTap)
+
+            showSuccessToast("Skipped to Next Track", icon: Image(systemName: "forward.fill"))
         }
     ),
 ]
