@@ -2572,7 +2572,7 @@ let cornerActions: [CornerAction] = [
         title: "Next Desktop",
         description: "Switch to the next desktop.",
         iconName: "arrow.right.square",
-        tag: "System",
+        tag: "Window Management",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2589,7 +2589,7 @@ let cornerActions: [CornerAction] = [
                 do {
                     try task.run()
                     task.waitUntilExit()
-                    showSuccessToast("Switched to Next Desktop", icon: Image(systemName: "arrow.right.square"))
+                    showSuccessToast()
                 } catch {
                     showErrorToast("Failed to switch desktop")
                 }
@@ -2602,7 +2602,7 @@ let cornerActions: [CornerAction] = [
         title: "Previous Desktop",
         description: "Switch to the previous desktop.",
         iconName: "arrow.left.square",
-        tag: "System",
+        tag: "Window Management",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2619,9 +2619,39 @@ let cornerActions: [CornerAction] = [
                 do {
                     try task.run()
                     task.waitUntilExit()
-                    showSuccessToast("Switched to Previous Desktop", icon: Image(systemName: "arrow.left.square"))
+                    showSuccessToast()
                 } catch {
                     showErrorToast("Failed to switch desktop")
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "82",
+        title: "Application Windows",
+        description: "Show all windows for the current application.",
+        iconName: "rectangle.on.rectangle.angled",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let script = """
+                tell application "System Events"
+                    key code 125 using control down -- Down Arrow
+                end tell
+                """
+                let task = Process()
+                task.launchPath = "/usr/bin/osascript"
+                task.arguments = ["-e", script]
+
+                do {
+                    try task.run()
+                    task.waitUntilExit()
+                    showSuccessToast()
+                } catch {
+                    showErrorToast("Failed to show application windows")
                 }
             }
         }
