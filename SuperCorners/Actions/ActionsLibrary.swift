@@ -2096,4 +2096,116 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "71",
+        title: "Copy Current Page in Safari",
+        description: "Copy the current page url in safari.",
+        iconName: "link",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let script = """
+            tell application "Safari"
+                if exists front document then
+                    return URL of front document
+                else
+                    return ""
+                end if
+            end tell
+            """
+
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = ["-e", script]
+
+            let pipe = Pipe()
+            task.standardOutput = pipe
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                if let url = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines),
+                   !url.isEmpty
+                {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(url, forType: .string)
+                    showSuccessToast()
+                } else {
+                    showErrorToast("No page open in Safari")
+                }
+            } catch {
+                showErrorToast("Failed to fetch URL")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "72",
+        title: "Open Last Download",
+        description: "Open the most recently downloaded file.",
+        iconName: "arrow.down.doc",
+        tag: "Finder",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+
+            do {
+                let files = try FileManager.default.contentsOfDirectory(at: downloadsURL, includingPropertiesForKeys: [.contentModificationDateKey], options: .skipsHiddenFiles)
+
+                let sortedFiles = files
+                    .compactMap { url -> (url: URL, date: Date)? in
+                        let values = try? url.resourceValues(forKeys: [.contentModificationDateKey])
+                        return values?.contentModificationDate != nil ? (url, values!.contentModificationDate!) : nil
+                    }
+                    .sorted { $0.date > $1.date }
+
+                if let mostRecent = sortedFiles.first?.url {
+                    NSWorkspace.shared.open(mostRecent)
+                    showSuccessToast()
+                } else {
+                    showErrorToast("No recent downloads found")
+                }
+            } catch {
+                showErrorToast("Failed to open last download")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "73",
+        title: "Copy Last Download Path",
+        description: "Copy the file path of your most recent download to the clipboard.",
+        iconName: "doc.on.clipboard",
+        tag: "Finder",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+
+            do {
+                let files = try FileManager.default.contentsOfDirectory(at: downloadsURL, includingPropertiesForKeys: [.contentModificationDateKey], options: .skipsHiddenFiles)
+
+                let sortedFiles = files
+                    .compactMap { url -> (url: URL, date: Date)? in
+                        let values = try? url.resourceValues(forKeys: [.contentModificationDateKey])
+                        return values?.contentModificationDate != nil ? (url, values!.contentModificationDate!) : nil
+                    }
+                    .sorted { $0.date > $1.date }
+
+                if let mostRecent = sortedFiles.first?.url {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(mostRecent.path, forType: .string)
+                    showSuccessToast()
+                } else {
+                    showErrorToast("No recent downloads found")
+                }
+            } catch {
+                showErrorToast("Failed to copy path")
+            }
+        }
+    ),
 ]
