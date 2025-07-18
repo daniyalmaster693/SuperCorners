@@ -2508,4 +2508,122 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "79",
+        title: "Toggle Theme",
+        description: "Turn Dark or Light Mode",
+        iconName: "sun.max",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let toggleScript = """
+            tell application "System Events"
+                tell appearance preferences
+                    set dark mode to not dark mode
+                end tell
+            end tell
+            """
+
+            let checkScript = """
+            tell application "System Events"
+                tell appearance preferences
+                    return dark mode
+                end tell
+            end tell
+            """
+
+            let toggleTask = Process()
+            toggleTask.launchPath = "/usr/bin/osascript"
+            toggleTask.arguments = ["-e", toggleScript]
+
+            do {
+                try toggleTask.run()
+                toggleTask.waitUntilExit()
+
+                let checkTask = Process()
+                checkTask.launchPath = "/usr/bin/osascript"
+                checkTask.arguments = ["-e", checkScript]
+
+                let pipe = Pipe()
+                checkTask.standardOutput = pipe
+
+                try checkTask.run()
+                checkTask.waitUntilExit()
+
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "false"
+
+                if output.lowercased() == "true" {
+                    showSuccessToast("Toggled Dark Mode", icon: Image(systemName: "moon.fill"))
+                } else {
+                    showSuccessToast("Toggled Light Mode", icon: Image(systemName: "sun.max.fill"))
+                }
+
+            } catch {
+                showErrorToast("Failed to toggle Dark Mode")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "80",
+        title: "Next Desktop",
+        description: "Switch to the next desktop.",
+        iconName: "arrow.right.square",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let script = """
+                tell application "System Events"
+                    key code 124 using control down -- Right Arrow
+                end tell
+                """
+                let task = Process()
+                task.launchPath = "/usr/bin/osascript"
+                task.arguments = ["-e", script]
+
+                do {
+                    try task.run()
+                    task.waitUntilExit()
+                    showSuccessToast("Switched to Next Desktop", icon: Image(systemName: "arrow.right.square"))
+                } catch {
+                    showErrorToast("Failed to switch desktop")
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "81",
+        title: "Previous Desktop",
+        description: "Switch to the previous desktop.",
+        iconName: "arrow.left.square",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                let script = """
+                tell application "System Events"
+                    key code 123 using control down -- Left Arrow
+                end tell
+                """
+                let task = Process()
+                task.launchPath = "/usr/bin/osascript"
+                task.arguments = ["-e", script]
+
+                do {
+                    try task.run()
+                    task.waitUntilExit()
+                    showSuccessToast("Switched to Previous Desktop", icon: Image(systemName: "arrow.left.square"))
+                } catch {
+                    showErrorToast("Failed to switch desktop")
+                }
+            }
+        }
+    ),
 ]
