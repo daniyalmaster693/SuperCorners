@@ -2264,7 +2264,7 @@ let cornerActions: [CornerAction] = [
         title: "Create Zip Archive",
         description: "Create a zip archive for a specified folder.",
         iconName: "doc.zipper",
-        tag: "File Tools",
+        tag: "Finder",
         requiresInput: true,
         inputPrompt: "Enter Folder Path",
         perform: { input in
@@ -2298,6 +2298,213 @@ let cornerActions: [CornerAction] = [
                 }
             } catch {
                 showErrorToast("Error running zip process")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "76",
+        title: "Network Speed Test",
+        description: "Run a network speed test.",
+        iconName: "gauge",
+        tag: "Developer",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let task = Process()
+            task.launchPath = "/usr/bin/env"
+            task.arguments = ["bash", "-c", "curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -"]
+
+            let pipe = Pipe()
+            task.standardOutput = pipe
+
+            do {
+                try task.run()
+
+                showSuccessToast("Running Speed Test...", icon: Image(systemName: "circle.dotted"))
+                task.waitUntilExit()
+
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: data, encoding: .utf8) ?? "No output"
+
+                let lines = output.components(separatedBy: "\n")
+                var ip = "", isp = "", server = "", ping = "", download = "", upload = ""
+
+                var lastLineWasServer = false
+
+                for line in lines {
+                    if line.contains("Testing from") {
+                        if let range = line.range(of: #"Testing from (.+?) \((.+?)\)"#, options: .regularExpression) {
+                            let match = String(line[range])
+                            let parts = match.replacingOccurrences(of: "Testing from ", with: "").dropLast().components(separatedBy: " (")
+                            isp = parts.first ?? ""
+                            ip = parts.last?.replacingOccurrences(of: ")", with: "") ?? ""
+                        }
+                    } else if line.contains("Hosted by") {
+                        let components = line.components(separatedBy: ":")
+                        if components.count == 2 {
+                            let full = components[0].replacingOccurrences(of: "Hosted by ", with: "").trimmingCharacters(in: .whitespaces)
+
+                            if let range = full.range(of: #"[\(\[].*"#, options: .regularExpression) {
+                                server = String(full[..<range.lowerBound]).trimmingCharacters(in: .whitespaces)
+                            } else {
+                                server = full
+                            }
+
+                            ping = components[1].trimmingCharacters(in: .whitespaces)
+                        }
+                    } else if lastLineWasServer, line.contains("ms"), ping.isEmpty {
+                        ping = line.trimmingCharacters(in: .whitespaces)
+                        lastLineWasServer = false
+                    } else {
+                        lastLineWasServer = false
+                    }
+
+                    if line.contains("Download:") {
+                        download = line.replacingOccurrences(of: "Download: ", with: "").trimmingCharacters(in: .whitespaces)
+                    } else if line.contains("Upload:") {
+                        upload = line.replacingOccurrences(of: "Upload: ", with: "").trimmingCharacters(in: .whitespaces)
+                    }
+                }
+
+                let cleanedOutput = """
+                Network Speed Test Results
+
+                ISP: \(isp)
+                IP: \(ip)
+                Server: \(server)
+                Ping: \(ping)
+                Download: \(download)
+                Upload: \(upload)
+                """
+
+                let panel = FloatingPanel(initialMessage: cleanedOutput)
+                panel.show()
+                showSuccessToast("Speed Test Completed")
+            } catch {
+                showErrorToast("Failed to run speed test")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "77",
+        title: "Ping Website",
+        description: "Pings a website.",
+        iconName: "dot.radiowaves.left.and.right",
+        tag: "Developer",
+        requiresInput: true,
+        inputPrompt: "Enter Website URL or DNS Server",
+        perform: { input in
+            guard let site = input, !site.isEmpty else {
+                showErrorToast("No website or dns was entered")
+                return
+            }
+
+            let task = Process()
+            task.launchPath = "/sbin/ping"
+            task.arguments = ["-c", "3", site]
+
+            let pipe = Pipe()
+            task.standardOutput = pipe
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(data: data, encoding: .utf8) ?? ""
+
+                let lines = output.components(separatedBy: "\n")
+                var hostIP = "Unknown"
+                if let firstLine = lines.first,
+                   let ipStart = firstLine.range(of: "("),
+                   let ipEnd = firstLine.range(of: ")")
+                {
+                    hostIP = String(firstLine[ipStart.upperBound ..< ipEnd.lowerBound])
+                }
+
+                let packetsLine = lines.first(where: { $0.contains("packets transmitted") }) ?? ""
+                let latencyLine = lines.first(where: { $0.contains("avg") && ($0.contains("min") || $0.contains("round-trip") || $0.contains("rtt")) }) ?? ""
+
+                let packetsInfoParts = packetsLine.components(separatedBy: ",")
+                var packetsSent = "?"
+                var packetsReceived = "?"
+                var packetLoss = "?"
+
+                if packetsInfoParts.count >= 3 {
+                    packetsSent = packetsInfoParts[0].trimmingCharacters(in: .whitespaces).components(separatedBy: " ").first ?? "?"
+                    packetsReceived = packetsInfoParts[1].trimmingCharacters(in: .whitespaces).components(separatedBy: " ").first ?? "?"
+                    packetLoss = packetsInfoParts[2].trimmingCharacters(in: .whitespaces).components(separatedBy: " ").first ?? "?"
+                }
+
+                var minLatency = "?"
+                var avgLatency = "?"
+                var maxLatency = "?"
+                var stddevLatency = "?"
+
+                if let range = latencyLine.range(of: "=") {
+                    let valuesPart = latencyLine[range.upperBound...].trimmingCharacters(in: .whitespaces)
+                    let valuesString = valuesPart.replacingOccurrences(of: " ms", with: "")
+                    let parts = valuesString.components(separatedBy: "/")
+                    if parts.count == 4 {
+                        minLatency = parts[0]
+                        avgLatency = parts[1]
+                        maxLatency = parts[2]
+                        stddevLatency = parts[3]
+                    }
+                }
+
+                let message = """
+                Ping Results for \(site)
+                Host IP: \(hostIP)
+
+                Packets: \(packetsSent) transmitted, \(packetsReceived) received
+                Packet Loss: \(packetLoss)
+
+                Latency (ms):
+
+                Min: \(minLatency)
+                Avg: \(avgLatency)
+                Max: \(maxLatency)
+                Std Dev: \(stddevLatency)
+                """
+
+                let panel = FloatingPanel(initialMessage: message)
+                panel.show()
+
+            } catch {
+                showErrorToast("Failed to ping website")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "78",
+        title: "Get IP Address",
+        description: "Get your public IP address.",
+        iconName: "network",
+        tag: "Developer",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let task = Process()
+            task.launchPath = "/usr/bin/curl"
+            task.arguments = ["https://ipinfo.io/ip"]
+
+            let pipe = Pipe()
+            task.standardOutput = pipe
+
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                let ip = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "Unknown"
+
+                showSuccessToast("Your IP: \(ip)", icon: Image(systemName: "network"))
+            } catch {
+                showErrorToast("Failed to fetch IP address")
             }
         }
     ),
