@@ -89,7 +89,7 @@ struct BehaviorSettingsView: View {
                             .padding(.leading, 20)
                             .padding(.bottom, 10)
 
-                        Slider(value: self.$triggerSensitivity, in: 1 ... 5.0, step: 0.5)
+                        Slider(value: self.$triggerSensitivity, in: 1 ... 8.0, step: 0.5)
                     }
                 }
 
