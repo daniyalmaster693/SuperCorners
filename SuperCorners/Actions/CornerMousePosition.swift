@@ -64,16 +64,13 @@ func getCornerMousePosition() {
             let hitZone = CGRect(x: cornerPoint.x - tolerance/2, y: cornerPoint.y - tolerance/2, width: tolerance, height: tolerance)
 
             if hitZone.contains(mousePosition) {
-                triggerCornerAction(for: corner)
-                if playSoundEffect {
-                    NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
+                if corner != lastCorner {
+                    lastCorner = corner
+                    triggerCornerAction(for: corner)
+                    if playSoundEffect {
+                        NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
+                    }
                 }
-
-                lastCorner = corner
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    lastCorner = nil
-                }
-
                 return
             }
         }

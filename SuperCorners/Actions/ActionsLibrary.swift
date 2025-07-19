@@ -2750,4 +2750,19 @@ let cornerActions: [CornerAction] = [
             showSuccessToast("Skipped to Next Track", icon: Image(systemName: "forward.fill"))
         }
     ),
+
+    CornerAction(
+        id: "85",
+        title: "Counter",
+        description: "Opens a floating counter window",
+        iconName: "plusminus.circle",
+        tag: "Tool",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let counterPanel = FloatingCounterPanel()
+            counterPanel.show()
+            showSuccessToast()
+        }
+    ),
 ]
