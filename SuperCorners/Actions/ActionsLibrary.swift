@@ -1221,6 +1221,10 @@ let cornerActions: [CornerAction] = [
 
                 DispatchQueue.main.async {
                     let toast = ToastWindowController()
+                    let pickerPanel = FloatingPickerPanel()
+
+                    ColorHistoryManager.shared.addColor(color)
+                    pickerPanel.show()
                     toast.showToast(message: "Copied \(hexString) to clipboard", icon: Image(systemName: "eyedropper"))
                 }
             }
