@@ -2780,4 +2780,19 @@ let cornerActions: [CornerAction] = [
             showSuccessToast()
         }
     ),
+
+    CornerAction(
+        id: "87",
+        title: "Color Converter",
+        description: "Opens a color converter window",
+        iconName: "paintpalette",
+        tag: "Tool",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let colorPanel = FloatingColorPanel()
+            colorPanel.show()
+            showSuccessToast()
+        }
+    ),
 ]
