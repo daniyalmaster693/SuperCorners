@@ -111,16 +111,15 @@ struct ActionLibraryView: View {
                        let selectedAction = cornerActions.first(where: { $0.id == selectedID })
                     {
                         if selectedAction.requiresInput {
-                            if selectedAction.requiresInput {
-                                templateInput = ""
-                                showTemplateModal = true
-                            }
+                            templateInput = ""
                             showTemplateModal = true
                         } else {
                             UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
                             onUpdate()
                             dismiss()
                         }
+                    } else {
+                        showErrorToast("Please select an action first")
                     }
                 }
                 .keyboardShortcut(.defaultAction)
