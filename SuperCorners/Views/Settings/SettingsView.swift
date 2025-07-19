@@ -60,7 +60,7 @@ private extension SettingsView.Tab {
         case .general: return "gearshape"
         case .activation: return "bolt.circle"
         case .behavior: return "hand.tap"
-        case .actions: return "wand.and.stars"
+        case .actions: return "hammer"
         }
     }
 }
