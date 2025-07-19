@@ -2765,4 +2765,19 @@ let cornerActions: [CornerAction] = [
             showSuccessToast()
         }
     ),
+
+    CornerAction(
+        id: "86",
+        title: "Case Converter",
+        description: "Opens a text case converter window",
+        iconName: "textformat.size",
+        tag: "Tool",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let casePanel = FloatingCasePanel()
+            casePanel.show()
+            showSuccessToast()
+        }
+    ),
 ]
