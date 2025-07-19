@@ -119,7 +119,7 @@ struct ActionLibraryView: View {
                             dismiss()
                         }
                     } else {
-                        showErrorToast("Please select an action first")
+                        showErrorToast("Please Select an Action First")
                     }
                 }
                 .keyboardShortcut(.defaultAction)
