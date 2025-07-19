@@ -1220,12 +1220,11 @@ let cornerActions: [CornerAction] = [
                 pasteboard.setString(hexString, forType: .string)
 
                 DispatchQueue.main.async {
-                    let toast = ToastWindowController()
                     let pickerPanel = FloatingPickerPanel()
 
                     ColorHistoryManager.shared.addColor(color)
+                    showSuccessToast("Copied \(hexString) to clipboard", icon: Image(systemName: "eyedropper"))
                     pickerPanel.show()
-                    toast.showToast(message: "Copied \(hexString) to clipboard", icon: Image(systemName: "eyedropper"))
                 }
             }
         }
@@ -1264,7 +1263,12 @@ let cornerActions: [CornerAction] = [
                         let pasteboard = NSPasteboard.general
                         pasteboard.clearContents()
                         pasteboard.setString(recognizedText, forType: .string)
+
+                        let extractorPanel = FloatingExtractorPanel()
+
+                        TextExtractorManager.shared.addText(recognizedText)
                         showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+                        extractorPanel.show()
                     }
                 }
 
