@@ -16,6 +16,7 @@ struct FloatingPanelContentView: View {
             Text(self.message)
                 .padding(.top, 12)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .textSelection(.enabled)
         }
         .frame(width: 300, height: 200)
     }
