@@ -12,10 +12,8 @@ struct ActionSettingsView: View {
     @AppStorage("rememberCalcText") private var rememberCalcText = true
 
     @AppStorage("showRecentText") private var showRecentText = true
-    @AppStorage("saveText") private var saveText = true
 
     @AppStorage("showRecentColors") private var showRecentColors = true
-    @AppStorage("saveColors") private var saveColors = true
     @AppStorage("colorFormat") private var colorFormat: ColorFormat = .hex
 
     enum ColorFormat: String, CaseIterable, Identifiable {
@@ -63,14 +61,6 @@ struct ActionSettingsView: View {
                             Text("Show Recent Extractions")
                         }
                     }
-
-                    Toggle(isOn: self.$saveText) {
-                        HStack {
-                            Image(systemName: "tray.and.arrow.down")
-                                .foregroundColor(.secondary)
-                            Text("Save Extractions to App Storage")
-                        }
-                    }.disabled(!self.showRecentText)
                 }
 
                 Section("Color Picker") {
@@ -94,14 +84,6 @@ struct ActionSettingsView: View {
                             Text("Show Recent Colors")
                         }
                     }
-
-                    Toggle(isOn: self.$saveColors) {
-                        HStack {
-                            Image(systemName: "tray.and.arrow.down")
-                                .foregroundColor(.secondary)
-                            Text("Save Colors to App Storage")
-                        }
-                    }.disabled(!self.showRecentColors)
                 }
             }
         }

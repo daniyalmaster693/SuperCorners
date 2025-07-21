@@ -15,10 +15,6 @@ class SettingsManager: ObservableObject {
         UserDefaults.standard.bool(forKey: "showRecentColors")
     }
 
-    var saveColors: Bool {
-        UserDefaults.standard.bool(forKey: "saveColors")
-    }
-
     var colorFormat: ActionSettingsView.ColorFormat {
         get {
             ActionSettingsView.ColorFormat(rawValue: UserDefaults.standard.string(forKey: "colorFormat") ?? "Hex") ?? .hex
@@ -31,9 +27,43 @@ class SettingsManager: ObservableObject {
     var showRecentText: Bool {
         UserDefaults.standard.bool(forKey: "showRecentText")
     }
+}
 
-    var saveText: Bool {
-        UserDefaults.standard.bool(forKey: "saveText")
+extension NSColor {
+    func hslComponents() -> (hue: CGFloat, saturation: CGFloat, lightness: CGFloat) {
+        guard let rgbColor = usingColorSpace(.deviceRGB) else {
+            return (0, 0, 0)
+        }
+
+        let r = rgbColor.redComponent
+        let g = rgbColor.greenComponent
+        let b = rgbColor.blueComponent
+
+        let maxVal = max(r, g, b)
+        let minVal = min(r, g, b)
+        let delta = maxVal - minVal
+
+        let l = (maxVal + minVal) / 2
+
+        let s: CGFloat
+        if delta == 0 {
+            s = 0
+        } else {
+            s = delta / (1 - abs(2 * l - 1))
+        }
+
+        let h: CGFloat
+        if delta == 0 {
+            h = 0
+        } else if maxVal == r {
+            h = 60 * fmod((g - b) / delta, 6)
+        } else if maxVal == g {
+            h = 60 * (((b - r) / delta) + 2)
+        } else {
+            h = 60 * (((r - g) / delta) + 4)
+        }
+
+        return (hue: h < 0 ? h + 360 : h, saturation: s, lightness: l)
     }
 }
 
@@ -1239,22 +1269,48 @@ let cornerActions: [CornerAction] = [
                     return
                 }
 
-                let red = Int(color.redComponent * 255)
-                let green = Int(color.greenComponent * 255)
-                let blue = Int(color.blueComponent * 255)
-                let hexString = String(format: "#%02X%02X%02X", red, green, blue)
+                func formattedColorString(for color: NSColor, format: ActionSettingsView.ColorFormat) -> String {
+                    switch format {
+                    case .hex:
+                        let r = Int(color.redComponent * 255)
+                        let g = Int(color.greenComponent * 255)
+                        let b = Int(color.blueComponent * 255)
+                        return String(format: "#%02X%02X%02X", r, g, b)
 
-                let pasteboard = NSPasteboard.general
-                pasteboard.clearContents()
-                pasteboard.setString(hexString, forType: .string)
+                    case .rgb:
+                        let r = Int(color.redComponent * 255)
+                        let g = Int(color.greenComponent * 255)
+                        let b = Int(color.blueComponent * 255)
+                        return "rgb(\(r), \(g), \(b))"
+
+                    case .hsl:
+                        let hsl = color.usingColorSpace(.deviceRGB)?.hslComponents() ?? (0, 0, 0)
+                        return String(format: "hsl(%.0f, %.0f%%, %.0f%%)", hsl.0, hsl.1 * 100, hsl.2 * 100)
+
+                    case .rgba:
+                        let r = Int(color.redComponent * 255)
+                        let g = Int(color.greenComponent * 255)
+                        let b = Int(color.blueComponent * 255)
+                        let a = String(format: "%.2f", color.alphaComponent)
+                        return "rgba(\(r), \(g), \(b), \(a))"
+
+                    case .hsla:
+                        let hsl = color.usingColorSpace(.deviceRGB)?.hslComponents() ?? (0, 0, 0)
+                        let a = String(format: "%.2f", color.alphaComponent)
+                        return String(format: "hsla(%.0f, %.0f%%, %.0f%%, %@)", hsl.0, hsl.1 * 100, hsl.2 * 100, a)
+                    }
+                }
+
+                let format = SettingsManager.shared.colorFormat
+                let formattedString = formattedColorString(for: color, format: format)
 
                 DispatchQueue.main.async {
                     let pasteboard = NSPasteboard.general
                     pasteboard.clearContents()
-                    pasteboard.setString(hexString, forType: .string)
+                    pasteboard.setString(formattedString, forType: .string)
 
                     ColorHistoryManager.shared.addColor(color)
-                    showSuccessToast("Copied \(hexString) to clipboard", icon: Image(systemName: "eyedropper"))
+                    showSuccessToast("Copied \(formattedString) to clipboard", icon: Image(systemName: "eyedropper"))
 
                     if SettingsManager.shared.showRecentColors {
                         let pickerPanel = FloatingPickerPanel()

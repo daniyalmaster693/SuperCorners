@@ -11,19 +11,58 @@ class ColorHistoryManager: ObservableObject {
     static let shared = ColorHistoryManager()
     private let key = "RecentColors"
 
-    var recentColors: [NSColor] {
+    struct StoredColor: Codable {
+        let red: CGFloat
+        let green: CGFloat
+        let blue: CGFloat
+        let alpha: CGFloat
+    }
+
+    func formattedColorString(for color: NSColor, format: ActionSettingsView.ColorFormat) -> String {
+        switch format {
+        case .hex:
+            let r = Int(color.redComponent * 255)
+            let g = Int(color.greenComponent * 255)
+            let b = Int(color.blueComponent * 255)
+            return String(format: "#%02X%02X%02X", r, g, b)
+
+        case .rgb:
+            let r = Int(color.redComponent * 255)
+            let g = Int(color.greenComponent * 255)
+            let b = Int(color.blueComponent * 255)
+            return "rgb(\(r), \(g), \(b))"
+
+        case .hsl:
+            let hsl = color.usingColorSpace(.deviceRGB)?.hslComponents() ?? (0, 0, 0)
+            return String(format: "hsl(%.0f, %.0f%%, %.0f%%)", hsl.0, hsl.1 * 100, hsl.2 * 100)
+
+        case .rgba:
+            let r = Int(color.redComponent * 255)
+            let g = Int(color.greenComponent * 255)
+            let b = Int(color.blueComponent * 255)
+            let a = String(format: "%.2f", color.alphaComponent)
+            return "rgba(\(r), \(g), \(b), \(a))"
+
+        case .hsla:
+            let hsl = color.usingColorSpace(.deviceRGB)?.hslComponents() ?? (0, 0, 0)
+            let a = String(format: "%.2f", color.alphaComponent)
+            return String(format: "hsla(%.0f, %.0f%%, %.0f%%, %@)", hsl.0, hsl.1 * 100, hsl.2 * 100, a)
+        }
+    }
+
+    var recentColors: [String] {
         get {
-            let hexes = UserDefaults.standard.stringArray(forKey: self.key) ?? []
-            return hexes.compactMap { NSColor(hex: $0) }
+            UserDefaults.standard.stringArray(forKey: self.key) ?? []
         }
         set {
-            let hexes = newValue.map { $0.hexString }
-            UserDefaults.standard.set(hexes, forKey: self.key)
+            UserDefaults.standard.set(newValue, forKey: self.key)
         }
     }
 
     func addColor(_ color: NSColor) {
-        var updated = [color] + self.recentColors.filter { $0.hexString != color.hexString }
+        let format = SettingsManager.shared.colorFormat
+        let formatted = self.formattedColorString(for: color, format: format)
+        var updated = [formatted] + self.recentColors.filter { $0 != formatted }
         if updated.count > 20 {
             updated = Array(updated.prefix(20))
         }
@@ -68,19 +107,26 @@ struct ColorPickerView: View {
         GeometryReader { _ in
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
-                    ForEach(Array(self.colorHistory.recentColors.prefix(20).enumerated()), id: \.offset) { _, nsColor in
-                        let color = Color(nsColor: nsColor)
-                        let red = Int(nsColor.redComponent * 255)
-                        let green = Int(nsColor.greenComponent * 255)
-                        let blue = Int(nsColor.blueComponent * 255)
-                        let hex = String(format: "#%02X%02X%02X", red, green, blue)
+                    ForEach(Array(self.colorHistory.recentColors.prefix(20).enumerated()), id: \.offset) { _, string in
+                        let displayString = string
+                        let color: NSColor = {
+                            if string.hasPrefix("#") {
+                                return NSColor(hex: string) ?? .clear
+                            } else if string.starts(with: "rgb") || string.starts(with: "rgba") {
+                                return NSColor.fromRGBString(string) ?? .clear
+                            } else if string.starts(with: "hsl") || string.starts(with: "hsla") {
+                                return NSColor.fromHSLString(string) ?? .clear
+                            } else {
+                                return .clear
+                            }
+                        }()
 
                         HStack(spacing: 12) {
                             RoundedRectangle(cornerRadius: 6)
-                                .fill(color)
+                                .fill(Color(color))
                                 .frame(width: 30, height: 30)
 
-                            Text(hex)
+                            Text(displayString)
                                 .font(.body)
                                 .foregroundColor(.primary)
 
@@ -89,7 +135,7 @@ struct ColorPickerView: View {
                             Button(action: {
                                 let pasteboard = NSPasteboard.general
                                 pasteboard.clearContents()
-                                pasteboard.setString(hex, forType: .string)
+                                pasteboard.setString(displayString, forType: .string)
                             }) {
                                 Image(systemName: "square.on.square")
                                     .padding(6)
@@ -105,6 +151,58 @@ struct ColorPickerView: View {
             }
         }
         .frame(minHeight: 200)
+    }
+}
+
+extension NSColor {
+    static func fromRGBString(_ string: String) -> NSColor? {
+        let pattern = #"rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)"#
+        let regex = try? NSRegularExpression(pattern: pattern)
+        guard let match = regex?.firstMatch(in: string, range: NSRange(string.startIndex..., in: string)),
+              let r = Range(match.range(at: 1), in: string),
+              let g = Range(match.range(at: 2), in: string),
+              let b = Range(match.range(at: 3), in: string)
+        else {
+            return nil
+        }
+
+        let red = CGFloat(Int(string[r]) ?? 0) / 255.0
+        let green = CGFloat(Int(string[g]) ?? 0) / 255.0
+        let blue = CGFloat(Int(string[b]) ?? 0) / 255.0
+        let alpha: CGFloat = {
+            if let aRange = Range(match.range(at: 4), in: string),
+               let a = Double(string[aRange]) {
+                return CGFloat(a)
+            }
+            return 1.0
+        }()
+
+        return NSColor(calibratedRed: red, green: green, blue: blue, alpha: alpha)
+    }
+
+    static func fromHSLString(_ string: String) -> NSColor? {
+        let pattern = #"hsla?\((\d+),\s*(\d+)%?,\s*(\d+)%?(?:,\s*([\d.]+))?\)"#
+        let regex = try? NSRegularExpression(pattern: pattern)
+        guard let match = regex?.firstMatch(in: string, range: NSRange(string.startIndex..., in: string)),
+              let hRange = Range(match.range(at: 1), in: string),
+              let sRange = Range(match.range(at: 2), in: string),
+              let lRange = Range(match.range(at: 3), in: string)
+        else {
+            return nil
+        }
+
+        let h = Double(string[hRange]) ?? 0
+        let s = (Double(string[sRange]) ?? 0) / 100.0
+        let l = (Double(string[lRange]) ?? 0) / 100.0
+        let a: CGFloat = {
+            if let aRange = Range(match.range(at: 4), in: string),
+               let alpha = Double(string[aRange]) {
+                return CGFloat(alpha)
+            }
+            return 1.0
+        }()
+
+        return NSColor(hue: CGFloat(h / 360.0), saturation: CGFloat(s), brightness: CGFloat(l), alpha: a)
     }
 }
 
