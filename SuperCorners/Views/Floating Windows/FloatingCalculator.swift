@@ -11,6 +11,7 @@ import SwiftUI
 
 struct FloatingCalculatorContentView: View {
     @AppStorage("floatingCalculatorMessage") private var calculatorInput: String = ""
+    @AppStorage("rememberCalcText") var rememberCalcText = true
     
     let calculator = Calculator(customization: .standard)
        
@@ -58,6 +59,11 @@ struct FloatingCalculatorContentView: View {
                 }
             }
             .frame(minHeight: 200)
+        }
+        .onAppear {
+            if !self.rememberCalcText {
+                self.calculatorInput = ""
+            }
         }
         .padding()
         .frame(minWidth: 425, minHeight: 260)

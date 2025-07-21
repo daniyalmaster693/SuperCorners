@@ -11,14 +11,12 @@ struct ActionSettingsView: View {
     @AppStorage("rememberNotesText") private var rememberNotesText = true
     @AppStorage("rememberCalcText") private var rememberCalcText = true
 
-    @AppStorage("autoCopyColors") private var autoCopyColors = true
+    @AppStorage("showRecentText") private var showRecentText = true
+    @AppStorage("saveText") private var saveText = true
+
     @AppStorage("showRecentColors") private var showRecentColors = true
     @AppStorage("saveColors") private var saveColors = true
     @AppStorage("colorFormat") private var colorFormat: ColorFormat = .hex
-
-    @AppStorage("autoCopyText") private var autoCopyText = true
-    @AppStorage("showRecentText") private var showRecentText = true
-    @AppStorage("saveText") private var saveText = true
 
     enum ColorFormat: String, CaseIterable, Identifiable {
         case hex = "Hex"
@@ -58,14 +56,6 @@ struct ActionSettingsView: View {
                 }
 
                 Section("Text Extractor") {
-                    Toggle(isOn: self.$autoCopyText) {
-                        HStack {
-                            Image(systemName: "square.on.square")
-                                .foregroundColor(.secondary)
-                            Text("Automatically Copy Text to Clipboard")
-                        }
-                    }
-
                     Toggle(isOn: self.$showRecentText) {
                         HStack {
                             Image(systemName: "rectangle.stack")
@@ -95,14 +85,6 @@ struct ActionSettingsView: View {
                         }
                         .pickerStyle(.menu)
                         .frame(width: 150)
-                    }
-
-                    Toggle(isOn: self.$autoCopyColors) {
-                        HStack {
-                            Image(systemName: "square.on.square")
-                                .foregroundColor(.secondary)
-                            Text("Automatically Copy Colors to Clipboard")
-                        }
                     }
 
                     Toggle(isOn: self.$showRecentColors) {

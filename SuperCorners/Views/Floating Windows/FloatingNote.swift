@@ -10,6 +10,7 @@ import SwiftUI
 
 struct FloatingNoteContentView: View {
     @AppStorage("floatingNoteMessage") private var textInput: String = ""
+    @AppStorage("rememberNotesText") var rememberNotesText = true
 
     var wordCount: Int {
         self.textInput.split { $0.isWhitespace || $0.isNewline }.count
@@ -50,6 +51,11 @@ struct FloatingNoteContentView: View {
                 .padding(.bottom, 8)
             }
             .frame(maxHeight: .infinity)
+        }
+        .onAppear {
+            if !self.rememberNotesText {
+                self.textInput = ""
+            }
         }
         .padding()
         .frame(minWidth: 300, minHeight: 200)

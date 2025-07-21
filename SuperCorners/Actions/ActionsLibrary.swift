@@ -8,6 +8,35 @@
 import SwiftUI
 import Vision
 
+class SettingsManager: ObservableObject {
+    static let shared = SettingsManager()
+
+    var showRecentColors: Bool {
+        UserDefaults.standard.bool(forKey: "showRecentColors")
+    }
+
+    var saveColors: Bool {
+        UserDefaults.standard.bool(forKey: "saveColors")
+    }
+
+    var colorFormat: ActionSettingsView.ColorFormat {
+        get {
+            ActionSettingsView.ColorFormat(rawValue: UserDefaults.standard.string(forKey: "colorFormat") ?? "Hex") ?? .hex
+        }
+        set {
+            UserDefaults.standard.set(newValue.rawValue, forKey: "colorFormat")
+        }
+    }
+
+    var showRecentText: Bool {
+        UserDefaults.standard.bool(forKey: "showRecentText")
+    }
+
+    var saveText: Bool {
+        UserDefaults.standard.bool(forKey: "saveText")
+    }
+}
+
 var caffeinateProcess: Process?
 
 struct CornerAction: Identifiable {
@@ -1220,11 +1249,17 @@ let cornerActions: [CornerAction] = [
                 pasteboard.setString(hexString, forType: .string)
 
                 DispatchQueue.main.async {
-                    let pickerPanel = FloatingPickerPanel()
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(hexString, forType: .string)
 
                     ColorHistoryManager.shared.addColor(color)
                     showSuccessToast("Copied \(hexString) to clipboard", icon: Image(systemName: "eyedropper"))
-                    pickerPanel.show()
+
+                    if SettingsManager.shared.showRecentColors {
+                        let pickerPanel = FloatingPickerPanel()
+                        pickerPanel.show()
+                    }
                 }
             }
         }
@@ -1264,11 +1299,13 @@ let cornerActions: [CornerAction] = [
                         pasteboard.clearContents()
                         pasteboard.setString(recognizedText, forType: .string)
 
-                        let extractorPanel = FloatingExtractorPanel()
-
                         TextExtractorManager.shared.addText(recognizedText)
                         showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
-                        extractorPanel.show()
+
+                        if SettingsManager.shared.showRecentText {
+                            let extractorPanel = FloatingExtractorPanel()
+                            extractorPanel.show()
+                        }
                     }
                 }
 
