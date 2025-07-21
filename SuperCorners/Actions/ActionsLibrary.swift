@@ -1433,13 +1433,8 @@ let cornerActions: [CornerAction] = [
 
             DispatchQueue.main.async {
                 let panel = FloatingPanel(initialMessage: "\n\(notificationText)")
-
-                let pasteboard = NSPasteboard.general
-                pasteboard.clearContents()
-                pasteboard.setString(notificationText, forType: .string)
-                showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
-
                 panel.show()
+                showSuccessToast()
             }
         }
     ),
@@ -1778,11 +1773,7 @@ let cornerActions: [CornerAction] = [
                     DispatchQueue.main.async {
                         let panel = FloatingPanel(initialMessage: "Battery Info:\n\(batteryInfo)")
                         panel.show()
-
-                        let pasteboard = NSPasteboard.general
-                        pasteboard.clearContents()
-                        pasteboard.setString(batteryInfo, forType: .string)
-                        showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+                        showSuccessToast()
                     }
                 }
             } catch {
@@ -1815,11 +1806,7 @@ let cornerActions: [CornerAction] = [
                     DispatchQueue.main.async {
                         let panel = FloatingPanel(initialMessage: "System Uptime:\n\(uptime)")
                         panel.show()
-
-                        let pasteboard = NSPasteboard.general
-                        pasteboard.clearContents()
-                        pasteboard.setString(uptime, forType: .string)
-                        showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+                        showSuccessToast()
                     }
                 }
             } catch {
@@ -1859,11 +1846,7 @@ let cornerActions: [CornerAction] = [
             DispatchQueue.main.async {
                 let panel = FloatingPanel(initialMessage: systemInfo)
                 panel.show()
-
-                let pasteboard = NSPasteboard.general
-                pasteboard.clearContents()
-                pasteboard.setString(systemInfo, forType: .string)
-                showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+                showSuccessToast()
             }
         }
     ),
@@ -1912,11 +1895,7 @@ let cornerActions: [CornerAction] = [
                 DispatchQueue.main.async {
                     let panel = FloatingPanel(initialMessage: infoText)
                     panel.show()
-
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.setString(infoText, forType: .string)
-                    showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+                    showSuccessToast()
                 }
             } else {
                 DispatchQueue.main.async {
@@ -2067,11 +2046,7 @@ let cornerActions: [CornerAction] = [
                 DispatchQueue.main.async {
                     let panel = FloatingPanel(initialMessage: output)
                     panel.show()
-
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.setString(output, forType: .string)
-                    showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+                    showSuccessToast()
                 }
             } catch {
                 showErrorToast("Failed to list network services")
@@ -2105,11 +2080,7 @@ let cornerActions: [CornerAction] = [
                 DispatchQueue.main.async {
                     let panel = FloatingPanel(initialMessage: output)
                     panel.show()
-
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.setString(output, forType: .string)
-                    showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+                    showSuccessToast()
                 }
             } catch {
                 showErrorToast("Failed to get DNS")
@@ -2143,11 +2114,7 @@ let cornerActions: [CornerAction] = [
                 DispatchQueue.main.async {
                     let panel = FloatingPanel(initialMessage: output)
                     panel.show()
-
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.setString(output, forType: .string)
-                    showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
+                    showSuccessToast()
                 }
             } catch {
                 showErrorToast("Failed to get web proxy status")
