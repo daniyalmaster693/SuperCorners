@@ -46,9 +46,20 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 
 **Requires macOS 13.0 and later**
 
+### Manual Installation
+
 1. Download the latest release.
 2. Move the app to your **Applications folder**.
 3. Run the app and grant necessary permissions when prompted.
+
+### Homebrew
+
+You can also install SuperCorners using Homebrew:
+
+```bash
+brew tap daniyalmaster693/casks
+brew install --cask supercorners
+```
 
 **Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
 
