@@ -81,6 +81,42 @@ func activateCornerHotkey() {
         return event
     }
 
+    globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
+        let selectedRaw = UserDefaults.standard.string(forKey: "selectedModifierKey") ?? "Command"
+        let selectedModifier = ModifierKey(rawValue: selectedRaw) ?? .command
+
+        if enableCornerHover {
+            if enableModifierKey {
+                if let modifierFlag = selectedModifier.flag {
+                    let modifierPressed = event.modifierFlags.contains(modifierFlag)
+
+                    if modifierPressed, !modifierKeyPressed {
+                        modifierKeyPressed = true
+                        localCornerMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
+                            getCornerMousePosition()
+                            return event
+                        }
+
+                        globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
+                            getCornerMousePosition()
+                        }
+                    } else if !modifierPressed, modifierKeyPressed {
+                        modifierKeyPressed = false
+                        if let local = localCornerMonitor {
+                            NSEvent.removeMonitor(local)
+                            localCornerMonitor = nil
+                        }
+
+                        if let global = globalCornerMonitor {
+                            NSEvent.removeMonitor(global)
+                            globalCornerMonitor = nil
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // Activation Using Corner Clicks
 
     NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged]) { event in
@@ -119,6 +155,42 @@ func activateCornerHotkey() {
         }
 
         return event
+    }
+
+    globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
+        let selectedRaw = UserDefaults.standard.string(forKey: "selectedModifierKey") ?? "Command"
+        let selectedModifier = ModifierKey(rawValue: selectedRaw) ?? .command
+
+        if enableCornerClick {
+            if enableModifierKey {
+                if let modifierFlag = selectedModifier.flag {
+                    let modifierPressed = event.modifierFlags.contains(modifierFlag)
+
+                    if modifierPressed, !modifierKeyPressed {
+                        modifierKeyPressed = true
+                        localCornerMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown]) { event in
+                            getCornerMousePosition()
+                            return event
+                        }
+
+                        globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown]) { _ in
+                            getCornerMousePosition()
+                        }
+                    } else if !modifierPressed, modifierKeyPressed {
+                        modifierKeyPressed = false
+                        if let local = localCornerMonitor {
+                            NSEvent.removeMonitor(local)
+                            localCornerMonitor = nil
+                        }
+
+                        if let global = globalCornerMonitor {
+                            NSEvent.removeMonitor(global)
+                            globalCornerMonitor = nil
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Activation Using Keyboard Shortcut + Hover
