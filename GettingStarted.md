@@ -11,14 +11,14 @@
 - You can now use a single modifier key to trigger an action (can be configured through the settings window)
 - This is an additional option on top of the existing keyboard shortcut activation method
 
-<img src="/Assets/SuperCorners-Dark-1.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/SuperCorners-1.png" width="100%" alt="SuperCorners"/><br/>
 
 ### 2. Assigning Actions
 
 - To assign an action to a corner or zone, click the corresponding button in the either the Corner and Zone Tab in the main app. This will open the action picker.
 - To assign an action from the action picker, click on an action and then click the done button. Thats it!
 
-<img src="/Assets/SuperCorners-Dark-4.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/SuperCorners-4.png" width="100%" alt="SuperCorners"/><br/>
 
 ### 3. Using Template Actions
 
@@ -26,7 +26,7 @@
 - Assigning a template action is done the same way as a normal action. However, after clicking Done, you’ll be prompted to enter a required input (like a file path, website URL, or shortcut name).
 - Each corner/zone stores its own input, so you can use the same action differently across the screen.
 
-<img src="/Assets/SuperCorners-Dark-5.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/SuperCorners-5.png" width="100%" alt="SuperCorners"/><br/>
 
 ### 4. Menubar Component
 
@@ -45,4 +45,4 @@
 
 **Note: You cannot use variable expressions or custom units as of v1.1.0**
 
-<img src="/Assets/SuperCorners-Dark-6.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/SuperCorners-6.png" width="100%" alt="SuperCorners"/><br/>

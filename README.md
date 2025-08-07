@@ -17,7 +17,7 @@
 <br>
 <br>
 
-<img src="/Assets/SuperCorners-Dark-1.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/SuperCorners-1.png" width="100%" alt="SuperCorners"/><br/>
 
 SuperCorners is a macOS app that supercharges your screen corners.
 
