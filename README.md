@@ -75,9 +75,9 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 ## Roadmap
 
 - [x] ~~Fix toast messages not showing up when app is not active~~
-- [x] Improve toast success and error logic
-- [x] Additional trigger methods for corners and zones
-- [x] Action List for the Menubar Command (a seperate menu to trigger more actions)
+- [x] ~~Improve toast success and error logic~~
+- [x] ~~Additional trigger methods for corners and zones~~
+- [x] ~~Action List for the Menubar Command (a seperate menu to trigger more actions)~~
 - [ ] Allow assigning actions per app
 - [ ] Template action to trigger a hotkey
 - [ ] Additional in app actions
