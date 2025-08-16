@@ -18,6 +18,10 @@ struct SuperCornersApp: App {
         userDriverDelegate: nil
     )
     
+    private var updater: SPUUpdater {
+        updaterController.updater
+    }
+
     // Settings Variables
     
     @AppStorage("showInDock") private var showInDock = true
@@ -239,6 +243,14 @@ struct SuperCornersApp: App {
                     }
                     .keyboardShortcut(",")
                 }
+                
+                Button {
+                    updater.checkForUpdates()
+                } label: {
+                    Text("Check for Updates")
+                }
+                .buttonStyle(.bordered)
+                .keyboardShortcut("u")
 
                 Button("Quit") {
                     NSApplication.shared.terminate(nil)
