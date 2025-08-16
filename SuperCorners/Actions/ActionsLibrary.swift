@@ -2590,7 +2590,7 @@ let cornerActions: [CornerAction] = [
     CornerAction(
         id: "79",
         title: "Toggle Theme",
-        description: "Turn Dark or Light Mode",
+        description: "Toggle dark or light mode",
         iconName: "sun.max",
         tag: "System",
         requiresInput: false,
