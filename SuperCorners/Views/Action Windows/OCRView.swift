@@ -48,6 +48,8 @@ struct TextExtractorView: View {
                                 let pasteboard = NSPasteboard.general
                                 pasteboard.clearContents()
                                 pasteboard.setString(text, forType: .string)
+
+                                showSuccessToast("Copied Text to Clipboard", icon: Image(systemName: "clipboard.fill"))
                             }) {
                                 Image(systemName: "square.on.square")
                                     .padding(6)

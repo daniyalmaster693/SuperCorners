@@ -136,6 +136,8 @@ struct ColorPickerView: View {
                                 let pasteboard = NSPasteboard.general
                                 pasteboard.clearContents()
                                 pasteboard.setString(displayString, forType: .string)
+
+                                showSuccessToast("Copied \(displayString) to clipboard", icon: Image(systemName: "eyedropper"))
                             }) {
                                 Image(systemName: "square.on.square")
                                     .padding(6)
@@ -171,7 +173,8 @@ extension NSColor {
         let blue = CGFloat(Int(string[b]) ?? 0) / 255.0
         let alpha: CGFloat = {
             if let aRange = Range(match.range(at: 4), in: string),
-               let a = Double(string[aRange]) {
+               let a = Double(string[aRange])
+            {
                 return CGFloat(a)
             }
             return 1.0
@@ -196,7 +199,8 @@ extension NSColor {
         let l = (Double(string[lRange]) ?? 0) / 100.0
         let a: CGFloat = {
             if let aRange = Range(match.range(at: 4), in: string),
-               let alpha = Double(string[aRange]) {
+               let alpha = Double(string[aRange])
+            {
                 return CGFloat(alpha)
             }
             return 1.0
