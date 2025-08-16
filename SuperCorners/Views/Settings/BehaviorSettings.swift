@@ -64,9 +64,6 @@ struct BehaviorSettingsView: View {
         }
     }
 
-    @AppStorage("showToastsInDND") private var showToastsInDND = true
-    @AppStorage("playSoundsInDND") private var playSoundsInDND = true
-
     var body: some View {
         VStack(spacing: 8) {
             Text("Behavior")
@@ -83,10 +80,10 @@ struct BehaviorSettingsView: View {
                             Text("Trigger Sensitivity: \(String(format: "%.1f", self.triggerSensitivity))")
                         }
 
-                        Text("Controls how close you must your mouse must be to a corner or zone to trigger it")
+                        Text("Controls how close your mouse must be to a corner or zone to trigger it")
                             .font(.caption)
                             .foregroundColor(.secondary)
-                            .padding(.leading, 20)
+                            .padding(.leading, 25)
                             .padding(.bottom, 10)
 
                         Slider(value: self.$triggerSensitivity, in: 1 ... 8.0, step: 0.5)
