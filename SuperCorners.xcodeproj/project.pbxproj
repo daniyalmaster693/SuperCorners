@@ -36,9 +36,22 @@
 		0DA0E4F62DDF8C83006576E1 /* SuperCornersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperCornersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0D5699CB2E5A264600CEE563 /* Exceptions for "SuperCorners" folder in "SuperCorners" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0DA0E4DA2DDF8C82006576E1 /* SuperCorners */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0DA0E4DD2DDF8C82006576E1 /* SuperCorners */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0D5699CB2E5A264600CEE563 /* Exceptions for "SuperCorners" folder in "SuperCorners" target */,
+			);
 			path = SuperCorners;
 			sourceTree = "<group>";
 		};

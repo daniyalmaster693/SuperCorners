@@ -1,3 +1,10 @@
+//
+//  ToastNotification.swift
+//  SuperCorners
+//
+//  Created by Daniyal Master on 2025-06-27.
+//
+
 import AppKit
 import SwiftUI
 
