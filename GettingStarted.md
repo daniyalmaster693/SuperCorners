@@ -18,7 +18,7 @@
 - To assign an action to a corner or zone, click the corresponding button in the either the Corner and Zone Tab in the main app. This will open the action picker.
 - To assign an action from the action picker, click on an action and then click the done button. Thats it!
 
-<img src="/Assets/SuperCorners-4.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/SuperCorners-5.png" width="100%" alt="SuperCorners"/><br/>
 
 ### 3. Using Template Actions
 
@@ -26,7 +26,7 @@
 - Assigning a template action is done the same way as a normal action. However, after clicking Done, you’ll be prompted to enter a required input (like a file path, website URL, or shortcut name).
 - Each corner/zone stores its own input, so you can use the same action differently across the screen.
 
-<img src="/Assets/SuperCorners-5.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/SuperCorners-6.png" width="100%" alt="SuperCorners"/><br/>
 
 ### 4. Menubar Component
 
@@ -35,6 +35,8 @@
 - After assigning or updating actions, click the Refresh button (or press Command + R) in the Menubar Component to update the displayed action titles.
 - If your prefer, you can disable the Menubar Component from the "General" section in Settings Window.
 - Favorited Actions: You can access your actions added to your favorites (from the action browser) from your menubar component for easy access to useful actions.
+
+<img src="/Assets/SuperCorners-12.png" width="100%" alt="SuperCorners"/><br/>
 
 ## 5. Actions
 
@@ -45,4 +47,4 @@
 
 **Note: You cannot use variable expressions or custom units as of v1.1.0**
 
-<img src="/Assets/SuperCorners-6.png" width="100%" alt="SuperCorners"/><br/>
+<img src="/Assets/SuperCorners-7.png" width="100%" alt="SuperCorners"/><br/>
