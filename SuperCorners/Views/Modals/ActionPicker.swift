@@ -45,10 +45,24 @@ struct ActionLibraryView: View {
                 .padding(.bottom, 27)
                 .frame(maxWidth: 300)
 
-            TextField("Search Actions", text: $searchText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(maxWidth: 375, alignment: .center)
-                .padding(.bottom, 10)
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
+                TextField("Search Actions", text: $searchText)
+                    .textFieldStyle(.plain)
+            }
+            .padding(.vertical, 8)
+            .padding(.horizontal, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(NSColor.controlBackgroundColor))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+            )
+            .frame(maxWidth: 300)
+            .padding(.bottom, 10)
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
