@@ -15,6 +15,7 @@ struct ActivationSettingsView: View {
     @AppStorage("enableCornerHover") private var enableCornerHover = true
     @AppStorage("enableCornerClick") private var enableCornerClick = false
     @AppStorage("selectedModifierKey") private var selectedModifier: ModifierKey = .command
+    @AppStorage("delayTimer") private var delayTimer: Double = 0.0
 
     enum ModifierKey: String, CaseIterable, Identifiable {
         case command = "Command"
@@ -107,6 +108,24 @@ struct ActivationSettingsView: View {
                                 .foregroundColor(.secondary)
                             Text("Trigger Actions on Corner Click")
                         }
+                    }
+                }
+
+                Section {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "timer")
+                                .foregroundColor(.secondary)
+                            Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))")
+                        }
+
+                        Text("Adds a delay before actions are performed.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.bottom, 10)
+
+                        Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
                     }
                 }
 
