@@ -60,17 +60,13 @@ struct ActionLibraryView: View {
                                 Image(systemName: action.iconName)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.accentColor)
+                                    .frame(width: 15, height: 15)
 
-                                VStack(alignment: .leading, spacing: 4) {
+                                VStack(alignment: .leading, spacing: 2) {
                                     Text(action.title)
-                                        .font(.title3)
-                                        .fontWeight(.semibold)
                                         .foregroundColor(.primary)
 
                                     Text(action.description)
-                                        .font(.subheadline)
                                         .foregroundColor(.secondary)
                                 }
 
@@ -78,15 +74,15 @@ struct ActionLibraryView: View {
                             }
                             .padding()
                             .background(
-                                RoundedRectangle(cornerRadius: 14)
+                                RoundedRectangle(cornerRadius: 10)
                                     .fill(
                                         selectedActionID == action.id
                                             ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.06))
                                             : Color.clear
                                     )
                                     .overlay(
-                                        RoundedRectangle(cornerRadius: 14)
-                                            .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
                                     )
                             )
                         }
