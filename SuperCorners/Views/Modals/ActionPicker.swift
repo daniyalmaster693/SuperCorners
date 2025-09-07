@@ -37,13 +37,8 @@ struct ActionLibraryView: View {
             Text("Action Library")
                 .font(.title)
                 .padding(.top, 15)
-                .bold()
-
-            Text("Click an action to assign to select it, then click the done button to assign it.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .padding(.bottom, 27)
-                .frame(maxWidth: 300)
+                .padding(.bottom, 10)
+                .fontWeight(.semibold)
 
             HStack {
                 Image(systemName: "magnifyingglass")
@@ -62,7 +57,7 @@ struct ActionLibraryView: View {
                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
             )
             .frame(maxWidth: 300)
-            .padding(.bottom, 10)
+            .padding(.bottom, 15)
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
@@ -79,9 +74,13 @@ struct ActionLibraryView: View {
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(action.title)
                                         .foregroundColor(.primary)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
 
                                     Text(action.description)
                                         .foregroundColor(.secondary)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
                                 }
 
                                 Spacer()
@@ -104,10 +103,11 @@ struct ActionLibraryView: View {
                     }
                 }
             }
-            .frame(maxWidth: 375, maxHeight: 230)
+            .padding(.top, 5)
+            .frame(maxWidth: 350, maxHeight: 230)
             .padding(.bottom, 25)
 
-            Divider().frame(maxWidth: 375)
+            Divider().frame(maxWidth: 350)
 
             HStack {
                 Button("Cancel") {
@@ -136,10 +136,10 @@ struct ActionLibraryView: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding(.horizontal, 3)
-            .frame(maxWidth: 375)
+            .frame(maxWidth: 350)
         }
         .padding(.top, 15)
-        .frame(minWidth: 250, minHeight: 460)
+        .frame(minWidth: 225, minHeight: 425)
         .padding()
         .sheet(isPresented: $showTemplateModal) {
             VStack(spacing: 12) {
