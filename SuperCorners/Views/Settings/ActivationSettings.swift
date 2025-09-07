@@ -117,15 +117,9 @@ struct ActivationSettingsView: View {
                             Image(systemName: "timer")
                                 .foregroundColor(.secondary)
                             Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))")
+
+                            Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
                         }
-
-                        Text("Adds a delay before actions are performed.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .padding(.leading, 25)
-                            .padding(.bottom, 10)
-
-                        Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
                     }
                 }
 
