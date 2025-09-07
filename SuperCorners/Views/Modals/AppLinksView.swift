@@ -40,11 +40,15 @@ struct AppLinksView: View {
                 Image(nsImage: nsImage)
                     .resizable()
                     .frame(width: 80, height: 80)
+                    .padding([.top, .leading, .trailing])
+                    .padding(.bottom, 3)
                     .cornerRadius(12)
             } else {
                 Image(systemName: "app.fill")
                     .resizable()
                     .frame(width: 80, height: 80)
+                    .padding([.top, .leading, .trailing])
+                    .padding(.bottom, 3)
                     .cornerRadius(12)
             }
 
@@ -110,18 +114,19 @@ struct AppLinksView: View {
             }
             .formStyle(.grouped)
             .frame(maxWidth: 725)
-            .padding(.top, 7)
+            .padding(.top, 3)
 
             Divider()
 
             Button("Done") {
                 dismiss()
             }
+            .padding()
             .keyboardShortcut(.defaultAction)
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
-        .padding()
+
         .padding(.top, 7)
-        .frame(width: 400, height: 510)
+        .frame(width: 400, height: 525)
     }
 }
