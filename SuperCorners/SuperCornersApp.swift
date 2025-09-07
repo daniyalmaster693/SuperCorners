@@ -272,7 +272,13 @@ struct SuperCornersApp: App {
         
         .commands {
             CommandGroup(replacing: .help) {
-                Button("SuperCorners Help") {
+                Button("Website") {
+                    if let url = URL(string: "https://supercorners.vercel.app") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                
+                Button("Repository") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners") {
                         NSWorkspace.shared.open(url)
                     }
@@ -288,12 +294,6 @@ struct SuperCornersApp: App {
                 
                 Button("Changelog") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/releases") {
-                        NSWorkspace.shared.open(url)
-                    }
-                }
-                
-                Button("License") {
-                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/blob/main/License") {
                         NSWorkspace.shared.open(url)
                     }
                 }

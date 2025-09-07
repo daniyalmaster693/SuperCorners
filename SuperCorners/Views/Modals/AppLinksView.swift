@@ -83,10 +83,10 @@ struct AppLinksView: View {
                 Section(header: Text("Links")) {
                     ForEach(
                         [
-                            ("SuperCorners Help", "https://github.com/daniyalmaster693/SuperCorners"),
+                            ("Website", "https://supercorners.vercel.app"),
+                            ("Repository", "https://github.com/daniyalmaster693/SuperCorners"),
                             ("Feedback", "https://github.com/daniyalmaster693/SuperCorners/issues/new"),
                             ("Changelog", "https://github.com/daniyalmaster693/SuperCorners/releases"),
-                            ("License", "https://github.com/daniyalmaster693/SuperCorners/blob/main/License"),
 
                         ],
                         id: \.0
