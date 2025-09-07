@@ -84,8 +84,23 @@ struct ActionLibraryView: View {
                                 .padding(.vertical, 4)
                                 .padding(.horizontal, 10)
                                 .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(selectedTags.contains(tag) ? Color.accentColor.opacity(0.2) : Color(NSColor.controlBackgroundColor))
+                                    Group {
+                                        if selectedTags.contains(tag) {
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(Color.accentColor.opacity(0.2))
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
+                                                )
+                                        } else {
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(Color(NSColor.controlBackgroundColor))
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
+                                                )
+                                        }
+                                    }
                                 )
                                 .foregroundColor(selectedTags.contains(tag) ? .accentColor : .primary)
                         }
@@ -127,7 +142,7 @@ struct ActionLibraryView: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(
                                         selectedActionID == action.id
-                                            ? (colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.06))
+                                            ? (colorScheme == .dark ? Color.white.opacity(0.05) : Color.black.opacity(0.05))
                                             : Color.clear
                                     )
                                     .overlay(
