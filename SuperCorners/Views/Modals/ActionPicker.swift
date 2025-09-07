@@ -12,6 +12,7 @@ struct ActionLibraryView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @State private var searchText = ""
+    @State private var selectedTags: Set<String> = []
     @State private var selectedActionID: String?
     @State private var showTemplateModal = false
     @State private var templateInput = ""
@@ -19,15 +20,24 @@ struct ActionLibraryView: View {
     let corner: CornerPosition.Corner
     var onUpdate: () -> Void
 
+    let allTags: [String] = {
+        let tags = cornerActions.map { $0.tag }
+        return Array(Set(tags)).sorted()
+    }()
+
     var filteredActions: [CornerAction] {
-        if searchText.isEmpty {
-            return cornerActions
+        let searchFiltered = searchText.isEmpty
+            ? cornerActions
+            : cornerActions.filter { action in
+                action.title.lowercased().contains(searchText.lowercased()) ||
+                    action.description.lowercased().contains(searchText.lowercased())
+            }
+
+        if selectedTags.isEmpty {
+            return searchFiltered
         } else {
-            let lowercasedSearch = searchText.lowercased()
-            return cornerActions.filter { action in
-                let titleContains = action.title.lowercased().contains(lowercasedSearch)
-                let descriptionContains = action.description.lowercased().contains(lowercasedSearch)
-                return titleContains || descriptionContains
+            return searchFiltered.filter { action in
+                selectedTags.contains(action.tag)
             }
         }
     }
@@ -37,8 +47,8 @@ struct ActionLibraryView: View {
             Text("Action Library")
                 .font(.title)
                 .padding(.top, 15)
-                .padding(.bottom, 10)
-                .fontWeight(.semibold)
+                .padding(.bottom, 12)
+                .bold()
 
             HStack {
                 Image(systemName: "magnifyingglass")
@@ -57,6 +67,33 @@ struct ActionLibraryView: View {
                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
             )
             .frame(maxWidth: 300)
+            .padding(.bottom, 5)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6) {
+                    ForEach(allTags, id: \.self) { tag in
+                        Button(action: {
+                            if selectedTags.contains(tag) {
+                                selectedTags.remove(tag)
+                            } else {
+                                selectedTags.insert(tag)
+                            }
+                        }) {
+                            Text(tag)
+                                .font(.subheadline)
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(selectedTags.contains(tag) ? Color.accentColor.opacity(0.2) : Color(NSColor.controlBackgroundColor))
+                                )
+                                .foregroundColor(selectedTags.contains(tag) ? .accentColor : .primary)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                }
+            }
+            .frame(maxWidth: 325)
             .padding(.bottom, 15)
 
             ScrollView {
@@ -104,8 +141,8 @@ struct ActionLibraryView: View {
                 }
             }
             .padding(.top, 5)
-            .frame(maxWidth: 350, maxHeight: 230)
-            .padding(.bottom, 25)
+            .frame(maxWidth: 350, maxHeight: 225)
+            .padding(.bottom, 15)
 
             Divider().frame(maxWidth: 350)
 
@@ -139,7 +176,7 @@ struct ActionLibraryView: View {
             .frame(maxWidth: 350)
         }
         .padding(.top, 15)
-        .frame(minWidth: 225, minHeight: 425)
+        .frame(minWidth: 250, minHeight: 440)
         .padding()
         .sheet(isPresented: $showTemplateModal) {
             VStack(spacing: 12) {
