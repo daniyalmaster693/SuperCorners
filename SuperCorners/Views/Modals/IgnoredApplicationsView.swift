@@ -15,13 +15,12 @@ struct IgnoredApplicationsView: View {
     @AppStorage("ignoredAppPaths") private var ignoredAppPathsData: Data = .init()
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             Text("Applications")
                 .font(.title2)
                 .bold()
                 .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.top, 15)
-                .padding(.bottom, 7)
+                .padding(.top, 25)
 
             Form {
                 ForEach(installedApps, id: \.self) { appURL in
@@ -40,7 +39,7 @@ struct IgnoredApplicationsView: View {
                         }
                     }
                 }
-            }
+            }.padding(.top, 5)
 
             Divider().frame(maxWidth: 375)
 
