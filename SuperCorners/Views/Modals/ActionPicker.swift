@@ -194,25 +194,35 @@ struct ActionLibraryView: View {
         .frame(minWidth: 250, minHeight: 440)
         .padding()
         .sheet(isPresented: $showTemplateModal) {
-            VStack(spacing: 12) {
+            VStack(spacing: 8) {
                 Text(cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt ?? "Enter Input")
                     .font(.title2)
-                    .padding(.top, 15)
+                    .padding(.top, 10)
                     .padding(.bottom, 2)
                     .bold()
 
-                Text("Enter a valid input for the action to assign it")
+                Text("Enter a valid action input to assign it")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .padding(.bottom, 20)
-                    .frame(maxWidth: 350)
+                    .frame(maxWidth: 290)
 
                 TextField("Enter Action Input...", text: $templateInput)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(maxWidth: 350, maxHeight: 230)
-                    .padding(.bottom, 25)
+                    .textFieldStyle(.plain)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(NSColor.controlBackgroundColor))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                    )
+                    .frame(maxWidth: 300)
+                    .padding(.bottom, 20)
 
-                Divider().frame(maxWidth: 350)
+                Divider().frame(maxWidth: 290)
 
                 HStack {
                     Button("Cancel") {
@@ -238,7 +248,7 @@ struct ActionLibraryView: View {
                     .frame(maxWidth: 375, alignment: .trailing)
                 }
             }
-            .frame(width: 325)
+            .frame(maxWidth: 290, minHeight: 175)
             .padding(.top, 15)
             .padding()
             .onAppear {
