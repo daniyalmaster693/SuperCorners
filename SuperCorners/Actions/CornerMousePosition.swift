@@ -10,6 +10,7 @@ import SwiftUI
 private var lastCorner: CornerPosition.Corner?
 
 func getCornerMousePosition() {
+    @AppStorage("delayTimer") var delayTimer = 0.0
     @AppStorage("triggerSensitivity") var triggerSensitivity = 5.0
     @AppStorage("disableInFullScreen") var disableInFullScreen = false
 
@@ -66,9 +67,18 @@ func getCornerMousePosition() {
             if hitZone.contains(mousePosition) {
                 if corner != lastCorner {
                     lastCorner = corner
-                    triggerCornerAction(for: corner)
-                    if playSoundEffect {
-                        NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
+                    if delayTimer > 0.0 {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delayTimer) {
+                            triggerCornerAction(for: corner)
+                            if playSoundEffect {
+                                NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
+                            }
+                        }
+                    } else {
+                        triggerCornerAction(for: corner)
+                        if playSoundEffect {
+                            NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
+                        }
                     }
                 }
                 return
