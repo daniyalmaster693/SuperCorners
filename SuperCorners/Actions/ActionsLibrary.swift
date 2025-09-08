@@ -2863,4 +2863,31 @@ let cornerActions: [CornerAction] = [
             showSuccessToast()
         }
     ),
+
+    CornerAction(
+        id: "88",
+        title: "Run Terminal Command",
+        description: "Run a terminal command.",
+        iconName: "terminal",
+        tag: "Template Action",
+        requiresInput: true,
+        inputPrompt: "",
+        perform: { input in
+            guard let command = input, !command.isEmpty else {
+                showErrorToast("No command entered")
+                return
+            }
+
+            let process = Process()
+            process.launchPath = "/bin/zsh"
+            process.arguments = ["-c", command]
+
+            do {
+                try process.run()
+                showSuccessToast()
+            } catch {
+                showErrorToast("Failed to run command")
+            }
+        }
+    ),
 ]
