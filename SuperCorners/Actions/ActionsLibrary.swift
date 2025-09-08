@@ -2976,4 +2976,41 @@ let cornerActions: [CornerAction] = [
             showSuccessToast("Coin flip: \(result)", icon: Image(systemName: "circle.circle.fill"))
         }
     ),
+
+    CornerAction(
+        id: "93",
+        title: "Send Text to ChatGPT",
+        description: "Copies currently selected text and sends it to the ChatGPT app.",
+        iconName: "text.bubble.fill",
+        tag: "Tool",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                let script = """
+                tell application "System Events"
+                    keystroke "c" using {command down}
+                    delay 0.2
+                    tell application "ChatGPT" to activate
+                    delay 3.0
+                    keystroke "v" using {command down}
+                    delay 0.2
+                    key code 36
+                end tell
+                """
+
+                let task = Process()
+                task.launchPath = "/usr/bin/osascript"
+                task.arguments = ["-e", script]
+
+                do {
+                    try task.run()
+                    task.waitUntilExit()
+                    showSuccessToast("Text Sent to ChatGPT", icon: Image(systemName: "text.bubble.fill"))
+                } catch {
+                    showErrorToast("Failed to send text")
+                }
+            }
+        }
+    ),
 ]
