@@ -2890,4 +2890,90 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "89",
+        title: "Set Volume",
+        description: "Set system volume to a specific level.",
+        iconName: "speaker.wave.2.fill",
+        tag: "Media",
+        requiresInput: true,
+        inputPrompt: "Enter a volume percentage (0–100):",
+        perform: { input in
+            guard let value = input, let percent = Double(value),
+                  percent >= 0, percent <= 100
+            else {
+                showErrorToast("Invalid volume")
+                return
+            }
+
+            let volumeValue = percent / 100.0
+            let script = "set volume output volume \(Int(percent))"
+            let process = Process()
+            process.launchPath = "/usr/bin/osascript"
+            process.arguments = ["-e", script]
+
+            do {
+                try process.run()
+                showSuccessToast("Volume set to \(Int(percent))%", icon: Image(systemName: "speaker.wave.2.fill"))
+            } catch {
+                showErrorToast("Failed to set volume")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "90",
+        title: "Speak Time",
+        description: "Speak the current system time aloud.",
+        iconName: "clock.fill",
+        tag: "Tool",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let formatter = DateFormatter()
+            formatter.timeStyle = .short
+            let timeString = formatter.string(from: Date())
+
+            let process = Process()
+            process.launchPath = "/usr/bin/say"
+            process.arguments = ["The time is \(timeString)"]
+
+            do {
+                try process.run()
+                showSuccessToast("The time is \(timeString)", icon: Image(systemName: "clock.fill"))
+            } catch {
+                showErrorToast("Failed to speak time")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "91",
+        title: "Roll Dice",
+        description: "Roll a six-sided dice and show the result.",
+        iconName: "dice",
+        tag: "Tool",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let result = Int.random(in: 1 ... 6)
+            let iconName = "die.face.\(result).fill"
+            showSuccessToast("Dice rolled: \(result)", icon: Image(systemName: iconName))
+        }
+    ),
+
+    CornerAction(
+        id: "92",
+        title: "Coin Flip",
+        description: "Flip a coin and get Heads or Tails.",
+        iconName: "circle.circle.fill",
+        tag: "Tool",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let result = Bool.random() ? "Heads" : "Tails"
+            showSuccessToast("Coin flip: \(result)", icon: Image(systemName: "circle.circle.fill"))
+        }
+    ),
 ]
