@@ -75,7 +75,7 @@ struct ContentView: View {
                         }
                     }
                     .padding()
-                    .frame(maxWidth: 150, alignment: .center)
+                    .frame(maxWidth: 175, alignment: .center)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
                             .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)
@@ -86,23 +86,25 @@ struct ContentView: View {
                     isHovered = hovering
                 }
             }
-            .frame(minWidth: 150)
+            .frame(minWidth: 175)
         } detail: {
             Group {
                 switch selectedItem {
                 case "corners":
                     CornerView()
+                        .navigationTitle("Corners")
                 case "zones":
                     ZoneView()
+                        .navigationTitle("Zones")
                 case "actions":
                     ActionBrowserView()
+                        .navigationTitle("Actions")
                 default:
                     Text("No item selected")
                 }
             }
-            .navigationTitle("")
         }
-        .frame(minWidth: 880, minHeight: 460)
+        .frame(minWidth: 915, minHeight: 460)
         .sheet(isPresented: $showingAboutModal) {
             AppLinksView(updater: updater)
         }
