@@ -28,10 +28,6 @@ struct ActionSettingsView: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            Text("Action Settings")
-                .font(.title2)
-                .bold()
-
             Form {
                 Section("Floating Notes Window") {
                     Toggle(isOn: self.$rememberNotesText) {

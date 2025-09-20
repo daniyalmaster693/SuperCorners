@@ -35,19 +35,22 @@ struct SettingsView: View {
                 switch selectedTab {
                 case .general:
                     GeneralSettingsView()
+                        .navigationTitle("General")
                 case .activation:
                     ActivationSettingsView()
+                        .navigationTitle("Activation")
                 case .behavior:
                     BehaviorSettingsView()
+                        .navigationTitle("Behavior")
                 case .actions:
                     ActionSettingsView()
+                        .navigationTitle("Actions")
                 default:
                     Text("Select a tab")
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding()
-            .navigationTitle("")
             .toolbar(.hidden)
         }
         .frame(minWidth: 700, idealWidth: 700, maxWidth: 700)
