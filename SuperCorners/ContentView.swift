@@ -101,7 +101,6 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("")
-            .toolbar(.hidden)
         }
         .frame(minWidth: 880, minHeight: 460)
         .sheet(isPresented: $showingAboutModal) {

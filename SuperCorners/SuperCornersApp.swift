@@ -79,18 +79,12 @@ struct SuperCornersApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if #available(macOS 15.0, *) {
+            if #available(macOS 26, *) {
                 ContentView(updater: updaterController.updater)
-                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-                    .containerBackground(.ultraThickMaterial, for: .window)
-                    .onAppear {
-                        updateActivationPolicy()
-                    }
+                    .onAppear { updateActivationPolicy() }
             } else {
                 ContentView(updater: updaterController.updater)
-                    .onAppear {
-                        updateActivationPolicy()
-                    }
+                    .onAppear { updateActivationPolicy() }
             }
         }
         
@@ -261,10 +255,8 @@ struct SuperCornersApp: App {
         }
 
         Settings {
-            if #available(macOS 15.0, *) {
+            if #available(macOS 26.0, *) {
                 SettingsView()
-                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-                    .containerBackground(.ultraThickMaterial, for: .window)
             } else {
                 SettingsView()
             }
