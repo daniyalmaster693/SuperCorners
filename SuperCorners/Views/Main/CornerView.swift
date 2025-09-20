@@ -67,40 +67,77 @@ struct CornerView: View {
                                     GeometryReader { geo in
                                         ZStack {
                                             if enableTopLeftCorner {
-                                                Button(topLeftTitle ?? "Add Action") {
-                                                    currentlySelectedCorner = .topLeft
-                                                    showModal = true
+                                                if #available(macOS 26.0, *) {
+                                                    Button(topLeftTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .topLeft
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.glass)
+                                                    .position(x: 0 + 75, y: 0 + 20)
+                                                } else {
+                                                    Button(topLeftTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .topLeft
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .position(x: 0 + 75, y: 0 + 20)
                                                 }
-                                                .buttonStyle(.bordered)
-                                                .tint(.white)
-                                                .position(x: 0 + 75, y: 0 + 20)
                                             }
 
                                             if enableTopRightCorner {
-                                                Button(topRightTitle ?? "Add Action") {
-                                                    currentlySelectedCorner = .topRight
-                                                    showModal = true
+                                                if #available(macOS 26.0, *) {
+                                                    Button(topRightTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .topRight
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.glass)
+                                                    .position(x: geo.size.width - 75, y: 0 + 20)
+                                                } else {
+                                                    Button(topRightTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .topRight
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .position(x: geo.size.width - 75, y: 0 + 20)
                                                 }
-                                                .buttonStyle(.bordered)
-                                                .position(x: geo.size.width - 75, y: 0 + 20)
                                             }
 
                                             if enableBottomLeftCorner {
-                                                Button(bottomLeftTitle ?? "Add Action") {
-                                                    currentlySelectedCorner = .bottomLeft
-                                                    showModal = true
+                                                if #available(macOS 26.0, *) {
+                                                    Button(bottomLeftTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .bottomLeft
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.glass)
+                                                    .position(x: 0 + 75, y: geo.size.height - 20)
                                                 }
-                                                .buttonStyle(.bordered)
-                                                .position(x: 0 + 75, y: geo.size.height - 20)
+
+                                                else {
+                                                    Button(bottomLeftTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .bottomLeft
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .position(x: 0 + 75, y: geo.size.height - 20)
+                                                }
                                             }
 
                                             if enableBottomRightCorner {
-                                                Button(bottomRightTitle ?? "Add Action") {
-                                                    currentlySelectedCorner = .bottomRight
-                                                    showModal = true
+                                                if #available(macOS 26.0, *) {
+                                                    Button(bottomRightTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .bottomRight
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.glass)
+                                                    .position(x: geo.size.width - 75, y: geo.size.height - 20)
+                                                } else {
+                                                    Button(bottomRightTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .bottomRight
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                                 }
-                                                .buttonStyle(.bordered)
-                                                .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                             }
                                         }
                                     }
