@@ -66,6 +66,11 @@ struct BehaviorSettingsView: View {
 
     var body: some View {
         VStack(spacing: 8) {
+            Text("Behavior")
+                .font(.title2)
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .center)
+
             Form {
                 Section {
                     VStack(alignment: .leading, spacing: 6) {

@@ -41,6 +41,11 @@ struct ActivationSettingsView: View {
 
     var body: some View {
         VStack(spacing: 8) {
+            Text("Activation")
+                .font(.title2)
+                .bold()
+                .frame(maxWidth: .infinity, alignment: .center)
+
             Form {
                 Section {
                     Toggle(isOn: $enableModifierKey) {
