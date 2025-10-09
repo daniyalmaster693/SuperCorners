@@ -271,14 +271,14 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "8",
-        title: "Open Launchpad",
-        description: "Open the Launchpad to see your apps.",
+        title: "Open Applications Folder",
+        description: "Open the Spotlight Applications Folder to see your apps.",
         iconName: "square.grid.2x2",
         tag: "System",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
-            let path = "/System/Applications/Launchpad.app"
+            let path = "/System/Applications/Apps.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
 
             showSuccessToast()
