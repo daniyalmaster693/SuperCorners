@@ -5,9 +5,11 @@
 //  Created by Daniyal Master on 2025-05-24.
 //
 
+import AppKit
 import SwiftUI
 
 struct ZoneView: View {
+    @State private var wallpaperImage: NSImage?
     @Environment(\.colorScheme) var colorScheme
 
     // Action Picker Variables
@@ -59,112 +61,114 @@ struct ZoneView: View {
 
                             Spacer()
 
-                            Image(colorScheme == .dark ? "ClassicWallpaperDark" : "ClassicWallpaperLight")
-                                .resizable()
-                                .aspectRatio(16 / 9, contentMode: .fit)
-                                .cornerRadius(12)
-                                .overlay(alignment: .top) {
-                                    if enableTopZone {
-                                        if #available(macOS 26.0, *) {
-                                            Button(topTitle ?? "Add Action") {
-                                                currentlySelectedCorner = .top
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.glass)
-                                            .padding(8)
-                                        }
-                                        else {
-                                            Button(topTitle ?? "Add Action") {
-                                                currentlySelectedCorner = .top
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .padding(8)
-                                        }
-                                    }
-                                }
-                                .overlay(alignment: .bottom) {
-                                    if enableBottomZone {
-                                        if #available(macOS 26.0, *) {
-                                            Button(bottomTitle ?? "Add Action") {
-                                                currentlySelectedCorner = .bottom
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.glass)
-                                            .padding(8)
-                                        }
-                                        else {
-                                            Button(bottomTitle ?? "Add Action") {
-                                                currentlySelectedCorner = .bottom
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .padding(8)
-                                        }
-                                    }
-                                }
-                                .overlay(alignment: .leading) {
-                                    if enableLeftZone {
-                                        if #available(macOS 26.0, *) {
-                                            VStack {
-                                                Spacer()
-                                                Button(leftTitle ?? "Add Action") {
-                                                    currentlySelectedCorner = .left
+                            if let wallpaper = wallpaperImage {
+                                Image(nsImage: wallpaper)
+                                    .resizable()
+                                    .aspectRatio(16 / 9, contentMode: .fit)
+                                    .cornerRadius(12)
+                                    .overlay(alignment: .top) {
+                                        if enableTopZone {
+                                            if #available(macOS 26.0, *) {
+                                                Button(topTitle ?? "Add Action") {
+                                                    currentlySelectedCorner = .top
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.glass)
-                                                .padding(.trailing, 10)
                                                 .padding(8)
-                                                Spacer()
                                             }
-                                        }
-                                        else {
-                                            VStack {
-                                                Spacer()
-                                                Button(leftTitle ?? "Add Action") {
-                                                    currentlySelectedCorner = .left
+                                            else {
+                                                Button(topTitle ?? "Add Action") {
+                                                    currentlySelectedCorner = .top
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.bordered)
-                                                .padding(.trailing, 10)
                                                 .padding(8)
-                                                Spacer()
                                             }
                                         }
                                     }
-                                }
-                                .overlay(alignment: .trailing) {
-                                    if enableRightZone {
-                                        if #available(macOS 26.0, *) {
-                                            VStack {
-                                                Spacer()
-                                                Button(rightTitle ?? "Add Action") {
-                                                    currentlySelectedCorner = .right
+                                    .overlay(alignment: .bottom) {
+                                        if enableBottomZone {
+                                            if #available(macOS 26.0, *) {
+                                                Button(bottomTitle ?? "Add Action") {
+                                                    currentlySelectedCorner = .bottom
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.glass)
-                                                .padding(.leading, 10)
                                                 .padding(8)
-                                                Spacer()
+                                            }
+                                            else {
+                                                Button(bottomTitle ?? "Add Action") {
+                                                    currentlySelectedCorner = .bottom
+                                                    showModal = true
+                                                }
+                                                .buttonStyle(.bordered)
+                                                .padding(8)
                                             }
                                         }
+                                    }
+                                    .overlay(alignment: .leading) {
+                                        if enableLeftZone {
+                                            if #available(macOS 26.0, *) {
+                                                VStack {
+                                                    Spacer()
+                                                    Button(leftTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .left
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.glass)
+                                                    .padding(.trailing, 10)
+                                                    .padding(8)
+                                                    Spacer()
+                                                }
+                                            }
+                                            else {
+                                                VStack {
+                                                    Spacer()
+                                                    Button(leftTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .left
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .padding(.trailing, 10)
+                                                    .padding(8)
+                                                    Spacer()
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .overlay(alignment: .trailing) {
+                                        if enableRightZone {
+                                            if #available(macOS 26.0, *) {
+                                                VStack {
+                                                    Spacer()
+                                                    Button(rightTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .right
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.glass)
+                                                    .padding(.leading, 10)
+                                                    .padding(8)
+                                                    Spacer()
+                                                }
+                                            }
 
-                                        else {
-                                            VStack {
-                                                Spacer()
-                                                Button(rightTitle ?? "Add Action") {
-                                                    currentlySelectedCorner = .right
-                                                    showModal = true
+                                            else {
+                                                VStack {
+                                                    Spacer()
+                                                    Button(rightTitle ?? "Add Action") {
+                                                        currentlySelectedCorner = .right
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .padding(.leading, 10)
+                                                    .padding(8)
+                                                    Spacer()
                                                 }
-                                                .buttonStyle(.bordered)
-                                                .padding(.leading, 10)
-                                                .padding(8)
-                                                Spacer()
                                             }
                                         }
                                     }
-                                }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                            }
                         }
                     }
                 }
@@ -181,5 +185,26 @@ struct ZoneView: View {
             }
         }
         .id(refreshID)
+        .onAppear {
+            loadWallpaper()
+        }
+    }
+
+    private func loadWallpaper() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let image: NSImage?
+            if let screen = NSScreen.main,
+               let url = NSWorkspace.shared.desktopImageURL(for: screen)
+            {
+                image = NSImage(contentsOf: url)
+            }
+            else {
+                image = nil
+            }
+
+            DispatchQueue.main.async {
+                wallpaperImage = image
+            }
+        }
     }
 }

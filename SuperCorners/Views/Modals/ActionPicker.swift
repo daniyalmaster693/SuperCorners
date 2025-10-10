@@ -191,7 +191,7 @@ struct ActionLibraryView: View {
             .frame(maxWidth: 350)
         }
         .padding(.top, 15)
-        .frame(minWidth: 250, minHeight: 440)
+        .frame(minWidth: 250, minHeight: 450)
         .padding()
         .sheet(isPresented: $showTemplateModal) {
             VStack(spacing: 8) {
