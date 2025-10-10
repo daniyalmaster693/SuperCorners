@@ -34,14 +34,56 @@ var localCornerMonitor: Any?
 var globalCornerMonitor: Any?
 
 func activateCornerHotkey() {
-    // Activation Using Modifier Key
-
     @AppStorage("selectedModifierKey") var selectedModifier: ModifierKey = .command
     @AppStorage("enableModifierKey") var enableModifierKey = true
     @AppStorage("enableCornerHover") var enableCornerHover = true
     @AppStorage("enableCornerClick") var enableCornerClick = false
 
     var modifierKeyPressed = false
+
+    // Activation Using Hover
+
+    NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
+        if enableCornerHover {
+            if !enableModifierKey {
+                getCornerMousePosition()
+                return event
+            }
+        }
+
+        return event
+    }
+
+    globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
+        if enableCornerHover {
+            if !enableModifierKey {
+                getCornerMousePosition()
+            }
+        }
+    }
+
+    // Activation Using Click
+
+    NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown]) { event in
+        if enableCornerClick {
+            if !enableModifierKey {
+                getCornerMousePosition()
+                return event
+            }
+        }
+
+        return event
+    }
+
+    globalCornerMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown]) { _ in
+        if enableCornerClick {
+            if !enableModifierKey {
+                getCornerMousePosition()
+            }
+        }
+    }
+
+    // Activation Using Modifier Key + Hover
 
     NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged]) { event in
         let selectedRaw = UserDefaults.standard.string(forKey: "selectedModifierKey") ?? "Command"
@@ -117,7 +159,7 @@ func activateCornerHotkey() {
         }
     }
 
-    // Activation Using Corner Clicks
+    // Activation Using Modifier Key + Click
 
     NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged]) { event in
         let selectedRaw = UserDefaults.standard.string(forKey: "selectedModifierKey") ?? "Command"
