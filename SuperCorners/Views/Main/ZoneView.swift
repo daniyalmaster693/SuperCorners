@@ -113,6 +113,7 @@ struct ZoneView: View {
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.glass)
+                                                .padding(.trailing, 10)
                                                 .padding(8)
                                                 Spacer()
                                             }
@@ -125,6 +126,7 @@ struct ZoneView: View {
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.bordered)
+                                                .padding(.trailing, 10)
                                                 .padding(8)
                                                 Spacer()
                                             }
@@ -141,6 +143,7 @@ struct ZoneView: View {
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.glass)
+                                                .padding(.leading, 10)
                                                 .padding(8)
                                                 Spacer()
                                             }
@@ -154,6 +157,7 @@ struct ZoneView: View {
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.bordered)
+                                                .padding(.leading, 10)
                                                 .padding(8)
                                                 Spacer()
                                             }

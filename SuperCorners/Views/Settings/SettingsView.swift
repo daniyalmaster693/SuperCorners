@@ -32,7 +32,7 @@ struct SettingsView: View {
                 .listStyle(.sidebar)
             }
             .padding(.top, 7)
-            .frame(minWidth: 100)
+            .frame(minWidth: 175)
         } detail: {
             Group {
                 switch selectedTab {

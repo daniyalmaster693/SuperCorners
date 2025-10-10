@@ -73,6 +73,7 @@ struct CornerView: View {
                                                         showModal = true
                                                     }
                                                     .buttonStyle(.glass)
+                                                    .padding(.leading, 10)
                                                     .position(x: 0 + 75, y: 0 + 20)
                                                 } else {
                                                     Button(topLeftTitle ?? "Add Action") {
@@ -80,6 +81,7 @@ struct CornerView: View {
                                                         showModal = true
                                                     }
                                                     .buttonStyle(.bordered)
+                                                    .padding(.leading, 10)
                                                     .position(x: 0 + 75, y: 0 + 20)
                                                 }
                                             }
@@ -91,6 +93,7 @@ struct CornerView: View {
                                                         showModal = true
                                                     }
                                                     .buttonStyle(.glass)
+                                                    .padding(.trailing, 10)
                                                     .position(x: geo.size.width - 75, y: 0 + 20)
                                                 } else {
                                                     Button(topRightTitle ?? "Add Action") {
@@ -98,6 +101,7 @@ struct CornerView: View {
                                                         showModal = true
                                                     }
                                                     .buttonStyle(.bordered)
+                                                    .padding(.trailing, 10)
                                                     .position(x: geo.size.width - 75, y: 0 + 20)
                                                 }
                                             }
@@ -109,6 +113,7 @@ struct CornerView: View {
                                                         showModal = true
                                                     }
                                                     .buttonStyle(.glass)
+                                                    .padding(.leading, 10)
                                                     .position(x: 0 + 75, y: geo.size.height - 20)
                                                 }
 
@@ -118,6 +123,7 @@ struct CornerView: View {
                                                         showModal = true
                                                     }
                                                     .buttonStyle(.bordered)
+                                                    .padding(.leading, 10)
                                                     .position(x: 0 + 75, y: geo.size.height - 20)
                                                 }
                                             }
@@ -129,6 +135,7 @@ struct CornerView: View {
                                                         showModal = true
                                                     }
                                                     .buttonStyle(.glass)
+                                                    .padding(.trailing, 10)
                                                     .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                                 } else {
                                                     Button(bottomRightTitle ?? "Add Action") {
@@ -136,6 +143,7 @@ struct CornerView: View {
                                                         showModal = true
                                                     }
                                                     .buttonStyle(.bordered)
+                                                    .padding(.trailing, 10)
                                                     .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                                 }
                                             }
