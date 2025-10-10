@@ -48,20 +48,12 @@ struct ContentView: View {
                     showingAboutModal = true
                 } label: {
                     HStack(spacing: 8) {
-                        if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
-                           let nsImage = NSImage(contentsOfFile: iconPath)
-                        {
-                            Image(nsImage: nsImage)
-                                .resizable()
-                                .frame(width: 32, height: 32)
-                                .cornerRadius(6)
-                        } else {
-                            Image(systemName: "app.fill")
-                                .resizable()
-                                .frame(width: 32, height: 32)
-                                .cornerRadius(6)
-                        }
-                        
+                        Image("TahoeIcon")
+                            .resizable()
+                            .frame(width: 28, height: 28)
+                            .cornerRadius(4)
+                            .padding(.trailing, 3)
+                       
                         VStack(alignment: .leading) {
                             Text("SuperCorners")
                                 .font(.footnote)
@@ -75,7 +67,7 @@ struct ContentView: View {
                         }
                     }
                     .padding()
-                    .frame(maxWidth: 175, alignment: .center)
+                    .frame(maxWidth: 150, alignment: .center)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
                             .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)

@@ -16,20 +16,14 @@ struct AppLinksView: View {
 
     var body: some View {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+
         VStack(spacing: 8) {
-            if let iconPath = Bundle.main.path(forResource: "AppIcon", ofType: "icns"),
-               let nsImage = NSImage(contentsOfFile: iconPath)
-            {
-                Image(nsImage: nsImage)
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .cornerRadius(12)
-            } else {
-                Image(systemName: "app.fill")
-                    .resizable()
-                    .frame(width: 80, height: 80)
-                    .cornerRadius(12)
-            }
+            Image("TahoeIcon")
+                .resizable()
+                .frame(width: 67, height: 67)
+                .cornerRadius(4)
+                .padding(.top, 10)
+                .padding(.bottom, 5)
 
             Text("SuperCorners ")
                 .font(.title2)
