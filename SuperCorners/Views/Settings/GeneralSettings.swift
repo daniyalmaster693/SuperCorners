@@ -6,11 +6,29 @@
 //
 
 import LaunchAtLogin
+import Sparkle
 import SwiftUI
 
 struct GeneralSettingsView: View {
-    @AppStorage("showInDock") private var showInDock = true
+    let updater: SPUUpdater
+    @StateObject private var updateViewModel: CheckForUpdatesViewModel
 
+    final class CheckForUpdatesViewModel: ObservableObject {
+        @Published var canCheckForUpdates = false
+
+        init(updater: SPUUpdater) {
+            updater.publisher(for: \.canCheckForUpdates)
+                .assign(to: &$canCheckForUpdates)
+        }
+    }
+
+    init(updater: SPUUpdater) {
+        self.updater = updater
+        _updateViewModel = StateObject(
+            wrappedValue: CheckForUpdatesViewModel(updater: updater))
+    }
+
+    @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
     @AppStorage("showCorners") private var showCorners = true
     @AppStorage("showZones") private var showZones = true
@@ -47,6 +65,19 @@ struct GeneralSettingsView: View {
                                 NSApp.setActivationPolicy(.accessory)
                             }
                         }
+                    }
+                }
+
+                Section {
+                    HStack {
+                        Label("Updates", systemImage: "arrow.2.circlepath")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Check for Updates") {
+                            updater.checkForUpdates()
+                        }
+                        .buttonStyle(.bordered)
+                        .disabled(!updateViewModel.canCheckForUpdates)
                     }
                 }
 

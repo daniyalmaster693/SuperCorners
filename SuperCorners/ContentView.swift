@@ -106,7 +106,7 @@ struct ContentView: View {
         }
         .frame(minWidth: 915, minHeight: 460)
         .sheet(isPresented: $showingAboutModal) {
-            AppLinksView(updater: updater)
+            AppLinksView()
         }
     }
 }

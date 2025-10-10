@@ -262,11 +262,11 @@ struct SuperCornersApp: App {
 
         Settings {
             if #available(macOS 15.0, *) {
-                SettingsView()
+                SettingsView(updater: updater)
                     .containerBackground(.ultraThinMaterial, for: .window)
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
             } else {
-                SettingsView()
+                SettingsView(updater: updater)
             }
         }
         
