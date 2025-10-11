@@ -81,7 +81,7 @@ struct SuperCornersApp: App {
         WindowGroup {
             if #available(macOS 15.0, *) {
                 ContentView(updater: updaterController.updater)
-                    .containerBackground(.ultraThinMaterial, for: .window)
+                    .containerBackground(.thickMaterial, for: .window)
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
                     .onAppear {
                         updateActivationPolicy()
@@ -263,8 +263,8 @@ struct SuperCornersApp: App {
         Settings {
             if #available(macOS 15.0, *) {
                 SettingsView(updater: updater)
+                    .containerBackground(.thickMaterial, for: .window)
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-                    .containerBackground(.ultraThickMaterial, for: .window)
             } else {
                 SettingsView(updater: updater)
             }
