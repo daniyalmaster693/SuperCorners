@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct BehaviorSettingsView: View {
-    @AppStorage("triggerSensitivity") private var triggerSensitivity: Double = 5.0
+    @AppStorage("cornerTriggerSensitivity") private var cornerTriggerSensitivity: Double = 5.0
+    @AppStorage("zoneTriggerSensitivity") private var zoneTriggerSensitivity: Double = 5.0
 
     // Ignored applications list
     @State private var ignoredApps: [String] = []
@@ -77,16 +78,32 @@ struct BehaviorSettingsView: View {
                         HStack {
                             Image(systemName: "dot.circle.and.cursorarrow")
                                 .foregroundColor(.secondary)
-                            Text("Trigger Sensitivity: \(String(format: "%.1f", self.triggerSensitivity))")
+                            Text("Corner Trigger Sensitivity: \(String(format: "%.1f", self.cornerTriggerSensitivity))")
                         }
 
-                        Text("Controls how close your mouse must be to a corner or zone to trigger it")
+                        Text("Controls how close your mouse must be to a corner to trigger it")
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .padding(.leading, 25)
                             .padding(.bottom, 10)
 
-                        Slider(value: self.$triggerSensitivity, in: 1 ... 8.0, step: 0.5)
+                        Slider(value: self.$cornerTriggerSensitivity, in: 1 ... 8.0, step: 0.5)
+                    }
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "dot.circle.and.cursorarrow")
+                                .foregroundColor(.secondary)
+                            Text("Zone Trigger Sensitivity: \(String(format: "%.1f", self.zoneTriggerSensitivity))")
+                        }
+
+                        Text("Controls how close your mouse must be to a zone to trigger it")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.bottom, 10)
+
+                        Slider(value: self.$zoneTriggerSensitivity, in: 1 ... 8.0, step: 0.5)
                     }
                 }
 

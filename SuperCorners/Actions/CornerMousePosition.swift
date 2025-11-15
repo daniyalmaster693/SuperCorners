@@ -11,9 +11,10 @@ private var lastCorner: CornerPosition.Corner?
 
 func getCornerMousePosition() {
     @AppStorage("delayTimer") var delayTimer = 0.0
-    @AppStorage("triggerSensitivity") var triggerSensitivity = 5.0
-    @AppStorage("disableInFullScreen") var disableInFullScreen = false
+    @AppStorage("cornerTriggerSensitivity") var cornerTriggerSensitivity = 5.0
+    @AppStorage("zoneTriggerSensitivity") var zoneTriggerSensitivity = 5.0
 
+    @AppStorage("disableInFullScreen") var disableInFullScreen = false
     @AppStorage("playSoundEffect") var playSoundEffect = false
     @AppStorage("selectedSoundEffect") var selectedSound: SoundEffect = .purr
 
@@ -61,7 +62,16 @@ func getCornerMousePosition() {
             let position = CornerPosition(screen: screen, corner: corner)
             let cornerPoint = position.coordinate
 
-            let tolerance: CGFloat = triggerSensitivity * 10
+            let sensitivity: CGFloat = {
+                switch corner {
+                case .topLeft, .topRight, .bottomLeft, .bottomRight:
+                    return cornerTriggerSensitivity
+                default:
+                    return zoneTriggerSensitivity
+                }
+            }()
+
+            let tolerance: CGFloat = sensitivity * 10
             let hitZone = CGRect(x: cornerPoint.x - tolerance/2, y: cornerPoint.y - tolerance/2, width: tolerance, height: tolerance)
 
             if hitZone.contains(mousePosition) {
