@@ -152,11 +152,21 @@ struct CornerView: View {
                                                     }
                                                 }
 
-                                                Picker("", selection: $selectedActionSet) {
-                                                    Text("Global Actions").tag("Global Actions")
-                                                    Text("Safari Actions").tag("Safari Actions")
-                                                    Text("Music Actions").tag("Music Actions")
-                                                    Text("Xcode Actions").tag("Developer Actions")
+                                                if #available(macOS 26.0, *) {
+                                                    Picker("", selection: $selectedActionSet) {
+                                                        Text("Global Actions").tag("Global Actions")
+                                                        Text("Safari Actions").tag("Safari Actions")
+                                                        Text("Music Actions").tag("Music Actions")
+                                                        Text("Xcode Actions").tag("Developer Actions")
+                                                    }
+                                                    .glassEffect(.regular)
+                                                } else {
+                                                    Picker("", selection: $selectedActionSet) {
+                                                        Text("Global Actions").tag("Global Actions")
+                                                        Text("Safari Actions").tag("Safari Actions")
+                                                        Text("Music Actions").tag("Music Actions")
+                                                        Text("Xcode Actions").tag("Developer Actions")
+                                                    }
                                                 }
                                             }
                                         }
