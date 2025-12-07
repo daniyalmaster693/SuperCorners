@@ -3087,4 +3087,17 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "96",
+        title: "Simulate Key Press",
+        description: "Simulate a keyboard shortcut",
+        iconName: "keyboard",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            keypress.hotkey(modifiers: ["command"], key: "t")
+        }
+    ),
 ]
