@@ -167,6 +167,13 @@ struct ZoneView: View {
                                             }
                                         }
                                     }
+                                    .overlay(alignment: .center) {
+                                        Picker("", selection: .constant(0)) {
+                                            // Placeholder for picking trigger sets
+                                        }
+                                        .frame(width: 150)
+                                        .padding(8)
+                                    }
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                             }
                         }
@@ -187,6 +194,16 @@ struct ZoneView: View {
         .id(refreshID)
         .onAppear {
             loadWallpaper()
+        }
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
+                    // Action for creating an trigger set
+                }) {
+                    Image(systemName: "plus")
+                }
+                .help("Create Trigger Set")
+            }
         }
     }
 

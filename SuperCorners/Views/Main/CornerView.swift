@@ -150,6 +150,12 @@ struct CornerView: View {
                                                         .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                                     }
                                                 }
+
+                                                Picker("", selection: .constant(0)) {
+                                                    // Placeholder for picking trigger sets
+                                                }
+                                                .frame(width: 150)
+                                                .position(x: geo.size.width / 2, y: geo.size.height / 2)
                                             }
                                         }
                                     )
@@ -173,6 +179,16 @@ struct CornerView: View {
         .id(refreshID)
         .onAppear {
             loadWallpaper()
+        }
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
+                    // Action for creating an trigger set
+                }) {
+                    Image(systemName: "plus")
+                }
+                .help("Create Trigger Set")
+            }
         }
     }
 
