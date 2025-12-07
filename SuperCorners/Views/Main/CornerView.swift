@@ -16,6 +16,7 @@ struct CornerView: View {
 
     @State private var showModal = false
     @State private var refreshID = UUID()
+    @State private var selectedActionSet = "Global Actions"
 
     // Corner Variables
 
@@ -151,11 +152,12 @@ struct CornerView: View {
                                                     }
                                                 }
 
-                                                Picker("", selection: .constant(0)) {
-                                                    // Placeholder for picking trigger sets
+                                                Picker("", selection: $selectedActionSet) {
+                                                    Text("Global Actions").tag("Global Actions")
+                                                    Text("Safari Actions").tag("Safari Actions")
+                                                    Text("Music Actions").tag("Music Actions")
+                                                    Text("Xcode Actions").tag("Developer Actions")
                                                 }
-                                                .frame(width: 150)
-                                                .position(x: geo.size.width / 2, y: geo.size.height / 2)
                                             }
                                         }
                                     )
