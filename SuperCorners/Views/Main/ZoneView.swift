@@ -168,25 +168,6 @@ struct ZoneView: View {
                                             }
                                         }
                                     }
-                                    .overlay(alignment: .center) {
-                                        if #available(macOS 26.0, *) {
-                                            Picker("", selection: $selectedActionSet) {
-                                                Text("Global Actions").tag("Global Actions")
-                                                Text("Safari Actions").tag("Safari Actions")
-                                                Text("Music Actions").tag("Music Actions")
-                                                Text("Xcode Actions").tag("Developer Actions")
-                                            }
-                                            .glassEffect(.regular)
-                                        }
-                                        else {
-                                            Picker("", selection: $selectedActionSet) {
-                                                Text("Global Actions").tag("Global Actions")
-                                                Text("Safari Actions").tag("Safari Actions")
-                                                Text("Music Actions").tag("Music Actions")
-                                                Text("Xcode Actions").tag("Developer Actions")
-                                            }
-                                        }
-                                    }
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                             }
                         }
@@ -209,6 +190,16 @@ struct ZoneView: View {
             loadWallpaper()
         }
         .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Picker("", selection: $selectedActionSet) {
+                    Text("Global Actions").tag("Global Actions")
+                    Text("Safari Actions").tag("Safari Actions")
+                    Text("Music Actions").tag("Music Actions")
+                    Text("Xcode Actions").tag("Developer Actions")
+                }
+                .help("Choose Trigger Set")
+            }
+
             ToolbarItem(placement: .automatic) {
                 Button(action: {
                     // Action for creating an trigger set
