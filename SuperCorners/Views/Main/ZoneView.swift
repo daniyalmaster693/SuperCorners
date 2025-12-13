@@ -25,6 +25,16 @@ struct ZoneView: View {
     @AppStorage("enableRightZone") var enableRightZone = true
     @AppStorage("enableBottomZone") var enableBottomZone = true
 
+    // Hardcoded App Icon for UI
+
+    let safariIcon: NSImage? = {
+        let workspace = NSWorkspace.shared
+        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.finder") {
+            return workspace.icon(forFile: appURL.path)
+        }
+        return nil
+    }()
+
     var body: some View {
         let topTitle = cornerActionBindings[.top]?.title
         let leftTitle = cornerActionBindings[.left]?.title
@@ -165,6 +175,27 @@ struct ZoneView: View {
                                                     .padding(8)
                                                     Spacer()
                                                 }
+                                            }
+                                        }
+                                    }
+
+                                    .overlay(alignment: .center) {
+                                        if let safariIcon {
+                                            if #available(macOS 26.0, *) {
+                                                Image(nsImage: safariIcon)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 50, height: 50)
+                                                    .cornerRadius(12)
+                                                    .padding(2)
+                                                    .glassEffect(in: .rect(cornerRadius: 12.0))
+                                            }
+                                            else {
+                                                Image(nsImage: safariIcon)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 50, height: 50)
+                                                    .cornerRadius(12)
                                             }
                                         }
                                     }

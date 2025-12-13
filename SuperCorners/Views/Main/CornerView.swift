@@ -25,6 +25,16 @@ struct CornerView: View {
     @AppStorage("enableBottomLeftCorner") var enableBottomLeftCorner = true
     @AppStorage("enableBottomRightCorner") var enableBottomRightCorner = true
 
+    // Hardcoded App Icon for UI
+
+    let safariIcon: NSImage? = {
+        let workspace = NSWorkspace.shared
+        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.safari") {
+            return workspace.icon(forFile: appURL.path)
+        }
+        return nil
+    }()
+
     var body: some View {
         let topLeftTitle = cornerActionBindings[.topLeft]?.title
         let topRightTitle = cornerActionBindings[.topRight]?.title
@@ -107,6 +117,24 @@ struct CornerView: View {
                                                         .buttonStyle(.bordered)
                                                         .padding(.trailing, 10)
                                                         .position(x: geo.size.width - 75, y: 0 + 20)
+                                                    }
+                                                }
+
+                                                if let safariIcon {
+                                                    if #available(macOS 26.0, *) {
+                                                        Image(nsImage: safariIcon)
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 50, height: 50)
+                                                            .cornerRadius(12)
+                                                            .padding(2)
+                                                            .glassEffect(in: .rect(cornerRadius: 12.0))
+                                                    } else {
+                                                        Image(nsImage: safariIcon)
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 50, height: 50)
+                                                            .cornerRadius(12)
                                                     }
                                                 }
 
