@@ -209,7 +209,7 @@ struct CornerView: View {
                     Text("Global Actions").tag("Global Actions")
                     Text("Safari Actions").tag("Safari Actions")
                     Text("Music Actions").tag("Music Actions")
-                    Text("Xcode Actions").tag("Developer Actions")
+                    Text("Finder Actions").tag("Finder Actions")
                 }
                 .help("Choose Trigger Set")
             }

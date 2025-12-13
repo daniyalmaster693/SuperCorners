@@ -116,18 +116,18 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "System" }) { action in
                                 ActionCard(action: action)
                             }
                         }
                         .padding(.horizontal)
+                        .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.top, 6)
                 }
-                .padding(.bottom, 24)
-                
+    
                 Divider()
                     .padding(.horizontal)
                 
@@ -145,7 +145,7 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "App Actions" }) { action in
                                 ActionCard(action: action)
@@ -153,8 +153,8 @@ struct ActionBrowserView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.bottom, 24)
                     
                     Divider()
                         .padding(.horizontal)
@@ -174,7 +174,7 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Finder" }) { action in
                                 ActionCard(action: action)
@@ -182,8 +182,8 @@ struct ActionBrowserView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.bottom, 24)
                     
                     Divider()
                         .padding(.horizontal)
@@ -203,20 +203,20 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Template Action" }) { action in
                                 ActionCard(action: action)
                             }
                         }
                         .padding(.horizontal)
+                        .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.top, 6)
+            
+                    Divider()
+                        .padding(.horizontal)
                 }
-                .padding(.bottom, 24)
-                
-                Divider()
-                    .padding(.horizontal)
                 
                 VStack {
                     Text("Tools")
@@ -232,7 +232,7 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Tool" }) { action in
                                 ActionCard(action: action)
@@ -240,8 +240,8 @@ struct ActionBrowserView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.bottom, 24)
                     
                     Divider()
                         .padding(.horizontal)
@@ -261,7 +261,7 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Developer" }) { action in
                                 ActionCard(action: action)
@@ -269,8 +269,8 @@ struct ActionBrowserView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.bottom, 24)
                     
                     Divider()
                         .padding(.horizontal)
@@ -290,7 +290,7 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Capture" }) { action in
                                 ActionCard(action: action)
@@ -298,8 +298,8 @@ struct ActionBrowserView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.bottom, 24)
                     
                     Divider()
                         .padding(.horizontal)
@@ -319,7 +319,7 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Media" }) { action in
                                 ActionCard(action: action)
@@ -327,8 +327,8 @@ struct ActionBrowserView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.bottom, 24)
                     
                     Divider()
                         .padding(.horizontal)
@@ -348,7 +348,7 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Window Management" }) { action in
                                 ActionCard(action: action)
@@ -356,8 +356,8 @@ struct ActionBrowserView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.bottom, 24)
                     
                     Divider()
                         .padding(.horizontal)
@@ -377,7 +377,7 @@ struct ActionBrowserView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    ScrollView(.horizontal) {
                         HStack(spacing: 16) {
                             ForEach(filteredItems(cornerActions).filter { $0.tag == "Accessibility" }) { action in
                                 ActionCard(action: action)
@@ -385,8 +385,8 @@ struct ActionBrowserView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 6)
+                        .padding(.bottom, 20)
                     }
-                    .padding(.bottom, 24)
                 }
             }
             .padding(.leading, 6)
