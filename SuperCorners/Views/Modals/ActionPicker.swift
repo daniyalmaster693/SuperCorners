@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ActionLibraryView: View {
     @Environment(\.dismiss) private var dismiss
@@ -207,20 +208,58 @@ struct ActionLibraryView: View {
                     .padding(.bottom, 20)
                     .frame(maxWidth: 290)
 
-                TextField("Enter Action Input...", text: $templateInput)
-                    .textFieldStyle(.plain)
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(NSColor.controlBackgroundColor))
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                    )
-                    .frame(maxWidth: 300)
+                if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Enter Application Path" {
+                    HStack(spacing: 8) {
+                        TextField("Enter Action Input...", text: $templateInput)
+                            .textFieldStyle(.plain)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(NSColor.controlBackgroundColor))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                            )
+                            .frame(maxWidth: 260)
+
+                        Button(action: {
+                            let panel = NSOpenPanel()
+                            panel.canChooseFiles = true
+                            panel.canChooseDirectories = false
+                            panel.allowsMultipleSelection = false
+                            panel.allowedContentTypes = [.application]
+                            panel.directoryURL = URL(fileURLWithPath: "/Applications")
+                            panel.title = "Select Application"
+                            panel.prompt = "Select"
+
+                            if panel.runModal() == .OK, let url = panel.url {
+                                templateInput = url.path
+                            }
+                        }) {
+                            Image(systemName: "folder")
+                                .frame(width: 30, height: 30)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }
                     .padding(.bottom, 20)
+                } else {
+                    TextField("Enter Action Input...", text: $templateInput)
+                        .textFieldStyle(.plain)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color(NSColor.controlBackgroundColor))
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                        )
+                        .frame(maxWidth: 300)
+                        .padding(.bottom, 20)
+                }
 
                 Divider().frame(maxWidth: 290)
 
