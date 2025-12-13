@@ -11,7 +11,7 @@ import SwiftUI
 struct ActivationSettingsView: View {
     // Modifier Key Picker
 
-    @AppStorage("enableModifierKey") private var enableModifierKey = true
+    @AppStorage("enableModifierKey") private var enableModifierKey = false
     @AppStorage("enableCornerHover") private var enableCornerHover = true
     @AppStorage("enableCornerClick") private var enableCornerClick = false
     @AppStorage("selectedModifierKey") private var selectedModifier: ModifierKey = .command

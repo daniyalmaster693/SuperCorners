@@ -35,7 +35,7 @@ var globalCornerMonitor: Any?
 
 func activateCornerHotkey() {
     @AppStorage("selectedModifierKey") var selectedModifier: ModifierKey = .command
-    @AppStorage("enableModifierKey") var enableModifierKey = true
+    @AppStorage("enableModifierKey") var enableModifierKey = false
     @AppStorage("enableCornerHover") var enableCornerHover = true
     @AppStorage("enableCornerClick") var enableCornerClick = false
 
