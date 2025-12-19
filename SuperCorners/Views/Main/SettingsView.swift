@@ -153,10 +153,6 @@ struct SettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 4) {
-                Text("General")
-                    .font(.title2)
-                    .bold()
-
                 Form {
                     Section {
                         HStack {
@@ -235,14 +231,10 @@ struct SettingsView: View {
                     }
                 }
             }
+            .frame(maxWidth: 700)
             .formStyle(.grouped)
 
             VStack(spacing: 8) {
-                Text("Activation")
-                    .font(.title2)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .center)
-
                 Form {
                     Section {
                         Toggle(isOn: self.$enableModifierKey) {
@@ -385,13 +377,8 @@ struct SettingsView: View {
                 .formStyle(.grouped)
                 .frame(maxWidth: 700)
             }
-            
-            VStack(spacing: 8) {
-                Text("Behavior")
-                    .font(.title2)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .center)
 
+            VStack(spacing: 8) {
                 Form {
                     Section {
                         VStack(alignment: .leading, spacing: 6) {
@@ -507,12 +494,8 @@ struct SettingsView: View {
             }.sheet(isPresented: self.$showIgnoredAppsModal) {
                 IgnoredApplicationsView()
             }
-            
-            VStack(spacing: 4) {
-                Text("Action Settings")
-                    .font(.title2)
-                    .bold()
 
+            VStack(spacing: 4) {
                 Form {
                     Section("Floating Notes Window") {
                         Toggle(isOn: self.$rememberNotesText) {
@@ -569,6 +552,7 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
+            .frame(maxWidth: 700)
         }
     }
 }
