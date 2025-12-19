@@ -30,3 +30,12 @@ func parseShortcutString(_ shortcut: String) -> (modifiers: [String], key: Strin
     guard !key.isEmpty else { return nil }
     return (modifiers, key.lowercased())
 }
+
+var dynamicShortcuts: [KeyboardShortcuts.Name] = []
+
+func disableAllShortcuts() {
+    for shortcut in dynamicShortcuts {
+        KeyboardShortcuts.disable(shortcut)
+    }
+    dynamicShortcuts.removeAll()
+}

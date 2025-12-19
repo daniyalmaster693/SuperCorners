@@ -3105,12 +3105,21 @@ let cornerActions: [CornerAction] = [
         tag: "System",
         requiresInput: true,
         inputPrompt: "Record Hotkey",
-        perform: { _ in
-            if let shortcutString = KeyboardShortcuts.getShortcut(for: .keyPressActivation) {
+        perform: { input in
+            guard let input = input, !input.isEmpty else {
+                showErrorToast("No hotkey name provided")
+                return
+            }
+
+            let dynamicName = KeyboardShortcuts.Name(input)
+
+            if let shortcutString = KeyboardShortcuts.getShortcut(for: dynamicName) {
                 if let parsed = parseShortcutString("\(shortcutString)") {
                     keypress.hotkey(modifiers: parsed.modifiers, key: parsed.key)
+                    disableAllShortcuts()
                 } else {
                     showErrorToast("Failed to parse shortcut")
+                    disableAllShortcuts()
                 }
             } else {
                 showErrorToast("No shortcut set")

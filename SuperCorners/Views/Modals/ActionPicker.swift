@@ -263,7 +263,8 @@ struct ActionLibraryView: View {
                             )
                             .frame(maxWidth: 300)
 
-                        KeyboardShortcuts.Recorder("", name: .keyPressActivation)
+                        let dynamicHotkeyName = KeyboardShortcuts.Name(templateInput.isEmpty ? "tempHotkey" : templateInput)
+                        KeyboardShortcuts.Recorder(for: dynamicHotkeyName)
                     }
                     .padding(.bottom, 20)
                 } else {
