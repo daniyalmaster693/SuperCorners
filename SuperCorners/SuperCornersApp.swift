@@ -232,17 +232,17 @@ struct SuperCornersApp: App {
                 }
                 .keyboardShortcut("r")
                 
-                if #available(macOS 14, *) {
-                    Button {
-                        let environment = EnvironmentValues()
-                        environment.openSettings()
-                        NSApp.setActivationPolicy(.regular)
-                        NSApp.activate(ignoringOtherApps: true)
-                    } label: {
-                        Text("Preferences")
-                    }
-                    .keyboardShortcut(",")
-                }
+//                if #available(macOS 14, *) {
+//                    Button {
+//                        let environment = EnvironmentValues()
+//                        environment.openSettings()
+//                        NSApp.setActivationPolicy(.regular)
+//                        NSApp.activate(ignoringOtherApps: true)
+//                    } label: {
+//                        Text("Preferences")
+//                    }
+//                    .keyboardShortcut(",")
+//                }
                 
                 Button {
                     updater.checkForUpdates()
@@ -260,16 +260,6 @@ struct SuperCornersApp: App {
             .id(refreshID)
         }
 
-        Settings {
-            if #available(macOS 15.0, *) {
-                SettingsView(updater: updater)
-                    .containerBackground(.thickMaterial, for: .window)
-                    .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
-            } else {
-                SettingsView(updater: updater)
-            }
-        }
-        
         .commands {
             CommandGroup(replacing: .help) {
                 Button("Website") {

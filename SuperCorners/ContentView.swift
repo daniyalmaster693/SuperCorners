@@ -38,6 +38,13 @@ struct ContentView: View {
                         Text("Actions")
                     }
                     .tag("actions")
+                    
+                    HStack {
+                        Image(systemName: "gear")
+                            .frame(width: 18, height: 18)
+                        Text("Settings")
+                    }
+                    .tag("settings")
                 }
                 .listStyle(.sidebar)
                 .padding(.top, 7)
@@ -91,6 +98,9 @@ struct ContentView: View {
                 case "actions":
                     ActionBrowserView()
                         .navigationTitle("Actions")
+                case "settings":
+                    SettingsView(updater: updater)
+                        .navigationTitle("Settings")
                 default:
                     Text("No item selected")
                 }

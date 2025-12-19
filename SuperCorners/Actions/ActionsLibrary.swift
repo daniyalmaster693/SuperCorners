@@ -15,9 +15,9 @@ class SettingsManager: ObservableObject {
         UserDefaults.standard.bool(forKey: "showRecentColors")
     }
 
-    var colorFormat: ActionSettingsView.ColorFormat {
+    var colorFormat: SettingsView.ColorFormat {
         get {
-            ActionSettingsView.ColorFormat(rawValue: UserDefaults.standard.string(forKey: "colorFormat") ?? "Hex") ?? .hex
+            SettingsView.ColorFormat(rawValue: UserDefaults.standard.string(forKey: "colorFormat") ?? "Hex") ?? .hex
         }
         set {
             UserDefaults.standard.set(newValue.rawValue, forKey: "colorFormat")
@@ -1269,7 +1269,7 @@ let cornerActions: [CornerAction] = [
                     return
                 }
 
-                func formattedColorString(for color: NSColor, format: ActionSettingsView.ColorFormat) -> String {
+                func formattedColorString(for color: NSColor, format: SettingsView.ColorFormat) -> String {
                     switch format {
                     case .hex:
                         let r = Int(color.redComponent * 255)

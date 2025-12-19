@@ -18,7 +18,7 @@ class ColorHistoryManager: ObservableObject {
         let alpha: CGFloat
     }
 
-    func formattedColorString(for color: NSColor, format: ActionSettingsView.ColorFormat) -> String {
+    func formattedColorString(for color: NSColor, format: SettingsView.ColorFormat) -> String {
         switch format {
         case .hex:
             let r = Int(color.redComponent * 255)
