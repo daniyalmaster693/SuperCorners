@@ -391,15 +391,5 @@ struct ActionBrowserView: View {
             }
             .padding(.leading, 6)
         }
-        .toolbar {
-            ToolbarItem(placement: .automatic) {
-                Button(action: {
-                    // Action for creating an action set
-                }) {
-                    Image(systemName: "plus")
-                }
-                .help("Create Action")
-            }
-        }
     }
 }
