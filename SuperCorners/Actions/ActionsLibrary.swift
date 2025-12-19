@@ -3099,10 +3099,10 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "96",
-        title: "Simulate Key Press",
+        title: "Simulate Hotkey",
         description: "Simulate a keyboard shortcut",
         iconName: "keyboard",
-        tag: "System",
+        tag: "Template Action",
         requiresInput: true,
         inputPrompt: "Record Hotkey",
         perform: { input in
