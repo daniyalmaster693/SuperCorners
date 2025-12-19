@@ -3106,7 +3106,7 @@ let cornerActions: [CornerAction] = [
         requiresInput: true,
         inputPrompt: "Record Hotkey",
         perform: { _ in
-            if let shortcutString = KeyboardShortcuts.getShortcut(for: .cornerActivation) {
+            if let shortcutString = KeyboardShortcuts.getShortcut(for: .keyPressActivation) {
                 if let parsed = parseShortcutString("\(shortcutString)") {
                     keypress.hotkey(modifiers: parsed.modifiers, key: parsed.key)
                 } else {

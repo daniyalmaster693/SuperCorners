@@ -248,8 +248,24 @@ struct ActionLibraryView: View {
                     }
                     .padding(.bottom, 20)
                 } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Record Hotkey" {
-                    HStack(spacing: 8) {}
-                        .padding(.bottom, 20)
+                    HStack(spacing: 8) {
+                        TextField("Hotkey Name...", text: $templateInput)
+                            .textFieldStyle(.plain)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(NSColor.controlBackgroundColor))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                            )
+                            .frame(maxWidth: 300)
+
+                        KeyboardShortcuts.Recorder("", name: .keyPressActivation)
+                    }
+                    .padding(.bottom, 20)
                 } else {
                     TextField("Enter Action Input...", text: $templateInput)
                         .textFieldStyle(.plain)
