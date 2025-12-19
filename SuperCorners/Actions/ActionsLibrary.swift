@@ -1532,7 +1532,7 @@ let cornerActions: [CornerAction] = [
         iconName: "curlybraces",
         tag: "Template Action",
         requiresInput: true,
-        inputPrompt: "Enter File Path",
+        inputPrompt: "Enter AppleScript Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
                 showErrorToast("Error: No file path provided")

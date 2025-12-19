@@ -248,6 +248,118 @@ struct ActionLibraryView: View {
                         .buttonStyle(BorderlessButtonStyle())
                     }
                     .padding(.bottom, 20)
+                } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Enter Folder Path" {
+                    HStack(spacing: 8) {
+                        TextField("Enter Action Input...", text: $templateInput)
+                            .textFieldStyle(.plain)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(NSColor.controlBackgroundColor))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                            )
+                            .frame(maxWidth: 260)
+
+                        Button(action: {
+                            let panel = NSOpenPanel()
+                            panel.canChooseFiles = false
+                            panel.canChooseDirectories = true
+                            panel.allowsMultipleSelection = false
+                            let lastPath = UserDefaults.standard.string(forKey: "lastChosenPath") ?? NSHomeDirectory()
+                            panel.directoryURL = URL(fileURLWithPath: lastPath)
+                            panel.title = "Select Folder"
+                            panel.prompt = "Select"
+
+                            if panel.runModal() == .OK, let url = panel.url {
+                                templateInput = url.path
+                                UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
+                            }
+                        }) {
+                            Image(systemName: "folder")
+                                .frame(width: 30, height: 30)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }
+                    .padding(.bottom, 20)
+                } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Enter File Path" {
+                    HStack(spacing: 8) {
+                        TextField("Enter Action Input...", text: $templateInput)
+                            .textFieldStyle(.plain)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(NSColor.controlBackgroundColor))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                            )
+                            .frame(maxWidth: 260)
+
+                        Button(action: {
+                            let panel = NSOpenPanel()
+                            panel.canChooseFiles = true
+                            panel.canChooseDirectories = false
+                            panel.allowsMultipleSelection = false
+                            let lastPath = UserDefaults.standard.string(forKey: "lastChosenPath") ?? NSHomeDirectory()
+                            panel.directoryURL = URL(fileURLWithPath: lastPath)
+                            panel.title = "Select File"
+                            panel.prompt = "Select"
+
+                            if panel.runModal() == .OK, let url = panel.url {
+                                templateInput = url.path
+                                UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
+                            }
+                        }) {
+                            Image(systemName: "doc")
+                                .frame(width: 30, height: 30)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }
+                    .padding(.bottom, 20)
+                } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Enter AppleScript Path" {
+                    HStack(spacing: 8) {
+                        TextField("Enter Action Input...", text: $templateInput)
+                            .textFieldStyle(.plain)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(NSColor.controlBackgroundColor))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                            )
+                            .frame(maxWidth: 260)
+
+                        Button(action: {
+                            let panel = NSOpenPanel()
+                            panel.canChooseFiles = true
+                            panel.canChooseDirectories = false
+                            panel.allowsMultipleSelection = false
+                            panel.allowedContentTypes = [.appleScript]
+                            let lastPath = UserDefaults.standard.string(forKey: "lastChosenPath") ?? NSHomeDirectory()
+                            panel.directoryURL = URL(fileURLWithPath: lastPath)
+                            panel.title = "Select AppleScript"
+                            panel.prompt = "Select"
+
+                            if panel.runModal() == .OK, let url = panel.url {
+                                templateInput = url.path
+                                UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
+                            }
+                        }) {
+                            Image(systemName: "doc")
+                                .frame(width: 30, height: 30)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                    }
+                    .padding(.bottom, 20)
                 } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Record Hotkey" {
                     HStack(spacing: 8) {
                         TextField("Hotkey Name...", text: $templateInput)
@@ -269,20 +381,32 @@ struct ActionLibraryView: View {
                     }
                     .padding(.bottom, 20)
                 } else {
-                    TextField("Enter Action Input...", text: $templateInput)
-                        .textFieldStyle(.plain)
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color(NSColor.controlBackgroundColor))
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                        )
-                        .frame(maxWidth: 300)
-                        .padding(.bottom, 20)
+                    HStack(spacing: 8) {
+                        TextField("Enter Action Input...", text: $templateInput)
+                            .textFieldStyle(.plain)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 10)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(NSColor.controlBackgroundColor))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                            )
+                            .frame(maxWidth: 260)
+
+                        Button(action: {
+                            if let clipboardString = NSPasteboard.general.string(forType: .string) {
+                                templateInput = clipboardString
+                            }
+                        }) {
+                            Image(systemName: "clipboard")
+                                .frame(width: 30, height: 30)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+
+                    }.padding(.bottom, 20)
                 }
 
                 Divider().frame(maxWidth: 290)
