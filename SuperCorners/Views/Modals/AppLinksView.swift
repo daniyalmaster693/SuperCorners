@@ -44,23 +44,6 @@ struct AppLinksView: View {
                         Text(version)
                             .foregroundColor(.secondary)
                     }
-
-                    if #available(macOS 14, *) {
-                        HStack {
-                            Text("Preferences")
-                                .foregroundColor(.primary)
-                            Spacer()
-
-                            Button {
-                                let environment = EnvironmentValues()
-                                environment.openSettings()
-                                NSApp.setActivationPolicy(.regular)
-                                NSApp.activate(ignoringOtherApps: true)
-                            } label: {
-                                Text("Preferences")
-                            }
-                        }
-                    }
                 }
 
                 Section(header: Text("Links")) {
@@ -105,6 +88,6 @@ struct AppLinksView: View {
         }
         .padding()
         .padding(.top, 7)
-        .frame(width: 400, height: 520)
+        .frame(width: 400, height: 480)
     }
 }
