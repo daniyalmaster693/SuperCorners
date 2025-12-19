@@ -229,7 +229,6 @@ struct SettingsView: View {
                     }.disabled(!self.showMenuBarExtra)
                 }
             }
-            .frame(maxWidth: 700)
             .formStyle(.grouped)
 
             Form {
@@ -372,7 +371,6 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
-            .frame(maxWidth: 700)
 
             Form {
                 Section {
@@ -484,7 +482,6 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
-            .frame(maxWidth: 700)
             .sheet(isPresented: self.$showIgnoredAppsModal) {
                 IgnoredApplicationsView()
             }
@@ -544,7 +541,6 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
-            .frame(maxWidth: 700)
         }
     }
 }
