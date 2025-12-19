@@ -96,15 +96,15 @@ struct SuperCornersApp: App {
         
         MenuBarExtra("Menu", systemImage: "rectangle.3.group", isInserted: $showMenuBarExtra) {
             VStack {
-                let topLeftTitle = cornerActionBindings[.topLeft]?.title
-                let topRightTitle = cornerActionBindings[.topRight]?.title
-                let bottomLeftTitle = cornerActionBindings[.bottomLeft]?.title
-                let bottomRightTitle = cornerActionBindings[.bottomRight]?.title
+                let topLeftTitle = titleForCorner(.topLeft)
+                let topRightTitle = titleForCorner(.topRight)
+                let bottomLeftTitle = titleForCorner(.bottomLeft)
+                let bottomRightTitle = titleForCorner(.bottomRight)
                 
-                let topTitle = cornerActionBindings[.top]?.title
-                let leftTitle = cornerActionBindings[.left]?.title
-                let rightTitle = cornerActionBindings[.right]?.title
-                let bottomTitle = cornerActionBindings[.bottom]?.title
+                let topTitle = titleForCorner(.top)
+                let leftTitle = titleForCorner(.left)
+                let rightTitle = titleForCorner(.right)
+                let bottomTitle = titleForCorner(.bottom)
                 
                 if showCorners {
                     Menu("Corners") {
@@ -114,7 +114,7 @@ struct SuperCornersApp: App {
                             } label: {
                                 HStack {
                                     Image(systemName: "inset.filled.topleft.rectangle")
-                                    Text(topLeftTitle ?? "Add Action")
+                                    Text(topLeftTitle)
                                 }
                             }
                         }
@@ -125,7 +125,7 @@ struct SuperCornersApp: App {
                             } label: {
                                 HStack {
                                     Image(systemName: "inset.filled.topright.rectangle")
-                                    Text(topRightTitle ?? "Add Action")
+                                    Text(topRightTitle)
                                 }
                             }
                         }
@@ -136,7 +136,7 @@ struct SuperCornersApp: App {
                             } label: {
                                 HStack {
                                     Image(systemName: "inset.filled.bottomleft.rectangle")
-                                    Text(bottomLeftTitle ?? "Add Action")
+                                    Text(bottomLeftTitle)
                                 }
                             }
                         }
@@ -147,7 +147,7 @@ struct SuperCornersApp: App {
                             } label: {
                                 HStack {
                                     Image(systemName: "inset.filled.bottomright.rectangle")
-                                    Text(bottomRightTitle ?? "Add Action")
+                                    Text(bottomRightTitle)
                                 }
                             }
                         }
@@ -162,7 +162,7 @@ struct SuperCornersApp: App {
                             } label: {
                                 HStack {
                                     Image(systemName: "rectangle.topthird.inset.filled")
-                                    Text(topTitle ?? "Add Action")
+                                    Text(topTitle)
                                 }
                             }
                         }
@@ -173,7 +173,7 @@ struct SuperCornersApp: App {
                             } label: {
                                 HStack {
                                     Image(systemName: "rectangle.leadingthird.inset.filled")
-                                    Text(leftTitle ?? "Add Action")
+                                    Text(leftTitle)
                                 }
                             }
                         }
@@ -184,7 +184,7 @@ struct SuperCornersApp: App {
                             } label: {
                                 HStack {
                                     Image(systemName: "rectangle.trailingthird.inset.filled")
-                                    Text(rightTitle ?? "Add Action")
+                                    Text(rightTitle)
                                 }
                             }
                         }
@@ -195,7 +195,7 @@ struct SuperCornersApp: App {
                             } label: {
                                 HStack {
                                     Image(systemName: "rectangle.bottomthird.inset.filled")
-                                    Text(bottomTitle ?? "Add Action")
+                                    Text(bottomTitle)
                                 }
                             }
                         }
