@@ -36,10 +36,10 @@ struct CornerView: View {
     }()
 
     var body: some View {
-        let topLeftTitle = cornerActionBindings[.topLeft]?.title
-        let topRightTitle = cornerActionBindings[.topRight]?.title
-        let bottomLeftTitle = cornerActionBindings[.bottomLeft]?.title
-        let bottomRightTitle = cornerActionBindings[.bottomRight]?.title
+        let topLeftTitle = titleForCorner(.topLeft)
+        let topRightTitle = titleForCorner(.topRight)
+        let bottomLeftTitle = titleForCorner(.bottomLeft)
+        let bottomRightTitle = titleForCorner(.bottomRight)
 
         func mapSelectedToCorner(_ selected: SelectedCornerPosition) -> CornerPosition.Corner {
             switch selected {
@@ -82,7 +82,7 @@ struct CornerView: View {
                                             ZStack {
                                                 if enableTopLeftCorner {
                                                     if #available(macOS 26.0, *) {
-                                                        Button(topLeftTitle ?? "Add Action") {
+                                                        Button(topLeftTitle) {
                                                             currentlySelectedCorner = .topLeft
                                                             showModal = true
                                                         }
@@ -90,7 +90,7 @@ struct CornerView: View {
                                                         .padding(.leading, 10)
                                                         .position(x: 0 + 75, y: 0 + 20)
                                                     } else {
-                                                        Button(topLeftTitle ?? "Add Action") {
+                                                        Button(topLeftTitle) {
                                                             currentlySelectedCorner = .topLeft
                                                             showModal = true
                                                         }
@@ -102,7 +102,7 @@ struct CornerView: View {
 
                                                 if enableTopRightCorner {
                                                     if #available(macOS 26.0, *) {
-                                                        Button(topRightTitle ?? "Add Action") {
+                                                        Button(topRightTitle) {
                                                             currentlySelectedCorner = .topRight
                                                             showModal = true
                                                         }
@@ -110,7 +110,7 @@ struct CornerView: View {
                                                         .padding(.trailing, 10)
                                                         .position(x: geo.size.width - 75, y: 0 + 20)
                                                     } else {
-                                                        Button(topRightTitle ?? "Add Action") {
+                                                        Button(topRightTitle) {
                                                             currentlySelectedCorner = .topRight
                                                             showModal = true
                                                         }
@@ -140,7 +140,7 @@ struct CornerView: View {
 
                                                 if enableBottomLeftCorner {
                                                     if #available(macOS 26.0, *) {
-                                                        Button(bottomLeftTitle ?? "Add Action") {
+                                                        Button(bottomLeftTitle) {
                                                             currentlySelectedCorner = .bottomLeft
                                                             showModal = true
                                                         }
@@ -150,7 +150,7 @@ struct CornerView: View {
                                                     }
 
                                                     else {
-                                                        Button(bottomLeftTitle ?? "Add Action") {
+                                                        Button(bottomLeftTitle) {
                                                             currentlySelectedCorner = .bottomLeft
                                                             showModal = true
                                                         }
@@ -162,7 +162,7 @@ struct CornerView: View {
 
                                                 if enableBottomRightCorner {
                                                     if #available(macOS 26.0, *) {
-                                                        Button(bottomRightTitle ?? "Add Action") {
+                                                        Button(bottomRightTitle) {
                                                             currentlySelectedCorner = .bottomRight
                                                             showModal = true
                                                         }
@@ -170,7 +170,7 @@ struct CornerView: View {
                                                         .padding(.trailing, 10)
                                                         .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                                     } else {
-                                                        Button(bottomRightTitle ?? "Add Action") {
+                                                        Button(bottomRightTitle) {
                                                             currentlySelectedCorner = .bottomRight
                                                             showModal = true
                                                         }

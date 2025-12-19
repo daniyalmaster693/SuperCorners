@@ -36,10 +36,10 @@ struct ZoneView: View {
     }()
 
     var body: some View {
-        let topTitle = cornerActionBindings[.top]?.title
-        let leftTitle = cornerActionBindings[.left]?.title
-        let rightTitle = cornerActionBindings[.right]?.title
-        let bottomTitle = cornerActionBindings[.bottom]?.title
+        let topTitle = titleForCorner(.top)
+        let leftTitle = titleForCorner(.left)
+        let rightTitle = titleForCorner(.right)
+        let bottomTitle = titleForCorner(.bottom)
 
         func mapSelectedToCorner(_ selected: SelectedCornerPosition) -> CornerPosition.Corner {
             switch selected {
@@ -80,7 +80,7 @@ struct ZoneView: View {
                                     .overlay(alignment: .top) {
                                         if enableTopZone {
                                             if #available(macOS 26.0, *) {
-                                                Button(topTitle ?? "Add Action") {
+                                                Button(topTitle) {
                                                     currentlySelectedCorner = .top
                                                     showModal = true
                                                 }
@@ -88,7 +88,7 @@ struct ZoneView: View {
                                                 .padding(8)
                                             }
                                             else {
-                                                Button(topTitle ?? "Add Action") {
+                                                Button(topTitle) {
                                                     currentlySelectedCorner = .top
                                                     showModal = true
                                                 }
@@ -100,7 +100,7 @@ struct ZoneView: View {
                                     .overlay(alignment: .bottom) {
                                         if enableBottomZone {
                                             if #available(macOS 26.0, *) {
-                                                Button(bottomTitle ?? "Add Action") {
+                                                Button(bottomTitle) {
                                                     currentlySelectedCorner = .bottom
                                                     showModal = true
                                                 }
@@ -108,7 +108,7 @@ struct ZoneView: View {
                                                 .padding(8)
                                             }
                                             else {
-                                                Button(bottomTitle ?? "Add Action") {
+                                                Button(bottomTitle) {
                                                     currentlySelectedCorner = .bottom
                                                     showModal = true
                                                 }
@@ -122,7 +122,7 @@ struct ZoneView: View {
                                             if #available(macOS 26.0, *) {
                                                 VStack {
                                                     Spacer()
-                                                    Button(leftTitle ?? "Add Action") {
+                                                    Button(leftTitle) {
                                                         currentlySelectedCorner = .left
                                                         showModal = true
                                                     }
@@ -135,7 +135,7 @@ struct ZoneView: View {
                                             else {
                                                 VStack {
                                                     Spacer()
-                                                    Button(leftTitle ?? "Add Action") {
+                                                    Button(leftTitle) {
                                                         currentlySelectedCorner = .left
                                                         showModal = true
                                                     }
@@ -152,7 +152,7 @@ struct ZoneView: View {
                                             if #available(macOS 26.0, *) {
                                                 VStack {
                                                     Spacer()
-                                                    Button(rightTitle ?? "Add Action") {
+                                                    Button(rightTitle) {
                                                         currentlySelectedCorner = .right
                                                         showModal = true
                                                     }
@@ -166,7 +166,7 @@ struct ZoneView: View {
                                             else {
                                                 VStack {
                                                     Spacer()
-                                                    Button(rightTitle ?? "Add Action") {
+                                                    Button(rightTitle) {
                                                         currentlySelectedCorner = .right
                                                         showModal = true
                                                     }

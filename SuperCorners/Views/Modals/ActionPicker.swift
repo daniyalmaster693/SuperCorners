@@ -175,6 +175,7 @@ struct ActionLibraryView: View {
                 Button("Done") {
                     if let selectedID = selectedActionID,
                        let selectedAction = cornerActions.first(where: { $0.id == selectedID })
+
                     {
                         if selectedAction.requiresInput {
                             templateInput = ""
@@ -299,6 +300,7 @@ struct ActionLibraryView: View {
                         {
                             UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
                             UserDefaults.standard.set(templateInput, forKey: "cornerInput_\(corner.rawValue)")
+
                             onUpdate()
                             showTemplateModal = false
                             dismiss()
