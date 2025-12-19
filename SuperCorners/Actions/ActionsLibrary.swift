@@ -195,8 +195,8 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "5",
-        title: "Launch an Application",
-        description: "Launch an application.",
+        title: "Toggle Application",
+        description: "Opens an app or hides it if already focused.",
         iconName: "square.grid.3x3",
         tag: "Template Action",
         requiresInput: true,
@@ -206,8 +206,16 @@ let cornerActions: [CornerAction] = [
                 showErrorToast("Error: No path provided")
                 return
             }
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-            showSuccessToast()
+
+            if let frontApp = NSWorkspace.shared.frontmostApplication,
+               frontApp.bundleURL?.path == path
+            {
+                frontApp.hide()
+                showSuccessToast()
+            } else {
+                NSWorkspace.shared.open(URL(fileURLWithPath: path))
+                showSuccessToast()
+            }
         }
     ),
 
