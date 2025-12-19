@@ -1,3 +1,10 @@
+//
+//  KeyCode.swift
+//  SuperCorners
+//
+//  Created by Daniyal Master on 2025-12-19.
+//
+
 import Carbon.HIToolbox.Events
 
 let keyCode: [String: UInt16] = [
@@ -160,9 +167,9 @@ let ShiftKeyCode: [String: UInt16] = [
     "$": 0x15,
     "%": 0x17,
     "^": 0x16,
-    "&": 0x1A,
-    "_": 0x1B,
-    "?": 0x2C,
-    ">": 0x2F,
-    "<": 0x2B,
+    "&": 0x1a,
+    "_": 0x1b,
+    "?": 0x2c,
+    ">": 0x2f,
+    "<": 0x2b,
 ]

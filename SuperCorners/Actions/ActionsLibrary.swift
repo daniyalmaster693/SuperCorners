@@ -5,6 +5,7 @@
 //  Created by Daniyal Master on 2025-05-24.
 //
 
+import KeyboardShortcuts
 import SwiftUI
 import Vision
 
@@ -3102,10 +3103,18 @@ let cornerActions: [CornerAction] = [
         description: "Simulate a keyboard shortcut",
         iconName: "keyboard",
         tag: "System",
-        requiresInput: false,
-        inputPrompt: "",
+        requiresInput: true,
+        inputPrompt: "Record Hotkey",
         perform: { _ in
-            keypress.hotkey(modifiers: ["command"], key: "t")
+            if let shortcutString = KeyboardShortcuts.getShortcut(for: .cornerActivation) {
+                if let parsed = parseShortcutString("\(shortcutString)") {
+                    keypress.hotkey(modifiers: parsed.modifiers, key: parsed.key)
+                } else {
+                    showErrorToast("Failed to parse shortcut")
+                }
+            } else {
+                showErrorToast("No shortcut set")
+            }
         }
     ),
 ]

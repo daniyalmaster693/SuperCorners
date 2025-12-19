@@ -5,8 +5,8 @@
 //  Created by Daniyal Master on 2025-05-24.
 //
 
+import KeyboardShortcuts
 import SwiftUI
-import UniformTypeIdentifiers
 
 struct ActionLibraryView: View {
     @Environment(\.dismiss) private var dismiss
@@ -17,6 +17,9 @@ struct ActionLibraryView: View {
     @State private var selectedActionID: String?
     @State private var showTemplateModal = false
     @State private var templateInput = ""
+
+    @State private var hotkeyNameKey: KeyboardShortcuts.Name = .init("tempHotkey")
+    @State private var hotkeyDisplayName: String = ""
 
     let corner: CornerPosition.Corner
     var onUpdate: () -> Void
@@ -244,6 +247,9 @@ struct ActionLibraryView: View {
                         .buttonStyle(BorderlessButtonStyle())
                     }
                     .padding(.bottom, 20)
+                } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Record Hotkey" {
+                    HStack(spacing: 8) {}
+                        .padding(.bottom, 20)
                 } else {
                     TextField("Enter Action Input...", text: $templateInput)
                         .textFieldStyle(.plain)

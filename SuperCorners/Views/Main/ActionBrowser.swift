@@ -398,7 +398,7 @@ struct ActionBrowserView: View {
                 }) {
                     Image(systemName: "plus")
                 }
-                .help("Create Action Set")
+                .help("Create Action")
             }
         }
     }

@@ -1,3 +1,10 @@
+//
+//  KeyPress.swift
+//  SuperCorners
+//
+//  Created by Daniyal Master on 2025-12-19.
+//
+
 import CoreGraphics
 import Foundation
 
@@ -140,8 +147,8 @@ public enum keypress {
                     modifierEventsUp.insert(eventUp!, at: 0)
                 } else {
                     // Use the standard Option keycode 0x3A if keyCode["option"] not found
-                    let eventDown = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3A), keyDown: true)
-                    let eventUp = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3A), keyDown: false)
+                    let eventDown = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3a), keyDown: true)
+                    let eventUp = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3a), keyDown: false)
                     modifierEventsDown.append(eventDown!)
                     modifierEventsUp.insert(eventUp!, at: 0)
                 }
@@ -168,8 +175,8 @@ public enum keypress {
                     modifierEventsUp.insert(eventUp!, at: 0)
                 } else {
                     // Use the standard Control keycode 0x3B if keyCode["control"] not found
-                    let eventDown = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3B), keyDown: true)
-                    let eventUp = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3B), keyDown: false)
+                    let eventDown = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3b), keyDown: true)
+                    let eventUp = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3b), keyDown: false)
                     modifierEventsDown.append(eventDown!)
                     modifierEventsUp.insert(eventUp!, at: 0)
                 }
@@ -182,8 +189,8 @@ public enum keypress {
                     modifierEventsUp.insert(eventUp!, at: 0)
                 } else {
                     // Use the standard Function keycode 0x3F if keyCode["function"] not found
-                    let eventDown = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3F), keyDown: true)
-                    let eventUp = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3F), keyDown: false)
+                    let eventDown = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3f), keyDown: true)
+                    let eventUp = CGEvent(keyboardEventSource: src, virtualKey: CGKeyCode(0x3f), keyDown: false)
                     modifierEventsDown.append(eventDown!)
                     modifierEventsUp.insert(eventUp!, at: 0)
                 }
