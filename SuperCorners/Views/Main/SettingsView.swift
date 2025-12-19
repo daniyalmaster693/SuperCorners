@@ -152,401 +152,393 @@ struct SettingsView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 4) {
-                Form {
-                    Section {
-                        HStack {
-                            Image(systemName: "person.crop.circle")
-                                .foregroundColor(.secondary)
-                            LaunchAtLogin.Toggle()
-                        }
-
-                        HStack {
-                            Toggle(isOn: self.$showInDock) {
-                                HStack {
-                                    Image(systemName: "dock.rectangle")
-                                        .foregroundColor(.secondary)
-                                    Text("Show in Dock")
-                                }
-                            }
-                            .onChange(of: self.showInDock) { newValue in
-                                UserDefaults.standard.set(newValue, forKey: "showInDock")
-
-                                if newValue {
-                                    NSApp.setActivationPolicy(.regular)
-                                } else {
-                                    NSApp.setActivationPolicy(.accessory)
-                                }
-                            }
-                        }
+            Form {
+                Section {
+                    HStack {
+                        Image(systemName: "person.crop.circle")
+                            .foregroundColor(.secondary)
+                        LaunchAtLogin.Toggle()
                     }
 
-                    Section {
-                        HStack {
-                            Label("Updates", systemImage: "arrow.2.circlepath")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Button("Check for Updates") {
-                                self.updater.checkForUpdates()
-                            }
-                            .buttonStyle(.bordered)
-                            .disabled(!self.updateViewModel.canCheckForUpdates)
-                        }
-                    }
-
-                    Section {
-                        Toggle(isOn: self.$showMenuBarExtra) {
+                    HStack {
+                        Toggle(isOn: self.$showInDock) {
                             HStack {
-                                Image(systemName: "menubar.rectangle")
+                                Image(systemName: "dock.rectangle")
                                     .foregroundColor(.secondary)
-                                Text("Show in Menu Bar")
+                                Text("Show in Dock")
+                            }
+                        }
+                        .onChange(of: self.showInDock) { newValue in
+                            UserDefaults.standard.set(newValue, forKey: "showInDock")
+
+                            if newValue {
+                                NSApp.setActivationPolicy(.regular)
+                            } else {
+                                NSApp.setActivationPolicy(.accessory)
+                            }
+                        }
+                    }
+                }
+
+                Section {
+                    HStack {
+                        Label("Updates", systemImage: "arrow.2.circlepath")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Check for Updates") {
+                            self.updater.checkForUpdates()
+                        }
+                        .buttonStyle(.bordered)
+                        .disabled(!self.updateViewModel.canCheckForUpdates)
+                    }
+                }
+
+                Section {
+                    Toggle(isOn: self.$showMenuBarExtra) {
+                        HStack {
+                            Image(systemName: "menubar.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Show in Menu Bar")
+                        }
+                    }
+
+                    Group {
+                        Toggle(isOn: self.$showCorners) {
+                            HStack {
+                                Image(systemName: "square.grid.2x2")
+                                    .foregroundColor(.secondary)
+                                Text("Show Corners in Menu Bar")
                             }
                         }
 
-                        Group {
-                            Toggle(isOn: self.$showCorners) {
-                                HStack {
-                                    Image(systemName: "square.grid.2x2")
-                                        .foregroundColor(.secondary)
-                                    Text("Show Corners in Menu Bar")
-                                }
+                        Toggle(isOn: self.$showZones) {
+                            HStack {
+                                Image(systemName: "rectangle.leftthird.inset.filled")
+                                    .foregroundColor(.secondary)
+                                Text("Show Zones in Menu Bar")
                             }
+                        }
 
-                            Toggle(isOn: self.$showZones) {
-                                HStack {
-                                    Image(systemName: "rectangle.leftthird.inset.filled")
-                                        .foregroundColor(.secondary)
-                                    Text("Show Zones in Menu Bar")
-                                }
+                        Toggle(isOn: self.$showFavorites) {
+                            HStack {
+                                Image(systemName: "star")
+                                    .foregroundColor(.secondary)
+                                Text("Show Favorites in Menu Bar")
                             }
-
-                            Toggle(isOn: self.$showFavorites) {
-                                HStack {
-                                    Image(systemName: "star")
-                                        .foregroundColor(.secondary)
-                                    Text("Show Favorites in Menu Bar")
-                                }
-                            }
-                        }.disabled(!self.showMenuBarExtra)
-                    }
+                        }
+                    }.disabled(!self.showMenuBarExtra)
                 }
             }
             .frame(maxWidth: 700)
             .formStyle(.grouped)
 
-            VStack(spacing: 8) {
-                Form {
-                    Section {
-                        Toggle(isOn: self.$enableModifierKey) {
-                            HStack {
-                                Image(systemName: "command")
-                                    .foregroundColor(.secondary)
-                                Text("Modifier Key")
-                            }
-                        }
-
+            Form {
+                Section {
+                    Toggle(isOn: self.$enableModifierKey) {
                         HStack {
-                            Label("Activation Modifier", systemImage: "square.grid.2x2")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Picker("", selection: self.$selectedModifier) {
-                                ForEach(ModifierKey.allCases) { key in
-                                    Text(key.rawValue).tag(key)
-                                }
-                            }
-                            .pickerStyle(.menu)
-                            .disabled(!self.enableModifierKey)
-                            .frame(width: 150)
+                            Image(systemName: "command")
+                                .foregroundColor(.secondary)
+                            Text("Modifier Key")
                         }
                     }
 
-                    Section {
+                    HStack {
+                        Label("Activation Modifier", systemImage: "square.grid.2x2")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: self.$selectedModifier) {
+                            ForEach(ModifierKey.allCases) { key in
+                                Text(key.rawValue).tag(key)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .disabled(!self.enableModifierKey)
+                        .frame(width: 150)
+                    }
+                }
+
+                Section {
+                    HStack {
+                        Label("Activation Shortcut", systemImage: "rectangle.leftthird.inset.filled")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        KeyboardShortcuts.Recorder(for: .cornerActivation)
+                            .frame(width: 130)
+                    }
+                }
+
+                Section {
+                    Toggle(isOn: Binding(
+                        get: { self.enableCornerHover },
+                        set: { newValue in
+                            self.enableCornerHover = newValue
+                            if newValue { self.enableCornerClick = false }
+                        }
+                    )) {
                         HStack {
-                            Label("Activation Shortcut", systemImage: "rectangle.leftthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            KeyboardShortcuts.Recorder(for: .cornerActivation)
-                                .frame(width: 130)
+                            Image(systemName: "hand.point.up.left")
+                                .foregroundColor(.secondary)
+                            Text("Trigger Actions on Corner Hover")
                         }
                     }
 
-                    Section {
-                        Toggle(isOn: Binding(
-                            get: { self.enableCornerHover },
-                            set: { newValue in
-                                self.enableCornerHover = newValue
-                                if newValue { self.enableCornerClick = false }
-                            }
-                        )) {
-                            HStack {
-                                Image(systemName: "hand.point.up.left")
-                                    .foregroundColor(.secondary)
-                                Text("Trigger Actions on Corner Hover")
-                            }
+                    Toggle(isOn: Binding(
+                        get: { self.enableCornerClick },
+                        set: { newValue in
+                            self.enableCornerClick = newValue
+                            if newValue { self.enableCornerHover = false }
+                        }
+                    )) {
+                        HStack {
+                            Image(systemName: "hand.tap")
+                                .foregroundColor(.secondary)
+                            Text("Trigger Actions on Corner Click")
+                        }
+                    }
+                }
+
+                Section {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "timer")
+                                .foregroundColor(.secondary)
+                            Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))")
+
+                            Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
+                        }
+                    }
+                }
+
+                Section(header: Text("Enabled Corners")) {
+                    Toggle(isOn: self.$enableTopLeftCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.topleft.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Top Left Corner")
+                        }
+                    }
+                    Toggle(isOn: self.$enableTopRightCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.topright.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Top Right Corner")
+                        }
+                    }
+                    Toggle(isOn: self.$enableBottomLeftCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.bottomleft.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Bottom Left Corner")
+                        }
+                    }
+                    Toggle(isOn: self.$enableBottomRightCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.bottomright.rectangle")
+                                .foregroundColor(.secondary)
+                            Text("Bottom Right Corner")
+                        }
+                    }
+                }
+
+                Section(header: Text("Enabled Zones")) {
+                    Toggle(isOn: self.$enableTopZone) {
+                        HStack {
+                            Image(systemName: "rectangle.topthird.inset.filled")
+                                .foregroundColor(.secondary)
+                            Text("Top Zone")
+                        }
+                    }
+                    Toggle(isOn: self.$enableLeftZone) {
+                        HStack {
+                            Image(systemName: "rectangle.leadingthird.inset.filled")
+                                .foregroundColor(.secondary)
+                            Text("Left Zone")
+                        }
+                    }
+                    Toggle(isOn: self.$enableRightZone) {
+                        HStack {
+                            Image(systemName: "rectangle.trailingthird.inset.filled")
+                                .foregroundColor(.secondary)
+                            Text("Right Zone")
+                        }
+                    }
+                    Toggle(isOn: self.$enableBottomZone) {
+                        HStack {
+                            Image(systemName: "rectangle.bottomthird.inset.filled")
+                                .foregroundColor(.secondary)
+                            Text("Bottom Zone")
+                        }
+                    }
+                }
+            }
+            .formStyle(.grouped)
+            .frame(maxWidth: 700)
+
+            Form {
+                Section {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "dot.circle.and.cursorarrow")
+                                .foregroundColor(.secondary)
+                            Text("Corner Trigger Sensitivity: \(String(format: "%.1f", self.cornerTriggerSensitivity))")
                         }
 
-                        Toggle(isOn: Binding(
-                            get: { self.enableCornerClick },
-                            set: { newValue in
-                                self.enableCornerClick = newValue
-                                if newValue { self.enableCornerHover = false }
-                            }
-                        )) {
+                        Text("Controls how close your mouse must be to a corner to trigger it")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.bottom, 10)
+
+                        Slider(value: self.$cornerTriggerSensitivity, in: 1 ... 8.0, step: 0.5)
+                    }
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "dot.circle.and.cursorarrow")
+                                .foregroundColor(.secondary)
+                            Text("Zone Trigger Sensitivity: \(String(format: "%.1f", self.zoneTriggerSensitivity))")
+                        }
+
+                        Text("Controls how close your mouse must be to a zone to trigger it")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.bottom, 10)
+
+                        Slider(value: self.$zoneTriggerSensitivity, in: 1 ... 8.0, step: 0.5)
+                    }
+                }
+
+                Section {
+                    HStack {
+                        Label("Ignored Applications", systemImage: "rectangle.slash")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Configure") {
+                            self.showIgnoredAppsModal = true
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                }
+
+                Section {
+                    Toggle(isOn: self.$showToastNotification) {
+                        HStack {
+                            Image(systemName: "bell.badge")
+                                .foregroundColor(.secondary)
+                            Text("Show Toast Notifications")
+                        }
+                    }
+
+                    Group {
+                        Toggle(isOn: self.$dismissOnClick) {
                             HStack {
                                 Image(systemName: "hand.tap")
                                     .foregroundColor(.secondary)
-                                Text("Trigger Actions on Corner Click")
-                            }
-                        }
-                    }
-
-                    Section {
-                        VStack(alignment: .leading, spacing: 6) {
-                            HStack {
-                                Image(systemName: "timer")
-                                    .foregroundColor(.secondary)
-                                Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))")
-
-                                Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
-                            }
-                        }
-                    }
-
-                    Section(header: Text("Enabled Corners")) {
-                        Toggle(isOn: self.$enableTopLeftCorner) {
-                            HStack {
-                                Image(systemName: "inset.filled.topleft.rectangle")
-                                    .foregroundColor(.secondary)
-                                Text("Top Left Corner")
-                            }
-                        }
-                        Toggle(isOn: self.$enableTopRightCorner) {
-                            HStack {
-                                Image(systemName: "inset.filled.topright.rectangle")
-                                    .foregroundColor(.secondary)
-                                Text("Top Right Corner")
-                            }
-                        }
-                        Toggle(isOn: self.$enableBottomLeftCorner) {
-                            HStack {
-                                Image(systemName: "inset.filled.bottomleft.rectangle")
-                                    .foregroundColor(.secondary)
-                                Text("Bottom Left Corner")
-                            }
-                        }
-                        Toggle(isOn: self.$enableBottomRightCorner) {
-                            HStack {
-                                Image(systemName: "inset.filled.bottomright.rectangle")
-                                    .foregroundColor(.secondary)
-                                Text("Bottom Right Corner")
-                            }
-                        }
-                    }
-
-                    Section(header: Text("Enabled Zones")) {
-                        Toggle(isOn: self.$enableTopZone) {
-                            HStack {
-                                Image(systemName: "rectangle.topthird.inset.filled")
-                                    .foregroundColor(.secondary)
-                                Text("Top Zone")
-                            }
-                        }
-                        Toggle(isOn: self.$enableLeftZone) {
-                            HStack {
-                                Image(systemName: "rectangle.leadingthird.inset.filled")
-                                    .foregroundColor(.secondary)
-                                Text("Left Zone")
-                            }
-                        }
-                        Toggle(isOn: self.$enableRightZone) {
-                            HStack {
-                                Image(systemName: "rectangle.trailingthird.inset.filled")
-                                    .foregroundColor(.secondary)
-                                Text("Right Zone")
-                            }
-                        }
-                        Toggle(isOn: self.$enableBottomZone) {
-                            HStack {
-                                Image(systemName: "rectangle.bottomthird.inset.filled")
-                                    .foregroundColor(.secondary)
-                                Text("Bottom Zone")
-                            }
-                        }
-                    }
-                }
-                .formStyle(.grouped)
-                .frame(maxWidth: 700)
-            }
-
-            VStack(spacing: 8) {
-                Form {
-                    Section {
-                        VStack(alignment: .leading, spacing: 6) {
-                            HStack {
-                                Image(systemName: "dot.circle.and.cursorarrow")
-                                    .foregroundColor(.secondary)
-                                Text("Corner Trigger Sensitivity: \(String(format: "%.1f", self.cornerTriggerSensitivity))")
-                            }
-
-                            Text("Controls how close your mouse must be to a corner to trigger it")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.leading, 25)
-                                .padding(.bottom, 10)
-
-                            Slider(value: self.$cornerTriggerSensitivity, in: 1 ... 8.0, step: 0.5)
-                        }
-
-                        VStack(alignment: .leading, spacing: 6) {
-                            HStack {
-                                Image(systemName: "dot.circle.and.cursorarrow")
-                                    .foregroundColor(.secondary)
-                                Text("Zone Trigger Sensitivity: \(String(format: "%.1f", self.zoneTriggerSensitivity))")
-                            }
-
-                            Text("Controls how close your mouse must be to a zone to trigger it")
-                                .font(.caption)
-                                .foregroundColor(.secondary)
-                                .padding(.leading, 25)
-                                .padding(.bottom, 10)
-
-                            Slider(value: self.$zoneTriggerSensitivity, in: 1 ... 8.0, step: 0.5)
-                        }
-                    }
-
-                    Section {
-                        HStack {
-                            Label("Ignored Applications", systemImage: "rectangle.slash")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Button("Configure") {
-                                self.showIgnoredAppsModal = true
-                            }
-                            .buttonStyle(.bordered)
-                        }
-                    }
-
-                    Section {
-                        Toggle(isOn: self.$showToastNotification) {
-                            HStack {
-                                Image(systemName: "bell.badge")
-                                    .foregroundColor(.secondary)
-                                Text("Show Toast Notifications")
-                            }
-                        }
-
-                        Group {
-                            Toggle(isOn: self.$dismissOnClick) {
-                                HStack {
-                                    Image(systemName: "hand.tap")
-                                        .foregroundColor(.secondary)
-                                    Text("Dismiss on Click")
-                                }
-                            }
-
-                            HStack {
-                                Label("Auto Dismiss Timer", systemImage: "timer")
-                                    .foregroundColor(.primary)
-                                Spacer()
-                                Picker("", selection: self.$autoDismissTimer) {
-                                    ForEach(DismissTimer.allCases) { interval in
-                                        Text(interval.rawValue).tag(interval)
-                                    }
-                                }
-                                .pickerStyle(.menu)
-                                .frame(width: 150)
-                            }
-                        }
-                        .disabled(!self.showToastNotification)
-                    }
-
-                    Section {
-                        Toggle(isOn: self.$playSoundEffect) {
-                            HStack {
-                                Image(systemName: "speaker.wave.2")
-                                    .foregroundColor(.secondary)
-                                Text("Play Sound Effect on Trigger")
+                                Text("Dismiss on Click")
                             }
                         }
 
                         HStack {
-                            Label("Choose Sound Effect", systemImage: "waveform")
+                            Label("Auto Dismiss Timer", systemImage: "timer")
                                 .foregroundColor(.primary)
                             Spacer()
-                            Picker("", selection: self.$selectedSound) {
-                                ForEach(SoundEffect.allCases) { sound in
-                                    Text(sound.rawValue).tag(sound)
+                            Picker("", selection: self.$autoDismissTimer) {
+                                ForEach(DismissTimer.allCases) { interval in
+                                    Text(interval.rawValue).tag(interval)
                                 }
                             }
                             .pickerStyle(.menu)
-                            .disabled(!self.playSoundEffect)
                             .frame(width: 150)
-                        }.onChange(of: self.selectedSound) { newSound in
-                            if self.playSoundEffect {
-                                newSound.play()
+                        }
+                    }
+                    .disabled(!self.showToastNotification)
+                }
+
+                Section {
+                    Toggle(isOn: self.$playSoundEffect) {
+                        HStack {
+                            Image(systemName: "speaker.wave.2")
+                                .foregroundColor(.secondary)
+                            Text("Play Sound Effect on Trigger")
+                        }
+                    }
+
+                    HStack {
+                        Label("Choose Sound Effect", systemImage: "waveform")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: self.$selectedSound) {
+                            ForEach(SoundEffect.allCases) { sound in
+                                Text(sound.rawValue).tag(sound)
                             }
+                        }
+                        .pickerStyle(.menu)
+                        .disabled(!self.playSoundEffect)
+                        .frame(width: 150)
+                    }.onChange(of: self.selectedSound) { newSound in
+                        if self.playSoundEffect {
+                            newSound.play()
                         }
                     }
                 }
-
-                .formStyle(.grouped)
-                .frame(maxWidth: 700)
-            }.sheet(isPresented: self.$showIgnoredAppsModal) {
+            }
+            .formStyle(.grouped)
+            .frame(maxWidth: 700)
+            .sheet(isPresented: self.$showIgnoredAppsModal) {
                 IgnoredApplicationsView()
             }
 
-            VStack(spacing: 4) {
-                Form {
-                    Section("Floating Notes Window") {
-                        Toggle(isOn: self.$rememberNotesText) {
-                            HStack {
-                                Image(systemName: "macwindow")
-                                    .foregroundColor(.secondary)
-                                Text("Remember Text on Close")
-                            }
-                        }
-                    }
-
-                    Section("Natural Language Calculator") {
-                        Toggle(isOn: self.$rememberCalcText) {
-                            HStack {
-                                Image(systemName: "captions.bubble")
-                                    .foregroundColor(.secondary)
-                                Text("Remember Text on Close")
-                            }
-                        }
-                    }
-
-                    Section("Text Extractor") {
-                        Toggle(isOn: self.$showRecentText) {
-                            HStack {
-                                Image(systemName: "rectangle.stack")
-                                    .foregroundColor(.secondary)
-                                Text("Show Recent Extractions")
-                            }
-                        }
-                    }
-
-                    Section("Color Picker") {
+            Form {
+                Section("Floating Notes Window") {
+                    Toggle(isOn: self.$rememberNotesText) {
                         HStack {
-                            Label("Color Format", systemImage: "paintpalette")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Picker("", selection: self.$colorFormat) {
-                                ForEach(ColorFormat.allCases) { format in
-                                    Text(format.rawValue).tag(format)
-                                }
-                            }
-                            .pickerStyle(.menu)
-                            .frame(width: 150)
+                            Image(systemName: "macwindow")
+                                .foregroundColor(.secondary)
+                            Text("Remember Text on Close")
                         }
+                    }
+                }
 
-                        Toggle(isOn: self.$showRecentColors) {
-                            HStack {
-                                Image(systemName: "rectangle.stack")
-                                    .foregroundColor(.secondary)
-                                Text("Show Recent Colors")
+                Section("Natural Language Calculator") {
+                    Toggle(isOn: self.$rememberCalcText) {
+                        HStack {
+                            Image(systemName: "captions.bubble")
+                                .foregroundColor(.secondary)
+                            Text("Remember Text on Close")
+                        }
+                    }
+                }
+
+                Section("Text Extractor") {
+                    Toggle(isOn: self.$showRecentText) {
+                        HStack {
+                            Image(systemName: "rectangle.stack")
+                                .foregroundColor(.secondary)
+                            Text("Show Recent Extractions")
+                        }
+                    }
+                }
+
+                Section("Color Picker") {
+                    HStack {
+                        Label("Color Format", systemImage: "paintpalette")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: self.$colorFormat) {
+                            ForEach(ColorFormat.allCases) { format in
+                                Text(format.rawValue).tag(format)
                             }
+                        }
+                        .pickerStyle(.menu)
+                        .frame(width: 150)
+                    }
+
+                    Toggle(isOn: self.$showRecentColors) {
+                        HStack {
+                            Image(systemName: "rectangle.stack")
+                                .foregroundColor(.secondary)
+                            Text("Show Recent Colors")
                         }
                     }
                 }
