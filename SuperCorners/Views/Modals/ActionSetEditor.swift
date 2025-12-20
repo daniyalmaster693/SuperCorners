@@ -68,6 +68,18 @@ struct ActionSetEditor: View {
                                 panel.allowedContentTypes = [.application]
                                 panel.title = "Select Application"
                                 panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 HStack {
                                     Image(systemName: "folder")
@@ -87,6 +99,18 @@ struct ActionSetEditor: View {
                                 panel.allowedFileTypes = ["app"]
                                 panel.title = "Select Application"
                                 panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 HStack {
                                     Image(systemName: "folder")
