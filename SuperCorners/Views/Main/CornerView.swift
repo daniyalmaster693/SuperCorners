@@ -211,16 +211,25 @@ struct CornerView: View {
                     Text("Music Actions").tag("Music Actions")
                     Text("Finder Actions").tag("Finder Actions")
                 }
-                .help("Choose Trigger Set")
+                .help("Choose an Action Set")
             }
 
             ToolbarItem(placement: .automatic) {
                 Button(action: {
-                    // Action for creating an trigger set
+                    // Action for editing action sets
+                }) {
+                    Image(systemName: "wrench")
+                }
+                .help("Edit Action Sets")
+            }
+
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
+                    // Action for creating an action set
                 }) {
                     Image(systemName: "plus")
                 }
-                .help("Create Trigger Set")
+                .help("Create a Trigger Set")
             }
         }
     }
