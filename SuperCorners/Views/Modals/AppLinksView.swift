@@ -18,17 +18,24 @@ struct AppLinksView: View {
 
     var body: some View {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
 
         VStack(spacing: 8) {
             Image("TahoeIcon")
                 .resizable()
-                .frame(width: 80, height: 80)
+                .frame(width: 77, height: 77)
                 .cornerRadius(4)
                 .padding(.top, 15)
                 .padding(.bottom, 10)
+                .scaleEffect(isHovering ? 1.05 : 1.0)
+                .onHover { hovering in
+                    withAnimation(.interpolatingSpring(stiffness: 180, damping: 10)) {
+                        isHovering = hovering
+                    }
+                }
 
             Text("SuperCorners ")
-                .font(.system(size: 20, weight: .semibold, design: .default))
+                .font(.system(size: 18, weight: .semibold, design: .default))
                 .foregroundColor(.primary)
                 +
                 Text(version)
@@ -41,7 +48,7 @@ struct AppLinksView: View {
                         Text("Version")
                             .foregroundColor(.primary)
                         Spacer()
-                        Text(version)
+                        Text("\(version) (\(build))")
                             .foregroundColor(.secondary)
                     }
                 }
