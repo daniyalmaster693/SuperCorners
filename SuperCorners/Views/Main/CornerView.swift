@@ -25,6 +25,11 @@ struct CornerView: View {
     @AppStorage("enableBottomLeftCorner") var enableBottomLeftCorner = true
     @AppStorage("enableBottomRightCorner") var enableBottomRightCorner = true
 
+    // Action Set Variables
+
+    @State private var showActionSetEditor = false
+    @State private var showActionSetCreator = false
+
     // Hardcoded App Icon for UI
 
     let safariIcon: NSImage? = {
@@ -216,20 +221,26 @@ struct CornerView: View {
 
             ToolbarItem(placement: .automatic) {
                 Button(action: {
-                    // Action for editing action sets
+                    showActionSetEditor = true
                 }) {
                     Image(systemName: "slider.horizontal.3")
                 }
                 .help("Edit Action Sets")
+                .sheet(isPresented: $showActionSetEditor) {
+                    ActionSetEditor()
+                }
             }
 
             ToolbarItem(placement: .automatic) {
                 Button(action: {
-                    // Action for creating an action set
+                    showActionSetCreator = true
                 }) {
                     Image(systemName: "plus")
                 }
                 .help("Create a Trigger Set")
+                .sheet(isPresented: $showActionSetCreator) {
+                    ActionSetCreator()
+                }
             }
         }
     }
