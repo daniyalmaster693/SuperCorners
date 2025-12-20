@@ -218,7 +218,7 @@ struct CornerView: View {
                 Button(action: {
                     // Action for editing action sets
                 }) {
-                    Image(systemName: "wrench")
+                    Image(systemName: "slider.horizontal.3")
                 }
                 .help("Edit Action Sets")
             }
