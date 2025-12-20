@@ -11,9 +11,6 @@ import SwiftUI
 struct ActionSetEditor: View {
     @Environment(\.dismiss) var dismiss
 
-    @State private var selectedAppName: String? = nil
-    @State private var selectedAppIcon: NSImage? = nil
-
     let safariIcon: NSImage? = {
         let workspace = NSWorkspace.shared
         if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.safari") {
@@ -51,22 +48,13 @@ struct ActionSetEditor: View {
             Form {
                 Section("Create an Action Set") {
                     HStack {
-                        if let selectedAppIcon {
-                            Image(nsImage: selectedAppIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .cornerRadius(12)
-                        }
-                        else {
-                            Image(systemName: "plus.app")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.secondary)
-                        }
+                        Image(systemName: "plus.app")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(.secondary)
                         
-                        Text(selectedAppName ?? "Select App")
+                        Text("Select App")
                             .padding(.leading, 5)
                         
                         Spacer()
@@ -80,11 +68,6 @@ struct ActionSetEditor: View {
                                 panel.allowedContentTypes = [.application]
                                 panel.title = "Select Application"
                                 panel.prompt = "Choose"
-
-                                if panel.runModal() == .OK, let url = panel.url {
-                                    selectedAppName = url.deletingPathExtension().lastPathComponent
-                                    selectedAppIcon = NSWorkspace.shared.icon(forFile: url.path)
-                                }
                             }) {
                                 HStack {
                                     Image(systemName: "folder")
@@ -104,11 +87,6 @@ struct ActionSetEditor: View {
                                 panel.allowedFileTypes = ["app"]
                                 panel.title = "Select Application"
                                 panel.prompt = "Choose"
-
-                                if panel.runModal() == .OK, let url = panel.url {
-                                    selectedAppName = url.deletingPathExtension().lastPathComponent
-                                    selectedAppIcon = NSWorkspace.shared.icon(forFile: url.path)
-                                }
                             }) {
                                 HStack {
                                     Image(systemName: "folder")
@@ -121,13 +99,13 @@ struct ActionSetEditor: View {
                     }
                 }
 
-                Section("Edit Action Sets") {
+                Section("Action Sets") {
                     HStack {
                         if let safariIcon {
                             Image(nsImage: safariIcon)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
                                 .cornerRadius(12)
                         }
                             
@@ -180,7 +158,7 @@ struct ActionSetEditor: View {
                             Image(nsImage: notesIcon)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
                                 .cornerRadius(12)
                         }
                             
@@ -233,7 +211,7 @@ struct ActionSetEditor: View {
                             Image(nsImage: musicIcon)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
                                 .cornerRadius(12)
                         }
                             
@@ -286,7 +264,431 @@ struct ActionSetEditor: View {
                             Image(nsImage: finderIcon)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12)
+                        }
+                            
+                        Text("Finder Actions")
+                            .padding(.leading, 5)
+                            
+                        Spacer()
+                            
+                        if #available(macOS 26.0, *) {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                        }
+                            
+                        else {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    }
+                    
+                    HStack {
+                        if let safariIcon {
+                            Image(nsImage: safariIcon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12)
+                        }
+                            
+                        Text("Safari Actions")
+                            .padding(.leading, 5)
+                            
+                        Spacer()
+                            
+                        if #available(macOS 26.0, *) {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                        }
+                            
+                        else {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    }
+                    
+                    HStack {
+                        if let notesIcon {
+                            Image(nsImage: notesIcon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12)
+                        }
+                            
+                        Text("Notes Actions")
+                            .padding(.leading, 5)
+                            
+                        Spacer()
+                            
+                        if #available(macOS 26.0, *) {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                        }
+                            
+                        else {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    }
+                    
+                    HStack {
+                        if let musicIcon {
+                            Image(nsImage: musicIcon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12)
+                        }
+                            
+                        Text("Music Actions")
+                            .padding(.leading, 5)
+                            
+                        Spacer()
+                            
+                        if #available(macOS 26.0, *) {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                        }
+                            
+                        else {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    }
+                    
+                    HStack {
+                        if let finderIcon {
+                            Image(nsImage: finderIcon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12)
+                        }
+                            
+                        Text("Finder Actions")
+                            .padding(.leading, 5)
+                            
+                        Spacer()
+                            
+                        if #available(macOS 26.0, *) {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                        }
+                            
+                        else {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    }
+                    
+                    HStack {
+                        if let safariIcon {
+                            Image(nsImage: safariIcon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12)
+                        }
+                            
+                        Text("Safari Actions")
+                            .padding(.leading, 5)
+                            
+                        Spacer()
+                            
+                        if #available(macOS 26.0, *) {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                        }
+                            
+                        else {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    }
+                    
+                    HStack {
+                        if let notesIcon {
+                            Image(nsImage: notesIcon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12)
+                        }
+                            
+                        Text("Notes Actions")
+                            .padding(.leading, 5)
+                            
+                        Spacer()
+                            
+                        if #available(macOS 26.0, *) {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                        }
+                            
+                        else {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    }
+                    
+                    HStack {
+                        if let musicIcon {
+                            Image(nsImage: musicIcon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                                .cornerRadius(12)
+                        }
+                            
+                        Text("Music Actions")
+                            .padding(.leading, 5)
+                            
+                        Spacer()
+                            
+                        if #available(macOS 26.0, *) {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.glass)
+                            .padding(.trailing, 4)
+                        }
+                            
+                        else {
+                            Button(action: {
+                                // Placeholder edit action
+                            }) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                                
+                            Button(action: {
+                                // Placeholder delete action
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 4)
+                        }
+                    }
+                    
+                    HStack {
+                        if let finderIcon {
+                            Image(nsImage: finderIcon)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
                                 .cornerRadius(12)
                         }
                             
