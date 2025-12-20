@@ -14,25 +14,25 @@ struct AppLinksView: View {
     @AppStorage("enableBottomLeftCorner") private var enableBottomLeftCorner = true
     @AppStorage("enableBottomRightCorner") private var enableBottomRightCorner = true
 
+    @State private var isHovering = false
+
     var body: some View {
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
 
         VStack(spacing: 8) {
             Image("TahoeIcon")
                 .resizable()
-                .frame(width: 67, height: 67)
+                .frame(width: 80, height: 80)
                 .cornerRadius(4)
-                .padding(.top, 10)
-                .padding(.bottom, 5)
+                .padding(.top, 15)
+                .padding(.bottom, 10)
 
             Text("SuperCorners ")
-                .font(.title2)
-                .bold()
+                .font(.system(size: 20, weight: .semibold, design: .default))
                 .foregroundColor(.primary)
                 +
                 Text(version)
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.system(size: 18, weight: .semibold, design: .default))
                 .foregroundColor(.secondary)
 
             Form {
@@ -75,7 +75,8 @@ struct AppLinksView: View {
                 }
             }
             .formStyle(.grouped)
-            .frame(maxWidth: 725)
+            .padding(.horizontal, -12)
+            .frame(maxWidth: .infinity, alignment: .center)
             .padding(.top, 7)
 
             Divider()
@@ -88,6 +89,6 @@ struct AppLinksView: View {
         }
         .padding()
         .padding(.top, 7)
-        .frame(width: 400, height: 480)
+        .frame(width: 400, height: 520)
     }
 }

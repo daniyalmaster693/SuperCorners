@@ -77,10 +77,11 @@ struct ContentView: View {
                     .frame(maxWidth: 150, alignment: .center)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(isHovered ? Color.gray.opacity(0.15) : Color.clear)
+                            .fill(isHovered ? Color.gray.opacity(0.05) : Color.clear)
                     )
                 }
                 .buttonStyle(.plain)
+                .padding(.bottom, 10)
                 .onHover { hovering in
                     isHovered = hovering
                 }
