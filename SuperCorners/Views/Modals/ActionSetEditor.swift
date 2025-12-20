@@ -140,7 +140,25 @@ struct ActionSetEditor: View {
                             
                         if #available(macOS 26.0, *) {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -160,7 +178,25 @@ struct ActionSetEditor: View {
                             
                         else {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -193,7 +229,25 @@ struct ActionSetEditor: View {
                             
                         if #available(macOS 26.0, *) {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -213,7 +267,25 @@ struct ActionSetEditor: View {
                             
                         else {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -246,7 +318,25 @@ struct ActionSetEditor: View {
                             
                         if #available(macOS 26.0, *) {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -266,7 +356,25 @@ struct ActionSetEditor: View {
                             
                         else {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -299,7 +407,25 @@ struct ActionSetEditor: View {
                             
                         if #available(macOS 26.0, *) {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -319,7 +445,25 @@ struct ActionSetEditor: View {
                             
                         else {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -352,7 +496,25 @@ struct ActionSetEditor: View {
                             
                         if #available(macOS 26.0, *) {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -372,7 +534,25 @@ struct ActionSetEditor: View {
                             
                         else {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -405,7 +585,25 @@ struct ActionSetEditor: View {
                             
                         if #available(macOS 26.0, *) {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -425,7 +623,25 @@ struct ActionSetEditor: View {
                             
                         else {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -458,7 +674,25 @@ struct ActionSetEditor: View {
                             
                         if #available(macOS 26.0, *) {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -478,7 +712,25 @@ struct ActionSetEditor: View {
                             
                         else {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -511,7 +763,25 @@ struct ActionSetEditor: View {
                             
                         if #available(macOS 26.0, *) {
                             Button(action: {
-                                // Placeholder edit action
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+                                
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
@@ -531,219 +801,25 @@ struct ActionSetEditor: View {
                             
                         else {
                             Button(action: {
-                                // Placeholder edit action
-                            }) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 4)
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedFileTypes = ["app"]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
                                 
-                            Button(action: {
-                                // Placeholder delete action
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 4)
-                        }
-                    }
-                    
-                    HStack {
-                        if let safariIcon {
-                            Image(nsImage: safariIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25, height: 25)
-                                .cornerRadius(12)
-                        }
-                            
-                        Text("Safari Actions")
-                            .padding(.leading, 5)
-                            
-                        Spacer()
-                            
-                        if #available(macOS 26.0, *) {
-                            Button(action: {
-                                // Placeholder edit action
-                            }) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.glass)
-                            .padding(.trailing, 4)
-                                
-                            Button(action: {
-                                // Placeholder delete action
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.glass)
-                            .padding(.trailing, 4)
-                        }
-                            
-                        else {
-                            Button(action: {
-                                // Placeholder edit action
-                            }) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 4)
-                                
-                            Button(action: {
-                                // Placeholder delete action
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 4)
-                        }
-                    }
-                    
-                    HStack {
-                        if let notesIcon {
-                            Image(nsImage: notesIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25, height: 25)
-                                .cornerRadius(12)
-                        }
-                            
-                        Text("Notes Actions")
-                            .padding(.leading, 5)
-                            
-                        Spacer()
-                            
-                        if #available(macOS 26.0, *) {
-                            Button(action: {
-                                // Placeholder edit action
-                            }) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.glass)
-                            .padding(.trailing, 4)
-                                
-                            Button(action: {
-                                // Placeholder delete action
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.glass)
-                            .padding(.trailing, 4)
-                        }
-                            
-                        else {
-                            Button(action: {
-                                // Placeholder edit action
-                            }) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 4)
-                                
-                            Button(action: {
-                                // Placeholder delete action
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 4)
-                        }
-                    }
-                    
-                    HStack {
-                        if let musicIcon {
-                            Image(nsImage: musicIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25, height: 25)
-                                .cornerRadius(12)
-                        }
-                            
-                        Text("Music Actions")
-                            .padding(.leading, 5)
-                            
-                        Spacer()
-                            
-                        if #available(macOS 26.0, *) {
-                            Button(action: {
-                                // Placeholder edit action
-                            }) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.glass)
-                            .padding(.trailing, 4)
-                                
-                            Button(action: {
-                                // Placeholder delete action
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.glass)
-                            .padding(.trailing, 4)
-                        }
-                            
-                        else {
-                            Button(action: {
-                                // Placeholder edit action
-                            }) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 4)
-                                
-                            Button(action: {
-                                // Placeholder delete action
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 4)
-                        }
-                    }
-                    
-                    HStack {
-                        if let finderIcon {
-                            Image(nsImage: finderIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25, height: 25)
-                                .cornerRadius(12)
-                        }
-                            
-                        Text("Finder Actions")
-                            .padding(.leading, 5)
-                            
-                        Spacer()
-                            
-                        if #available(macOS 26.0, *) {
-                            Button(action: {
-                                // Placeholder edit action
-                            }) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.glass)
-                            .padding(.trailing, 4)
-                                
-                            Button(action: {
-                                // Placeholder delete action
-                            }) {
-                                Image(systemName: "trash")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.glass)
-                            .padding(.trailing, 4)
-                        }
-                            
-                        else {
-                            Button(action: {
-                                // Placeholder edit action
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    let workspace = NSWorkspace.shared
+                                    
+                                    let appPath = url.path
+                                    let appIcon = workspace.icon(forFile: appPath)
+                                    let appName = url.deletingPathExtension().lastPathComponent
+                                           
+                                    print("App path: \(appPath)")
+                                    print("App name: \(appName)")
+                                    print("App icon: \(appIcon)")
+                                }
                             }) {
                                 Image(systemName: "pencil")
                                     .foregroundColor(.secondary)
