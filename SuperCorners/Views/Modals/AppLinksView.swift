@@ -23,7 +23,7 @@ struct AppLinksView: View {
         VStack(spacing: 8) {
             Image("TahoeIcon")
                 .resizable()
-                .frame(width: 77, height: 77)
+                .frame(width: 75, height: 75)
                 .cornerRadius(4)
                 .padding(.top, 15)
                 .padding(.bottom, 10)
@@ -96,6 +96,6 @@ struct AppLinksView: View {
         }
         .padding()
         .padding(.top, 7)
-        .frame(width: 400, height: 520)
+        .frame(width: 400, height: 510)
     }
 }

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct IgnoredApplicationsView: View {
     @Environment(\.dismiss) var dismiss
+    @State private var searchText = ""
     @State private var installedApps: [URL] = []
     @State private var checkedStates: [String: Bool] = [:]
     @AppStorage("ignoredAppPaths") private var ignoredAppPathsData: Data = .init()
@@ -17,13 +18,33 @@ struct IgnoredApplicationsView: View {
     var body: some View {
         VStack(spacing: 6) {
             Text("Applications")
-                .font(.title2)
-                .bold()
-                .frame(maxWidth: .infinity, alignment: .center)
+                .font(.title)
                 .padding(.top, 25)
+                .padding(.bottom, 12)
+                .bold()
+
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
+                TextField("Search Actions", text: $searchText)
+                    .textFieldStyle(.plain)
+            }
+            .padding(.vertical, 8)
+            .padding(.horizontal, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(NSColor.controlBackgroundColor))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+            )
+            .frame(maxWidth: 300)
 
             Form {
-                ForEach(installedApps, id: \.self) { appURL in
+                ForEach(installedApps.filter { appURL in
+                    searchText.isEmpty || appURL.deletingPathExtension().lastPathComponent.localizedCaseInsensitiveContains(searchText)
+                }, id: \.self) { appURL in
                     Toggle(isOn: Binding(
                         get: { checkedStates[appURL.path] ?? false },
                         set: {
@@ -39,21 +60,24 @@ struct IgnoredApplicationsView: View {
                         }
                     }
                 }
-            }.padding(.top, 5)
+            }
+            .formStyle(.grouped)
+            .padding(.horizontal, -12)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.top, 7)
+            .onAppear(perform: loadInstalledApps)
 
-            Divider().frame(maxWidth: 375)
+            Divider()
 
             Button("Done") {
                 dismiss()
             }
             .keyboardShortcut(.defaultAction)
-            .frame(maxWidth: 375, alignment: .trailing)
-            .padding(.top, 10)
+            .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding()
-        .frame(width: 350)
-        .formStyle(.grouped)
-        .onAppear(perform: loadInstalledApps)
+        .padding(.top, 7)
+        .frame(width: 400, height: 520)
     }
 
     func saveIgnoredAppPaths() {
