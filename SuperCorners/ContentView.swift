@@ -5,11 +5,9 @@
 //  Created by Daniyal Master on 2025-05-22.
 //
 
-import Sparkle
 import SwiftUI
 
 struct ContentView: View {
-    let updater: SPUUpdater
     @State private var selectedItem: String? = "corners"
     @State private var isHovered = false
     @State private var showingAboutModal = false
@@ -100,7 +98,7 @@ struct ContentView: View {
                     ActionBrowserView()
                         .navigationTitle("Actions")
                 case "settings":
-                    SettingsView(updater: updater)
+                    SettingsView()
                         .navigationTitle("Settings")
                 default:
                     Text("No item selected")

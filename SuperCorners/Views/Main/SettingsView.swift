@@ -7,30 +7,9 @@
 
 import KeyboardShortcuts
 import LaunchAtLogin
-import Sparkle
 import SwiftUI
 
 struct SettingsView: View {
-    // Sparkle Updater
-
-    let updater: SPUUpdater
-    @StateObject private var updateViewModel: CheckForUpdatesViewModel
-
-    final class CheckForUpdatesViewModel: ObservableObject {
-        @Published var canCheckForUpdates = false
-
-        init(updater: SPUUpdater) {
-            updater.publisher(for: \.canCheckForUpdates)
-                .assign(to: &self.$canCheckForUpdates)
-        }
-    }
-
-    init(updater: SPUUpdater) {
-        self.updater = updater
-        _updateViewModel = StateObject(
-            wrappedValue: CheckForUpdatesViewModel(updater: updater))
-    }
-
     // Settings Variables
 
     @AppStorage("showInDock") private var showInDock = true
@@ -177,19 +156,6 @@ struct SettingsView: View {
                                 NSApp.setActivationPolicy(.accessory)
                             }
                         }
-                    }
-                }
-
-                Section {
-                    HStack {
-                        Label("Updates", systemImage: "arrow.2.circlepath")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Button("Check for Updates") {
-                            self.updater.checkForUpdates()
-                        }
-                        .buttonStyle(.bordered)
-                        .disabled(!self.updateViewModel.canCheckForUpdates)
                     }
                 }
 

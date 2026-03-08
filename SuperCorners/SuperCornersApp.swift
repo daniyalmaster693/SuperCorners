@@ -5,23 +5,10 @@
 //  Created by Daniyal Master on 2025-05-22.
 //
 
-import Sparkle
 import SwiftUI
 
 @main
 struct SuperCornersApp: App {
-    // Sparkle Updater Closure
-    
-    private let updaterController = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
-    
-    private var updater: SPUUpdater {
-        updaterController.updater
-    }
-
     // Settings Variables
     
     @AppStorage("showInDock") private var showInDock = true
@@ -80,14 +67,14 @@ struct SuperCornersApp: App {
     var body: some Scene {
         WindowGroup {
             if #available(macOS 15.0, *) {
-                ContentView(updater: updaterController.updater)
+                ContentView()
                     .containerBackground(.thickMaterial, for: .window)
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
                     .onAppear {
                         updateActivationPolicy()
                     }
             } else {
-                ContentView(updater: updaterController.updater)
+                ContentView()
                     .onAppear {
                         updateActivationPolicy()
                     }
@@ -232,14 +219,6 @@ struct SuperCornersApp: App {
                 }
                 .keyboardShortcut("r")
                 
-                Button {
-                    updater.checkForUpdates()
-                } label: {
-                    Text("Check for Updates")
-                }
-                .buttonStyle(.bordered)
-                .keyboardShortcut("u")
-
                 Button("Quit") {
                     NSApplication.shared.terminate(nil)
                 }
