@@ -12,8 +12,28 @@ struct IgnoredApplicationsView: View {
     @Environment(\.dismiss) var dismiss
     @State private var searchText = ""
     @State private var installedApps: [URL] = []
+    @State private var runningApps: [URL] = []
     @State private var checkedStates: [String: Bool] = [:]
     @AppStorage("ignoredAppPaths") private var ignoredAppPathsData: Data = .init()
+
+    func appRow(_ appURL: URL) -> some View {
+        Toggle(isOn: Binding(
+            get: { checkedStates[appURL.path] ?? false },
+            set: {
+                checkedStates[appURL.path] = $0
+                saveIgnoredAppPaths()
+            }
+        )) {
+            HStack {
+                Image(nsImage: NSWorkspace.shared.icon(forFile: appURL.path))
+                    .resizable()
+                    .frame(width: 20, height: 20)
+
+                Text(appURL.deletingPathExtension().lastPathComponent)
+            }
+        }
+        .help(appURL.path)
+    }
 
     var body: some View {
         VStack(spacing: 6) {
@@ -26,7 +46,7 @@ struct IgnoredApplicationsView: View {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
-                TextField("Search Actions", text: $searchText)
+                TextField("Search Applications", text: $searchText)
                     .textFieldStyle(.plain)
             }
             .padding(.vertical, 8)
@@ -42,22 +62,23 @@ struct IgnoredApplicationsView: View {
             .frame(maxWidth: 300)
 
             Form {
-                ForEach(installedApps.filter { appURL in
-                    searchText.isEmpty || appURL.deletingPathExtension().lastPathComponent.localizedCaseInsensitiveContains(searchText)
-                }, id: \.self) { appURL in
-                    Toggle(isOn: Binding(
-                        get: { checkedStates[appURL.path] ?? false },
-                        set: {
-                            checkedStates[appURL.path] = $0
-                            saveIgnoredAppPaths()
-                        }
-                    )) {
-                        HStack {
-                            Image(nsImage: NSWorkspace.shared.icon(forFile: appURL.path))
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                            Text(appURL.deletingPathExtension().lastPathComponent)
-                        }
+                Section("Running Applications") {
+                    ForEach(runningApps.filter { appURL in
+                        searchText.isEmpty ||
+                        appURL.deletingPathExtension().lastPathComponent
+                            .localizedCaseInsensitiveContains(searchText)
+                    }, id: \.self) { appURL in
+                        appRow(appURL)
+                    }
+                }
+
+                Section("Installed Applications") {
+                    ForEach(installedApps.filter { appURL in
+                        searchText.isEmpty ||
+                        appURL.deletingPathExtension().lastPathComponent
+                            .localizedCaseInsensitiveContains(searchText)
+                    }, id: \.self) { appURL in
+                        appRow(appURL)
                     }
                 }
             }
@@ -65,7 +86,7 @@ struct IgnoredApplicationsView: View {
             .padding(.horizontal, -12)
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.top, 7)
-            .onAppear(perform: loadInstalledApps)
+            .onAppear(perform: loadAllApps)
 
             Divider()
 
@@ -89,31 +110,82 @@ struct IgnoredApplicationsView: View {
 
     func loadIgnoredAppStates() {
         guard let savedPaths = try? JSONDecoder().decode([String].self, from: ignoredAppPathsData) else { return }
-
-        for url in installedApps {
-            checkedStates[url.path] = savedPaths.contains(url.path)
+        for url in installedApps + runningApps {
+            if (savedPaths.contains(url.path)) {
+                checkedStates[url.path] = savedPaths.contains(url.path)
+            }
         }
     }
 
     func loadInstalledApps() {
-        let applicationDirectories = ["/Applications", "/System/Applications"]
+        let applicationDirectories = [
+            "/Applications",
+            "/System/Applications",
+            FileManager.default.homeDirectoryForCurrentUser
+                .appendingPathComponent("Applications").path
+        ]
 
-        var allAppURLs: [URL] = []
+        var collectedApps: [URL] = []
+        var visitedDirectories = Set<String>()
 
         for path in applicationDirectories {
             let url = URL(fileURLWithPath: path)
-            if let appURLs = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil) {
-                let apps = appURLs.filter { $0.pathExtension == "app" }
-                allAppURLs.append(contentsOf: apps)
+            scanDirectory(url, collected: &collectedApps, visited: &visitedDirectories)
+        }
+
+        installedApps = Array(Set(collectedApps)).sorted {
+            $0.deletingPathExtension().lastPathComponent
+                .localizedCaseInsensitiveCompare(
+                    $1.deletingPathExtension().lastPathComponent
+                ) == .orderedAscending
+        }
+    }
+    
+    func scanDirectory(
+        _ url: URL,
+        collected: inout [URL],
+        visited: inout Set<String>
+    ) {
+        let resolvedURL = url.resolvingSymlinksInPath()
+        let path = resolvedURL.path
+
+        // in case of infinite loops from symlinks
+        guard !visited.contains(path) else { return }
+        visited.insert(path)
+
+        guard let enumerator = FileManager.default.enumerator(
+            at: resolvedURL,
+            includingPropertiesForKeys: [.isSymbolicLinkKey, .isDirectoryKey],
+            options: [.skipsHiddenFiles, .skipsPackageDescendants]
+        ) else { return }
+
+        for case let fileURL as URL in enumerator {
+            if fileURL.pathExtension == "app" {
+                collected.append(fileURL)
+                continue
+            }
+
+            if let values = try? fileURL.resourceValues(forKeys: [.isSymbolicLinkKey]),
+               values.isSymbolicLink == true {
+                let resolved = fileURL.resolvingSymlinksInPath()
+                var isDir: ObjCBool = false
+                if FileManager.default.fileExists(atPath: resolved.path, isDirectory: &isDir),
+                   isDir.boolValue {
+                    scanDirectory(resolved, collected: &collected, visited: &visited)
+                }
             }
         }
-
-        installedApps = allAppURLs.sorted {
-            $0.deletingPathExtension().lastPathComponent.localizedCaseInsensitiveCompare(
-                $1.deletingPathExtension().lastPathComponent
-            ) == .orderedAscending
-        }
-
+    }
+    
+    func loadRunningApps() {
+        runningApps = NSWorkspace.shared.runningApplications
+            .filter { $0.activationPolicy == .regular }
+            .compactMap { $0.bundleURL }
+    }
+    
+    func loadAllApps() {
+        loadInstalledApps()
+        loadRunningApps()
         loadIgnoredAppStates()
     }
 }
