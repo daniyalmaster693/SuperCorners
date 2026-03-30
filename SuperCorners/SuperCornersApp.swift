@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct SuperCornersApp: App {
+    @Environment(\.openWindow) private var openWindow
+
     // Settings Variables
     
     @AppStorage("showInDock") private var showInDock = true
@@ -65,7 +67,7 @@ struct SuperCornersApp: App {
     }
     
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "main") {
             if #available(macOS 15.0, *) {
                 ContentView()
                     .containerBackground(.thickMaterial, for: .window)
@@ -218,6 +220,11 @@ struct SuperCornersApp: App {
                     refreshID = UUID()
                 }
                 .keyboardShortcut("r")
+                
+                Button("Configure") {
+                    openWindow(id: "main")
+                }
+                .keyboardShortcut(",")
                 
                 Button("Quit") {
                     NSApplication.shared.terminate(nil)
