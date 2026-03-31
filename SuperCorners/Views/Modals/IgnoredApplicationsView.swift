@@ -34,6 +34,34 @@ struct IgnoredApplicationsView: View {
         }
         .help(appURL.path)
     }
+    
+    var ignoredAppsFiltered: [String] {
+        checkedStates.keys.filter { appURL in
+            searchText.isEmpty ||
+            ((URL(string: appURL)?
+                .deletingPathExtension()
+                .lastPathComponent
+                .localizedCaseInsensitiveContains(searchText)) ?? false)
+        }
+    }
+    
+    var runningAppsFiltered: [URL] {
+        runningApps.filter { appURL in
+            searchText.isEmpty ||
+            appURL.deletingPathExtension()
+                .lastPathComponent
+                .localizedCaseInsensitiveContains(searchText)
+        }
+    }
+    
+    var installedAppsFiltered: [URL] {
+        installedApps.filter { appURL in
+            searchText.isEmpty ||
+            appURL.deletingPathExtension()
+                .lastPathComponent
+                .localizedCaseInsensitiveContains(searchText)
+        }
+    }
 
     var body: some View {
         VStack(spacing: 6) {
@@ -62,23 +90,38 @@ struct IgnoredApplicationsView: View {
             .frame(maxWidth: 300)
 
             Form {
-                Section("Running Applications") {
-                    ForEach(runningApps.filter { appURL in
-                        searchText.isEmpty ||
-                        appURL.deletingPathExtension().lastPathComponent
-                            .localizedCaseInsensitiveContains(searchText)
-                    }, id: \.self) { appURL in
-                        appRow(appURL)
+                Section("Ignored Applications") {
+                    if ignoredAppsFiltered.isEmpty {
+                        Text("None")
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(ignoredAppsFiltered, id: \.self) { appURL in
+                            if let url = URL(string: appURL) {
+                                appRow(url)
+                            }
+                        }
                     }
                 }
-
+                
+                Section("Running Applications") {
+                    if runningAppsFiltered.isEmpty {
+                        Text("None")
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(runningAppsFiltered, id: \.self) { appURL in
+                            appRow(appURL)
+                        }
+                    }
+                }
+                                
                 Section("Installed Applications") {
-                    ForEach(installedApps.filter { appURL in
-                        searchText.isEmpty ||
-                        appURL.deletingPathExtension().lastPathComponent
-                            .localizedCaseInsensitiveContains(searchText)
-                    }, id: \.self) { appURL in
-                        appRow(appURL)
+                    if installedAppsFiltered.isEmpty {
+                        Text("None")
+                            .foregroundColor(.secondary)
+                    } else {
+                        ForEach(installedAppsFiltered, id: \.self) { appURL in
+                            appRow(appURL)
+                        }
                     }
                 }
             }
