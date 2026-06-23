@@ -267,7 +267,7 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "timer")
                                 .foregroundColor(.secondary)
-                            Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))")
+                            Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))s")
 
                             Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
                         }
