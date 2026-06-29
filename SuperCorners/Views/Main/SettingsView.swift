@@ -135,7 +135,7 @@ struct SettingsView: View {
                 Section {
                     HStack {
                         Image(systemName: "person.crop.circle")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.primary)
                         LaunchAtLogin.Toggle()
                     }
 
@@ -143,7 +143,7 @@ struct SettingsView: View {
                         Toggle(isOn: self.$showInDock) {
                             HStack {
                                 Image(systemName: "dock.rectangle")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.primary)
                                 Text("Show in Dock")
                             }
                         }
@@ -163,7 +163,7 @@ struct SettingsView: View {
                     Toggle(isOn: self.$showMenuBarExtra) {
                         HStack {
                             Image(systemName: "menubar.rectangle")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Show in Menu Bar")
                         }
                     }
@@ -172,7 +172,7 @@ struct SettingsView: View {
                         Toggle(isOn: self.$showCorners) {
                             HStack {
                                 Image(systemName: "square.grid.2x2")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.primary)
                                 Text("Show Corners in Menu Bar")
                             }
                         }
@@ -180,7 +180,7 @@ struct SettingsView: View {
                         Toggle(isOn: self.$showZones) {
                             HStack {
                                 Image(systemName: "rectangle.leftthird.inset.filled")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.primary)
                                 Text("Show Zones in Menu Bar")
                             }
                         }
@@ -188,7 +188,7 @@ struct SettingsView: View {
                         Toggle(isOn: self.$showFavorites) {
                             HStack {
                                 Image(systemName: "star")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.primary)
                                 Text("Show Favorites in Menu Bar")
                             }
                         }
@@ -202,7 +202,7 @@ struct SettingsView: View {
                     Toggle(isOn: self.$enableModifierKey) {
                         HStack {
                             Image(systemName: "command")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Modifier Key")
                         }
                     }
@@ -242,7 +242,7 @@ struct SettingsView: View {
                     )) {
                         HStack {
                             Image(systemName: "hand.point.up.left")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Trigger Actions on Corner Hover")
                         }
                     }
@@ -256,7 +256,7 @@ struct SettingsView: View {
                     )) {
                         HStack {
                             Image(systemName: "hand.tap")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Trigger Actions on Corner Click")
                         }
                     }
@@ -266,7 +266,7 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "timer")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))s")
 
                             Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
@@ -278,28 +278,28 @@ struct SettingsView: View {
                     Toggle(isOn: self.$enableTopLeftCorner) {
                         HStack {
                             Image(systemName: "inset.filled.topleft.rectangle")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Top Left Corner")
                         }
                     }
                     Toggle(isOn: self.$enableTopRightCorner) {
                         HStack {
                             Image(systemName: "inset.filled.topright.rectangle")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Top Right Corner")
                         }
                     }
                     Toggle(isOn: self.$enableBottomLeftCorner) {
                         HStack {
                             Image(systemName: "inset.filled.bottomleft.rectangle")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Bottom Left Corner")
                         }
                     }
                     Toggle(isOn: self.$enableBottomRightCorner) {
                         HStack {
                             Image(systemName: "inset.filled.bottomright.rectangle")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Bottom Right Corner")
                         }
                     }
@@ -309,28 +309,28 @@ struct SettingsView: View {
                     Toggle(isOn: self.$enableTopZone) {
                         HStack {
                             Image(systemName: "rectangle.topthird.inset.filled")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Top Zone")
                         }
                     }
                     Toggle(isOn: self.$enableLeftZone) {
                         HStack {
                             Image(systemName: "rectangle.leadingthird.inset.filled")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Left Zone")
                         }
                     }
                     Toggle(isOn: self.$enableRightZone) {
                         HStack {
                             Image(systemName: "rectangle.trailingthird.inset.filled")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Right Zone")
                         }
                     }
                     Toggle(isOn: self.$enableBottomZone) {
                         HStack {
                             Image(systemName: "rectangle.bottomthird.inset.filled")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Bottom Zone")
                         }
                     }
@@ -343,13 +343,13 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "dot.circle.and.cursorarrow")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Corner Trigger Sensitivity: \(String(format: "%.1f", self.cornerTriggerSensitivity))")
                         }
 
                         Text("Controls how close your mouse must be to a corner to trigger it")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.primary)
                             .padding(.leading, 25)
                             .padding(.bottom, 10)
 
@@ -359,13 +359,13 @@ struct SettingsView: View {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "dot.circle.and.cursorarrow")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Zone Trigger Sensitivity: \(String(format: "%.1f", self.zoneTriggerSensitivity))")
                         }
 
                         Text("Controls how close your mouse must be to a zone to trigger it")
                             .font(.caption)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(.primary)
                             .padding(.leading, 25)
                             .padding(.bottom, 10)
 
@@ -389,7 +389,7 @@ struct SettingsView: View {
                     Toggle(isOn: self.$showToastNotification) {
                         HStack {
                             Image(systemName: "bell.badge")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Show Toast Notifications")
                         }
                     }
@@ -398,7 +398,7 @@ struct SettingsView: View {
                         Toggle(isOn: self.$dismissOnClick) {
                             HStack {
                                 Image(systemName: "hand.tap")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.primary)
                                 Text("Dismiss on Click")
                             }
                         }
@@ -423,7 +423,7 @@ struct SettingsView: View {
                     Toggle(isOn: self.$playSoundEffect) {
                         HStack {
                             Image(systemName: "speaker.wave.2")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Play Sound Effect on Trigger")
                         }
                     }
@@ -457,7 +457,7 @@ struct SettingsView: View {
                     Toggle(isOn: self.$rememberNotesText) {
                         HStack {
                             Image(systemName: "macwindow")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Remember Text on Close")
                         }
                     }
@@ -467,7 +467,7 @@ struct SettingsView: View {
                     Toggle(isOn: self.$rememberCalcText) {
                         HStack {
                             Image(systemName: "captions.bubble")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Remember Text on Close")
                         }
                     }
@@ -477,7 +477,7 @@ struct SettingsView: View {
                     Toggle(isOn: self.$showRecentText) {
                         HStack {
                             Image(systemName: "rectangle.stack")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Show Recent Extractions")
                         }
                     }
@@ -500,7 +500,7 @@ struct SettingsView: View {
                     Toggle(isOn: self.$showRecentColors) {
                         HStack {
                             Image(systemName: "rectangle.stack")
-                                .foregroundColor(.secondary)
+                                .foregroundColor(.primary)
                             Text("Show Recent Colors")
                         }
                     }
