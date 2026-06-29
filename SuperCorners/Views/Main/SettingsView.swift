@@ -349,7 +349,7 @@ struct SettingsView: View {
 
                         Text("Controls how close your mouse must be to a corner to trigger it")
                             .font(.caption)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.secondary)
                             .padding(.leading, 25)
                             .padding(.bottom, 10)
 
@@ -365,7 +365,7 @@ struct SettingsView: View {
 
                         Text("Controls how close your mouse must be to a zone to trigger it")
                             .font(.caption)
-                            .foregroundColor(.primary)
+                            .foregroundColor(.secondary)
                             .padding(.leading, 25)
                             .padding(.bottom, 10)
 
