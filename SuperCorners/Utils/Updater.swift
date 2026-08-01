@@ -22,7 +22,7 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
 
     func getUpdateData(manualCheck: Bool = false) {
         isManualCheck = manualCheck
-        guard let url = URL(string: "https://daniyalmaster693.github.io/MenuScores/appcast.xml") else { return }
+        guard let url = URL(string: "https://daniyalmaster693.github.io/SuperCorners/appcast.xml") else { return }
 
         URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
             guard let self = self else { return }
