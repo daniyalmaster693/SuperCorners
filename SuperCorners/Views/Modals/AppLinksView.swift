@@ -97,6 +97,6 @@ struct AppLinksView: View {
         }
         .padding()
         .padding(.top, 7)
-        .frame(width: 400, height: 530)
+        .frame(width: 400, height: 535)
     }
 }
