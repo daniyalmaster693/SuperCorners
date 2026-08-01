@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct SuperCornersApp: App {
     @Environment(\.openWindow) private var openWindow
+    private let updateManager = UpdateManager()
 
     // Settings Variables
     
@@ -221,8 +222,13 @@ struct SuperCornersApp: App {
                 }
                 .keyboardShortcut("r")
                 
+                Button("Check for Updates") {
+                    updateManager.getUpdateData(manualCheck: true)
+                }
+                .keyboardShortcut(",")
+                
                 Button("Configure") {
-                    openWindow(id: "main")
+                    openWindow(id: "settings")
                 }
                 .keyboardShortcut(",")
                 
@@ -235,15 +241,23 @@ struct SuperCornersApp: App {
         }
 
         .commands {
-            CommandGroup(replacing: .help) {
-                Button("Website") {
-                    if let url = URL(string: "https://supercorners.vercel.app") {
-                        NSWorkspace.shared.open(url)
-                    }
+            CommandGroup(after: .appInfo) {
+                Button {
+                    openWindow(id: "settings")
+                } label: {
+                    Label("Preferences", systemImage: "gear")
                 }
-                
-                Button("Repository") {
-                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners") {
+
+                Button {
+                    updateManager.getUpdateData(manualCheck: true)
+                } label: {
+                    Label("Check for Updates", systemImage: "gear.badge")
+                }
+            }
+            
+            CommandGroup(replacing: .help) {
+                Button("SuperCorners Help") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners#usage") {
                         NSWorkspace.shared.open(url)
                     }
                 }
@@ -258,6 +272,18 @@ struct SuperCornersApp: App {
                 
                 Button("Changelog") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/releases") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                
+                Button("Website") {
+                    if let url = URL(string: "https://supercorners.vercel.app") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                
+                Button("Repository") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/blob/main/License") {
                         NSWorkspace.shared.open(url)
                     }
                 }
