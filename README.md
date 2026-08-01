@@ -97,7 +97,6 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [Keyboard Shortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
 - [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
 - [SoulverCore](https://github.com/soulverteam/SoulverCore)
-- [Sparkle](https://github.com/sparkle-project/Sparkle)
 
 ## Contributions
 
