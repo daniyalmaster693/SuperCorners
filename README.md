@@ -58,7 +58,9 @@ You can also install SuperCorners using Homebrew:
 
 ```bash
 brew tap daniyalmaster693/casks
+brew trust --cask daniyalmaster693/casks/supercorners
 brew install --cask supercorners
+xattr -dr com.apple.quarantine /Applications/SuperCorners.app
 ```
 
 **Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
