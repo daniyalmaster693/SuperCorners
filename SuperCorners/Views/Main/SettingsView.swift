@@ -12,6 +12,7 @@ import SwiftUI
 struct SettingsView: View {
     // Settings Variables
 
+    @StateObject private var updateManager = UpdateManager()
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
     @AppStorage("showCorners") private var showCorners = true
@@ -54,6 +55,7 @@ struct SettingsView: View {
     @AppStorage("zoneTriggerSensitivity") private var zoneTriggerSensitivity: Double = 5.0
 
     // Ignored applications list
+
     @State private var ignoredApps: [String] = []
     @State private var showIgnoredAppsModal = false
 
@@ -156,6 +158,16 @@ struct SettingsView: View {
                                 NSApp.setActivationPolicy(.accessory)
                             }
                         }
+                    }
+
+                    HStack {
+                        Label("Updates", systemImage: "arrow.2.circlepath")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Button("Check for Updates") {
+                            self.updateManager.getUpdateData(manualCheck: true)
+                        }
+                        .buttonStyle(.bordered)
                     }
                 }
 
