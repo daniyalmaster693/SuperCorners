@@ -93,7 +93,7 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
 
         if updateAvailable {
             alert.messageText = "Update Available"
-            alert.informativeText = "A new version of MenuScores is available. Click the download button to open the newest release."
+            alert.informativeText = "A new version of SuperCorners is available. Click the download button to open the newest release."
             alert.addButton(withTitle: "Download")
             alert.addButton(withTitle: "Cancel")
             let response = alert.runModal()
@@ -106,7 +106,7 @@ class UpdateManager: NSObject, ObservableObject, XMLParserDelegate {
 
         if isManualCheck && !updateAvailable {
             alert.messageText = "Up to Date!"
-            alert.informativeText = "Your on the latest version of MenuScores."
+            alert.informativeText = "Your on the latest version of SuperCorners."
             alert.addButton(withTitle: "Done")
             alert.runModal()
         }
