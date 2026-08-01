@@ -227,11 +227,6 @@ struct SuperCornersApp: App {
                 }
                 .keyboardShortcut(",")
                 
-                Button("Configure") {
-                    openWindow(id: "settings")
-                }
-                .keyboardShortcut(",")
-                
                 Button("Quit") {
                     NSApplication.shared.terminate(nil)
                 }
@@ -242,12 +237,6 @@ struct SuperCornersApp: App {
 
         .commands {
             CommandGroup(after: .appInfo) {
-                Button {
-                    openWindow(id: "settings")
-                } label: {
-                    Label("Preferences", systemImage: "gear")
-                }
-
                 Button {
                     updateManager.getUpdateData(manualCheck: true)
                 } label: {
