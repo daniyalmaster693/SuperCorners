@@ -15,9 +15,6 @@ struct SettingsView: View {
     @StateObject private var updateManager = UpdateManager()
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
-    @AppStorage("showCorners") private var showCorners = true
-    @AppStorage("showZones") private var showZones = true
-    @AppStorage("showFavorites") private var showFavorites = true
 
     // Modifier Key Picker
 
@@ -157,6 +154,14 @@ struct SettingsView: View {
                         }
                     }
 
+                    Toggle(isOn: self.$showMenuBarExtra) {
+                        HStack {
+                            Image(systemName: "menubar.rectangle")
+                                .foregroundColor(.primary)
+                            Text("Show in Menu Bar")
+                        }
+                    }
+
                     HStack {
                         Label("Updates", systemImage: "arrow.2.circlepath")
                             .foregroundColor(.primary)
@@ -166,42 +171,6 @@ struct SettingsView: View {
                         }
                         .buttonStyle(.bordered)
                     }
-                }
-
-                Section {
-                    Toggle(isOn: self.$showMenuBarExtra) {
-                        HStack {
-                            Image(systemName: "menubar.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Show in Menu Bar")
-                        }
-                    }
-
-                    Group {
-                        Toggle(isOn: self.$showCorners) {
-                            HStack {
-                                Image(systemName: "square.grid.2x2")
-                                    .foregroundColor(.primary)
-                                Text("Show Corners in Menu Bar")
-                            }
-                        }
-
-                        Toggle(isOn: self.$showZones) {
-                            HStack {
-                                Image(systemName: "rectangle.leftthird.inset.filled")
-                                    .foregroundColor(.primary)
-                                Text("Show Zones in Menu Bar")
-                            }
-                        }
-
-                        Toggle(isOn: self.$showFavorites) {
-                            HStack {
-                                Image(systemName: "star")
-                                    .foregroundColor(.primary)
-                                Text("Show Favorites in Menu Bar")
-                            }
-                        }
-                    }.disabled(!self.showMenuBarExtra)
                 }
             }
             .formStyle(.grouped)

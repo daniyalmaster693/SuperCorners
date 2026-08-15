@@ -17,9 +17,6 @@ struct SuperCornersApp: App {
     @AppStorage("showInDock") private var showInDock = true
     
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
-    @AppStorage("showCorners") private var showCorners = true
-    @AppStorage("showZones") private var showZones = true
-    @AppStorage("showFavorites") private var showFavorites = true
 
     // Corner and Zone Variables
     
@@ -96,125 +93,119 @@ struct SuperCornersApp: App {
                 let rightTitle = titleForCorner(.right)
                 let bottomTitle = titleForCorner(.bottom)
                 
-                if showCorners {
-                    Menu("Corners") {
-                        if enableTopLeftCorner {
-                            Button {
-                                triggerCornerAction(for: .topLeft)
-                            } label: {
-                                HStack {
-                                    Image(systemName: "inset.filled.topleft.rectangle")
-                                    Text(topLeftTitle)
-                                }
+                Menu("Corners") {
+                    if enableTopLeftCorner {
+                        Button {
+                            triggerCornerAction(for: .topLeft)
+                        } label: {
+                            HStack {
+                                Image(systemName: "inset.filled.topleft.rectangle")
+                                Text(topLeftTitle)
                             }
                         }
+                    }
                         
-                        if enableTopRightCorner {
-                            Button {
-                                triggerCornerAction(for: .topRight)
-                            } label: {
-                                HStack {
-                                    Image(systemName: "inset.filled.topright.rectangle")
-                                    Text(topRightTitle)
-                                }
+                    if enableTopRightCorner {
+                        Button {
+                            triggerCornerAction(for: .topRight)
+                        } label: {
+                            HStack {
+                                Image(systemName: "inset.filled.topright.rectangle")
+                                Text(topRightTitle)
                             }
                         }
+                    }
                         
-                        if enableBottomLeftCorner {
-                            Button {
-                                triggerCornerAction(for: .bottomLeft)
-                            } label: {
-                                HStack {
-                                    Image(systemName: "inset.filled.bottomleft.rectangle")
-                                    Text(bottomLeftTitle)
-                                }
+                    if enableBottomLeftCorner {
+                        Button {
+                            triggerCornerAction(for: .bottomLeft)
+                        } label: {
+                            HStack {
+                                Image(systemName: "inset.filled.bottomleft.rectangle")
+                                Text(bottomLeftTitle)
                             }
                         }
+                    }
                         
-                        if enableBottomRightCorner {
-                            Button {
-                                triggerCornerAction(for: .bottomRight)
-                            } label: {
-                                HStack {
-                                    Image(systemName: "inset.filled.bottomright.rectangle")
-                                    Text(bottomRightTitle)
-                                }
+                    if enableBottomRightCorner {
+                        Button {
+                            triggerCornerAction(for: .bottomRight)
+                        } label: {
+                            HStack {
+                                Image(systemName: "inset.filled.bottomright.rectangle")
+                                Text(bottomRightTitle)
+                            }
+                        }
+                    }
+                }
+            
+                Menu("Zones") {
+                    if enableTopZone {
+                        Button {
+                            triggerCornerAction(for: .top)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.topthird.inset.filled")
+                                Text(topTitle)
+                            }
+                        }
+                    }
+                        
+                    if enableLeftZone {
+                        Button {
+                            triggerCornerAction(for: .left)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.leadingthird.inset.filled")
+                                Text(leftTitle)
+                            }
+                        }
+                    }
+                        
+                    if enableRightZone {
+                        Button {
+                            triggerCornerAction(for: .right)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.trailingthird.inset.filled")
+                                Text(rightTitle)
+                            }
+                        }
+                    }
+                        
+                    if enableBottomZone {
+                        Button {
+                            triggerCornerAction(for: .bottom)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.bottomthird.inset.filled")
+                                Text(bottomTitle)
                             }
                         }
                     }
                 }
 
-                if showZones {
-                    Menu("Zones") {
-                        if enableTopZone {
+                Menu("Favorites") {
+                    if favoriteActions.isEmpty {
+                        Text("No Actions Favorited")
+                            .foregroundColor(.secondary)
+                            .padding(.vertical, 8)
+                    } else {
+                        let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
+                            
+                        ForEach(sortedActions, id: \.id) { action in
                             Button {
-                                triggerCornerAction(for: .top)
+                                action.perform(nil)
                             } label: {
                                 HStack {
-                                    Image(systemName: "rectangle.topthird.inset.filled")
-                                    Text(topTitle)
-                                }
-                            }
-                        }
-                        
-                        if enableLeftZone {
-                            Button {
-                                triggerCornerAction(for: .left)
-                            } label: {
-                                HStack {
-                                    Image(systemName: "rectangle.leadingthird.inset.filled")
-                                    Text(leftTitle)
-                                }
-                            }
-                        }
-                        
-                        if enableRightZone {
-                            Button {
-                                triggerCornerAction(for: .right)
-                            } label: {
-                                HStack {
-                                    Image(systemName: "rectangle.trailingthird.inset.filled")
-                                    Text(rightTitle)
-                                }
-                            }
-                        }
-                        
-                        if enableBottomZone {
-                            Button {
-                                triggerCornerAction(for: .bottom)
-                            } label: {
-                                HStack {
-                                    Image(systemName: "rectangle.bottomthird.inset.filled")
-                                    Text(bottomTitle)
+                                    Image(systemName: action.iconName)
+                                    Text(action.title)
                                 }
                             }
                         }
                     }
                 }
                 
-                if showFavorites {
-                    Menu("Favorites") {
-                        if favoriteActions.isEmpty {
-                            Text("No Actions Favorited")
-                                .foregroundColor(.secondary)
-                                .padding(.vertical, 8)
-                        } else {
-                            let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
-                            
-                            ForEach(sortedActions, id: \.id) { action in
-                                Button {
-                                    action.perform(nil)
-                                } label: {
-                                    HStack {
-                                        Image(systemName: action.iconName)
-                                        Text(action.title)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            
                 Divider()
             
                 Button("Refresh") {
