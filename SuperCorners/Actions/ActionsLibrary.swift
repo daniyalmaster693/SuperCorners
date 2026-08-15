@@ -1484,7 +1484,7 @@ let cornerActions: [CornerAction] = [
         title: "Network Speed Test",
         description: "Run a network speed test.",
         iconName: "gauge",
-        tag: "Developer",
+        tag: "Tool",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
