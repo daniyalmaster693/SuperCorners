@@ -246,7 +246,7 @@ struct SuperCornersApp: App {
             
             CommandGroup(replacing: .help) {
                 Button("SuperCorners Help") {
-                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners#usage") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/blob/main/GettingStarted.md") {
                         NSWorkspace.shared.open(url)
                     }
                 }
@@ -272,7 +272,7 @@ struct SuperCornersApp: App {
                 }
                 
                 Button("Repository") {
-                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/blob/main/License") {
+                    if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners") {
                         NSWorkspace.shared.open(url)
                     }
                 }

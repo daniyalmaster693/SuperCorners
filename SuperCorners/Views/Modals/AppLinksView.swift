@@ -56,7 +56,7 @@ struct AppLinksView: View {
                 Section(header: Text("Links")) {
                     ForEach(
                         [
-                            ("MenuScores Help", "https://github.com/daniyalmaster693/SuperCorners#usage"),
+                            ("SuperCorners Help", "https://github.com/daniyalmaster693/SuperCorners/blob/main/GettingStarted.md"),
                             ("Feedback", "https://github.com/daniyalmaster693/SuperCorners/issues/new"),
                             ("Changelog", "https://github.com/daniyalmaster693/SuperCorners/releases"),
                             ("Website", "https://supercorners.vercel.app"),
