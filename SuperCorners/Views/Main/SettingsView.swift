@@ -111,9 +111,6 @@ struct SettingsView: View {
 
     // Action Settings
 
-    @AppStorage("rememberNotesText") private var rememberNotesText = true
-    @AppStorage("rememberCalcText") private var rememberCalcText = true
-
     @AppStorage("showRecentText") private var showRecentText = true
 
     @AppStorage("showRecentColors") private var showRecentColors = true
