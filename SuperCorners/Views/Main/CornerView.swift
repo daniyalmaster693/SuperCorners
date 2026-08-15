@@ -25,20 +25,6 @@ struct CornerView: View {
     @AppStorage("enableBottomLeftCorner") var enableBottomLeftCorner = true
     @AppStorage("enableBottomRightCorner") var enableBottomRightCorner = true
 
-    // Action Set Variables
-
-    @State private var showActionSetEditor = false
-
-    // Hardcoded App Icon for UI
-
-    let safariIcon: NSImage? = {
-        let workspace = NSWorkspace.shared
-        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.safari") {
-            return workspace.icon(forFile: appURL.path)
-        }
-        return nil
-    }()
-
     var body: some View {
         let topLeftTitle = titleForCorner(.topLeft)
         let topRightTitle = titleForCorner(.topRight)
@@ -76,118 +62,98 @@ struct CornerView: View {
 
                             Spacer()
 
-                            if let wallpaper = wallpaperImage {
-                                Image(nsImage: wallpaper)
-                                    .resizable()
-                                    .aspectRatio(16 / 9, contentMode: .fit)
-                                    .cornerRadius(12)
-                                    .overlay(
-                                        GeometryReader { geo in
-                                            ZStack {
-                                                if enableTopLeftCorner {
-                                                    if #available(macOS 26.0, *) {
-                                                        Button(topLeftTitle) {
-                                                            currentlySelectedCorner = .topLeft
-                                                            showModal = true
-                                                        }
-                                                        .buttonStyle(.glass)
-                                                        .padding(.leading, 10)
-                                                        .position(x: 0 + 75, y: 0 + 20)
-                                                    } else {
-                                                        Button(topLeftTitle) {
-                                                            currentlySelectedCorner = .topLeft
-                                                            showModal = true
-                                                        }
-                                                        .buttonStyle(.bordered)
-                                                        .padding(.leading, 10)
-                                                        .position(x: 0 + 75, y: 0 + 20)
+                            Image(colorScheme == .dark ? "ClassicWallpaperDark" : "ClassicWallpaperLight")
+                                .resizable()
+                                .aspectRatio(16 / 9, contentMode: .fit)
+                                .cornerRadius(12)
+                                .overlay(
+                                    GeometryReader { geo in
+                                        ZStack {
+                                            if enableTopLeftCorner {
+                                                if #available(macOS 26.0, *) {
+                                                    Button(topLeftTitle) {
+                                                        currentlySelectedCorner = .topLeft
+                                                        showModal = true
                                                     }
+                                                    .buttonStyle(.glass)
+                                                    .padding(.leading, 10)
+                                                    .position(x: 0 + 75, y: 0 + 20)
+                                                } else {
+                                                    Button(topLeftTitle) {
+                                                        currentlySelectedCorner = .topLeft
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .padding(.leading, 10)
+                                                    .position(x: 0 + 75, y: 0 + 20)
+                                                }
+                                            }
+
+                                            if enableTopRightCorner {
+                                                if #available(macOS 26.0, *) {
+                                                    Button(topRightTitle) {
+                                                        currentlySelectedCorner = .topRight
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.glass)
+                                                    .padding(.trailing, 10)
+                                                    .position(x: geo.size.width - 75, y: 0 + 20)
+                                                } else {
+                                                    Button(topRightTitle) {
+                                                        currentlySelectedCorner = .topRight
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .padding(.trailing, 10)
+                                                    .position(x: geo.size.width - 75, y: 0 + 20)
+                                                }
+                                            }
+
+                                            if enableBottomLeftCorner {
+                                                if #available(macOS 26.0, *) {
+                                                    Button(bottomLeftTitle) {
+                                                        currentlySelectedCorner = .bottomLeft
+                                                        showModal = true
+                                                    }
+                                                    .buttonStyle(.glass)
+                                                    .padding(.leading, 10)
+                                                    .position(x: 0 + 75, y: geo.size.height - 20)
                                                 }
 
-                                                if enableTopRightCorner {
-                                                    if #available(macOS 26.0, *) {
-                                                        Button(topRightTitle) {
-                                                            currentlySelectedCorner = .topRight
-                                                            showModal = true
-                                                        }
-                                                        .buttonStyle(.glass)
-                                                        .padding(.trailing, 10)
-                                                        .position(x: geo.size.width - 75, y: 0 + 20)
-                                                    } else {
-                                                        Button(topRightTitle) {
-                                                            currentlySelectedCorner = .topRight
-                                                            showModal = true
-                                                        }
-                                                        .buttonStyle(.bordered)
-                                                        .padding(.trailing, 10)
-                                                        .position(x: geo.size.width - 75, y: 0 + 20)
+                                                else {
+                                                    Button(bottomLeftTitle) {
+                                                        currentlySelectedCorner = .bottomLeft
+                                                        showModal = true
                                                     }
+                                                    .buttonStyle(.bordered)
+                                                    .padding(.leading, 10)
+                                                    .position(x: 0 + 75, y: geo.size.height - 20)
                                                 }
+                                            }
 
-//                                                if let safariIcon {
-//                                                    if #available(macOS 26.0, *) {
-//                                                        Image(nsImage: safariIcon)
-//                                                            .resizable()
-//                                                            .scaledToFit()
-//                                                            .frame(width: 50, height: 50)
-//                                                            .cornerRadius(12)
-//                                                            .padding(2)
-//                                                            .glassEffect(in: .rect(cornerRadius: 12.0))
-//                                                    } else {
-//                                                        Image(nsImage: safariIcon)
-//                                                            .resizable()
-//                                                            .scaledToFit()
-//                                                            .frame(width: 50, height: 50)
-//                                                            .cornerRadius(12)
-//                                                    }
-//                                                }
-
-                                                if enableBottomLeftCorner {
-                                                    if #available(macOS 26.0, *) {
-                                                        Button(bottomLeftTitle) {
-                                                            currentlySelectedCorner = .bottomLeft
-                                                            showModal = true
-                                                        }
-                                                        .buttonStyle(.glass)
-                                                        .padding(.leading, 10)
-                                                        .position(x: 0 + 75, y: geo.size.height - 20)
+                                            if enableBottomRightCorner {
+                                                if #available(macOS 26.0, *) {
+                                                    Button(bottomRightTitle) {
+                                                        currentlySelectedCorner = .bottomRight
+                                                        showModal = true
                                                     }
-
-                                                    else {
-                                                        Button(bottomLeftTitle) {
-                                                            currentlySelectedCorner = .bottomLeft
-                                                            showModal = true
-                                                        }
-                                                        .buttonStyle(.bordered)
-                                                        .padding(.leading, 10)
-                                                        .position(x: 0 + 75, y: geo.size.height - 20)
+                                                    .buttonStyle(.glass)
+                                                    .padding(.trailing, 10)
+                                                    .position(x: geo.size.width - 75, y: geo.size.height - 20)
+                                                } else {
+                                                    Button(bottomRightTitle) {
+                                                        currentlySelectedCorner = .bottomRight
+                                                        showModal = true
                                                     }
-                                                }
-
-                                                if enableBottomRightCorner {
-                                                    if #available(macOS 26.0, *) {
-                                                        Button(bottomRightTitle) {
-                                                            currentlySelectedCorner = .bottomRight
-                                                            showModal = true
-                                                        }
-                                                        .buttonStyle(.glass)
-                                                        .padding(.trailing, 10)
-                                                        .position(x: geo.size.width - 75, y: geo.size.height - 20)
-                                                    } else {
-                                                        Button(bottomRightTitle) {
-                                                            currentlySelectedCorner = .bottomRight
-                                                            showModal = true
-                                                        }
-                                                        .buttonStyle(.bordered)
-                                                        .padding(.trailing, 10)
-                                                        .position(x: geo.size.width - 75, y: geo.size.height - 20)
-                                                    }
+                                                    .buttonStyle(.bordered)
+                                                    .padding(.trailing, 10)
+                                                    .position(x: geo.size.width - 75, y: geo.size.height - 20)
                                                 }
                                             }
                                         }
-                                    )
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                            }
+                                    }
+                                )
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                         }
                     }
                 }
@@ -204,48 +170,5 @@ struct CornerView: View {
             }
         }
         .id(refreshID)
-        .onAppear {
-            loadWallpaper()
-        }
-//        .toolbar {
-//            ToolbarItem(placement: .automatic) {
-//                Picker("", selection: $selectedActionSet) {
-//                    Text("Global Actions").tag("Global Actions")
-//                    Text("Safari Actions").tag("Safari Actions")
-//                    Text("Music Actions").tag("Music Actions")
-//                    Text("Finder Actions").tag("Finder Actions")
-//                }
-//                .help("Choose an Action Set")
-//            }
-//
-//            ToolbarItem(placement: .automatic) {
-//                Button(action: {
-//                    showActionSetEditor = true
-//                }) {
-//                    Image(systemName: "slider.horizontal.3")
-//                }
-//                .help("Edit Action Sets")
-//                .sheet(isPresented: $showActionSetEditor) {
-//                    ActionSetEditor()
-//                }
-//            }
-//        }
-    }
-
-    private func loadWallpaper() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let image: NSImage?
-            if let screen = NSScreen.main,
-               let url = NSWorkspace.shared.desktopImageURL(for: screen)
-            {
-                image = NSImage(contentsOf: url)
-            } else {
-                image = nil
-            }
-
-            DispatchQueue.main.async {
-                wallpaperImage = image
-            }
-        }
     }
 }

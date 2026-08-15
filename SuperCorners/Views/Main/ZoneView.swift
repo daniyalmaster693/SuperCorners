@@ -25,20 +25,6 @@ struct ZoneView: View {
     @AppStorage("enableRightZone") var enableRightZone = true
     @AppStorage("enableBottomZone") var enableBottomZone = true
 
-    // Action Set Variables
-
-    @State private var showActionSetEditor = false
-
-    // Hardcoded App Icon for UI
-
-    let safariIcon: NSImage? = {
-        let workspace = NSWorkspace.shared
-        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.finder") {
-            return workspace.icon(forFile: appURL.path)
-        }
-        return nil
-    }()
-
     var body: some View {
         let topTitle = titleForCorner(.top)
         let leftTitle = titleForCorner(.left)
@@ -76,135 +62,111 @@ struct ZoneView: View {
 
                             Spacer()
 
-                            if let wallpaper = wallpaperImage {
-                                Image(nsImage: wallpaper)
-                                    .resizable()
-                                    .aspectRatio(16 / 9, contentMode: .fit)
-                                    .cornerRadius(12)
-                                    .overlay(alignment: .top) {
-                                        if enableTopZone {
-                                            if #available(macOS 26.0, *) {
-                                                Button(topTitle) {
-                                                    currentlySelectedCorner = .top
+                            Image(colorScheme == .dark ? "ClassicWallpaperDark" : "ClassicWallpaperLight")
+                                .resizable()
+                                .aspectRatio(16 / 9, contentMode: .fit)
+                                .cornerRadius(12)
+                                .overlay(alignment: .top) {
+                                    if enableTopZone {
+                                        if #available(macOS 26.0, *) {
+                                            Button(topTitle) {
+                                                currentlySelectedCorner = .top
+                                                showModal = true
+                                            }
+                                            .buttonStyle(.glass)
+                                            .padding(8)
+                                        }
+                                        else {
+                                            Button(topTitle) {
+                                                currentlySelectedCorner = .top
+                                                showModal = true
+                                            }
+                                            .buttonStyle(.bordered)
+                                            .padding(8)
+                                        }
+                                    }
+                                }
+                                .overlay(alignment: .bottom) {
+                                    if enableBottomZone {
+                                        if #available(macOS 26.0, *) {
+                                            Button(bottomTitle) {
+                                                currentlySelectedCorner = .bottom
+                                                showModal = true
+                                            }
+                                            .buttonStyle(.glass)
+                                            .padding(8)
+                                        }
+                                        else {
+                                            Button(bottomTitle) {
+                                                currentlySelectedCorner = .bottom
+                                                showModal = true
+                                            }
+                                            .buttonStyle(.bordered)
+                                            .padding(8)
+                                        }
+                                    }
+                                }
+                                .overlay(alignment: .leading) {
+                                    if enableLeftZone {
+                                        if #available(macOS 26.0, *) {
+                                            VStack {
+                                                Spacer()
+                                                Button(leftTitle) {
+                                                    currentlySelectedCorner = .left
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.glass)
+                                                .padding(.trailing, 10)
                                                 .padding(8)
+                                                Spacer()
                                             }
-                                            else {
-                                                Button(topTitle) {
-                                                    currentlySelectedCorner = .top
+                                        }
+                                        else {
+                                            VStack {
+                                                Spacer()
+                                                Button(leftTitle) {
+                                                    currentlySelectedCorner = .left
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.bordered)
+                                                .padding(.trailing, 10)
                                                 .padding(8)
+                                                Spacer()
                                             }
                                         }
                                     }
-                                    .overlay(alignment: .bottom) {
-                                        if enableBottomZone {
-                                            if #available(macOS 26.0, *) {
-                                                Button(bottomTitle) {
-                                                    currentlySelectedCorner = .bottom
+                                }
+                                .overlay(alignment: .trailing) {
+                                    if enableRightZone {
+                                        if #available(macOS 26.0, *) {
+                                            VStack {
+                                                Spacer()
+                                                Button(rightTitle) {
+                                                    currentlySelectedCorner = .right
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.glass)
+                                                .padding(.leading, 10)
                                                 .padding(8)
+                                                Spacer()
                                             }
-                                            else {
-                                                Button(bottomTitle) {
-                                                    currentlySelectedCorner = .bottom
+                                        }
+
+                                        else {
+                                            VStack {
+                                                Spacer()
+                                                Button(rightTitle) {
+                                                    currentlySelectedCorner = .right
                                                     showModal = true
                                                 }
                                                 .buttonStyle(.bordered)
+                                                .padding(.leading, 10)
                                                 .padding(8)
+                                                Spacer()
                                             }
                                         }
                                     }
-                                    .overlay(alignment: .leading) {
-                                        if enableLeftZone {
-                                            if #available(macOS 26.0, *) {
-                                                VStack {
-                                                    Spacer()
-                                                    Button(leftTitle) {
-                                                        currentlySelectedCorner = .left
-                                                        showModal = true
-                                                    }
-                                                    .buttonStyle(.glass)
-                                                    .padding(.trailing, 10)
-                                                    .padding(8)
-                                                    Spacer()
-                                                }
-                                            }
-                                            else {
-                                                VStack {
-                                                    Spacer()
-                                                    Button(leftTitle) {
-                                                        currentlySelectedCorner = .left
-                                                        showModal = true
-                                                    }
-                                                    .buttonStyle(.bordered)
-                                                    .padding(.trailing, 10)
-                                                    .padding(8)
-                                                    Spacer()
-                                                }
-                                            }
-                                        }
-                                    }
-                                    .overlay(alignment: .trailing) {
-                                        if enableRightZone {
-                                            if #available(macOS 26.0, *) {
-                                                VStack {
-                                                    Spacer()
-                                                    Button(rightTitle) {
-                                                        currentlySelectedCorner = .right
-                                                        showModal = true
-                                                    }
-                                                    .buttonStyle(.glass)
-                                                    .padding(.leading, 10)
-                                                    .padding(8)
-                                                    Spacer()
-                                                }
-                                            }
-
-                                            else {
-                                                VStack {
-                                                    Spacer()
-                                                    Button(rightTitle) {
-                                                        currentlySelectedCorner = .right
-                                                        showModal = true
-                                                    }
-                                                    .buttonStyle(.bordered)
-                                                    .padding(.leading, 10)
-                                                    .padding(8)
-                                                    Spacer()
-                                                }
-                                            }
-                                        }
-                                    }
-
-//                                    .overlay(alignment: .center) {
-//                                        if let safariIcon {
-//                                            if #available(macOS 26.0, *) {
-//                                                Image(nsImage: safariIcon)
-//                                                    .resizable()
-//                                                    .scaledToFit()
-//                                                    .frame(width: 50, height: 50)
-//                                                    .cornerRadius(12)
-//                                                    .padding(2)
-//                                                    .glassEffect(in: .rect(cornerRadius: 12.0))
-//                                            }
-//                                            else {
-//                                                Image(nsImage: safariIcon)
-//                                                    .resizable()
-//                                                    .scaledToFit()
-//                                                    .frame(width: 50, height: 50)
-//                                                    .cornerRadius(12)
-//                                            }
-//                                        }
-//                                    }
-//                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                            }
+                                }
                         }
                     }
                 }
@@ -221,49 +183,5 @@ struct ZoneView: View {
             }
         }
         .id(refreshID)
-        .onAppear {
-            loadWallpaper()
-        }
-//        .toolbar {
-//            ToolbarItem(placement: .automatic) {
-//                Picker("", selection: $selectedActionSet) {
-//                    Text("Global Actions").tag("Global Actions")
-//                    Text("Safari Actions").tag("Safari Actions")
-//                    Text("Music Actions").tag("Music Actions")
-//                    Text("Finder Actions").tag("Finder Actions")
-//                }
-//                .help("Choose an Action Set")
-//            }
-//
-//            ToolbarItem(placement: .automatic) {
-//                Button(action: {
-//                    showActionSetEditor = true
-//                }) {
-//                    Image(systemName: "slider.horizontal.3")
-//                }
-//                .help("Edit Action Sets")
-//                .sheet(isPresented: $showActionSetEditor) {
-//                    ActionSetEditor()
-//                }
-//            }
-//        }
-    }
-
-    private func loadWallpaper() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let image: NSImage?
-            if let screen = NSScreen.main,
-               let url = NSWorkspace.shared.desktopImageURL(for: screen)
-            {
-                image = NSImage(contentsOf: url)
-            }
-            else {
-                image = nil
-            }
-
-            DispatchQueue.main.async {
-                wallpaperImage = image
-            }
-        }
     }
 }
