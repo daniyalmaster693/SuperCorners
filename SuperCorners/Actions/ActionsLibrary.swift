@@ -912,6 +912,7 @@ let cornerActions: [CornerAction] = [
                 if let parsed = parseShortcutString("\(shortcutString)") {
                     keypress.hotkey(modifiers: parsed.modifiers, key: parsed.key)
                     disableAllShortcuts()
+                    showSuccessToast()
                 } else {
                     showErrorToast("Failed to parse shortcut")
                     disableAllShortcuts()
