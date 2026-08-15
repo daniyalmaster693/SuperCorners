@@ -210,7 +210,7 @@ struct SettingsView: View {
             .formStyle(.grouped)
 
             Form {
-                Section("Enabled Triggers") {
+                Section("Triggers") {
                     Toggle(isOn: self.$enableTopLeftCorner) {
                         HStack {
                             Image(systemName: "inset.filled.topleft.rectangle")
