@@ -377,32 +377,6 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "13",
-        title: "Start Screen Recording",
-        description: "Open QuickTime screen recording window.",
-        iconName: "video.fill",
-        tag: "Capture",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let quickTimePath = "/System/Applications/QuickTime Player.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: quickTimePath))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                let src = CGEventSource(stateID: .hidSystemState)
-                let keyCodeN: CGKeyCode = 45
-                let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
-                keyDown?.flags = [.maskCommand, .maskControl]
-                let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
-                keyUp?.flags = [.maskCommand, .maskControl]
-                keyDown?.post(tap: .cghidEventTap)
-                keyUp?.post(tap: .cghidEventTap)
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
         id: "14",
         title: "Volume Up",
         description: "Increase system volume by one step.",
@@ -904,7 +878,7 @@ let cornerActions: [CornerAction] = [
         title: "Empty Trash",
         description: "Opens Finder and Asks to Empty Trash",
         iconName: "trash",
-        tag: "Finder",
+        tag: "App Actions",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1206,7 +1180,7 @@ let cornerActions: [CornerAction] = [
         title: "Create New Folder",
         description: "Creates a new folder in Finder.",
         iconName: "folder.badge.plus",
-        tag: "Finder",
+        tag: "App Actions",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1238,7 +1212,7 @@ let cornerActions: [CornerAction] = [
         title: "Create New File",
         description: "Creates a new file in a user selected folder.",
         iconName: "doc.text",
-        tag: "Finder",
+        tag: "App Actions",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1434,7 +1408,7 @@ let cornerActions: [CornerAction] = [
         title: "Open Last Download",
         description: "Open the most recently downloaded file.",
         iconName: "arrow.down.doc",
-        tag: "Finder",
+        tag: "App Actions",
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1467,7 +1441,7 @@ let cornerActions: [CornerAction] = [
         title: "Create Zip Archive",
         description: "Create a zip archive for a specified folder.",
         iconName: "doc.zipper",
-        tag: "Finder",
+        tag: "App Actions",
         requiresInput: true,
         inputPrompt: "Enter Folder Path",
         perform: { input in
