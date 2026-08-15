@@ -404,32 +404,6 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "14",
-        title: "Start Movie Recording",
-        description: "Open QuickTime movie recording window.",
-        iconName: "film.fill",
-        tag: "Capture",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let quickTimePath = "/System/Applications/QuickTime Player.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: quickTimePath))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                let src = CGEventSource(stateID: .hidSystemState)
-                let keyCodeN: CGKeyCode = 45
-                let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
-                keyDown?.flags = [.maskCommand, .maskAlternate]
-                let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
-                keyUp?.flags = [.maskCommand, .maskAlternate]
-                keyDown?.post(tap: .cghidEventTap)
-                keyUp?.post(tap: .cghidEventTap)
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "15",
         title: "Volume Up",
         description: "Increase system volume by one step.",
         iconName: "speaker.wave.2.fill",
@@ -447,7 +421,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "16",
+        id: "15",
         title: "Volume Down",
         description: "Decrease system volume by one step.",
         iconName: "speaker.wave.1.fill",
@@ -465,7 +439,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "17",
+        id: "16",
         title: "Toggle Mute",
         description: "Toggles system volume mute state.",
         iconName: "speaker.slash.circle.fill",
@@ -507,7 +481,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "18",
+        id: "17",
         title: "Year In Progress",
         description: "Get the current year progress",
         iconName: "clock.arrow.2.circlepath",
@@ -537,7 +511,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "19",
+        id: "18",
         title: "Emoji & Symbol Viewer",
         description: "Open the Emoji and Symbol viewer.",
         iconName: "smiley.fill",
@@ -559,23 +533,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "20",
-        title: "Open Camera",
-        description: "Launch the Camera (Photo Booth) app.",
-        iconName: "camera.fill",
-        tag: "System",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let path = "/System/Applications/Photo Booth.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "21",
+        id: "19",
         title: "Maximize Window",
         description: "Expand the active window to fill the desktop.",
         iconName: "rectangle.inset.fill",
@@ -597,7 +555,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "22",
+        id: "20",
         title: "Return to Previous Size",
         description: "Restore the active window to it's previous size",
         iconName: "arrow.uturn.left.circle",
@@ -619,7 +577,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "23",
+        id: "21",
         title: "Center Window",
         description: "Center the active window on the desktop.",
         iconName: "rectangle.center.inset.fill",
@@ -641,7 +599,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "24",
+        id: "22",
         title: "Minimize Window",
         description: "Minimize the active window.",
         iconName: "minus.square.fill",
@@ -663,7 +621,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "25",
+        id: "23",
         title: "Minimize All Windows",
         description: "Minimize all windows of the current app.",
         iconName: "rectangle.compress.vertical",
@@ -685,7 +643,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "26",
+        id: "24",
         title: "Hide App",
         description: "Hide the active app.",
         iconName: "eye.slash.fill",
@@ -707,7 +665,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "27",
+        id: "25",
         title: "Hide Other Apps",
         description: "Hide all apps except the active one.",
         iconName: "eye.slash.circle.fill",
@@ -729,7 +687,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "28",
+        id: "26",
         title: "Open AirDrop",
         description: "Open AirDrop in Finder.",
         iconName: "square.and.arrow.up",
@@ -745,7 +703,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "29",
+        id: "27",
         title: "Start a Voice Recording",
         description: "Start a voice recording in voice memos",
         iconName: "waveform",
@@ -780,7 +738,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "30",
+        id: "28",
         title: "Create a New Note",
         description: "Create a New Note in Apple Notes",
         iconName: "note.text",
@@ -815,7 +773,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "31",
+        id: "29",
         title: "Compose a New Email",
         description: "Compose a New Email in Mail",
         iconName: "envelope",
@@ -850,7 +808,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "32",
+        id: "30",
         title: "Create a New Event",
         description: "Create a New Event in Calendar",
         iconName: "calendar.badge.plus",
@@ -885,7 +843,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "33",
+        id: "31",
         title: "Create a New Reminder",
         description: "Create a New Reminder in Reminders",
         iconName: "list.bullet",
@@ -920,42 +878,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "34",
-        title: "Take a Photo",
-        description: "Take a photo in PhotoBooth",
-        iconName: "photo",
-        tag: "App Actions",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let appPath = "/System/Applications/Photo Booth.app"
-            let url = URL(fileURLWithPath: appPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.photobooth").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let keyCodeReturn: CGKeyCode = 36 // Enter/Return key
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeReturn, keyDown: true)
-                    keyDown?.flags = [.maskCommand]
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeReturn, keyDown: false)
-                    keyUp?.flags = [.maskCommand]
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "35",
+        id: "32",
         title: "Open Spotlight Search",
         description: "Open the Spotlight Search Window",
         iconName: "magnifyingglass",
@@ -977,259 +900,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "36",
-        title: "Toggle Media Playback",
-        description: "Toggle Media Playback",
-        iconName: "playpause",
-        tag: "Media",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let keyCodePlayPause = 16
-
-            let eventDown = NSEvent.otherEvent(
-                with: .systemDefined,
-                location: .zero,
-                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xa00),
-                timestamp: 0,
-                windowNumber: 0,
-                context: nil,
-                subtype: 8,
-                data1: (keyCodePlayPause << 16) | (0xa << 8),
-                data2: -1
-            )
-
-            let eventUp = NSEvent.otherEvent(
-                with: .systemDefined,
-                location: .zero,
-                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xb00),
-                timestamp: 0,
-                windowNumber: 0,
-                context: nil,
-                subtype: 8,
-                data1: (keyCodePlayPause << 16) | (0xb << 8),
-                data2: -1
-            )
-
-            eventDown?.cgEvent?.post(tap: .cghidEventTap)
-            eventUp?.cgEvent?.post(tap: .cghidEventTap)
-
-            showSuccessToast("Toggled Playback", icon: Image(systemName: "playpause"))
-        }
-    ),
-
-    CornerAction(
-        id: "37",
-        title: "Stop Playback Apple Music",
-        description: "Stops Playback in Apple Music",
-        iconName: "play.slash",
-        tag: "Media",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let musicAppPath = "/System/Applications/Music.app"
-            let url = URL(fileURLWithPath: musicAppPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let periodKeyCode: CGKeyCode = 47 // '.' key
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: periodKeyCode, keyDown: true)
-                    keyDown?.flags = .maskCommand
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: periodKeyCode, keyDown: false)
-                    keyUp?.flags = .maskCommand
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "38",
-        title: "Go to Current Song",
-        description: "Opens album for currently playing song in Apple Music",
-        iconName: "cursorarrow.click",
-        tag: "Media",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let musicAppPath = "/System/Applications/Music.app"
-            let url = URL(fileURLWithPath: musicAppPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let lKeyCode: CGKeyCode = 37 // 'L' key
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
-                    keyDown?.flags = .maskCommand
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
-                    keyUp?.flags = .maskCommand
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "39",
-        title: "Open Visualizer",
-        description: "Opens Visualizer in Apple Music",
-        iconName: "waveform.path",
-        tag: "Media",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let musicAppPath = "/System/Applications/Music.app"
-            let url = URL(fileURLWithPath: musicAppPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let lKeyCode: CGKeyCode = 17
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
-                    keyDown?.flags = .maskCommand
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
-                    keyUp?.flags = .maskCommand
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "40",
-        title: "Open Miniplayer",
-        description: "Opens Miniplayer in Apple Music",
-        iconName: "rectangle.inset.bottomleading.filled",
-        tag: "Media",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let musicAppPath = "/System/Applications/Music.app"
-            let url = URL(fileURLWithPath: musicAppPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let lKeyCode: CGKeyCode = 46
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
-                    keyDown?.flags = [.maskCommand, .maskAlternate]
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
-                    keyUp?.flags = [.maskCommand, .maskAlternate]
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "41",
-        title: "Open Fullscreen Player",
-        description: "Opens Fullscreen Player in Apple Music",
-        iconName: "arrow.up.left.and.arrow.down.right",
-        tag: "Media",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let musicAppPath = "/System/Applications/Music.app"
-            let url = URL(fileURLWithPath: musicAppPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let lKeyCode: CGKeyCode = 3
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
-                    keyDown?.flags = [.maskCommand, .maskShift]
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
-                    keyUp?.flags = [.maskCommand, .maskShift]
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "42",
-        title: "Open Equalizer",
-        description: "Opens Equalizer in Apple Music",
-        iconName: "slider.horizontal.3",
-        tag: "Media",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let musicAppPath = "/System/Applications/Music.app"
-            let url = URL(fileURLWithPath: musicAppPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let lKeyCode: CGKeyCode = 14
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
-                    keyDown?.flags = [.maskCommand, .maskAlternate]
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
-                    keyUp?.flags = [.maskCommand, .maskAlternate]
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "43",
+        id: "33",
         title: "Empty Trash",
         description: "Opens Finder and Asks to Empty Trash",
         iconName: "trash",
@@ -1261,7 +932,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "44",
+        id: "34",
         title: "Color Picker",
         description: "Pick a color and copy its hex code",
         iconName: "eyedropper",
@@ -1331,7 +1002,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "45",
+        id: "35",
         title: "Extract Text (OCR)",
         description: "Select a region of the screen to extract text",
         iconName: "text.viewfinder",
@@ -1383,7 +1054,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "46",
+        id: "36",
         title: "Clipboard Text Count",
         description: "Receive count statistics for your last copied text.",
         iconName: "text.magnifyingglass",
@@ -1449,66 +1120,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "47",
-        title: "Open Font Panel",
-        description: "Opens the macOS font panel to preview fonts",
-        iconName: "character.circle",
-        tag: "Tool",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            NSFontPanel.shared.makeKeyAndOrderFront(nil)
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "48",
-        title: "Zoom In",
-        description: "Trigger the Zoom In Keyboard Shortcut.",
-        iconName: "plus.magnifyingglass",
-        tag: "Accessibility",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let src = CGEventSource(stateID: .hidSystemState)
-            let keyCodeEqual: CGKeyCode = 24 // '=' key
-            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeEqual, keyDown: true)
-            keyDown?.flags = [.maskCommand, .maskAlternate]
-            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeEqual, keyDown: false)
-            keyUp?.flags = [.maskCommand, .maskAlternate]
-            keyDown?.post(tap: .cghidEventTap)
-            keyUp?.post(tap: .cghidEventTap)
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "49",
-        title: "Zoom Out",
-        description: "Trigger the Zoom Out keyboard shortcut.",
-        iconName: "minus.magnifyingglass",
-        tag: "Accessibility",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let src = CGEventSource(stateID: .hidSystemState)
-            let keyCodeMinus: CGKeyCode = 27 // '-' key
-            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeMinus, keyDown: true)
-            keyDown?.flags = [.maskCommand, .maskAlternate]
-            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeMinus, keyDown: false)
-            keyUp?.flags = [.maskCommand, .maskAlternate]
-            keyDown?.post(tap: .cghidEventTap)
-            keyUp?.post(tap: .cghidEventTap)
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "50",
+        id: "37",
         title: "Open File",
         description: "Open a file in Finder.",
         iconName: "doc",
@@ -1526,7 +1138,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "51",
+        id: "38",
         title: "Run an Apple Script",
         description: "Run an AppleScript file.",
         iconName: "curlybraces",
@@ -1565,7 +1177,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "52",
+        id: "39",
         title: "Reveal Desktop",
         description: "Show the desktop by hiding all windows.",
         iconName: "desktopcomputer",
@@ -1590,32 +1202,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "53",
-        title: "Toggle Hidden Files",
-        description: "Show or hide hidden files in Finder.",
-        iconName: "doc",
-        tag: "Finder",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let src = CGEventSource(stateID: .hidSystemState)
-            let keyCodePeriod: CGKeyCode = 47 // '.' key
-
-            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodePeriod, keyDown: true)
-            keyDown?.flags = [.maskCommand, .maskShift]
-
-            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodePeriod, keyDown: false)
-            keyUp?.flags = [.maskCommand, .maskShift]
-
-            keyDown?.post(tap: .cghidEventTap)
-            keyUp?.post(tap: .cghidEventTap)
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "54",
+        id: "40",
         title: "Create New Folder",
         description: "Creates a new folder in Finder.",
         iconName: "folder.badge.plus",
@@ -1647,7 +1234,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "55",
+        id: "41",
         title: "Create New File",
         description: "Creates a new file in a user selected folder.",
         iconName: "doc.text",
@@ -1695,43 +1282,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "56",
-        title: "Open Go To Folder",
-        description: "Open the Go To Folder dialog in Finder.",
-        iconName: "folder",
-        tag: "Finder",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let finderPath = "/System/Library/CoreServices/Finder.app"
-            let url = URL(fileURLWithPath: finderPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Finder").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let keyCodeG: CGKeyCode = 5 // 'G' key
-
-                    if let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: true),
-                       let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: false)
-                    {
-                        keyDown.flags = [.maskCommand, .maskShift]
-                        keyUp.flags = [.maskCommand, .maskShift]
-
-                        keyDown.post(tap: .cghidEventTap)
-                        keyUp.post(tap: .cghidEventTap)
-                    }
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "57",
+        id: "42",
         title: "Toggle Keep Awake",
         description: "Toggle system sleep prevention indefinitely on or off.",
         iconName: "powerplug.fill",
@@ -1758,203 +1309,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "58",
-        title: "Show Battery Info",
-        description: "Display detailed battery status and health.",
-        iconName: "battery.100",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/sbin/system_profiler"
-            task.arguments = ["SPPowerDataType"]
-
-            let pipe = Pipe()
-            task.standardOutput = pipe
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-
-                let data = pipe.fileHandleForReading.readDataToEndOfFile()
-                if let batteryInfo = String(data: data, encoding: .utf8) {
-                    DispatchQueue.main.async {
-                        let panel = FloatingPanel(initialMessage: "Battery Info:\n\(batteryInfo)")
-                        panel.show()
-                        showSuccessToast()
-                    }
-                }
-            } catch {
-                showErrorToast("Failed to get Battery Info")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "59",
-        title: "Show System Uptime",
-        description: "Display how long your Mac has been running.",
-        iconName: "timer",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/bin/uptime"
-
-            let pipe = Pipe()
-            task.standardOutput = pipe
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-
-                let data = pipe.fileHandleForReading.readDataToEndOfFile()
-                if let uptime = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                    DispatchQueue.main.async {
-                        let panel = FloatingPanel(initialMessage: "System Uptime:\n\(uptime)")
-                        panel.show()
-                        showSuccessToast()
-                    }
-                }
-            } catch {
-                showErrorToast("Failed to Get System Uptime")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "60",
-        title: "Show System Information",
-        description: "Displays information about your Mac",
-        iconName: "desktopcomputer",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let info = ProcessInfo.processInfo
-            let hostname = info.hostName
-            let osVersion = info.operatingSystemVersion
-            let osVersionString = "\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)"
-            let cpuCount = info.processorCount
-            let memoryGB = Double(info.physicalMemory) / 1024 / 1024 / 1024
-            var lowPowerModeStatus = "Unknown"
-            if #available(macOS 12.0, *) {
-                lowPowerModeStatus = info.isLowPowerModeEnabled ? "Enabled" : "Disabled"
-            }
-
-            let systemInfo = """
-            Hostname: \(hostname)
-            OS Version: macOS \(osVersionString)
-            CPU Cores: \(cpuCount)
-            RAM: \(String(format: "%.2f", memoryGB)) GB
-            Low Power Mode: \(lowPowerModeStatus)
-            """
-
-            DispatchQueue.main.async {
-                let panel = FloatingPanel(initialMessage: systemInfo)
-                panel.show()
-                showSuccessToast()
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "61",
-        title: "Floating Note Window",
-        description: "Opens a floating note window",
-        iconName: "note",
-        tag: "Tool",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let notePanel = FloatingNotePanel()
-            notePanel.show()
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "62",
-        title: "Get App Info",
-        description: "Get info about the currently running app.",
-        iconName: "i.circle",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            if let app = NSWorkspace.shared.frontmostApplication,
-               let bundleURL = app.bundleURL,
-               let bundle = Bundle(url: bundleURL)
-            {
-                let appName = app.localizedName ?? "Unknown"
-                let bundleID = app.bundleIdentifier ?? "Unknown"
-                let version = bundle.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
-                let build = bundle.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-                let path = bundleURL.path
-
-                let infoText = """
-                App Name: \(appName)
-                Bundle ID: \(bundleID)
-                Version: \(version) (Build \(build))
-                Path: \(path)
-                """
-
-                DispatchQueue.main.async {
-                    let panel = FloatingPanel(initialMessage: infoText)
-                    panel.show()
-                    showSuccessToast()
-                }
-            } else {
-                DispatchQueue.main.async {
-                    let toast = ToastWindowController()
-                    showErrorToast("Failed to get app info")
-                }
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "63",
-        title: "Restart Dock",
-        description: "Restarts the macOS Dock process.",
-        iconName: "rectangle.dock",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: nil,
-        perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/bin/killall"
-            task.arguments = ["Dock"]
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-                showSuccessToast()
-            } catch {
-                showErrorToast("Failed to restart Dock")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "64",
-        title: "NL Calculator",
-        description: "Perform Calcuations using Natural Language",
-        iconName: "captions.bubble",
-        tag: "Tool",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let calculatorPanel = FloatingCalculatorPanel()
-            calculatorPanel.show()
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "65",
+        id: "43",
         title: "Open Notification Center",
         description: "Open Notification Center",
         iconName: "bell.badge",
@@ -1976,7 +1331,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "66",
+        id: "44",
         title: "Toggle WiFi",
         description: "Toggles WiFi on or off based on current state.",
         iconName: "wifi",
@@ -2030,162 +1385,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "67",
-        title: "List Network Services",
-        description: "Shows the system's network service order",
-        iconName: "list.bullet.rectangle",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/sbin/networksetup"
-            task.arguments = ["-listnetworkserviceorder"]
-
-            let outputPipe = Pipe()
-            task.standardOutput = outputPipe
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-
-                let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                let output = String(data: data, encoding: .utf8) ?? "No output"
-
-                DispatchQueue.main.async {
-                    let panel = FloatingPanel(initialMessage: output)
-                    panel.show()
-                    showSuccessToast()
-                }
-            } catch {
-                showErrorToast("Failed to list network services")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "68",
-        title: "Get DNS Server",
-        description: "Displays current DNS servers for Wi-Fi",
-        iconName: "globe",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/sbin/networksetup"
-            task.arguments = ["-getdnsservers", "Wi-Fi"]
-
-            let outputPipe = Pipe()
-            task.standardOutput = outputPipe
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-
-                let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                let output = String(data: data, encoding: .utf8) ?? "No output"
-
-                DispatchQueue.main.async {
-                    let panel = FloatingPanel(initialMessage: output)
-                    panel.show()
-                    showSuccessToast()
-                }
-            } catch {
-                showErrorToast("Failed to get DNS")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "69",
-        title: "Get Web Proxy",
-        description: "Displays current web proxy settings for Wi-Fi",
-        iconName: "network",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/sbin/networksetup"
-            task.arguments = ["-getwebproxy", "Wi-Fi"]
-
-            let outputPipe = Pipe()
-            task.standardOutput = outputPipe
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-
-                let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
-                let output = String(data: data, encoding: .utf8) ?? "No output"
-
-                DispatchQueue.main.async {
-                    let panel = FloatingPanel(initialMessage: output)
-                    panel.show()
-                    showSuccessToast()
-                }
-            } catch {
-                showErrorToast("Failed to get web proxy status")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "70",
-        title: "Toggle Web Proxy",
-        description: "Toggles the web proxy on or off",
-        iconName: "network.badge.shield.half.filled",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let statusTask = Process()
-            statusTask.launchPath = "/usr/sbin/networksetup"
-            statusTask.arguments = ["-getwebproxy", "Wi-Fi"]
-
-            let statusPipe = Pipe()
-            statusTask.standardOutput = statusPipe
-
-            do {
-                try statusTask.run()
-                statusTask.waitUntilExit()
-
-                let data = statusPipe.fileHandleForReading.readDataToEndOfFile()
-                guard let output = String(data: data, encoding: .utf8) else {
-                    showErrorToast("Could not read web proxy status")
-                    return
-                }
-
-                let isEnabled = output.contains("Enabled: Yes")
-                let newState = isEnabled ? "off" : "on"
-                let toggleTask = Process()
-                toggleTask.launchPath = "/usr/sbin/networksetup"
-                toggleTask.arguments = ["-setwebproxystate", "Wi-Fi", newState]
-
-                let errorPipe = Pipe()
-                toggleTask.standardError = errorPipe
-
-                try toggleTask.run()
-                toggleTask.waitUntilExit()
-
-                let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-                let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-
-                if !errorOutput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    showErrorToast("Failed to toggle Web Proxy")
-                } else {
-                    showSuccessToast("Web Proxy turned \(newState.uppercased())")
-                }
-
-            } catch {
-                showErrorToast("Failed to toggle Web Proxy")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "71",
+        id: "45",
         title: "Copy Current Page in Safari",
         description: "Copy the current page url in safari.",
         iconName: "link",
@@ -2230,7 +1430,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "72",
+        id: "46",
         title: "Open Last Download",
         description: "Open the most recently downloaded file.",
         iconName: "arrow.down.doc",
@@ -2263,91 +1463,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "73",
-        title: "Copy Last Download Path",
-        description: "Copy the path to your most recent download.",
-        iconName: "doc.on.clipboard",
-        tag: "Finder",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
-
-            do {
-                let files = try FileManager.default.contentsOfDirectory(at: downloadsURL, includingPropertiesForKeys: [.contentModificationDateKey], options: .skipsHiddenFiles)
-
-                let sortedFiles = files
-                    .compactMap { url -> (url: URL, date: Date)? in
-                        let values = try? url.resourceValues(forKeys: [.contentModificationDateKey])
-                        return values?.contentModificationDate != nil ? (url, values!.contentModificationDate!) : nil
-                    }
-                    .sorted { $0.date > $1.date }
-
-                if let mostRecent = sortedFiles.first?.url {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(mostRecent.path, forType: .string)
-                    showSuccessToast()
-                } else {
-                    showErrorToast("No recent downloads found")
-                }
-            } catch {
-                showErrorToast("Failed to copy path")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "74",
-        title: "Countdown to Date",
-        description: "Get the time until a date.",
-        iconName: "calendar",
-        tag: "Template Action",
-        requiresInput: true,
-        inputPrompt: "Enter Date in yyyy-MM-dd format",
-        perform: { input in
-            guard let input = input, !input.isEmpty else {
-                showErrorToast("Error: Date is not valid")
-                return
-            }
-
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-
-            guard let targetDate = formatter.date(from: input) else {
-                showErrorToast("Error: Use the yyyy-MM-dd format")
-                return
-            }
-
-            let now = Date()
-            if targetDate <= now {
-                showErrorToast("Error: Date is in the past")
-                return
-            }
-
-            let calendar = Calendar.current
-            let components = calendar.dateComponents([.month, .day], from: now, to: targetDate)
-
-            var parts: [String] = []
-
-            if let months = components.month, months > 0 {
-                parts.append("\(months) month" + (months > 1 ? "s" : ""))
-            }
-            if let days = components.day, days > 0 {
-                parts.append("\(days) day" + (days > 1 ? "s" : ""))
-            }
-
-            let countdown = parts.joined(separator: ", ")
-
-            if countdown.isEmpty {
-                showSuccessToast("The date is now!", icon: Image(systemName: "party.popper"))
-            } else {
-                showSuccessToast("Time left: \(countdown)", icon: Image(systemName: "stopwatch"))
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "75",
+        id: "47",
         title: "Create Zip Archive",
         description: "Create a zip archive for a specified folder.",
         iconName: "doc.zipper",
@@ -2390,7 +1506,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "76",
+        id: "48",
         title: "Network Speed Test",
         description: "Run a network speed test.",
         iconName: "gauge",
@@ -2475,129 +1591,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "77",
-        title: "Ping Website",
-        description: "Pings a website.",
-        iconName: "dot.radiowaves.left.and.right",
-        tag: "Developer",
-        requiresInput: true,
-        inputPrompt: "Enter Website URL or DNS Server",
-        perform: { input in
-            guard let site = input, !site.isEmpty else {
-                showErrorToast("No website or dns was entered")
-                return
-            }
-
-            let task = Process()
-            task.launchPath = "/sbin/ping"
-            task.arguments = ["-c", "3", site]
-
-            let pipe = Pipe()
-            task.standardOutput = pipe
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-
-                let data = pipe.fileHandleForReading.readDataToEndOfFile()
-                let output = String(data: data, encoding: .utf8) ?? ""
-
-                let lines = output.components(separatedBy: "\n")
-                var hostIP = "Unknown"
-                if let firstLine = lines.first,
-                   let ipStart = firstLine.range(of: "("),
-                   let ipEnd = firstLine.range(of: ")")
-                {
-                    hostIP = String(firstLine[ipStart.upperBound ..< ipEnd.lowerBound])
-                }
-
-                let packetsLine = lines.first(where: { $0.contains("packets transmitted") }) ?? ""
-                let latencyLine = lines.first(where: { $0.contains("avg") && ($0.contains("min") || $0.contains("round-trip") || $0.contains("rtt")) }) ?? ""
-
-                let packetsInfoParts = packetsLine.components(separatedBy: ",")
-                var packetsSent = "?"
-                var packetsReceived = "?"
-                var packetLoss = "?"
-
-                if packetsInfoParts.count >= 3 {
-                    packetsSent = packetsInfoParts[0].trimmingCharacters(in: .whitespaces).components(separatedBy: " ").first ?? "?"
-                    packetsReceived = packetsInfoParts[1].trimmingCharacters(in: .whitespaces).components(separatedBy: " ").first ?? "?"
-                    packetLoss = packetsInfoParts[2].trimmingCharacters(in: .whitespaces).components(separatedBy: " ").first ?? "?"
-                }
-
-                var minLatency = "?"
-                var avgLatency = "?"
-                var maxLatency = "?"
-                var stddevLatency = "?"
-
-                if let range = latencyLine.range(of: "=") {
-                    let valuesPart = latencyLine[range.upperBound...].trimmingCharacters(in: .whitespaces)
-                    let valuesString = valuesPart.replacingOccurrences(of: " ms", with: "")
-                    let parts = valuesString.components(separatedBy: "/")
-                    if parts.count == 4 {
-                        minLatency = parts[0]
-                        avgLatency = parts[1]
-                        maxLatency = parts[2]
-                        stddevLatency = parts[3]
-                    }
-                }
-
-                let message = """
-                Ping Results for \(site)
-                Host IP: \(hostIP)
-
-                Packets: \(packetsSent) transmitted, \(packetsReceived) received
-                Packet Loss: \(packetLoss)
-
-                Latency (ms):
-
-                Min: \(minLatency)
-                Avg: \(avgLatency)
-                Max: \(maxLatency)
-                Std Dev: \(stddevLatency)
-                """
-
-                let panel = FloatingPanel(initialMessage: message)
-                panel.show()
-
-            } catch {
-                showErrorToast("Failed to ping website")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "78",
-        title: "Get IP Address",
-        description: "Get your public IP address.",
-        iconName: "network",
-        tag: "Developer",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let task = Process()
-            task.launchPath = "/usr/bin/curl"
-            task.arguments = ["https://ipinfo.io/ip"]
-
-            let pipe = Pipe()
-            task.standardOutput = pipe
-
-            do {
-                try task.run()
-                task.waitUntilExit()
-
-                let data = pipe.fileHandleForReading.readDataToEndOfFile()
-                let ip = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "Unknown"
-
-                showSuccessToast("Your IP: \(ip)", icon: Image(systemName: "network"))
-            } catch {
-                showErrorToast("Failed to fetch IP address")
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "79",
+        id: "49",
         title: "Toggle Theme",
         description: "Toggle dark or light mode",
         iconName: "sun.max",
@@ -2655,7 +1649,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "80",
+        id: "50",
         title: "Next Desktop",
         description: "Switch to the next desktop.",
         iconName: "arrow.right.square",
@@ -2685,7 +1679,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "81",
+        id: "51",
         title: "Previous Desktop",
         description: "Switch to the previous desktop.",
         iconName: "arrow.left.square",
@@ -2715,7 +1709,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "82",
+        id: "52",
         title: "Application Windows",
         description: "Show all windows for the current application.",
         iconName: "rectangle.on.rectangle.angled",
@@ -2745,7 +1739,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "83",
+        id: "53",
         title: "Previous Track",
         description: "Play previous media track",
         iconName: "backward.fill",
@@ -2787,7 +1781,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "84",
+        id: "54",
         title: "Next Track",
         description: "Play next media track",
         iconName: "forward.fill",
@@ -2829,52 +1823,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "85",
-        title: "Counter",
-        description: "Opens a floating counter window",
-        iconName: "plusminus.circle",
-        tag: "Tool",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let counterPanel = FloatingCounterPanel()
-            counterPanel.show()
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "86",
-        title: "Case Converter",
-        description: "Opens a text case converter window",
-        iconName: "textformat.size",
-        tag: "Tool",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let casePanel = FloatingCasePanel()
-            casePanel.show()
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "87",
-        title: "Color Converter",
-        description: "Opens a color converter window",
-        iconName: "paintpalette",
-        tag: "Tool",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let colorPanel = FloatingColorPanel()
-            colorPanel.show()
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "88",
+        id: "55",
         title: "Run Terminal Command",
         description: "Run a terminal command.",
         iconName: "terminal",
@@ -2901,7 +1850,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "89",
+        id: "56",
         title: "Set Volume",
         description: "Set system volume to a specific level.",
         iconName: "speaker.wave.2.fill",
@@ -2932,7 +1881,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "90",
+        id: "57",
         title: "Speak Time",
         description: "Speak the current system time aloud.",
         iconName: "clock.fill",
@@ -2958,147 +1907,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "91",
-        title: "Roll Dice",
-        description: "Roll a six-sided dice and show the result.",
-        iconName: "dice",
-        tag: "Tool",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let result = Int.random(in: 1 ... 6)
-            let iconName = "die.face.\(result).fill"
-            showSuccessToast("Dice rolled: \(result)", icon: Image(systemName: iconName))
-        }
-    ),
-
-    CornerAction(
-        id: "92",
-        title: "Coin Flip",
-        description: "Flip a coin and get Heads or Tails.",
-        iconName: "circle.circle.fill",
-        tag: "Tool",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            let result = Bool.random() ? "Heads" : "Tails"
-            showSuccessToast("Coin flip: \(result)", icon: Image(systemName: "circle.circle.fill"))
-        }
-    ),
-
-    CornerAction(
-        id: "93",
-        title: "Send Text to ChatGPT",
-        description: "Copies currently selected text and sends it to the ChatGPT app.",
-        iconName: "text.bubble",
-        tag: "App Actions",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                let script = """
-                tell application "System Events"
-                    keystroke "c" using {command down}
-                    delay 0.2
-                    tell application "ChatGPT" to activate
-                    delay 3.0
-                    keystroke "v" using {command down}
-                    delay 0.2
-                    key code 36
-                end tell
-                """
-
-                let task = Process()
-                task.launchPath = "/usr/bin/osascript"
-                task.arguments = ["-e", script]
-
-                do {
-                    try task.run()
-                    task.waitUntilExit()
-                    showSuccessToast("Text Sent to ChatGPT", icon: Image(systemName: "text.bubble.fill"))
-                } catch {
-                    showErrorToast("Failed to send text")
-                }
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "94",
-        title: "Send Text to Perplexity",
-        description: "Copies currently selected text and sends it to the Perplexity app.",
-        iconName: "bubble.left.and.text.bubble.right",
-        tag: "App Actions",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                let script = """
-                tell application "System Events"
-                    keystroke "c" using {command down}
-                    delay 0.2
-                    tell application "Perplexity" to activate
-                    delay 3.0
-                    keystroke "v" using {command down}
-                    delay 0.2
-                    key code 36
-                end tell
-                """
-
-                let task = Process()
-                task.launchPath = "/usr/bin/osascript"
-                task.arguments = ["-e", script]
-
-                do {
-                    try task.run()
-                    task.waitUntilExit()
-                    showSuccessToast("Text Sent to Perplexity", icon: Image(systemName: "text.bubble.fill"))
-                } catch {
-                    showErrorToast("Failed to send text")
-                }
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "95",
-        title: "Send Text to Claude",
-        description: "Copies currently selected text and sends it to the Claude app.",
-        iconName: "text.bubble.badge.clock",
-        tag: "App Actions",
-        requiresInput: false,
-        inputPrompt: "",
-        perform: { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                let script = """
-                tell application "System Events"
-                    keystroke "c" using {command down}
-                    delay 0.2
-                    tell application "Claude" to activate
-                    delay 3.0
-                    keystroke "v" using {command down}
-                    delay 0.2
-                    key code 36
-                end tell
-                """
-
-                let task = Process()
-                task.launchPath = "/usr/bin/osascript"
-                task.arguments = ["-e", script]
-
-                do {
-                    try task.run()
-                    task.waitUntilExit()
-                    showSuccessToast("Text Sent to Claude", icon: Image(systemName: "text.bubble.fill"))
-                } catch {
-                    showErrorToast("Failed to send text")
-                }
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "96",
+        id: "58",
         title: "Simulate Hotkey",
         description: "Simulate a keyboard shortcut",
         iconName: "keyboard",
