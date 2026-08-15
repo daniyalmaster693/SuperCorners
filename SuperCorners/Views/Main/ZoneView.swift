@@ -183,27 +183,27 @@ struct ZoneView: View {
                                         }
                                     }
 
-                                    .overlay(alignment: .center) {
-                                        if let safariIcon {
-                                            if #available(macOS 26.0, *) {
-                                                Image(nsImage: safariIcon)
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 50, height: 50)
-                                                    .cornerRadius(12)
-                                                    .padding(2)
-                                                    .glassEffect(in: .rect(cornerRadius: 12.0))
-                                            }
-                                            else {
-                                                Image(nsImage: safariIcon)
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: 50, height: 50)
-                                                    .cornerRadius(12)
-                                            }
-                                        }
-                                    }
-                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+//                                    .overlay(alignment: .center) {
+//                                        if let safariIcon {
+//                                            if #available(macOS 26.0, *) {
+//                                                Image(nsImage: safariIcon)
+//                                                    .resizable()
+//                                                    .scaledToFit()
+//                                                    .frame(width: 50, height: 50)
+//                                                    .cornerRadius(12)
+//                                                    .padding(2)
+//                                                    .glassEffect(in: .rect(cornerRadius: 12.0))
+//                                            }
+//                                            else {
+//                                                Image(nsImage: safariIcon)
+//                                                    .resizable()
+//                                                    .scaledToFit()
+//                                                    .frame(width: 50, height: 50)
+//                                                    .cornerRadius(12)
+//                                            }
+//                                        }
+//                                    }
+//                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                             }
                         }
                     }
@@ -224,29 +224,29 @@ struct ZoneView: View {
         .onAppear {
             loadWallpaper()
         }
-        .toolbar {
-            ToolbarItem(placement: .automatic) {
-                Picker("", selection: $selectedActionSet) {
-                    Text("Global Actions").tag("Global Actions")
-                    Text("Safari Actions").tag("Safari Actions")
-                    Text("Music Actions").tag("Music Actions")
-                    Text("Finder Actions").tag("Finder Actions")
-                }
-                .help("Choose an Action Set")
-            }
-
-            ToolbarItem(placement: .automatic) {
-                Button(action: {
-                    showActionSetEditor = true
-                }) {
-                    Image(systemName: "slider.horizontal.3")
-                }
-                .help("Edit Action Sets")
-                .sheet(isPresented: $showActionSetEditor) {
-                    ActionSetEditor()
-                }
-            }
-        }
+//        .toolbar {
+//            ToolbarItem(placement: .automatic) {
+//                Picker("", selection: $selectedActionSet) {
+//                    Text("Global Actions").tag("Global Actions")
+//                    Text("Safari Actions").tag("Safari Actions")
+//                    Text("Music Actions").tag("Music Actions")
+//                    Text("Finder Actions").tag("Finder Actions")
+//                }
+//                .help("Choose an Action Set")
+//            }
+//
+//            ToolbarItem(placement: .automatic) {
+//                Button(action: {
+//                    showActionSetEditor = true
+//                }) {
+//                    Image(systemName: "slider.horizontal.3")
+//                }
+//                .help("Edit Action Sets")
+//                .sheet(isPresented: $showActionSetEditor) {
+//                    ActionSetEditor()
+//                }
+//            }
+//        }
     }
 
     private func loadWallpaper() {
