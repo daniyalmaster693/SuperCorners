@@ -134,7 +134,7 @@ struct SettingsView: View {
     var body: some View {
         ScrollView {
             Form {
-                Section {
+                Section("General") {
                     HStack {
                         Image(systemName: "person.crop.circle")
                             .foregroundColor(.primary)
@@ -210,7 +210,72 @@ struct SettingsView: View {
             .formStyle(.grouped)
 
             Form {
+                Section("Enabled Triggers") {
+                    Toggle(isOn: self.$enableTopLeftCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.topleft.rectangle")
+                                .foregroundColor(.primary)
+                            Text("Top Left Corner")
+                        }
+                    }
+                    Toggle(isOn: self.$enableTopRightCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.topright.rectangle")
+                                .foregroundColor(.primary)
+                            Text("Top Right Corner")
+                        }
+                    }
+                    Toggle(isOn: self.$enableBottomLeftCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.bottomleft.rectangle")
+                                .foregroundColor(.primary)
+                            Text("Bottom Left Corner")
+                        }
+                    }
+                    Toggle(isOn: self.$enableBottomRightCorner) {
+                        HStack {
+                            Image(systemName: "inset.filled.bottomright.rectangle")
+                                .foregroundColor(.primary)
+                            Text("Bottom Right Corner")
+                        }
+                    }
+                }
+
                 Section {
+                    Toggle(isOn: self.$enableTopZone) {
+                        HStack {
+                            Image(systemName: "rectangle.topthird.inset.filled")
+                                .foregroundColor(.primary)
+                            Text("Top Zone")
+                        }
+                    }
+                    Toggle(isOn: self.$enableLeftZone) {
+                        HStack {
+                            Image(systemName: "rectangle.leadingthird.inset.filled")
+                                .foregroundColor(.primary)
+                            Text("Left Zone")
+                        }
+                    }
+                    Toggle(isOn: self.$enableRightZone) {
+                        HStack {
+                            Image(systemName: "rectangle.trailingthird.inset.filled")
+                                .foregroundColor(.primary)
+                            Text("Right Zone")
+                        }
+                    }
+                    Toggle(isOn: self.$enableBottomZone) {
+                        HStack {
+                            Image(systemName: "rectangle.bottomthird.inset.filled")
+                                .foregroundColor(.primary)
+                            Text("Bottom Zone")
+                        }
+                    }
+                }
+            }
+            .formStyle(.grouped)
+
+            Form {
+                Section("Activation") {
                     Toggle(isOn: self.$enableModifierKey) {
                         HStack {
                             Image(systemName: "command")
@@ -285,73 +350,11 @@ struct SettingsView: View {
                         }
                     }
                 }
-
-                Section(header: Text("Enabled Corners")) {
-                    Toggle(isOn: self.$enableTopLeftCorner) {
-                        HStack {
-                            Image(systemName: "inset.filled.topleft.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Top Left Corner")
-                        }
-                    }
-                    Toggle(isOn: self.$enableTopRightCorner) {
-                        HStack {
-                            Image(systemName: "inset.filled.topright.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Top Right Corner")
-                        }
-                    }
-                    Toggle(isOn: self.$enableBottomLeftCorner) {
-                        HStack {
-                            Image(systemName: "inset.filled.bottomleft.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Bottom Left Corner")
-                        }
-                    }
-                    Toggle(isOn: self.$enableBottomRightCorner) {
-                        HStack {
-                            Image(systemName: "inset.filled.bottomright.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Bottom Right Corner")
-                        }
-                    }
-                }
-
-                Section(header: Text("Enabled Zones")) {
-                    Toggle(isOn: self.$enableTopZone) {
-                        HStack {
-                            Image(systemName: "rectangle.topthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Text("Top Zone")
-                        }
-                    }
-                    Toggle(isOn: self.$enableLeftZone) {
-                        HStack {
-                            Image(systemName: "rectangle.leadingthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Text("Left Zone")
-                        }
-                    }
-                    Toggle(isOn: self.$enableRightZone) {
-                        HStack {
-                            Image(systemName: "rectangle.trailingthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Text("Right Zone")
-                        }
-                    }
-                    Toggle(isOn: self.$enableBottomZone) {
-                        HStack {
-                            Image(systemName: "rectangle.bottomthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Text("Bottom Zone")
-                        }
-                    }
-                }
             }
             .formStyle(.grouped)
 
             Form {
-                Section {
+                Section("Behavior") {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "dot.circle.and.cursorarrow")
@@ -398,6 +401,34 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    Toggle(isOn: self.$playSoundEffect) {
+                        HStack {
+                            Image(systemName: "speaker.wave.2")
+                                .foregroundColor(.primary)
+                            Text("Play Sound Effect on Trigger")
+                        }
+                    }
+
+                    HStack {
+                        Label("Choose Sound Effect", systemImage: "waveform")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: self.$selectedSound) {
+                            ForEach(SoundEffect.allCases) { sound in
+                                Text(sound.rawValue).tag(sound)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .disabled(!self.playSoundEffect)
+                        .frame(width: 150)
+                    }.onChange(of: self.selectedSound) { newSound in
+                        if self.playSoundEffect {
+                            newSound.play()
+                        }
+                    }
+                }
+
+                Section {
                     Toggle(isOn: self.$showToastNotification) {
                         HStack {
                             Image(systemName: "bell.badge")
@@ -430,34 +461,6 @@ struct SettingsView: View {
                     }
                     .disabled(!self.showToastNotification)
                 }
-
-                Section {
-                    Toggle(isOn: self.$playSoundEffect) {
-                        HStack {
-                            Image(systemName: "speaker.wave.2")
-                                .foregroundColor(.primary)
-                            Text("Play Sound Effect on Trigger")
-                        }
-                    }
-
-                    HStack {
-                        Label("Choose Sound Effect", systemImage: "waveform")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Picker("", selection: self.$selectedSound) {
-                            ForEach(SoundEffect.allCases) { sound in
-                                Text(sound.rawValue).tag(sound)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .disabled(!self.playSoundEffect)
-                        .frame(width: 150)
-                    }.onChange(of: self.selectedSound) { newSound in
-                        if self.playSoundEffect {
-                            newSound.play()
-                        }
-                    }
-                }
             }
             .formStyle(.grouped)
             .sheet(isPresented: self.$showIgnoredAppsModal) {
@@ -465,26 +468,6 @@ struct SettingsView: View {
             }
 
             Form {
-                Section("Floating Notes Window") {
-                    Toggle(isOn: self.$rememberNotesText) {
-                        HStack {
-                            Image(systemName: "macwindow")
-                                .foregroundColor(.primary)
-                            Text("Remember Text on Close")
-                        }
-                    }
-                }
-
-                Section("Natural Language Calculator") {
-                    Toggle(isOn: self.$rememberCalcText) {
-                        HStack {
-                            Image(systemName: "captions.bubble")
-                                .foregroundColor(.primary)
-                            Text("Remember Text on Close")
-                        }
-                    }
-                }
-
                 Section("Text Extractor") {
                     Toggle(isOn: self.$showRecentText) {
                         HStack {
