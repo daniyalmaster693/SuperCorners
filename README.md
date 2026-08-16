@@ -95,8 +95,7 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 ## Dependencies
 
 - [Keyboard Shortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
-- [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
-- [SoulverCore](https://github.com/soulverteam/SoulverCore)
+- [TourKit](https://github.com/rampatra/TourKit)
 
 ## Contributions
 
