@@ -1847,4 +1847,80 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "56",
+        title: "Toggle Media Playback",
+        description: "Toggle Media Playback",
+        iconName: "playpause",
+        tag: "Media",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let keyCodePlayPause = 16
+
+            let eventDown = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xa00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodePlayPause << 16) | (0xa << 8),
+                data2: -1
+            )
+
+            let eventUp = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xb00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodePlayPause << 16) | (0xb << 8),
+                data2: -1
+            )
+
+            eventDown?.cgEvent?.post(tap: .cghidEventTap)
+            eventUp?.cgEvent?.post(tap: .cghidEventTap)
+
+            showSuccessToast("Toggled Playback", icon: Image(systemName: "playpause"))
+        }
+    ),
+
+    CornerAction(
+        id: "57",
+        title: "Copy Last Download Path",
+        description: "Copy the path to your most recent download.",
+        iconName: "doc.on.clipboard",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+
+            do {
+                let files = try FileManager.default.contentsOfDirectory(at: downloadsURL, includingPropertiesForKeys: [.contentModificationDateKey], options: .skipsHiddenFiles)
+
+                let sortedFiles = files
+                    .compactMap { url -> (url: URL, date: Date)? in
+                        let values = try? url.resourceValues(forKeys: [.contentModificationDateKey])
+                        return values?.contentModificationDate != nil ? (url, values!.contentModificationDate!) : nil
+                    }
+                    .sorted { $0.date > $1.date }
+
+                if let mostRecent = sortedFiles.first?.url {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(mostRecent.path, forType: .string)
+                    showSuccessToast()
+                } else {
+                    showErrorToast("No recent downloads found")
+                }
+            } catch {
+                showErrorToast("Failed to copy path")
+            }
+        }
+    ),
 ]
