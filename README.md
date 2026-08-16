@@ -43,8 +43,8 @@
 
 ### Manual Installation
 
-1. Open the [latest release](https://github.com/daniyalmaster693/SuperCorners/releases/latest) and download `SuperCorners.zip`.
-2. Open the `.zip` file and drag the app file into your **Applications** folder.
+1. Open the [latest release](https://github.com/daniyalmaster693/SuperCorners/releases/latest) and download `SuperCorners.dmg`.
+2. Open the `.dmg` file and drag the app icon into your **Applications** folder.
 
 **Note:** Because the app is not signed, on first launch, macOS may warn that the app couldn't be verified. To open it:
 
