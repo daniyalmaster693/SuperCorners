@@ -810,7 +810,7 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "23",
-        title: "Toggle Application",
+        title: "Launch Application",
         description: "Opens an app or hides it if already focused.",
         iconName: "square.grid.3x3",
         tag: "Template Action",
