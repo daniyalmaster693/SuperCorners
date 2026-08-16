@@ -84,7 +84,7 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [ ] Height based sensitivity for zones
 - [ ] Secondary actions for triggered actions
 - [ ] Template action modal suggested actions
-- [ ] Automation based action profiles
+- [ ] Deep Link Support
 - [ ] Allow assigning actions per focus mode
 - [ ] Allow assigning actions per app
 - [ ] Allow assigning actions per display
