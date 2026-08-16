@@ -34,13 +34,13 @@ struct SettingsView: View {
         var id: String { rawValue }
     }
 
-    // Enabled corners toggles
+    // Enabled Triggers
+
     @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
     @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
     @AppStorage("enableBottomLeftCorner") private var enableBottomLeftCorner = true
     @AppStorage("enableBottomRightCorner") private var enableBottomRightCorner = true
 
-    // Enabled zones toggles
     @AppStorage("enableTopZone") private var enableTopZone = true
     @AppStorage("enableLeftZone") private var enableLeftZone = true
     @AppStorage("enableRightZone") private var enableRightZone = true
@@ -56,7 +56,7 @@ struct SettingsView: View {
     @State private var ignoredApps: [String] = []
     @State private var showIgnoredAppsModal = false
 
-    @AppStorage("showToastNotifications") private var showToastNotification = true
+    @AppStorage("showToastNotifications") private var showToastNotification = false
     @AppStorage("dismissOnClick") private var dismissOnClick = true
     @AppStorage("autoDismissTimer") private var autoDismissTimer: DismissTimer = .seconds3
 

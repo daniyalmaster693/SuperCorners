@@ -16,7 +16,6 @@ struct SuperCornersApp: App {
     // Settings Variables
     
     @AppStorage("showInDock") private var showInDock = true
-    
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
     // Corner and Zone Variables
@@ -35,7 +34,7 @@ struct SuperCornersApp: App {
     
     @State private var refreshID = UUID()
     
-    // Walkthrough
+    // Request Accessibility Permission
 
     init() {
         if !AXIsProcessTrusted() {
