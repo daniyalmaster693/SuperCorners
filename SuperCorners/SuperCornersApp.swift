@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct SuperCornersApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @Environment(\.openWindow) private var openWindow
     private let updateManager = UpdateManager()
 
@@ -216,7 +217,7 @@ struct SuperCornersApp: App {
                 Button("Check for Updates") {
                     updateManager.getUpdateData(manualCheck: true)
                 }
-                .keyboardShortcut(",")
+                .keyboardShortcut("u")
                 
                 Button("Quit") {
                     NSApplication.shared.terminate(nil)
