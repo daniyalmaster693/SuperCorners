@@ -25,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     TourPage(imageName: "tour-welcome", title: "Welcome to SuperCorners", description: "Supercharge your Mac's Corners"),
                     TourPage(imageName: "tour-zones", title: "More Ways to Trigger", description: "Go beyond the corners with 4 additional zones."),
                     TourPage(imageName: "tour-actions", title: "Powerful Actions", description: "Trigger over 50 different actions from your triggers."),
+                    TourPage(imageName: "tour-activation", title: "Customizable Activation", description: "Optionally choose between modifier keys, keyboard shortcuts, hovering or clicking."),
                     TourPage(imageName: "tour-accessibility", title: "Enable Accessibility Permissions", description: "Give SuperCorners accessibility permission."),
                     TourPage(imageName: "tour-default", title: "Disable Default Hot Corners", description: "Disable the built in hot corners feature for the best experience."),
                 ],
