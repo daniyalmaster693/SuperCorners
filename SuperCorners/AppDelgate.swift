@@ -16,13 +16,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         let hasShownTour = UserDefaults.standard.bool(forKey: "hasShownTour")
 
-        if !hasShownTour {
+        if hasShownTour {
             NSApp.setActivationPolicy(.regular)
             NSApp.activate(ignoringOtherApps: true)
 
             tour.present(
                 pages: [
                     TourPage(imageName: "tour-welcome", title: "Welcome to SuperCorners", description: "Supercharge your Mac's Corners"),
+                    TourPage(imageName: "tour-zones", title: "More Ways to Trigger", description: "Go beyond the corners with 4 additional zones for endless possibilities."),
+                    TourPage(imageName: "tour-actions", title: "Powerful Actions", description: "Trigger over 50 different actions."),
+                    TourPage(imageName: "tour-accessibility", title: "Enable Accessibility Permissions", description: "Give SuperCorners accessibility permission."),
+                    TourPage(imageName: "tour-default", title: "Disable Default Hot Corners", description: "Disable the built in hot corners feature for the best experience."),
                 ],
                 width: 850,
                 continueButtonTitle: "Continue",
