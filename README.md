@@ -19,10 +19,6 @@
 
 <img src="/Assets/Mockups/SuperCorners-Cover.png" width="100%" alt="SuperCorners"/><br/>
 
-SuperCorners is a macOS app that supercharges your screen corners.
-
-I've always loved the Hot Corners feature on macOS, but it's always felt very limited. So I built SuperCorners, which aims to provide a more polished and powerful experience. It builds on Apple's built in Hot Corners with extra trigger zones while providing more control and smarter automation, transforming each corner and zone into a powerful part of your productivity system.
-
 ## Features
 
 - **Additional Zones** - Trigger actions when moving your mouse the middle of any screen edge.
@@ -34,7 +30,6 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 - **In App Actions** - Trigger in app actions directly from corners and zones.
 - **System Commands** - Run system commands directly from your screen corners and zones.
 - **Tools** - Access useful tools from your screen corners and zones.
-- **Developer Utilities** - Access useful developer related info directly from your screen corners and zones.
 - **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
 - **Visual Feedback** - Subtle toast notifications appear briefly to provide visual feedback for actions.
 - **Configurable** - Disable any corner or zone and control app behaviors.
@@ -48,9 +43,18 @@ I've always loved the Hot Corners feature on macOS, but it's always felt very li
 
 ### Manual Installation
 
-1. Download the latest release.
-2. Move the app to your **Applications folder**.
-3. Run the app and grant necessary permissions when prompted.
+1. Open the [latest release](https://github.com/daniyalmaster693/SuperCorners/releases/latest) and download `SuperCorners.zip`.
+2. Open the `.zip` file and drag the app file into your **Applications** folder.
+
+**Note:** Because the app is not signed, on first launch, macOS may warn that the app couldn't be verified. To open it:
+
+1. Click **Done** on the warning prompt.
+2. Open **System Settings → Privacy & Security**.
+3. Scroll down to the security section and click **Open Anyway**.
+
+4. Download the latest release.
+5. Move the app to your **Applications folder**.
+6. Run the app and grant necessary permissions when prompted.
 
 ### Homebrew
 
@@ -63,31 +67,26 @@ brew install --cask supercorners
 xattr -dr com.apple.quarantine /Applications/SuperCorners.app
 ```
 
-**Note**: On first launch, macOS may warn that the app couldn't be verified. Click **OK**, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** to launch the app.
-
 ## Usage
 
 1. Launch **SuperCorners**.
-2. Grant Necessary Permissions (**Accessibility permission must be enabled for the app to work correctly**).
-3. Use the activation hotkey or modifier key (set in the settings window) to trigger corners and zones when moving your mouse to a corner or the middle of any screen edge.
-4. Enjoy the upgraded hot corners experience!
+2. Grant Necessary Permissions (**Accessibility permission must be enabled for certain actions to function**).
+3. Trigger corners and zones by moving your mouse to a corner or the middle of a screen edge. You can also optionally choose to require a modifier key or keyboard shortcut to prevent accidental activation.
+4. Additional behaviors can be configured in the settings tab, such as the sensitivity, an action delay, toast messages, sound effects, and more.
 
 For more information visit the [Getting Started Guide](./GettingStarted.md)
 
 ## Roadmap
 
-- [x] ~~Fix toast messages not showing up when app is not active~~
-- [x] ~~Improve toast success and error logic~~
 - [x] ~~Additional trigger methods for corners and zones~~
 - [x] ~~Trigger Actions using only a modifier key~~
 - [x] ~~Trigger Actions by clicking~~
-- [x] ~~Action List for the Menubar Command (a seperate menu to trigger more actions)~~
 - [x] ~~Trigger Actions without any key presses~~
-- [ ] Allow assigning seperate actions per monitor
+- [ ] Simulating keyboard shortcuts
 - [ ] Automation based action profiles
 - [ ] Allow assigning actions per focus mode
-- [ ] Allow creating different global action profiles
 - [ ] Allow assigning actions per app
+- [ ] Allow assigning actions per display
 - [ ] Additional in app actions
 
 ...and more to come...
