@@ -48,13 +48,9 @@
 
 **Note:** Because the app is not signed, on first launch, macOS may warn that the app couldn't be verified. To open it:
 
-1. Click **Done** on the warning prompt.
-2. Open **System Settings → Privacy & Security**.
-3. Scroll down to the security section and click **Open Anyway**.
-
-4. Download the latest release.
-5. Move the app to your **Applications folder**.
-6. Run the app and grant necessary permissions when prompted.
+1. Click Done on the warning prompt.
+2. Open System Settings → Privacy & Security.
+3. Scroll down to the security section and click Open Anyway.
 
 ### Homebrew
 
