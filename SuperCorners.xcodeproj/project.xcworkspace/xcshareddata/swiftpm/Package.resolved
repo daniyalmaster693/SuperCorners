@@ -1,5 +1,5 @@
 {
-  "originHash" : "5b47ef04b27c67c07baff6a6ce12a66e433f82501e116a3c61fc1d98849d2d74",
+  "originHash" : "8d11ec23fd708567d5f8647f7ff2d300a42730ea7f25353703b64972977a5b0c",
   "pins" : [
     {
       "identity" : "keyboardshortcuts",
@@ -20,12 +20,12 @@
       }
     },
     {
-      "identity" : "soulvercore",
+      "identity" : "tourkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/soulverteam/SoulverCore",
+      "location" : "https://github.com/rampatra/TourKit.git",
       "state" : {
-        "revision" : "649996596de41172a4c67ffb801fe875a03b3c86",
-        "version" : "3.1.0"
+        "branch" : "main",
+        "revision" : "4f2b109506650151d87cd5e84bb9fe2623938781"
       }
     }
   ],
