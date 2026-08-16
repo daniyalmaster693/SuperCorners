@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         let hasShownTour = UserDefaults.standard.bool(forKey: "hasShownTour")
 
-        if hasShownTour {
+        if !hasShownTour {
             NSApp.setActivationPolicy(.regular)
             NSApp.activate(ignoringOtherApps: true)
 
@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     TourPage(imageName: "tour-accessibility", title: "Enable Accessibility Permissions", description: "Give SuperCorners accessibility permission."),
                     TourPage(imageName: "tour-default", title: "Disable Default Hot Corners", description: "Disable the built in hot corners feature for the best experience."),
                 ],
-                width: 850,
+                width: 900,
                 continueButtonTitle: "Continue",
                 finishButtonTitle: "Get Started",
                 onFinish: {
