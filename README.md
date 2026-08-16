@@ -31,9 +31,9 @@
 - **System Commands** - Run system commands directly from your screen corners and zones.
 - **Tools** - Access useful tools from your screen corners and zones.
 - **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
-- **Visual Feedback** - Subtle toast notifications appear briefly to provide visual feedback for actions.
-- **Configurable** - Disable any corner or zone and control app behaviors.
-- **Native** - Built with Swift and SwiftUI for a seamless experience that feels well integrated with macOS.
+- **Visual Feedback** - Optionally choose to enable subtle toast notifications which appear briefly as visual feedback for actions.
+- **Configurable** - Disable any corner or zone and control app behaviors from the settings tab.
+- **Lightweight & Native** - Built with Swift and SwiftUI for a seamless experience that feels well integrated with macOS.
 
 ...and more...
 
@@ -70,7 +70,7 @@ xattr -dr com.apple.quarantine /Applications/SuperCorners.app
 ## Usage
 
 1. Launch **SuperCorners**.
-2. Grant Necessary Permissions (**Accessibility permission must be enabled for certain actions to function**).
+2. Grant Necessary Permissions (**Accessibility permission must be enabled for the app to work correctly**).
 3. Trigger corners and zones by moving your mouse to a corner or the middle of a screen edge. You can also optionally choose to require a modifier key or keyboard shortcut to prevent accidental activation.
 4. Additional behaviors can be configured in the settings tab, such as the sensitivity, an action delay, toast messages, sound effects, and more.
 
@@ -78,16 +78,22 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 
 ## Roadmap
 
-- [x] ~~Additional trigger methods for corners and zones~~
 - [x] ~~Trigger Actions using only a modifier key~~
 - [x] ~~Trigger Actions by clicking~~
 - [x] ~~Trigger Actions without any key presses~~
+- [x] ~~Trigger actions with menubar~~
+- [x] ~~Favorites Feature~~
+- [ ] Seperate trigger sensitivity for corners and zones
 - [ ] Simulating keyboard shortcuts
+- [ ] Height based sensitivity for zones
+- [ ] Secondary actions for triggered actions
+- [ ] Template action modal suggested actions
 - [ ] Automation based action profiles
 - [ ] Allow assigning actions per focus mode
 - [ ] Allow assigning actions per app
 - [ ] Allow assigning actions per display
 - [ ] Additional in app actions
+- [ ] Actions using selected item logic
 
 ...and more to come...
 
