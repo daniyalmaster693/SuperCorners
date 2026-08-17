@@ -51,6 +51,13 @@ func titleForCorner(_ corner: CornerPosition.Corner) -> String {
             return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
         }
 
+    case "29":
+        if let input, !input.isEmpty {
+            let url = URL(fileURLWithPath: input)
+            let lastComponent = url.lastPathComponent
+            return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
+        }
+
     default:
         break
     }
