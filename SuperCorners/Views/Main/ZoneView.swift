@@ -12,13 +12,14 @@ struct ZoneView: View {
     @State private var wallpaperImage: NSImage?
     @Environment(\.colorScheme) var colorScheme
 
-    @State private var selectedActionSetID: UUID = ActionSetManager.shared.availableSets.first!.id
-
     // Action Picker Variables
 
     @State private var showModal = false
     @State private var refreshID = UUID()
-    @State private var selectedActionSet = "Global Actions"
+
+    // Action Set Info
+
+    @State private var selectedActionSetID: UUID = ActionSetManager.shared.availableSets.first!.id
 
     // Zone Variables
 
