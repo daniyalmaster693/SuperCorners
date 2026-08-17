@@ -17,11 +17,6 @@ struct ZoneView: View {
     @State private var showModal = false
     @State private var refreshID = UUID()
 
-    // Action Set Info
-
-    @ObservedObject private var actionSetManager = ActionSetManager.shared
-    @State private var selectedActionSetID: UUID = ActionSetManager.shared.availableSets.first!.id
-
     // Zone Variables
 
     @AppStorage("enableTopZone") var enableTopZone = true
@@ -189,13 +184,13 @@ struct ZoneView: View {
         .id(refreshID)
         .toolbar {
             ToolbarItem(placement: .automatic) {
-                Picker("Active Set:", selection: $selectedActionSetID) {
-                    ForEach(actionSetManager.availableSets) { set in
-                        Text(set.name)
-                            .tag(set.id)
-                    }
-                }
-                .help("Choose an Action Set")
+//                Picker("Active Set:", selection: $selectedActionSetID) {
+//                    ForEach(actionSetManager.availableSets) { set in
+//                        Text(set.name)
+//                            .tag(set.id)
+//                    }
+//                }
+//                .help("Choose an Action Set")
             }
         }
     }

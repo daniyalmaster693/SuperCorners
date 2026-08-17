@@ -17,5 +17,18 @@ struct ActionSet: Codable, Identifiable {
 final class ActionSetManager: ObservableObject {
     static let shared = ActionSetManager()
 
-    @Published private(set) var availableSets: [ActionSet] = []
+    @Published var availableSets: [ActionSet] = [
+        ActionSet(
+            name: "Global Actions",
+            targetBundleID: nil
+        ),
+        ActionSet(
+            name: "Safari Actions",
+            targetBundleID: "com.apple.safari"
+        ),
+        ActionSet(
+            name: "Xcode Actions",
+            targetBundleID: "com.apple.dt.xcode"
+        ),
+    ]
 }
