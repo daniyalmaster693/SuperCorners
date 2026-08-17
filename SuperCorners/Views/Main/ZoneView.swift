@@ -12,6 +12,8 @@ struct ZoneView: View {
     @State private var wallpaperImage: NSImage?
     @Environment(\.colorScheme) var colorScheme
 
+    @State private var selectedActionSetID: UUID = ActionSetManager.shared.availableSets.first!.id
+
     // Action Picker Variables
 
     @State private var showModal = false
@@ -183,5 +185,15 @@ struct ZoneView: View {
             }
         }
         .id(refreshID)
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Picker("Active Set:", selection: $selectedActionSetID) {
+                    ForEach(ActionSetManager.shared.availableSets, id: \.id) { set in
+                        Text(set.name).tag(set.id)
+                    }
+                }
+                .help("Choose an Action Set")
+            }
+        }
     }
 }
