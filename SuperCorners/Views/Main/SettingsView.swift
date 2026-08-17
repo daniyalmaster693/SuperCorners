@@ -1,5 +1,5 @@
 //
-//  ZoneView 2.swift
+//  Settings.swift
 //  SuperCorners
 //
 //  Created by Daniyal Master on 2025-12-19.
@@ -48,8 +48,8 @@ struct SettingsView: View {
 
     // Behavior Settings
 
-    @AppStorage("cornerTriggerSensitivity") private var cornerTriggerSensitivity: Double = 5.0
-    @AppStorage("zoneTriggerSensitivity") private var zoneTriggerSensitivity: Double = 5.0
+    @AppStorage("cornerTriggerSensitivity") private var cornerTriggerSensitivity: Double = 7.0
+    @AppStorage("zoneTriggerSensitivity") private var zoneTriggerSensitivity: Double = 3.0
 
     // Ignored applications list
 
@@ -334,7 +334,7 @@ struct SettingsView: View {
                             .padding(.leading, 25)
                             .padding(.bottom, 10)
 
-                        Slider(value: self.$cornerTriggerSensitivity, in: 1 ... 8.0, step: 0.5)
+                        Slider(value: self.$cornerTriggerSensitivity, in: 1 ... 10.0, step: 0.5)
                     }
 
                     VStack(alignment: .leading, spacing: 6) {
@@ -350,7 +350,7 @@ struct SettingsView: View {
                             .padding(.leading, 25)
                             .padding(.bottom, 10)
 
-                        Slider(value: self.$zoneTriggerSensitivity, in: 1 ... 8.0, step: 0.5)
+                        Slider(value: self.$zoneTriggerSensitivity, in: 1 ... 5.0, step: 0.5)
                     }
                 }
 

@@ -66,7 +66,7 @@ func getCornerMousePosition() {
                 switch corner {
                 case .topLeft, .topRight, .bottomLeft, .bottomRight:
                     return cornerTriggerSensitivity
-                default:
+                case .top, .right, .left, .bottom:
                     return zoneTriggerSensitivity
                 }
             }()
