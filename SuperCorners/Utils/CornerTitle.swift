@@ -15,45 +15,40 @@ func titleForCorner(_ corner: CornerPosition.Corner) -> String {
     let input = UserDefaults.standard.string(forKey: "cornerInput_\(corner.rawValue)")
 
     switch action.id {
-    case "4":
+    case "24":
         if let input, let url = URL(string: input), let host = url.host {
             return host.prefix(1).uppercased() + host.dropFirst()
         }
 
-    case "5":
+    case "23":
         if let input, !input.isEmpty {
             let appURL = URL(fileURLWithPath: input)
             let appName = appURL.deletingPathExtension().lastPathComponent
-            return "Toggle \(appName.capitalized)"
+            return "Launch \(appName.capitalized)"
         }
 
-    case "6":
+    case "25":
         if let input, !input.isEmpty {
             return input.capitalized
         }
 
-    case "7":
-        if let input, !input.isEmpty {
-            let url = URL(fileURLWithPath: input)
-            let lastComponent = url.lastPathComponent
-            return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
-        }
-
-    case "50":
-        if let input, !input.isEmpty {
-            let url = URL(fileURLWithPath: input)
-            let lastComponent = url.lastPathComponent
-            return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
-        }
-
-    case "74":
-        if let input, !input.isEmpty {
-            return "Countdown to \(input.capitalized)"
-        }
-
-    case "96":
+    case "26":
         if let input, !input.isEmpty {
             return input.capitalized
+        }
+
+    case "27":
+        if let input, !input.isEmpty {
+            let url = URL(fileURLWithPath: input)
+            let lastComponent = url.lastPathComponent
+            return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst()) Folder"
+        }
+
+    case "28":
+        if let input, !input.isEmpty {
+            let url = URL(fileURLWithPath: input)
+            let lastComponent = url.lastPathComponent
+            return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
         }
 
     default:
