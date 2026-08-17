@@ -19,6 +19,7 @@ struct CornerView: View {
 
     // Action Set Info
 
+    @ObservedObject private var actionSetManager = ActionSetManager.shared
     @State private var selectedActionSetID: UUID = ActionSetManager.shared.availableSets.first!.id
 
     // Corner Variables
@@ -176,8 +177,9 @@ struct CornerView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Picker("Active Set:", selection: $selectedActionSetID) {
-                    ForEach(ActionSetManager.shared.availableSets, id: \.id) { set in
-                        Text(set.name).tag(set.id)
+                    ForEach(actionSetManager.availableSets) { set in
+                        Text(set.name)
+                            .tag(set.id)
                     }
                 }
                 .help("Choose an Action Set")
