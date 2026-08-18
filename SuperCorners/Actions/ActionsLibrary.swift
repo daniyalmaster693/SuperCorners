@@ -2376,4 +2376,54 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "73",
+        title: "Countdown to Date",
+        description: "Get the time until a date.",
+        iconName: "calendar",
+        tag: "Template Action",
+        requiresInput: true,
+        inputPrompt: "Enter Date in yyyy-MM-dd format",
+        perform: { input in
+            guard let input = input, !input.isEmpty else {
+                showErrorToast("Error: Date is not valid")
+                return
+            }
+
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+
+            guard let targetDate = formatter.date(from: input) else {
+                showErrorToast("Error: Use the yyyy-MM-dd format")
+                return
+            }
+
+            let now = Date()
+            if targetDate <= now {
+                showErrorToast("Error: Date is in the past")
+                return
+            }
+
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.month, .day], from: now, to: targetDate)
+
+            var parts: [String] = []
+
+            if let months = components.month, months > 0 {
+                parts.append("\(months) month" + (months > 1 ? "s" : ""))
+            }
+            if let days = components.day, days > 0 {
+                parts.append("\(days) day" + (days > 1 ? "s" : ""))
+            }
+
+            let countdown = parts.joined(separator: ", ")
+
+            if countdown.isEmpty {
+                showSuccessToast("The date is now!", icon: Image(systemName: "party.popper"))
+            } else {
+                showSuccessToast("Time left: \(countdown)", icon: Image(systemName: "stopwatch"))
+            }
+        }
+    ),
 ]

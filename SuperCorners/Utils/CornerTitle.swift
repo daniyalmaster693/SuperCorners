@@ -58,6 +58,11 @@ func titleForCorner(_ corner: CornerPosition.Corner) -> String {
             return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
         }
 
+    case "73":
+        if let input, !input.isEmpty {
+            return "Countdown to \(input)"
+        }
+
     default:
         break
     }
