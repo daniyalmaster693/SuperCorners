@@ -72,7 +72,35 @@ func getCornerMousePosition() {
             }()
 
             let tolerance: CGFloat = sensitivity * 10
-            let hitZone = CGRect(x: cornerPoint.x - tolerance/2, y: cornerPoint.y - tolerance/2, width: tolerance, height: tolerance)
+            let zoneSize = sensitivity * 100
+
+            let hitZone: CGRect = {
+                switch corner {
+                case .topLeft, .topRight, .bottomLeft, .bottomRight:
+                    return CGRect(
+                        x: cornerPoint.x - tolerance / 2,
+                        y: cornerPoint.y - tolerance / 2,
+                        width: tolerance,
+                        height: tolerance
+                    )
+
+                case .top, .bottom:
+                    return CGRect(
+                        x: cornerPoint.x - zoneSize / 2,
+                        y: cornerPoint.y - tolerance / 2,
+                        width: zoneSize,
+                        height: tolerance
+                    )
+
+                case .left, .right:
+                    return CGRect(
+                        x: cornerPoint.x - tolerance / 2,
+                        y: cornerPoint.y - zoneSize / 2,
+                        width: tolerance,
+                        height: zoneSize
+                    )
+                }
+            }()
 
             if hitZone.contains(mousePosition) {
                 if corner != lastCorner {
