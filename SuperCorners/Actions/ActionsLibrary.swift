@@ -2344,7 +2344,7 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "72",
-        title: "Create a New Conact",
+        title: "Create a New Contact",
         description: "Create a New Contact in Apple Contacts",
         iconName: "person.crop.circle.badge.plus",
         tag: "App Actions",
