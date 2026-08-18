@@ -222,6 +222,18 @@ struct SuperCornersApp: App {
                 }
                 .keyboardShortcut("r")
                 
+                Button("Preferences") {
+                    NSApp.setActivationPolicy(.regular)
+                    NSApp.activate(ignoringOtherApps: true)
+
+                    if let window = NSApp.windows.first(where: { $0.identifier?.rawValue == "main" }) {
+                        window.makeKeyAndOrderFront(nil)
+                    }
+                    
+                    selectedTab = .settings
+                }
+                .keyboardShortcut(",")
+                
                 Button("Check for Updates") {
                     updateManager.getUpdateData(manualCheck: true)
                 }
