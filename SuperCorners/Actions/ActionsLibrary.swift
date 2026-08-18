@@ -412,10 +412,10 @@ let cornerActions: [CornerAction] = [
 
                     keyDown?.post(tap: .cghidEventTap)
                     keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
                 }
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -447,10 +447,10 @@ let cornerActions: [CornerAction] = [
 
                     keyDown?.post(tap: .cghidEventTap)
                     keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
                 }
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -482,10 +482,10 @@ let cornerActions: [CornerAction] = [
 
                     keyDown?.post(tap: .cghidEventTap)
                     keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
                 }
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -517,10 +517,10 @@ let cornerActions: [CornerAction] = [
 
                     keyDown?.post(tap: .cghidEventTap)
                     keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
                 }
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -552,10 +552,10 @@ let cornerActions: [CornerAction] = [
 
                     keyDown?.post(tap: .cghidEventTap)
                     keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
                 }
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -645,10 +645,10 @@ let cornerActions: [CornerAction] = [
                     keyUp?.flags = [.maskCommand, .maskShift]
                     keyDown?.post(tap: .cghidEventTap)
                     keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
                 }
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -801,10 +801,10 @@ let cornerActions: [CornerAction] = [
                     keyUp?.flags = [.maskCommand, .maskShift]
                     keyDown?.post(tap: .cghidEventTap)
                     keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
                 }
             }
-
-            showSuccessToast()
         }
     ),
 
@@ -1782,9 +1782,9 @@ let cornerActions: [CornerAction] = [
                 keyUp.flags = [.maskSecondaryFn]
                 keyDown.post(tap: .cghidEventTap)
                 keyUp.post(tap: .cghidEventTap)
-            }
 
-            showSuccessToast()
+                showSuccessToast()
+            }
         }
     ),
 
