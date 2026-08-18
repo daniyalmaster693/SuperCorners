@@ -2302,7 +2302,7 @@ let cornerActions: [CornerAction] = [
         id: "70",
         title: "Focus Dock",
         description: "Focus the Dock",
-        iconName: "bell.badge",
+        iconName: "rectangle.dock",
         tag: "System",
         requiresInput: false,
         inputPrompt: "",
@@ -2322,9 +2322,9 @@ let cornerActions: [CornerAction] = [
 
     CornerAction(
         id: "71",
-        title: "Focus Control Center",
-        description: "Focus the Control Center",
-        iconName: "bell.badge",
+        title: "Open Control Center",
+        description: "Open the Control Center",
+        iconName: "switch.2",
         tag: "System",
         requiresInput: false,
         inputPrompt: "",
