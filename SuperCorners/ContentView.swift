@@ -8,41 +8,41 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedItem: String? = "corners"
+    @Binding var selectedTab: SelectedTab
     @State private var isHovered = false
     @State private var showingAboutModal = false
 
     var body: some View {
         NavigationSplitView {
             VStack {
-                List(selection: $selectedItem) {
+                List(selection: $selectedTab) {
                     HStack {
                         Image(systemName: "square.grid.2x2")
                             .frame(width: 18, height: 18)
                         Text("Corners")
                     }
-                    .tag("corners")
+                    .tag(SelectedTab.corners)
                     
                     HStack {
                         Image(systemName: "rectangle.leftthird.inset.filled")
                             .frame(width: 18, height: 18)
                         Text("Zones")
                     }
-                    .tag("zones")
+                    .tag(SelectedTab.zones)
                     
                     HStack {
                         Image(systemName: "bolt.circle")
                             .frame(width: 18, height: 18)
                         Text("Actions")
                     }
-                    .tag("actions")
+                    .tag(SelectedTab.actions)
                     
                     HStack {
                         Image(systemName: "gear")
                             .frame(width: 18, height: 18)
                         Text("Settings")
                     }
-                    .tag("settings")
+                    .tag(SelectedTab.settings)
                 }
                 .listStyle(.sidebar)
                 .padding(.top, 7)
@@ -87,21 +87,19 @@ struct ContentView: View {
             .frame(minWidth: 175)
         } detail: {
             Group {
-                switch selectedItem {
-                case "corners":
+                switch selectedTab {
+                case .corners:
                     CornerView()
                         .navigationTitle("Corners")
-                case "zones":
+                case .zones:
                     ZoneView()
                         .navigationTitle("Zones")
-                case "actions":
+                case .actions:
                     ActionBrowserView()
                         .navigationTitle("Actions")
-                case "settings":
+                case .settings:
                     SettingsView()
                         .navigationTitle("Settings")
-                default:
-                    Text("No item selected")
                 }
             }
         }

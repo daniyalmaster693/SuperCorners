@@ -7,12 +7,21 @@
 
 import SwiftUI
 
+enum SelectedTab: String {
+    case corners
+    case zones
+    case actions
+    case settings
+}
+
 @main
 struct SuperCornersApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    @Environment(\.openWindow) private var openWindow
     private let updateManager = UpdateManager()
-
+    
+    @Environment(\.openWindow) private var openWindow
+    @State private var selectedTab: SelectedTab = .corners
+    
     // Settings Variables
     
     @AppStorage("showInDock") private var showInDock = true
@@ -67,14 +76,14 @@ struct SuperCornersApp: App {
     var body: some Scene {
         WindowGroup(id: "main") {
             if #available(macOS 15.0, *) {
-                ContentView()
+                ContentView(selectedTab: $selectedTab)
                     .containerBackground(.thickMaterial, for: .window)
                     .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
                     .onAppear {
                         updateActivationPolicy()
                     }
             } else {
-                ContentView()
+                ContentView(selectedTab: $selectedTab)
                     .onAppear {
                         updateActivationPolicy()
                     }
@@ -233,6 +242,36 @@ struct SuperCornersApp: App {
                 } label: {
                     Label("Check for Updates", systemImage: "gear.badge")
                 }
+            }
+            
+            CommandGroup(after: .sidebar) {
+                Button {
+                    selectedTab = .corners
+                } label: {
+                    Label("Corners", systemImage: "square.grid.2x2")
+                }
+                .keyboardShortcut("1")
+
+                Button {
+                    selectedTab = .zones
+                } label: {
+                    Label("Zones", systemImage: "rectangle.leftthird.inset.filled")
+                }
+                .keyboardShortcut("2")
+
+                Button {
+                    selectedTab = .actions
+                } label: {
+                    Label("Actions", systemImage: "bolt.circle")
+                }
+                .keyboardShortcut("3")
+
+                Button {
+                    selectedTab = .settings
+                } label: {
+                    Label("Settings", systemImage: "gear")
+                }
+                .keyboardShortcut("4")
             }
             
             CommandGroup(replacing: .help) {
