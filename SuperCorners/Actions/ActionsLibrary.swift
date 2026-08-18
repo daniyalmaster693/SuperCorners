@@ -1935,4 +1935,74 @@ let cornerActions: [CornerAction] = [
         perform: { _ in
         }
     ),
+
+    CornerAction(
+        id: "59",
+        title: "Open Reader Mode",
+        description: "Toggle Reader Mode in Safari.",
+        iconName: "book",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let appPath = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
+            let url = URL(fileURLWithPath: appPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.safari").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeN: CGKeyCode = 15
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskShift]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskShift]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "60",
+        title: "Compose New Message",
+        description: "Compose a new message in Messages",
+        iconName: "message",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let appPath = "/System/Applications/Messages.app"
+            let url = URL(fileURLWithPath: appPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Notes").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeN: CGKeyCode = 45
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    keyDown?.flags = [.maskCommand]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    keyUp?.flags = [.maskCommand]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+        }
+    ),
 ]
