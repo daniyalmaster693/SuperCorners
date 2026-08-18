@@ -1923,4 +1923,16 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "58",
+        title: "Do Nothing",
+        description: "Blank action that does nothing",
+        iconName: "nosign",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+        }
+    ),
 ]
