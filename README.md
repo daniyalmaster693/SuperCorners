@@ -82,13 +82,13 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [x] Seperate trigger sensitivity for corners and zones
 - [x] Simulating keyboard shortcuts
 - [ ] Height based sensitivity for zones
-- [ ] Secondary actions for triggered actions
 - [ ] Template action modal suggested actions
-- [ ] Visual overlay for corners and zones
-- [ ] Deep Link Support
 - [ ] Allow assigning actions per focus mode
 - [ ] Allow assigning actions per app
 - [ ] Allow assigning actions per display
+- [ ] Visual overlay for corners and zones
+- [ ] Secondary actions for triggered actions
+- [ ] Deep Link Support
 - [ ] Additional in app actions
 - [ ] Actions using selected item logic
 
@@ -98,6 +98,7 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 
 - [Keyboard Shortcuts](https://github.com/sindresorhus/KeyboardShortcuts)
 - [LaunchAtLogin Modern](https://github.com/sindresorhus/LaunchAtLogin-Modern)
+- [MacToastKit](https://github.com/daniyalmaster693/MacToastKit)
 - [TourKit](https://github.com/rampatra/TourKit)
 
 ## Contributions
