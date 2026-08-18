@@ -226,10 +226,6 @@ struct SuperCornersApp: App {
                     NSApp.setActivationPolicy(.regular)
                     NSApp.activate(ignoringOtherApps: true)
 
-                    if let window = NSApp.windows.first(where: { $0.identifier?.rawValue == "main" }) {
-                        window.makeKeyAndOrderFront(nil)
-                    }
-                    
                     selectedTab = .settings
                 }
                 .keyboardShortcut(",")
@@ -249,6 +245,13 @@ struct SuperCornersApp: App {
 
         .commands {
             CommandGroup(after: .appInfo) {
+                Button {
+                    selectedTab = .settings
+                } label: {
+                    Label("Preferences", systemImage: "gear")
+                }
+                .keyboardShortcut(",")
+                
                 Button {
                     updateManager.getUpdateData(manualCheck: true)
                 } label: {
@@ -277,13 +280,6 @@ struct SuperCornersApp: App {
                     Label("Actions", systemImage: "bolt.circle")
                 }
                 .keyboardShortcut("3")
-
-                Button {
-                    selectedTab = .settings
-                } label: {
-                    Label("Settings", systemImage: "gear")
-                }
-                .keyboardShortcut("4")
             }
             
             CommandGroup(replacing: .help) {
