@@ -2261,4 +2261,84 @@ let cornerActions: [CornerAction] = [
             }
         }
     ),
+
+    CornerAction(
+        id: "69",
+        title: "Open Go To Folder",
+        description: "Open the Go To Folder dialog in Finder.",
+        iconName: "folder",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let finderPath = "/System/Library/CoreServices/Finder.app"
+            let url = URL(fileURLWithPath: finderPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Finder").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeG: CGKeyCode = 5 // 'G' key
+
+                    if let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: true),
+                       let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: false)
+                    {
+                        keyDown.flags = [.maskCommand, .maskShift]
+                        keyUp.flags = [.maskCommand, .maskShift]
+
+                        keyDown.post(tap: .cghidEventTap)
+                        keyUp.post(tap: .cghidEventTap)
+                    }
+                }
+            }
+
+            showSuccessToast()
+        }
+    ),
+
+    CornerAction(
+        id: "70",
+        title: "Focus Dock",
+        description: "Focus the Dock",
+        iconName: "bell.badge",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeA: CGKeyCode = 0
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeA, keyDown: true)
+            keyDown?.flags = [.maskSecondaryFn]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeA, keyDown: false)
+            keyUp?.flags = [.maskSecondaryFn]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
+        }
+    ),
+
+    CornerAction(
+        id: "71",
+        title: "Focus Control Center",
+        description: "Focus the Control Center",
+        iconName: "bell.badge",
+        tag: "System",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeC: CGKeyCode = 8
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeC, keyDown: true)
+            keyDown?.flags = [.maskSecondaryFn]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeC, keyDown: false)
+            keyUp?.flags = [.maskSecondaryFn]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
+        }
+    ),
 ]
