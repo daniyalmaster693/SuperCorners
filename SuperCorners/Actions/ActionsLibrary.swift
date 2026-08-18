@@ -1954,12 +1954,12 @@ let cornerActions: [CornerAction] = [
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     let src = CGEventSource(stateID: .hidSystemState)
-                    let keyCodeN: CGKeyCode = 15
+                    let keyCodeR: CGKeyCode = 15
 
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeR, keyDown: true)
                     keyDown?.flags = [.maskCommand, .maskShift]
 
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeR, keyDown: false)
                     keyUp?.flags = [.maskCommand, .maskShift]
 
                     keyDown?.post(tap: .cghidEventTap)
@@ -2003,6 +2003,50 @@ let cornerActions: [CornerAction] = [
                     showSuccessToast()
                 }
             }
+        }
+    ),
+
+    CornerAction(
+        id: "61",
+        title: "New Window",
+        description: "Open a new window for the focused app",
+        iconName: "macwindow.on.rectangle",
+        tag: "Window Management",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeN: CGKeyCode = 45
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+            keyDown?.flags = [.maskCommand]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+            keyUp?.flags = [.maskCommand]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
+        }
+    ),
+
+    CornerAction(
+        id: "62",
+        title: "Close Window",
+        description: "Close a window for the focused app",
+        iconName: "macwindow.and.cursorarrow",
+        tag: "Window Management",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeW: CGKeyCode = 13
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeW, keyDown: true)
+            keyDown?.flags = [.maskCommand]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeW, keyDown: false)
+            keyUp?.flags = [.maskCommand]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
         }
     ),
 ]
