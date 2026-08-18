@@ -2049,4 +2049,216 @@ let cornerActions: [CornerAction] = [
             showSuccessToast()
         }
     ),
+
+    CornerAction(
+        id: "63",
+        title: "Go to Current Song",
+        description: "Opens album for currently playing song in Apple Music",
+        iconName: "cursorarrow.click",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let lKeyCode: CGKeyCode = 37 // 'L' key
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: true)
+                    keyDown?.flags = .maskCommand
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: lKeyCode, keyDown: false)
+                    keyUp?.flags = .maskCommand
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "64",
+        title: "Stop Playback Apple Music",
+        description: "Stops Playback in Apple Music",
+        iconName: "play.slash",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let periodKeyCode: CGKeyCode = 47 // '.' key
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: periodKeyCode, keyDown: true)
+                    keyDown?.flags = .maskCommand
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: periodKeyCode, keyDown: false)
+                    keyUp?.flags = .maskCommand
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "65",
+        title: "Open Miniplayer",
+        description: "Opens Miniplayer in Apple Music",
+        iconName: "rectangle.inset.bottomleading.filled",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let mKeyCode: CGKeyCode = 46
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: mKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskAlternate]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: mKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskAlternate]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "66",
+        title: "Open Fullscreen Player",
+        description: "Opens Fullscreen Player in Apple Music",
+        iconName: "arrow.up.left.and.arrow.down.right",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let fKeyCode: CGKeyCode = 3
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: fKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskShift]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: fKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskShift]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+
+            showSuccessToast()
+        }
+    ),
+
+    CornerAction(
+        id: "67",
+        title: "Open Now Playing",
+        description: "Open Now Playing in Apple Music",
+        iconName: "tv.music.note",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let fKeyCode: CGKeyCode = 3
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: fKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskAlternate]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: fKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskAlternate]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "68",
+        title: "Open Lyrics",
+        description: "Open Lyrics Panel in Apple Music",
+        iconName: "music.note.list",
+        tag: "App Actions",
+        requiresInput: false,
+        inputPrompt: "",
+        perform: { _ in
+            let musicAppPath = "/System/Applications/Music.app"
+            let url = URL(fileURLWithPath: musicAppPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Music").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let uKeyCode: CGKeyCode = 32
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: uKeyCode, keyDown: true)
+                    keyDown?.flags = [.maskCommand, .maskControl]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: uKeyCode, keyDown: false)
+                    keyUp?.flags = [.maskCommand, .maskControl]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+        }
+    ),
 ]
