@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         let hasShownTour = UserDefaults.standard.bool(forKey: "hasShownTour")
 
-        if !hasShownTour {
+        if hasShownTour {
             NSApp.setActivationPolicy(.regular)
             NSApp.activate(ignoringOtherApps: true)
 
