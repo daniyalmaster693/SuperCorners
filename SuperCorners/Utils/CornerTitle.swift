@@ -7,12 +7,16 @@
 
 import SwiftUI
 
-func titleForCorner(_ corner: CornerPosition.Corner) -> String {
-    guard let action = cornerActionBindings[corner] else {
+func titleForCorner(_ corner: CornerPosition.Corner, currentSet: ActionSet) -> String {
+    let assignment = currentSet.actionAssignment(for: corner)
+
+    guard let action = cornerActions.first(where: {
+        $0.id == assignment.actionID
+    }) else {
         return "Add Action"
     }
 
-    let input = UserDefaults.standard.string(forKey: "cornerInput_\(corner.rawValue)")
+    let input = assignment.input
 
     switch action.id {
     case "launchApp":

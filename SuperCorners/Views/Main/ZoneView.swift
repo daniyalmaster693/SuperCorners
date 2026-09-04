@@ -29,10 +29,16 @@ struct ZoneView: View {
     @AppStorage("enableBottomZone") var enableBottomZone = true
 
     var body: some View {
-        let topTitle = titleForCorner(.top)
-        let leftTitle = titleForCorner(.left)
-        let rightTitle = titleForCorner(.right)
-        let bottomTitle = titleForCorner(.bottom)
+        var currentSet: ActionSet {
+            ActionSetManager.shared.availableSets.first {
+                $0.id == selectedActionSet
+            } ?? ActionSetManager.shared.availableSets[0]
+        }
+
+        let topTitle = titleForCorner(.top, currentSet: currentSet)
+        let leftTitle = titleForCorner(.left, currentSet: currentSet)
+        let rightTitle = titleForCorner(.right, currentSet: currentSet)
+        let bottomTitle = titleForCorner(.bottom, currentSet: currentSet)
 
         func mapSelectedToCorner(_ selected: SelectedCornerPosition) -> CornerPosition.Corner {
             switch selected {

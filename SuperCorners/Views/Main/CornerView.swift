@@ -29,10 +29,16 @@ struct CornerView: View {
     @AppStorage("enableBottomRightCorner") var enableBottomRightCorner = true
 
     var body: some View {
-        let topLeftTitle = titleForCorner(.topLeft)
-        let topRightTitle = titleForCorner(.topRight)
-        let bottomLeftTitle = titleForCorner(.bottomLeft)
-        let bottomRightTitle = titleForCorner(.bottomRight)
+        var currentSet: ActionSet {
+            ActionSetManager.shared.availableSets.first {
+                $0.id == selectedActionSet
+            } ?? ActionSetManager.shared.availableSets[0]
+        }
+
+        let topLeftTitle = titleForCorner(.topLeft, currentSet: currentSet)
+        let topRightTitle = titleForCorner(.topRight, currentSet: currentSet)
+        let bottomLeftTitle = titleForCorner(.bottomLeft, currentSet: currentSet)
+        let bottomRightTitle = titleForCorner(.bottomRight, currentSet: currentSet)
 
         func mapSelectedToCorner(_ selected: SelectedCornerPosition) -> CornerPosition.Corner {
             switch selected {

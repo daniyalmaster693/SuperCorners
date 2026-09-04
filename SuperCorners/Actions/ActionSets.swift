@@ -143,3 +143,26 @@ final class ActionSetManager: ObservableObject {
         ),
     ]
 }
+
+extension ActionSet {
+    func actionAssignment(for corner: CornerPosition.Corner) -> ActionAssignment {
+        switch corner {
+        case .topLeft:
+            return topLeft
+        case .topRight:
+            return topRight
+        case .bottomLeft:
+            return bottomLeft
+        case .bottomRight:
+            return bottomRight
+        case .top:
+            return top
+        case .left:
+            return left
+        case .right:
+            return right
+        case .bottom:
+            return bottom
+        }
+    }
+}
