@@ -11,24 +11,24 @@ import SwiftUI
 struct ActionLibraryView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) var colorScheme
-
+    
     @State private var searchText = ""
     @State private var selectedCategories: Set<ActionCategory> = []
     @State private var selectedActionID: String?
     @State private var showTemplateModal = false
     @State private var templateInput = ""
-
+    
     @State private var hotkeyNameKey: KeyboardShortcuts.Name = .init("tempHotkey")
     @State private var hotkeyDisplayName: String = ""
-
+    
     let corner: CornerPosition.Corner
     var onUpdate: () -> Void
-
+    
     var allCategories: [ActionCategory] {
         Array(Set(cornerActions.map { $0.category }))
             .sorted { $0.rawValue < $1.rawValue }
     }
-
+    
     var filteredActions: [CornerAction] {
         let searchFiltered = searchText.isEmpty
             ? cornerActions
@@ -36,7 +36,7 @@ struct ActionLibraryView: View {
                 action.title.lowercased().contains(searchText.lowercased()) ||
                     action.description.lowercased().contains(searchText.lowercased())
             }
-
+        
         if selectedCategories.isEmpty {
             return searchFiltered
         } else {
@@ -45,7 +45,12 @@ struct ActionLibraryView: View {
             }
         }
     }
-
+    
+    var selectedAction: CornerAction? {
+        guard let selectedActionID else { return nil }
+        return cornerActions.first { $0.id == selectedActionID }
+    }
+    
     var body: some View {
         VStack(spacing: 8) {
             Text("Action Library")
@@ -53,7 +58,7 @@ struct ActionLibraryView: View {
                 .padding(.top, 15)
                 .padding(.bottom, 12)
                 .bold()
-
+            
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
@@ -72,7 +77,7 @@ struct ActionLibraryView: View {
             )
             .frame(maxWidth: 300)
             .padding(.bottom, 5)
-
+            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6) {
                     ForEach(allCategories, id: \.self) { category in
@@ -114,7 +119,7 @@ struct ActionLibraryView: View {
             }
             .frame(maxWidth: 325)
             .padding(.bottom, 15)
-
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
                     ForEach(filteredActions) { action in
@@ -126,19 +131,19 @@ struct ActionLibraryView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 15, height: 15)
-
+                                
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(action.title)
                                         .foregroundColor(.primary)
                                         .lineLimit(1)
                                         .truncationMode(.tail)
-
+                                    
                                     Text(action.description)
                                         .foregroundColor(.secondary)
                                         .lineLimit(1)
                                         .truncationMode(.tail)
                                 }
-
+                                
                                 Spacer()
                             }
                             .padding()
@@ -162,20 +167,20 @@ struct ActionLibraryView: View {
             .padding(.top, 5)
             .frame(maxWidth: 350, maxHeight: 225)
             .padding(.bottom, 15)
-
+            
             Divider().frame(maxWidth: 350)
-
+            
             HStack {
                 Button("Cancel") {
                     dismiss()
                 }
                 .keyboardShortcut(.cancelAction)
                 .frame(maxWidth: .infinity, alignment: .leading)
-
+                
                 Button("Done") {
                     if let selectedID = selectedActionID,
                        let selectedAction = cornerActions.first(where: { $0.id == selectedID })
-
+                        
                     {
                         if selectedAction.inputType != .none {
                             templateInput = ""
@@ -200,19 +205,19 @@ struct ActionLibraryView: View {
         .padding()
         .sheet(isPresented: $showTemplateModal) {
             VStack(spacing: 8) {
-                Text(cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt ?? "Enter Input")
+                Text(selectedAction?.inputPrompt ?? "Enter Input")
                     .font(.title2)
                     .padding(.top, 10)
                     .padding(.bottom, 2)
                     .bold()
-
+                
                 Text("Enter a valid action input to assign it")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .padding(.bottom, 20)
                     .frame(maxWidth: 290)
-
-                if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Enter Application Path" {
+                
+                if selectedAction?.inputType == .application {
                     HStack(spacing: 8) {
                         TextField("Enter Action Input...", text: $templateInput)
                             .textFieldStyle(.plain)
@@ -227,7 +232,7 @@ struct ActionLibraryView: View {
                                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
                             )
                             .frame(maxWidth: 260)
-
+                        
                         Button(action: {
                             let panel = NSOpenPanel()
                             panel.canChooseFiles = true
@@ -237,7 +242,7 @@ struct ActionLibraryView: View {
                             panel.directoryURL = URL(fileURLWithPath: "/Applications")
                             panel.title = "Select Application"
                             panel.prompt = "Select"
-
+                            
                             if panel.runModal() == .OK, let url = panel.url {
                                 templateInput = url.path
                             }
@@ -248,7 +253,7 @@ struct ActionLibraryView: View {
                         .buttonStyle(BorderlessButtonStyle())
                     }
                     .padding(.bottom, 20)
-                } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Enter Folder Path" {
+                } else if selectedAction?.inputType == .folder {
                     HStack(spacing: 8) {
                         TextField("Enter Action Input...", text: $templateInput)
                             .textFieldStyle(.plain)
@@ -263,7 +268,7 @@ struct ActionLibraryView: View {
                                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
                             )
                             .frame(maxWidth: 260)
-
+                        
                         Button(action: {
                             let panel = NSOpenPanel()
                             panel.canChooseFiles = false
@@ -273,7 +278,7 @@ struct ActionLibraryView: View {
                             panel.directoryURL = URL(fileURLWithPath: lastPath)
                             panel.title = "Select Folder"
                             panel.prompt = "Select"
-
+                            
                             if panel.runModal() == .OK, let url = panel.url {
                                 templateInput = url.path
                                 UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
@@ -285,7 +290,7 @@ struct ActionLibraryView: View {
                         .buttonStyle(BorderlessButtonStyle())
                     }
                     .padding(.bottom, 20)
-                } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Enter File Path" {
+                } else if selectedAction?.inputType == .file {
                     HStack(spacing: 8) {
                         TextField("Enter Action Input...", text: $templateInput)
                             .textFieldStyle(.plain)
@@ -300,7 +305,7 @@ struct ActionLibraryView: View {
                                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
                             )
                             .frame(maxWidth: 260)
-
+                        
                         Button(action: {
                             let panel = NSOpenPanel()
                             panel.canChooseFiles = true
@@ -310,7 +315,7 @@ struct ActionLibraryView: View {
                             panel.directoryURL = URL(fileURLWithPath: lastPath)
                             panel.title = "Select File"
                             panel.prompt = "Select"
-
+                            
                             if panel.runModal() == .OK, let url = panel.url {
                                 templateInput = url.path
                                 UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
@@ -322,7 +327,7 @@ struct ActionLibraryView: View {
                         .buttonStyle(BorderlessButtonStyle())
                     }
                     .padding(.bottom, 20)
-                } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Enter AppleScript Path" {
+                } else if selectedAction?.inputType == .appleScript {
                     HStack(spacing: 8) {
                         TextField("Enter Action Input...", text: $templateInput)
                             .textFieldStyle(.plain)
@@ -337,7 +342,7 @@ struct ActionLibraryView: View {
                                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
                             )
                             .frame(maxWidth: 260)
-
+                        
                         Button(action: {
                             let panel = NSOpenPanel()
                             panel.canChooseFiles = true
@@ -348,7 +353,7 @@ struct ActionLibraryView: View {
                             panel.directoryURL = URL(fileURLWithPath: lastPath)
                             panel.title = "Select AppleScript"
                             panel.prompt = "Select"
-
+                            
                             if panel.runModal() == .OK, let url = panel.url {
                                 templateInput = url.path
                                 UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
@@ -360,7 +365,7 @@ struct ActionLibraryView: View {
                         .buttonStyle(BorderlessButtonStyle())
                     }
                     .padding(.bottom, 20)
-                } else if cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt == "Record Hotkey" {
+                } else if selectedAction?.inputType == .hotkey {
                     HStack(spacing: 8) {
                         TextField("Hotkey Name...", text: $templateInput)
                             .textFieldStyle(.plain)
@@ -375,7 +380,7 @@ struct ActionLibraryView: View {
                                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
                             )
                             .frame(maxWidth: 300)
-
+                        
                         let dynamicHotkeyName = KeyboardShortcuts.Name(templateInput.isEmpty ? "tempHotkey" : templateInput)
                         KeyboardShortcuts.Recorder(for: dynamicHotkeyName)
                     }
@@ -395,7 +400,7 @@ struct ActionLibraryView: View {
                                     .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
                             )
                             .frame(maxWidth: 260)
-
+                        
                         Button(action: {
                             if let clipboardString = NSPasteboard.general.string(forType: .string) {
                                 templateInput = clipboardString
@@ -405,26 +410,26 @@ struct ActionLibraryView: View {
                                 .frame(width: 30, height: 30)
                         }
                         .buttonStyle(BorderlessButtonStyle())
-
+                        
                     }.padding(.bottom, 20)
                 }
-
+                
                 Divider().frame(maxWidth: 290)
-
+                
                 HStack {
                     Button("Cancel") {
                         dismiss()
                     }
                     .keyboardShortcut(.cancelAction)
                     .frame(maxWidth: .infinity, alignment: .leading)
-
+                    
                     Button("Assign") {
                         if let selectedID = selectedActionID,
                            let selectedAction = cornerActions.first(where: { $0.id == selectedID })
                         {
                             UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
                             UserDefaults.standard.set(templateInput, forKey: "cornerInput_\(corner.rawValue)")
-
+                            
                             onUpdate()
                             showTemplateModal = false
                             dismiss()
@@ -440,18 +445,16 @@ struct ActionLibraryView: View {
             .padding(.top, 15)
             .padding()
             .onAppear {
-                guard templateInput.isEmpty,
-                      let inputPrompt = cornerActions.first(where: { $0.id == selectedActionID })?.inputPrompt
-                else {
+                guard templateInput.isEmpty, let selectedAction else {
                     return
                 }
-
-                switch inputPrompt {
-                case "Enter Application Path":
-                    templateInput = "Applications/"
-                case "Enter Website URL":
+                
+                switch selectedAction.inputType {
+                case .url:
                     templateInput = "https://"
-                case "Enter Folder Path", "Enter File Path", "Enter AppleScript File Path", "Enter Bash Script File Path":
+                case .application:
+                    templateInput = "Applications/"
+                case .folder, .file, .appleScript:
                     let homePath = FileManager.default.homeDirectoryForCurrentUser.path
                     templateInput = "\(homePath)/"
                 default:
