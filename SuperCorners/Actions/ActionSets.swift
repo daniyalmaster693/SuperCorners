@@ -142,6 +142,49 @@ final class ActionSetManager: ObservableObject {
             ),
         ),
     ]
+
+    // Set Management
+
+    func createSet(name: String, targetBundleID: String) {
+        let newSet = ActionSet(
+            name: name,
+            targetBundleID: targetBundleID,
+            topLeft: ActionAssignment(
+                actionID: "doNothing",
+                input: nil
+            ),
+            topRight: ActionAssignment(
+                actionID: "doNothing",
+                input: nil
+            ),
+            bottomLeft: ActionAssignment(
+                actionID: "doNothing",
+                input: nil
+            ),
+            bottomRight: ActionAssignment(
+                actionID: "doNothing",
+                input: nil
+            ),
+            top: ActionAssignment(
+                actionID: "doNothing",
+                input: nil
+            ),
+            left: ActionAssignment(
+                actionID: "doNothing",
+                input: nil
+            ),
+            right: ActionAssignment(
+                actionID: "doNothing",
+                input: nil
+            ),
+            bottom: ActionAssignment(
+                actionID: "doNothing",
+                input: nil
+            )
+        )
+
+        availableSets.append(newSet)
+    }
 }
 
 extension ActionSet {
