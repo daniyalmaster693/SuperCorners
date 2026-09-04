@@ -185,6 +185,16 @@ final class ActionSetManager: ObservableObject {
 
         availableSets.append(newSet)
     }
+
+    func deleteSet(_ set: ActionSet) {
+        guard set.targetBundleID != nil else {
+            return
+        }
+
+        availableSets.removeAll {
+            $0.id == set.id
+        }
+    }
 }
 
 extension ActionSet {
