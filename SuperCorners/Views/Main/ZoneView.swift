@@ -19,7 +19,10 @@ struct ZoneView: View {
 
     // Action Set Info
 
+    @ObservedObject private var actionSetManager = ActionSetManager.shared
+
     @State private var selectedActionSet: UUID = ActionSetManager.shared.availableSets[0].id
+    @State private var showActionSetEditor = false
 
     // Zone Variables
 
@@ -30,9 +33,9 @@ struct ZoneView: View {
 
     var body: some View {
         var currentSet: ActionSet {
-            ActionSetManager.shared.availableSets.first {
+            actionSetManager.availableSets.first {
                 $0.id == selectedActionSet
-            } ?? ActionSetManager.shared.availableSets[0]
+            } ?? actionSetManager.availableSets[0]
         }
 
         let topTitle = titleForCorner(.top, currentSet: currentSet)
@@ -195,12 +198,24 @@ struct ZoneView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Picker("Active Set:", selection: $selectedActionSet) {
-                    ForEach(ActionSetManager.shared.availableSets) { set in
+                    ForEach(actionSetManager.availableSets) { set in
                         Text(set.name)
                             .tag(set.id)
                     }
                 }
                 .help("Choose an Action Set")
+            }
+
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
+                    showActionSetEditor = true
+                }) {
+                    Image(systemName: "slider.horizontal.3")
+                }
+                .help("Edit Action Sets")
+                .sheet(isPresented: $showActionSetEditor) {
+                    ActionSetEditor()
+                }
             }
         }
     }
