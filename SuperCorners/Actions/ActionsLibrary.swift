@@ -677,7 +677,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "openDowlnoad",
+        id: "openDownload",
         title: "Open Last Download",
         description: "Open the most recently downloaded file.",
         iconName: "arrow.down.doc",
@@ -1949,7 +1949,7 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "openAirdrop",
+        id: "openAirDrop",
         title: "Open AirDrop",
         description: "Open AirDrop in Finder.",
         iconName: "square.and.arrow.up",

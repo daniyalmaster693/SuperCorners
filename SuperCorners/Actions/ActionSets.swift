@@ -73,71 +73,71 @@ final class ActionSetManager: ObservableObject {
             name: "Safari Actions",
             targetBundleID: "com.apple.safari",
             topLeft: ActionAssignment(
-                actionID: "screenSaver",
+                actionID: "createEmail",
                 input: nil
             ),
             topRight: ActionAssignment(
-                actionID: "sleepDisplay",
+                actionID: "createEvent",
                 input: nil
             ),
             bottomLeft: ActionAssignment(
-                actionID: "toggleTheme",
+                actionID: "copyPage",
                 input: nil
             ),
             bottomRight: ActionAssignment(
-                actionID: "toggleAwake",
+                actionID: "readerMode",
                 input: nil
             ),
             top: ActionAssignment(
-                actionID: "spotlightApps",
+                actionID: "doNothing",
                 input: nil
             ),
             left: ActionAssignment(
-                actionID: "missionControl",
+                actionID: "doNothing",
                 input: nil
             ),
             right: ActionAssignment(
-                actionID: "applicationWindows",
+                actionID: "doNothing",
                 input: nil
             ),
             bottom: ActionAssignment(
-                actionID: "notificationCenter",
+                actionID: "doNothing",
                 input: nil
             ),
         ),
         ActionSet(
-            name: "Xcode Actions",
-            targetBundleID: "com.apple.dt.xcode",
+            name: "Finder Actions",
+            targetBundleID: "/System/Library/CoreServices/Finder.app",
             topLeft: ActionAssignment(
-                actionID: "screenSaver",
+                actionID: "createFile",
                 input: nil
             ),
             topRight: ActionAssignment(
-                actionID: "sleepDisplay",
+                actionID: "createFolder",
                 input: nil
             ),
             bottomLeft: ActionAssignment(
-                actionID: "createNote",
+                actionID: "openAirDrop",
                 input: nil
             ),
             bottomRight: ActionAssignment(
-                actionID: "createEvent",
+                actionID: "goToFolder",
                 input: nil
             ),
             top: ActionAssignment(
-                actionID: "spotlightApps",
+                actionID: "doNothing",
                 input: nil
             ),
             left: ActionAssignment(
-                actionID: "missionControl",
+                actionID: "openDownload",
                 input: nil
             ),
             right: ActionAssignment(
-                actionID: "applicationWindows",
+                actionID: "copyDownload",
                 input: nil
             ),
             bottom: ActionAssignment(
-                actionID: "notificationCenter",
+                actionID: "doNothing",
                 input: nil
             ),
         ),
