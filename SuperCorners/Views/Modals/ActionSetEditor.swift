@@ -9,6 +9,7 @@ import AppKit
 import SwiftUI
 
 struct ActionSetEditor: View {
+    @ObservedObject private var actionSetManager = ActionSetManager.shared
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -38,9 +39,15 @@ struct ActionSetEditor: View {
                                 panel.prompt = "Choose"
                                 
                                 if panel.runModal() == .OK, let url = panel.url {
+                                    let appName = url.deletingPathExtension().lastPathComponent
                                     let bundleID = Bundle(url: url)?.bundleIdentifier
                                            
-                                    print("Bundle ID: \(bundleID ?? "Unknown")")
+                                    if let bundleID {
+                                        ActionSetManager.shared.createSet(
+                                            name: "\(appName) Actions",
+                                            targetBundleID: bundleID
+                                        )
+                                    }
                                 }
                             }) {
                                 HStack {
@@ -80,7 +87,7 @@ struct ActionSetEditor: View {
                 }
 
                 Section("Action Sets") {
-                    ForEach(ActionSetManager.shared.availableSets) { set in
+                    ForEach(actionSetManager.availableSets) { set in
                         HStack {
                             if let icon = applicationIcon(for: set.targetBundleID) {
                                 Image(nsImage: icon)
@@ -106,7 +113,7 @@ struct ActionSetEditor: View {
                             if set.targetBundleID != nil {
                                 if #available(macOS 26.0, *) {
                                     Button(action: {
-                                        // Placeholder delete action
+                                        ActionSetManager.shared.deleteSet(set)
                                     }) {
                                         Image(systemName: "trash")
                                             .foregroundColor(.secondary)
@@ -116,7 +123,7 @@ struct ActionSetEditor: View {
                                 }
                                 else {
                                     Button(action: {
-                                        // Placeholder delete action
+                                        ActionSetManager.shared.deleteSet(set)
                                     }) {
                                         Image(systemName: "trash")
                                             .foregroundColor(.secondary)
