@@ -15,50 +15,50 @@ func titleForCorner(_ corner: CornerPosition.Corner) -> String {
     let input = UserDefaults.standard.string(forKey: "cornerInput_\(corner.rawValue)")
 
     switch action.id {
-    case "24":
-        if let input, let url = URL(string: input), let host = url.host {
-            return host.prefix(1).uppercased() + host.dropFirst()
-        }
-
-    case "23":
+    case "launchApp":
         if let input, !input.isEmpty {
             let appURL = URL(fileURLWithPath: input)
             let appName = appURL.deletingPathExtension().lastPathComponent
             return "Launch \(appName.capitalized)"
         }
 
-    case "25":
+    case "openWebsite":
+        if let input, let url = URL(string: input), let host = url.host {
+            return host.prefix(1).uppercased() + host.dropFirst()
+        }
+
+    case "runShortcut":
         if let input, !input.isEmpty {
             return input.capitalized
         }
 
-    case "26":
+    case "simulateHotkey":
         if let input, !input.isEmpty {
             return input.capitalized
         }
 
-    case "27":
+    case "openFolder":
         if let input, !input.isEmpty {
             let url = URL(fileURLWithPath: input)
             let lastComponent = url.lastPathComponent
             return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst()) Folder"
         }
 
-    case "28":
+    case "openFile":
         if let input, !input.isEmpty {
             let url = URL(fileURLWithPath: input)
             let lastComponent = url.lastPathComponent
             return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
         }
 
-    case "29":
+    case "runAppleScript":
         if let input, !input.isEmpty {
             let url = URL(fileURLWithPath: input)
             let lastComponent = url.lastPathComponent
             return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
         }
 
-    case "73":
+    case "dateCountdown":
         if let input, !input.isEmpty {
             return "Countdown to \(input)"
         }
