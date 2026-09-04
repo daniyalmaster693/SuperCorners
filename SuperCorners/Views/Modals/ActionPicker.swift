@@ -18,9 +18,6 @@ struct ActionLibraryView: View {
     @State private var showTemplateModal = false
     @State private var templateInput = ""
     
-    @State private var hotkeyNameKey: KeyboardShortcuts.Name = .init("tempHotkey")
-    @State private var hotkeyDisplayName: String = ""
-    
     let corner: CornerPosition.Corner
     var onUpdate: () -> Void
     
