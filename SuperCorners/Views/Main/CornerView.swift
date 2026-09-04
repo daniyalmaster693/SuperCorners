@@ -20,6 +20,7 @@ struct CornerView: View {
     // Action Set Info
 
     @State private var selectedActionSet: UUID = ActionSetManager.shared.availableSets[0].id
+    @State private var showActionSetEditor = false
 
     // Corner Variables
 
@@ -188,6 +189,18 @@ struct CornerView: View {
                     }
                 }
                 .help("Choose an Action Set")
+            }
+
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
+                    showActionSetEditor = true
+                }) {
+                    Image(systemName: "slider.horizontal.3")
+                }
+                .help("Edit Action Sets")
+                .sheet(isPresented: $showActionSetEditor) {
+                    ActionSetEditor()
+                }
             }
         }
     }

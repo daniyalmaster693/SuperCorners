@@ -107,7 +107,7 @@ final class ActionSetManager: ObservableObject {
         ),
         ActionSet(
             name: "Finder Actions",
-            targetBundleID: "/System/Library/CoreServices/Finder.app",
+            targetBundleID: "com.apple.finder",
             topLeft: ActionAssignment(
                 actionID: "createFile",
                 input: nil
