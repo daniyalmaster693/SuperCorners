@@ -89,6 +89,7 @@ enum ActionInputType {
     case folder
     case file
     case hotkey
+    case appleScript
 }
 
 struct CornerAction: Identifiable {
@@ -98,7 +99,7 @@ struct CornerAction: Identifiable {
     let iconName: String
     let category: ActionCategory
     let inputType: ActionInputType
-    let inputPrompt: String?
+    var inputPrompt: String? = nil
     let perform: (_ input: String?) -> Void
 }
 
@@ -110,7 +111,6 @@ let cornerActions: [CornerAction] = [
         iconName: "display",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let path = "/System/Library/CoreServices/ScreenSaverEngine.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
@@ -125,7 +125,6 @@ let cornerActions: [CornerAction] = [
         iconName: "moon.fill",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/pmset"
@@ -142,7 +141,6 @@ let cornerActions: [CornerAction] = [
         iconName: "lock.fill",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
 
@@ -166,7 +164,6 @@ let cornerActions: [CornerAction] = [
         iconName: "magnifyingglass",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let spaceKeyCode: CGKeyCode = 49 // Space key code
@@ -188,7 +185,6 @@ let cornerActions: [CornerAction] = [
         iconName: "square.grid.2x2",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let path = "/System/Applications/Apps.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
@@ -204,7 +200,6 @@ let cornerActions: [CornerAction] = [
         iconName: "rectangle.stack.fill",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let path = "/System/Applications/Mission Control.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
@@ -220,7 +215,6 @@ let cornerActions: [CornerAction] = [
         iconName: "rectangle.on.rectangle.angled",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 let script = """
@@ -250,7 +244,6 @@ let cornerActions: [CornerAction] = [
         iconName: "bell.badge",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeN: CGKeyCode = 45
@@ -272,7 +265,6 @@ let cornerActions: [CornerAction] = [
         iconName: "wifi",
         category: .system,
         inputType: .none,
-        inputPrompt: nil,
         perform: { _ in
             let statusTask = Process()
             statusTask.launchPath = "/usr/sbin/networksetup"
@@ -326,7 +318,6 @@ let cornerActions: [CornerAction] = [
         iconName: "sun.max",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let toggleScript = """
             tell application "System Events"
@@ -384,7 +375,6 @@ let cornerActions: [CornerAction] = [
         iconName: "powerplug.fill",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             if let existingProcess = caffeinateProcess, existingProcess.isRunning {
                 existingProcess.terminate()
@@ -411,7 +401,6 @@ let cornerActions: [CornerAction] = [
         iconName: "note.text",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Notes.app"
             let url = URL(fileURLWithPath: appPath)
@@ -446,7 +435,6 @@ let cornerActions: [CornerAction] = [
         iconName: "calendar.badge.plus",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Calendar.app"
             let url = URL(fileURLWithPath: appPath)
@@ -481,7 +469,6 @@ let cornerActions: [CornerAction] = [
         iconName: "list.bullet",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Reminder.app"
             let url = URL(fileURLWithPath: appPath)
@@ -516,7 +503,6 @@ let cornerActions: [CornerAction] = [
         iconName: "envelope",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Mail.app"
             let url = URL(fileURLWithPath: appPath)
@@ -551,7 +537,6 @@ let cornerActions: [CornerAction] = [
         iconName: "waveform",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let voiceMemosPath = "/System/Applications/VoiceMemos.app"
             let url = URL(fileURLWithPath: voiceMemosPath)
@@ -586,7 +571,6 @@ let cornerActions: [CornerAction] = [
         iconName: "square.and.arrow.up",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let path = "/System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
@@ -602,7 +586,6 @@ let cornerActions: [CornerAction] = [
         iconName: "link",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let script = """
             tell application "Safari"
@@ -647,7 +630,6 @@ let cornerActions: [CornerAction] = [
         iconName: "folder.badge.plus",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
             let url = URL(fileURLWithPath: finderPath)
@@ -679,7 +661,6 @@ let cornerActions: [CornerAction] = [
         iconName: "doc.text",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let panel = NSOpenPanel()
             panel.canChooseDirectories = true
@@ -727,7 +708,6 @@ let cornerActions: [CornerAction] = [
         iconName: "arrow.down.doc",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
 
@@ -803,7 +783,6 @@ let cornerActions: [CornerAction] = [
         iconName: "trash",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
             let url = URL(fileURLWithPath: finderPath)
@@ -985,7 +964,7 @@ let cornerActions: [CornerAction] = [
         description: "Run an AppleScript file.",
         iconName: "curlybraces",
         category: .template,
-        inputType: .file,
+        inputType: .appleScript,
         inputPrompt: "Enter AppleScript Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
@@ -1025,7 +1004,6 @@ let cornerActions: [CornerAction] = [
         iconName: "terminal",
         category: .template,
         inputType: .text,
-        inputPrompt: "",
         perform: { input in
             guard let command = input, !command.isEmpty else {
                 showErrorToast("No command entered")
@@ -1052,7 +1030,6 @@ let cornerActions: [CornerAction] = [
         iconName: "text.viewfinder",
         category: .tool,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("ocr_capture.png")
             let captureTask = Process()
@@ -1104,7 +1081,6 @@ let cornerActions: [CornerAction] = [
         iconName: "eyedropper",
         category: .tool,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let sampler = NSColorSampler()
             sampler.show { pickedColor in
@@ -1174,7 +1150,6 @@ let cornerActions: [CornerAction] = [
         iconName: "text.magnifyingglass",
         category: .tool,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let pasteboard = NSPasteboard.general
 
@@ -1240,7 +1215,6 @@ let cornerActions: [CornerAction] = [
         iconName: "smiley.fill",
         category: .tool,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 49 // Space key
@@ -1262,7 +1236,6 @@ let cornerActions: [CornerAction] = [
         iconName: "clock.arrow.2.circlepath",
         category: .tool,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let calendar = Calendar.current
             let now = Date()
@@ -1292,7 +1265,6 @@ let cornerActions: [CornerAction] = [
         iconName: "gauge",
         category: .tool,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/env"
@@ -1377,7 +1349,6 @@ let cornerActions: [CornerAction] = [
         iconName: "camera.viewfinder",
         category: .capture,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let path = "/System/Applications/Utilities/Screenshot.app"
             NSWorkspace.shared.open(URL(fileURLWithPath: path))
@@ -1393,7 +1364,6 @@ let cornerActions: [CornerAction] = [
         iconName: "selection.pin.in.out",
         category: .capture,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 21
@@ -1418,7 +1388,6 @@ let cornerActions: [CornerAction] = [
         iconName: "rectangle.on.rectangle",
         category: .capture,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 20
@@ -1443,7 +1412,6 @@ let cornerActions: [CornerAction] = [
         iconName: "backward.fill",
         category: .media,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let keyCodePrev = 18
 
@@ -1485,7 +1453,6 @@ let cornerActions: [CornerAction] = [
         iconName: "forward.fill",
         category: .media,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let keyCodeNext = 17
 
@@ -1527,7 +1494,6 @@ let cornerActions: [CornerAction] = [
         iconName: "speaker.wave.1.fill",
         category: .media,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/osascript"
@@ -1545,7 +1511,6 @@ let cornerActions: [CornerAction] = [
         iconName: "speaker.wave.2.fill",
         category: .media,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let task = Process()
             task.launchPath = "/usr/bin/osascript"
@@ -1563,7 +1528,6 @@ let cornerActions: [CornerAction] = [
         iconName: "speaker.slash.circle.fill",
         category: .media,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let getTask = Process()
             getTask.launchPath = "/usr/bin/osascript"
@@ -1636,7 +1600,6 @@ let cornerActions: [CornerAction] = [
         iconName: "rectangle.inset.fill",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeF: CGKeyCode = 3
@@ -1658,7 +1621,6 @@ let cornerActions: [CornerAction] = [
         iconName: "arrow.uturn.left.circle",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeR: CGKeyCode = 15
@@ -1680,7 +1642,6 @@ let cornerActions: [CornerAction] = [
         iconName: "rectangle.center.inset.fill",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeC: CGKeyCode = 8
@@ -1702,7 +1663,6 @@ let cornerActions: [CornerAction] = [
         iconName: "minus.square.fill",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 46 // M key
@@ -1724,7 +1684,6 @@ let cornerActions: [CornerAction] = [
         iconName: "rectangle.compress.vertical",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 46 // M key
@@ -1746,7 +1705,6 @@ let cornerActions: [CornerAction] = [
         iconName: "eye.slash.fill",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 4 // H key
@@ -1768,7 +1726,6 @@ let cornerActions: [CornerAction] = [
         iconName: "eye.slash.circle.fill",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCode: CGKeyCode = 4 // H key
@@ -1790,7 +1747,6 @@ let cornerActions: [CornerAction] = [
         iconName: "desktopcomputer",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeH: CGKeyCode = 4 // 'H' key
@@ -1815,7 +1771,6 @@ let cornerActions: [CornerAction] = [
         iconName: "arrow.left.square",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 let script = """
@@ -1845,7 +1800,6 @@ let cornerActions: [CornerAction] = [
         iconName: "arrow.right.square",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 let script = """
@@ -1875,7 +1829,6 @@ let cornerActions: [CornerAction] = [
         iconName: "playpause",
         category: .media,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let keyCodePlayPause = 16
 
@@ -1917,7 +1870,6 @@ let cornerActions: [CornerAction] = [
         iconName: "doc.on.clipboard",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
 
@@ -1951,7 +1903,6 @@ let cornerActions: [CornerAction] = [
         iconName: "nosign",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
         }
     ),
@@ -1963,7 +1914,6 @@ let cornerActions: [CornerAction] = [
         iconName: "book",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
             let url = URL(fileURLWithPath: appPath)
@@ -1998,7 +1948,6 @@ let cornerActions: [CornerAction] = [
         iconName: "message",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Messages.app"
             let url = URL(fileURLWithPath: appPath)
@@ -2033,7 +1982,6 @@ let cornerActions: [CornerAction] = [
         iconName: "macwindow.on.rectangle",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeN: CGKeyCode = 45
@@ -2055,7 +2003,6 @@ let cornerActions: [CornerAction] = [
         iconName: "macwindow.and.cursorarrow",
         category: .window,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeW: CGKeyCode = 13
@@ -2077,7 +2024,6 @@ let cornerActions: [CornerAction] = [
         iconName: "cursorarrow.click",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
@@ -2112,7 +2058,6 @@ let cornerActions: [CornerAction] = [
         iconName: "play.slash",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
@@ -2147,7 +2092,6 @@ let cornerActions: [CornerAction] = [
         iconName: "rectangle.inset.bottomleading.filled",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
@@ -2182,7 +2126,6 @@ let cornerActions: [CornerAction] = [
         iconName: "arrow.up.left.and.arrow.down.right",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
@@ -2219,7 +2162,6 @@ let cornerActions: [CornerAction] = [
         iconName: "tv.music.note",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
@@ -2254,7 +2196,6 @@ let cornerActions: [CornerAction] = [
         iconName: "music.note.list",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
             let url = URL(fileURLWithPath: musicAppPath)
@@ -2289,7 +2230,6 @@ let cornerActions: [CornerAction] = [
         iconName: "folder",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
             let url = URL(fileURLWithPath: finderPath)
@@ -2325,7 +2265,6 @@ let cornerActions: [CornerAction] = [
         iconName: "rectangle.dock",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeA: CGKeyCode = 0
@@ -2347,7 +2286,6 @@ let cornerActions: [CornerAction] = [
         iconName: "switch.2",
         category: .system,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
             let keyCodeC: CGKeyCode = 8
@@ -2369,7 +2307,6 @@ let cornerActions: [CornerAction] = [
         iconName: "person.crop.circle.badge.plus",
         category: .app,
         inputType: .none,
-        inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Contacts.app"
             let url = URL(fileURLWithPath: appPath)
