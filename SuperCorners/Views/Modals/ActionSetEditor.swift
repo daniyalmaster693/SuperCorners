@@ -63,15 +63,9 @@ struct ActionSetEditor: View {
                                 panel.prompt = "Choose"
                                 
                                 if panel.runModal() == .OK, let url = panel.url {
-                                    let workspace = NSWorkspace.shared
-                                    
-                                    let appPath = url.path
-                                    let appIcon = workspace.icon(forFile: appPath)
-                                    let appName = url.deletingPathExtension().lastPathComponent
+                                    let bundleID = Bundle(url: url)?.bundleIdentifier
                                            
-                                    print("App path: \(appPath)")
-                                    print("App name: \(appName)")
-                                    print("App icon: \(appIcon)")
+                                    print("Bundle ID: \(bundleID ?? "Unknown")")
                                 }
                             }) {
                                 HStack {
@@ -92,13 +86,16 @@ struct ActionSetEditor: View {
                                 Image(nsImage: icon)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 25, height: 25).cornerRadius(12)
+                                    .cornerRadius(12)
+                                    .frame(width: 25, height: 25)
                             }
                             else {
-                                Image(systemName: "app")
+                                Image(systemName: "globe")
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 25, height: 25)
+                                    .foregroundStyle(.secondary)
+                                    .padding(.leading, 5)
+                                    .frame(width: 22, height: 22)
                             }
                         
                             Text(set.name)
