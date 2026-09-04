@@ -93,12 +93,12 @@ final class ActionSetManager: ObservableObject {
                 input: nil
             ),
             left: ActionAssignment(
-                actionID: "doNothing",
-                input: nil
+                actionID: "openWebsite",
+                input: "https://menuscores.vercel.app"
             ),
             right: ActionAssignment(
-                actionID: "doNothing",
-                input: nil
+                actionID: "openWebsite",
+                input: "https://supercorners.vercel.app"
             ),
             bottom: ActionAssignment(
                 actionID: "doNothing",
