@@ -118,7 +118,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "System" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.category == .system }) { action in
                                 ActionCard(action: action)
                             }
                         }
@@ -147,7 +147,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "App Actions" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.category == .app }) { action in
                                 ActionCard(action: action)
                             }
                         }
@@ -176,7 +176,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Template Action" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.category == .template }) { action in
                                 ActionCard(action: action)
                             }
                         }
@@ -205,7 +205,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Tool" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.category == .tool }) { action in
                                 ActionCard(action: action)
                             }
                         }
@@ -234,7 +234,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Capture" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.category == .capture }) { action in
                                 ActionCard(action: action)
                             }
                         }
@@ -263,7 +263,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Media" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.category == .media }) { action in
                                 ActionCard(action: action)
                             }
                         }
@@ -292,7 +292,7 @@ struct ActionBrowserView: View {
                     
                     ScrollView(.horizontal) {
                         HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.tag == "Window Management" }) { action in
+                            ForEach(filteredItems(cornerActions).filter { $0.category == .window }) { action in
                                 ActionCard(action: action)
                             }
                         }

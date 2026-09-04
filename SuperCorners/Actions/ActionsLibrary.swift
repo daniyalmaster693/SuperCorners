@@ -70,25 +70,45 @@ extension NSColor {
 
 var caffeinateProcess: Process?
 
+enum ActionCategory: String, CaseIterable {
+    case system
+    case app
+    case file
+    case template
+    case tool
+    case capture
+    case media
+    case window
+}
+
+enum ActionInputType {
+    case none
+    case text
+    case url
+    case application
+    case folder
+    case file
+    case hotkey
+}
+
 struct CornerAction: Identifiable {
     let id: String
     let title: String
     let description: String
     let iconName: String
-    let tag: String
-    let requiresInput: Bool
-    let inputKey: String? = nil
+    let category: ActionCategory
+    let inputType: ActionInputType
     let inputPrompt: String?
     let perform: (_ input: String?) -> Void
 }
 
 let cornerActions: [CornerAction] = [
     CornerAction(
-        id: "0",
+        id: "screenSaver",
         title: "Start Screen Saver",
         description: "Activate the screen saver",
         iconName: "display",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -99,11 +119,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "1",
+        id: "sleepDisplay",
         title: "Put Display to Sleep",
         description: "Sleep your Mac",
         iconName: "moon.fill",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -116,11 +136,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "2",
+        id: "lockScreen",
         title: "Lock Screen",
         description: "Locks your Mac and returns to the login screen.",
         iconName: "lock.fill",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -140,11 +160,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "3",
+        id: "spotlightSearch",
         title: "Open Spotlight Search",
         description: "Open the Spotlight Search Window",
         iconName: "magnifyingglass",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -162,11 +182,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "4",
+        id: "spotlightApps",
         title: "Open Spotlight Apps",
         description: "Open the Spotlight Applications Folder.",
         iconName: "square.grid.2x2",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -178,11 +198,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "5",
+        id: "missionControl",
         title: "Show Mission Control",
         description: "Display all open windows and spaces.",
         iconName: "rectangle.stack.fill",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -194,11 +214,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "6",
+        id: "applicationWindows",
         title: "Application Windows",
         description: "Show all windows for the current application.",
         iconName: "rectangle.on.rectangle.angled",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -224,11 +244,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "7",
+        id: "notificationCenter",
         title: "Open Notification Center",
         description: "Open Notification Center",
         iconName: "bell.badge",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -246,11 +266,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "8",
+        id: "toggleWifi",
         title: "Toggle WiFi",
         description: "Toggles WiFi on or off based on current state.",
         iconName: "wifi",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: nil,
         perform: { _ in
@@ -300,11 +320,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "9",
+        id: "toggleTheme",
         title: "Toggle Theme",
         description: "Toggle dark or light mode",
         iconName: "sun.max",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -358,11 +378,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "10",
+        id: "toggleAwake",
         title: "Toggle Keep Awake",
         description: "Toggle system sleep prevention indefinitely on or off.",
         iconName: "powerplug.fill",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -385,11 +405,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "11",
+        id: "createNote",
         title: "Create a New Note",
         description: "Create a New Note in Apple Notes",
         iconName: "note.text",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -420,11 +440,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "12",
+        id: "createEvent",
         title: "Create a New Event",
         description: "Create a New Event in Calendar",
         iconName: "calendar.badge.plus",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -455,11 +475,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "13",
+        id: "createReminder",
         title: "Create a New Reminder",
         description: "Create a New Reminder in Reminders",
         iconName: "list.bullet",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -490,11 +510,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "14",
+        id: "createEmail",
         title: "Compose a New Email",
         description: "Compose a New Email in Mail",
         iconName: "envelope",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -525,11 +545,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "15",
+        id: "createRecording",
         title: "Start a Voice Recording",
         description: "Start a voice recording in voice memos",
         iconName: "waveform",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -560,11 +580,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "16",
+        id: "openAirdrop",
         title: "Open AirDrop",
         description: "Open AirDrop in Finder.",
         iconName: "square.and.arrow.up",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -576,11 +596,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "17",
+        id: "copyPage",
         title: "Copy Current Page in Safari",
         description: "Copy the current page url in safari.",
         iconName: "link",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -621,11 +641,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "18",
+        id: "createFolder",
         title: "Create New Folder",
         description: "Creates a new folder in Finder.",
         iconName: "folder.badge.plus",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -653,11 +673,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "19",
+        id: "createFile",
         title: "Create New File",
         description: "Creates a new file in a user selected folder.",
         iconName: "doc.text",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -701,11 +721,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "20",
+        id: "openDowlnoad",
         title: "Open Last Download",
         description: "Open the most recently downloaded file.",
         iconName: "arrow.down.doc",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -734,11 +754,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "21",
+        id: "createZip",
         title: "Create Zip Archive",
         description: "Create a zip archive for a specified folder.",
         iconName: "doc.zipper",
-        tag: "App Actions",
+        category: .app,
         requiresInput: true,
         inputPrompt: "Enter Folder Path",
         perform: { input in
@@ -777,11 +797,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "22",
+        id: "emptyTrash",
         title: "Empty Trash",
         description: "Opens Finder and Asks to Empty Trash",
         iconName: "trash",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -809,11 +829,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "23",
+        id: "launchApp",
         title: "Launch Application",
         description: "Opens an app or hides it if already focused.",
         iconName: "square.grid.3x3",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "Enter Application Path",
         perform: { input in
@@ -835,11 +855,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "24",
+        id: "openWebsite",
         title: "Open a Website",
         description: "Open a website in your default browser.",
         iconName: "globe",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "Enter Website URL",
         perform: { input in
@@ -853,11 +873,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "25",
+        id: "runShortcut",
         title: "Run Shortcut",
         description: "Run an Apple Shortcut.",
         iconName: "sparkles",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "Enter Shortcut Name",
         perform: { input in
@@ -893,11 +913,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "26",
+        id: "simulateHotkey",
         title: "Simulate Hotkey",
         description: "Simulate a keyboard shortcut",
         iconName: "keyboard",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "Record Hotkey",
         perform: { input in
@@ -924,11 +944,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "27",
+        id: "openFolder",
         title: "Open Folder",
         description: "Open a folder in Finder.",
         iconName: "folder.fill",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "Enter Folder Path",
         perform: { input in
@@ -942,11 +962,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "28",
+        id: "openFile",
         title: "Open File",
         description: "Open a file in Finder.",
         iconName: "doc",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "Enter File Path",
         perform: { input in
@@ -960,11 +980,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "29",
+        id: "runAppleScript",
         title: "Run an Apple Script",
         description: "Run an AppleScript file.",
         iconName: "curlybraces",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "Enter AppleScript Path",
         perform: { input in
@@ -999,11 +1019,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "30",
+        id: "runTerminalCommand",
         title: "Run Terminal Command",
         description: "Run a terminal command.",
         iconName: "terminal",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "",
         perform: { input in
@@ -1026,11 +1046,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "31",
+        id: "extractText",
         title: "Extract Text (OCR)",
         description: "Select a region of the screen to extract text",
         iconName: "text.viewfinder",
-        tag: "Tool",
+        category: .tool,,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1078,11 +1098,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "32",
+        id: "colorPicker",
         title: "Color Picker",
         description: "Pick a color and copy its hex code",
         iconName: "eyedropper",
-        tag: "Tool",
+        category: .tool,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1148,11 +1168,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "33",
+        id: "clipboardCount",
         title: "Clipboard Text Count",
         description: "Receive count statistics for your last copied text.",
         iconName: "text.magnifyingglass",
-        tag: "Tool",
+        category: .tool,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1214,11 +1234,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "34",
+        id: "emojiViewer",
         title: "Emoji & Symbol Viewer",
         description: "Open the Emoji and Symbol viewer.",
         iconName: "smiley.fill",
-        tag: "Tool",
+        category: .tool,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1236,11 +1256,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "35",
+        id: "yearProgress",
         title: "Year In Progress",
         description: "Get the current year progress",
         iconName: "clock.arrow.2.circlepath",
-        tag: "Tool",
+        category: .tool,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1266,11 +1286,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "36",
+        id: "networkSpeed",
         title: "Network Speed Test",
         description: "Run a network speed test.",
         iconName: "gauge",
-        tag: "Tool",
+        category: .tool,,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1351,11 +1371,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "37",
+        id: "openScreenshot",
         title: "Open Screenshot Utility",
         description: "Launch the macOS Screenshot utility.",
         iconName: "camera.viewfinder",
-        tag: "Capture",
+        category: .capture,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1367,11 +1387,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "38",
+        id: "captureArea",
         title: "Capture Selected Area",
         description: "Captures a custom area of the screen.",
         iconName: "selection.pin.in.out",
-        tag: "Capture",
+        category: .capture,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1392,11 +1412,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "39",
+        id: "captureScreen",
         title: "Capture Entire Screen",
         description: "Captures the entire screen.",
         iconName: "rectangle.on.rectangle",
-        tag: "Capture",
+        category: .capture,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1417,11 +1437,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "40",
+        id: "previousTrack",
         title: "Previous Track",
         description: "Play previous media track",
         iconName: "backward.fill",
-        tag: "Media",
+        category: .media,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1459,11 +1479,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "41",
+        id: "nextTrack",
         title: "Next Track",
         description: "Play next media track",
         iconName: "forward.fill",
-        tag: "Media",
+        category: .media,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1501,11 +1521,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "42",
+        id: "volumeDown",
         title: "Volume Down",
         description: "Decrease system volume by one step.",
         iconName: "speaker.wave.1.fill",
-        tag: "Media",
+        category: .media,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1519,11 +1539,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "43",
+        id: "volumeUp",
         title: "Volume Up",
         description: "Increase system volume by one step.",
         iconName: "speaker.wave.2.fill",
-        tag: "Media",
+        category: .media,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1537,11 +1557,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "44",
+        id: "toggleMute",
         title: "Toggle Mute",
         description: "Toggles system volume mute state.",
         iconName: "speaker.slash.circle.fill",
-        tag: "Media",
+        category: .media,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1579,11 +1599,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "45",
+        id: "setVolume",
         title: "Set Volume",
         description: "Set system volume to a specific level.",
         iconName: "speaker.wave.2.fill",
-        tag: "Media",
+        category: .media,
         requiresInput: true,
         inputPrompt: "Enter a volume percentage (0–100):",
         perform: { input in
@@ -1610,11 +1630,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "46",
+        id: "maximizeWindow",
         title: "Maximize Window",
         description: "Expand the active window to fill the desktop.",
         iconName: "rectangle.inset.fill",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1632,11 +1652,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "47",
+        id: "restoreSize",
         title: "Return to Previous Size",
         description: "Restore the active window to it's previous size",
         iconName: "arrow.uturn.left.circle",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1654,11 +1674,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "48",
+        id: "centerWindow",
         title: "Center Window",
         description: "Center the active window on the desktop.",
         iconName: "rectangle.center.inset.fill",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1676,11 +1696,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "49",
+        id: "minimizeWindow",
         title: "Minimize Window",
         description: "Minimize the active window.",
         iconName: "minus.square.fill",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1698,11 +1718,12 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "50",
+        id: "minimizeAll",
         title: "Minimize All Windows",
         description: "Minimize all windows of the current app.",
         iconName: "rectangle.compress.vertical",
-        tag: "Window Management",
+        category: .window,
+        requiresInput: false,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1720,11 +1741,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "51",
+        id: "hideApp",
         title: "Hide App",
         description: "Hide the active app.",
         iconName: "eye.slash.fill",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1742,11 +1763,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "52",
+        id: "hideOthers",
         title: "Hide Other Apps",
         description: "Hide all apps except the active one.",
         iconName: "eye.slash.circle.fill",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1764,11 +1785,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "53",
+        id: "revealDesktop",
         title: "Reveal Desktop",
         description: "Show the desktop by hiding all windows.",
         iconName: "desktopcomputer",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1789,11 +1810,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "54",
+        id: "previousDesktop",
         title: "Previous Desktop",
         description: "Switch to the previous desktop.",
         iconName: "arrow.left.square",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1819,11 +1840,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "55",
+        id: "nextDesktop",
         title: "Next Desktop",
         description: "Switch to the next desktop.",
         iconName: "arrow.right.square",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1849,11 +1870,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "56",
+        id: "toggleMedia",
         title: "Toggle Media Playback",
         description: "Toggle Media Playback",
         iconName: "playpause",
-        tag: "Media",
+        category: .media,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1891,11 +1912,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "57",
+        id: "copyDownload",
         title: "Copy Last Download Path",
         description: "Copy the path to your most recent download.",
         iconName: "doc.on.clipboard",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1925,11 +1946,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "58",
+        id: "doNothing",
         title: "Do Nothing",
         description: "Blank action that does nothing",
         iconName: "nosign",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1937,11 +1958,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "59",
+        id: "readerMode",
         title: "Open Reader Mode",
         description: "Toggle Reader Mode in Safari.",
         iconName: "book",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -1972,11 +1993,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "60",
+        id: "newMessage",
         title: "Compose New Message",
         description: "Compose a new message in Messages",
         iconName: "message",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2007,11 +2028,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "61",
+        id: "newWindow",
         title: "New Window",
         description: "Open a new window for the focused app",
         iconName: "macwindow.on.rectangle",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2029,11 +2050,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "62",
+        id: "closeWindow",
         title: "Close Window",
         description: "Close a window for the focused app",
         iconName: "macwindow.and.cursorarrow",
-        tag: "Window Management",
+        category: .window,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2051,11 +2072,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "63",
+        id: "currentSong",
         title: "Go to Current Song",
         description: "Opens album for currently playing song in Apple Music",
         iconName: "cursorarrow.click",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2086,11 +2107,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "64",
+        id: "stopPlayback",
         title: "Stop Playback Apple Music",
         description: "Stops Playback in Apple Music",
         iconName: "play.slash",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2121,11 +2142,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "65",
+        id: "openMiniplayer",
         title: "Open Miniplayer",
         description: "Opens Miniplayer in Apple Music",
         iconName: "rectangle.inset.bottomleading.filled",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2156,11 +2177,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "66",
+        id: "openFullPlayer",
         title: "Open Fullscreen Player",
         description: "Opens Fullscreen Player in Apple Music",
         iconName: "arrow.up.left.and.arrow.down.right",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2193,11 +2214,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "67",
+        id: "openNowPlaying",
         title: "Open Now Playing",
         description: "Open Now Playing in Apple Music",
         iconName: "tv.music.note",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2228,11 +2249,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "68",
+        id: "openLyrics",
         title: "Open Lyrics",
         description: "Open Lyrics Panel in Apple Music",
         iconName: "music.note.list",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2263,11 +2284,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "69",
+        id: "goToFolder",
         title: "Open Go To Folder",
         description: "Open the Go To Folder dialog in Finder.",
         iconName: "folder",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2299,11 +2320,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "70",
+        id: "focusDock",
         title: "Focus Dock",
         description: "Focus the Dock",
         iconName: "rectangle.dock",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2321,11 +2342,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "71",
+        id: "openControlCenter",
         title: "Open Control Center",
         description: "Open the Control Center",
         iconName: "switch.2",
-        tag: "System",
+        category: .system,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2343,11 +2364,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "72",
+        id: "createContact",
         title: "Create a New Contact",
         description: "Create a New Contact in Apple Contacts",
         iconName: "person.crop.circle.badge.plus",
-        tag: "App Actions",
+        category: .app,
         requiresInput: false,
         inputPrompt: "",
         perform: { _ in
@@ -2378,11 +2399,11 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "73",
+        id: "dateCountdown",
         title: "Countdown to Date",
         description: "Get the time until a date.",
         iconName: "calendar",
-        tag: "Template Action",
+        category: .template,
         requiresInput: true,
         inputPrompt: "Enter Date in yyyy-MM-dd format",
         perform: { input in
