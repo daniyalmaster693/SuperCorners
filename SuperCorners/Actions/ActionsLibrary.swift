@@ -531,6 +531,40 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
+        id: "newMessage",
+        title: "Compose New Message",
+        description: "Compose a new message in Messages",
+        iconName: "message",
+        category: .app,
+        inputType: .none,
+        perform: { _ in
+            let appPath = "/System/Applications/Messages.app"
+            let url = URL(fileURLWithPath: appPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Notes").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeN: CGKeyCode = 45
+
+                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+                    keyDown?.flags = [.maskCommand]
+
+                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+                    keyUp?.flags = [.maskCommand]
+
+                    keyDown?.post(tap: .cghidEventTap)
+                    keyUp?.post(tap: .cghidEventTap)
+
+                    showSuccessToast()
+                }
+            }
+        }
+    ),
+
+    CornerAction(
         id: "createRecording",
         title: "Start a Voice Recording",
         description: "Start a voice recording in voice memos",
@@ -560,65 +594,6 @@ let cornerActions: [CornerAction] = [
 
                     showSuccessToast()
                 }
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "openAirdrop",
-        title: "Open AirDrop",
-        description: "Open AirDrop in Finder.",
-        iconName: "square.and.arrow.up",
-        category: .app,
-        inputType: .none,
-        perform: { _ in
-            let path = "/System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app"
-            NSWorkspace.shared.open(URL(fileURLWithPath: path))
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "copyPage",
-        title: "Copy Current Page in Safari",
-        description: "Copy the current page url in safari.",
-        iconName: "link",
-        category: .app,
-        inputType: .none,
-        perform: { _ in
-            let script = """
-            tell application "Safari"
-                if exists front document then
-                    return URL of front document
-                else
-                    return ""
-                end if
-            end tell
-            """
-
-            let task = Process()
-            task.launchPath = "/usr/bin/osascript"
-            task.arguments = ["-e", script]
-
-            let pipe = Pipe()
-            task.standardOutput = pipe
-            do {
-                try task.run()
-                task.waitUntilExit()
-
-                let data = pipe.fileHandleForReading.readDataToEndOfFile()
-                if let url = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines),
-                   !url.isEmpty
-                {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(url, forType: .string)
-                    showSuccessToast()
-                } else {
-                    showErrorToast("No page open in Safari")
-                }
-            } catch {
-                showErrorToast("Failed to fetch URL")
             }
         }
     ),
@@ -729,6 +704,39 @@ let cornerActions: [CornerAction] = [
                 }
             } catch {
                 showErrorToast("Failed to open last download")
+            }
+        }
+    ),
+
+    CornerAction(
+        id: "copyDownload",
+        title: "Copy Last Download Path",
+        description: "Copy the path to your most recent download.",
+        iconName: "doc.on.clipboard",
+        category: .app,
+        inputType: .none,
+        perform: { _ in
+            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+
+            do {
+                let files = try FileManager.default.contentsOfDirectory(at: downloadsURL, includingPropertiesForKeys: [.contentModificationDateKey], options: .skipsHiddenFiles)
+
+                let sortedFiles = files
+                    .compactMap { url -> (url: URL, date: Date)? in
+                        let values = try? url.resourceValues(forKeys: [.contentModificationDateKey])
+                        return values?.contentModificationDate != nil ? (url, values!.contentModificationDate!) : nil
+                    }
+                    .sorted { $0.date > $1.date }
+
+                if let mostRecent = sortedFiles.first?.url {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(mostRecent.path, forType: .string)
+                    showSuccessToast()
+                } else {
+                    showErrorToast("No recent downloads found")
+                }
+            } catch {
+                showErrorToast("Failed to copy path")
             }
         }
     ),
@@ -1488,6 +1496,47 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
+        id: "toggleMedia",
+        title: "Toggle Media Playback",
+        description: "Toggle Media Playback",
+        iconName: "playpause",
+        category: .media,
+        inputType: .none,
+        perform: { _ in
+            let keyCodePlayPause = 16
+
+            let eventDown = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xa00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodePlayPause << 16) | (0xa << 8),
+                data2: -1
+            )
+
+            let eventUp = NSEvent.otherEvent(
+                with: .systemDefined,
+                location: .zero,
+                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xb00),
+                timestamp: 0,
+                windowNumber: 0,
+                context: nil,
+                subtype: 8,
+                data1: (keyCodePlayPause << 16) | (0xb << 8),
+                data2: -1
+            )
+
+            eventDown?.cgEvent?.post(tap: .cghidEventTap)
+            eventUp?.cgEvent?.post(tap: .cghidEventTap)
+
+            showSuccessToast("Toggled Playback", icon: Image(systemName: "playpause"))
+        }
+    ),
+
+    CornerAction(
         id: "volumeDown",
         title: "Volume Down",
         description: "Decrease system volume by one step.",
@@ -1649,6 +1698,48 @@ let cornerActions: [CornerAction] = [
             keyDown?.flags = [.maskControl, .maskSecondaryFn]
             let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeC, keyDown: false)
             keyUp?.flags = [.maskControl, .maskSecondaryFn]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
+        }
+    ),
+
+    CornerAction(
+        id: "newWindow",
+        title: "New Window",
+        description: "Open a new window for the focused app",
+        iconName: "macwindow.on.rectangle",
+        category: .window,
+        inputType: .none,
+        perform: { _ in
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeN: CGKeyCode = 45
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
+            keyDown?.flags = [.maskCommand]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
+            keyUp?.flags = [.maskCommand]
+            keyDown?.post(tap: .cghidEventTap)
+            keyUp?.post(tap: .cghidEventTap)
+
+            showSuccessToast()
+        }
+    ),
+
+    CornerAction(
+        id: "closeWindow",
+        title: "Close Window",
+        description: "Close a window for the focused app",
+        iconName: "macwindow.and.cursorarrow",
+        category: .window,
+        inputType: .none,
+        perform: { _ in
+            let src = CGEventSource(stateID: .hidSystemState)
+            let keyCodeW: CGKeyCode = 13
+            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeW, keyDown: true)
+            keyDown?.flags = [.maskCommand]
+            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeW, keyDown: false)
+            keyUp?.flags = [.maskCommand]
             keyDown?.post(tap: .cghidEventTap)
             keyUp?.post(tap: .cghidEventTap)
 
@@ -1823,87 +1914,96 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "toggleMedia",
-        title: "Toggle Media Playback",
-        description: "Toggle Media Playback",
-        iconName: "playpause",
-        category: .media,
-        inputType: .none,
-        perform: { _ in
-            let keyCodePlayPause = 16
-
-            let eventDown = NSEvent.otherEvent(
-                with: .systemDefined,
-                location: .zero,
-                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xa00),
-                timestamp: 0,
-                windowNumber: 0,
-                context: nil,
-                subtype: 8,
-                data1: (keyCodePlayPause << 16) | (0xa << 8),
-                data2: -1
-            )
-
-            let eventUp = NSEvent.otherEvent(
-                with: .systemDefined,
-                location: .zero,
-                modifierFlags: NSEvent.ModifierFlags(rawValue: 0xb00),
-                timestamp: 0,
-                windowNumber: 0,
-                context: nil,
-                subtype: 8,
-                data1: (keyCodePlayPause << 16) | (0xb << 8),
-                data2: -1
-            )
-
-            eventDown?.cgEvent?.post(tap: .cghidEventTap)
-            eventUp?.cgEvent?.post(tap: .cghidEventTap)
-
-            showSuccessToast("Toggled Playback", icon: Image(systemName: "playpause"))
-        }
-    ),
-
-    CornerAction(
-        id: "copyDownload",
-        title: "Copy Last Download Path",
-        description: "Copy the path to your most recent download.",
-        iconName: "doc.on.clipboard",
+        id: "goToFolder",
+        title: "Open Go To Folder",
+        description: "Open the Go To Folder dialog in Finder.",
+        iconName: "folder",
         category: .app,
         inputType: .none,
         perform: { _ in
-            let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+            let finderPath = "/System/Library/CoreServices/Finder.app"
+            let url = URL(fileURLWithPath: finderPath)
+            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
 
-            do {
-                let files = try FileManager.default.contentsOfDirectory(at: downloadsURL, includingPropertiesForKeys: [.contentModificationDateKey], options: .skipsHiddenFiles)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Finder").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
 
-                let sortedFiles = files
-                    .compactMap { url -> (url: URL, date: Date)? in
-                        let values = try? url.resourceValues(forKeys: [.contentModificationDateKey])
-                        return values?.contentModificationDate != nil ? (url, values!.contentModificationDate!) : nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    let src = CGEventSource(stateID: .hidSystemState)
+                    let keyCodeG: CGKeyCode = 5 // 'G' key
+
+                    if let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: true),
+                       let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: false)
+                    {
+                        keyDown.flags = [.maskCommand, .maskShift]
+                        keyUp.flags = [.maskCommand, .maskShift]
+
+                        keyDown.post(tap: .cghidEventTap)
+                        keyUp.post(tap: .cghidEventTap)
                     }
-                    .sorted { $0.date > $1.date }
-
-                if let mostRecent = sortedFiles.first?.url {
-                    NSPasteboard.general.clearContents()
-                    NSPasteboard.general.setString(mostRecent.path, forType: .string)
-                    showSuccessToast()
-                } else {
-                    showErrorToast("No recent downloads found")
                 }
-            } catch {
-                showErrorToast("Failed to copy path")
             }
+
+            showSuccessToast()
         }
     ),
 
     CornerAction(
-        id: "doNothing",
-        title: "Do Nothing",
-        description: "Blank action that does nothing",
-        iconName: "nosign",
-        category: .system,
+        id: "openAirdrop",
+        title: "Open AirDrop",
+        description: "Open AirDrop in Finder.",
+        iconName: "square.and.arrow.up",
+        category: .app,
         inputType: .none,
         perform: { _ in
+            let path = "/System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app"
+            NSWorkspace.shared.open(URL(fileURLWithPath: path))
+
+            showSuccessToast()
+        }
+    ),
+
+    CornerAction(
+        id: "copyPage",
+        title: "Copy Current Page in Safari",
+        description: "Copy the current page url in safari.",
+        iconName: "link",
+        category: .app,
+        inputType: .none,
+        perform: { _ in
+            let script = """
+            tell application "Safari"
+                if exists front document then
+                    return URL of front document
+                else
+                    return ""
+                end if
+            end tell
+            """
+
+            let task = Process()
+            task.launchPath = "/usr/bin/osascript"
+            task.arguments = ["-e", script]
+
+            let pipe = Pipe()
+            task.standardOutput = pipe
+            do {
+                try task.run()
+                task.waitUntilExit()
+
+                let data = pipe.fileHandleForReading.readDataToEndOfFile()
+                if let url = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines),
+                   !url.isEmpty
+                {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(url, forType: .string)
+                    showSuccessToast()
+                } else {
+                    showErrorToast("No page open in Safari")
+                }
+            } catch {
+                showErrorToast("Failed to fetch URL")
+            }
         }
     ),
 
@@ -1938,82 +2038,6 @@ let cornerActions: [CornerAction] = [
                     showSuccessToast()
                 }
             }
-        }
-    ),
-
-    CornerAction(
-        id: "newMessage",
-        title: "Compose New Message",
-        description: "Compose a new message in Messages",
-        iconName: "message",
-        category: .app,
-        inputType: .none,
-        perform: { _ in
-            let appPath = "/System/Applications/Messages.app"
-            let url = URL(fileURLWithPath: appPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Notes").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let keyCodeN: CGKeyCode = 45
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
-                    keyDown?.flags = [.maskCommand]
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
-                    keyUp?.flags = [.maskCommand]
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-
-                    showSuccessToast()
-                }
-            }
-        }
-    ),
-
-    CornerAction(
-        id: "newWindow",
-        title: "New Window",
-        description: "Open a new window for the focused app",
-        iconName: "macwindow.on.rectangle",
-        category: .window,
-        inputType: .none,
-        perform: { _ in
-            let src = CGEventSource(stateID: .hidSystemState)
-            let keyCodeN: CGKeyCode = 45
-            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
-            keyDown?.flags = [.maskCommand]
-            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
-            keyUp?.flags = [.maskCommand]
-            keyDown?.post(tap: .cghidEventTap)
-            keyUp?.post(tap: .cghidEventTap)
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "closeWindow",
-        title: "Close Window",
-        description: "Close a window for the focused app",
-        iconName: "macwindow.and.cursorarrow",
-        category: .window,
-        inputType: .none,
-        perform: { _ in
-            let src = CGEventSource(stateID: .hidSystemState)
-            let keyCodeW: CGKeyCode = 13
-            let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeW, keyDown: true)
-            keyDown?.flags = [.maskCommand]
-            let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeW, keyDown: false)
-            keyUp?.flags = [.maskCommand]
-            keyDown?.post(tap: .cghidEventTap)
-            keyUp?.post(tap: .cghidEventTap)
-
-            showSuccessToast()
         }
     ),
 
@@ -2224,41 +2248,6 @@ let cornerActions: [CornerAction] = [
     ),
 
     CornerAction(
-        id: "goToFolder",
-        title: "Open Go To Folder",
-        description: "Open the Go To Folder dialog in Finder.",
-        iconName: "folder",
-        category: .app,
-        inputType: .none,
-        perform: { _ in
-            let finderPath = "/System/Library/CoreServices/Finder.app"
-            let url = URL(fileURLWithPath: finderPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Finder").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let keyCodeG: CGKeyCode = 5 // 'G' key
-
-                    if let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: true),
-                       let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeG, keyDown: false)
-                    {
-                        keyDown.flags = [.maskCommand, .maskShift]
-                        keyUp.flags = [.maskCommand, .maskShift]
-
-                        keyDown.post(tap: .cghidEventTap)
-                        keyUp.post(tap: .cghidEventTap)
-                    }
-                }
-            }
-
-            showSuccessToast()
-        }
-    ),
-
-    CornerAction(
         id: "focusDock",
         title: "Focus Dock",
         description: "Focus the Dock",
@@ -2297,40 +2286,6 @@ let cornerActions: [CornerAction] = [
             keyUp?.post(tap: .cghidEventTap)
 
             showSuccessToast()
-        }
-    ),
-
-    CornerAction(
-        id: "createContact",
-        title: "Create a New Contact",
-        description: "Create a New Contact in Apple Contacts",
-        iconName: "person.crop.circle.badge.plus",
-        category: .app,
-        inputType: .none,
-        perform: { _ in
-            let appPath = "/System/Applications/Contacts.app"
-            let url = URL(fileURLWithPath: appPath)
-            NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.Contacts").first?.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    let src = CGEventSource(stateID: .hidSystemState)
-                    let keyCodeN: CGKeyCode = 45
-
-                    let keyDown = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: true)
-                    keyDown?.flags = [.maskCommand]
-
-                    let keyUp = CGEvent(keyboardEventSource: src, virtualKey: keyCodeN, keyDown: false)
-                    keyUp?.flags = [.maskCommand]
-
-                    keyDown?.post(tap: .cghidEventTap)
-                    keyUp?.post(tap: .cghidEventTap)
-
-                    showSuccessToast()
-                }
-            }
         }
     ),
 
@@ -2381,6 +2336,17 @@ let cornerActions: [CornerAction] = [
             } else {
                 showSuccessToast("Time left: \(countdown)", icon: Image(systemName: "stopwatch"))
             }
+        }
+    ),
+
+    CornerAction(
+        id: "doNothing",
+        title: "Do Nothing",
+        description: "Blank action that does nothing",
+        iconName: "nosign",
+        category: .system,
+        inputType: .none,
+        perform: { _ in
         }
     ),
 ]
