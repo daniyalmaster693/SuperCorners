@@ -136,7 +136,7 @@ struct ActionSetEditor: View {
 
             Divider()
 
-            Button("Done") {
+            Button("Save") {
                 dismiss()
             }
             .keyboardShortcut(.defaultAction)
