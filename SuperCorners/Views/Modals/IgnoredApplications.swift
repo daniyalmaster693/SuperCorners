@@ -1,5 +1,5 @@
 //
-//  IgnoredApplicationsView.swift
+//  IgnoredApplications.swift
 //  SuperCorners
 //
 //  Created by Daniyal Master on 2025-06-26.
