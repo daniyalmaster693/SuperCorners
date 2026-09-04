@@ -103,24 +103,26 @@ struct ActionSetEditor: View {
                             
                             Spacer()
                             
-                            if #available(macOS 26.0, *) {
-                                Button(action: {
-                                    // Placeholder delete action
-                                }) {
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.secondary)
+                            if set.targetBundleID != nil {
+                                if #available(macOS 26.0, *) {
+                                    Button(action: {
+                                        // Placeholder delete action
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .foregroundColor(.secondary)
+                                    }
+                                    .buttonStyle(.glass)
+                                    .padding(.trailing, 4)
                                 }
-                                .buttonStyle(.glass)
-                                .padding(.trailing, 4)
-                            }
-                            else {
-                                Button(action: {
-                                    // Placeholder delete action
-                                }) {
-                                    Image(systemName: "trash")
-                                        .foregroundColor(.secondary)
+                                else {
+                                    Button(action: {
+                                        // Placeholder delete action
+                                    }) {
+                                        Image(systemName: "trash")
+                                            .foregroundColor(.secondary)
+                                    }
+                                    .padding(.trailing, 4)
                                 }
-                                .padding(.trailing, 4)
                             }
                         }
                     }
