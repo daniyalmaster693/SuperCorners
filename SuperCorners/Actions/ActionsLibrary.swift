@@ -109,7 +109,7 @@ let cornerActions: [CornerAction] = [
         description: "Activate the screen saver",
         iconName: "display",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let path = "/System/Library/CoreServices/ScreenSaverEngine.app"
@@ -124,7 +124,7 @@ let cornerActions: [CornerAction] = [
         description: "Sleep your Mac",
         iconName: "moon.fill",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let task = Process()
@@ -141,7 +141,7 @@ let cornerActions: [CornerAction] = [
         description: "Locks your Mac and returns to the login screen.",
         iconName: "lock.fill",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -165,7 +165,7 @@ let cornerActions: [CornerAction] = [
         description: "Open the Spotlight Search Window",
         iconName: "magnifyingglass",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -187,7 +187,7 @@ let cornerActions: [CornerAction] = [
         description: "Open the Spotlight Applications Folder.",
         iconName: "square.grid.2x2",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let path = "/System/Applications/Apps.app"
@@ -203,7 +203,7 @@ let cornerActions: [CornerAction] = [
         description: "Display all open windows and spaces.",
         iconName: "rectangle.stack.fill",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let path = "/System/Applications/Mission Control.app"
@@ -219,7 +219,7 @@ let cornerActions: [CornerAction] = [
         description: "Show all windows for the current application.",
         iconName: "rectangle.on.rectangle.angled",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -249,7 +249,7 @@ let cornerActions: [CornerAction] = [
         description: "Open Notification Center",
         iconName: "bell.badge",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -271,7 +271,7 @@ let cornerActions: [CornerAction] = [
         description: "Toggles WiFi on or off based on current state.",
         iconName: "wifi",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: nil,
         perform: { _ in
             let statusTask = Process()
@@ -325,7 +325,7 @@ let cornerActions: [CornerAction] = [
         description: "Toggle dark or light mode",
         iconName: "sun.max",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let toggleScript = """
@@ -383,7 +383,7 @@ let cornerActions: [CornerAction] = [
         description: "Toggle system sleep prevention indefinitely on or off.",
         iconName: "powerplug.fill",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             if let existingProcess = caffeinateProcess, existingProcess.isRunning {
@@ -410,7 +410,7 @@ let cornerActions: [CornerAction] = [
         description: "Create a New Note in Apple Notes",
         iconName: "note.text",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Notes.app"
@@ -445,7 +445,7 @@ let cornerActions: [CornerAction] = [
         description: "Create a New Event in Calendar",
         iconName: "calendar.badge.plus",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Calendar.app"
@@ -480,7 +480,7 @@ let cornerActions: [CornerAction] = [
         description: "Create a New Reminder in Reminders",
         iconName: "list.bullet",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Reminder.app"
@@ -515,7 +515,7 @@ let cornerActions: [CornerAction] = [
         description: "Compose a New Email in Mail",
         iconName: "envelope",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Mail.app"
@@ -550,7 +550,7 @@ let cornerActions: [CornerAction] = [
         description: "Start a voice recording in voice memos",
         iconName: "waveform",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let voiceMemosPath = "/System/Applications/VoiceMemos.app"
@@ -585,7 +585,7 @@ let cornerActions: [CornerAction] = [
         description: "Open AirDrop in Finder.",
         iconName: "square.and.arrow.up",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let path = "/System/Library/CoreServices/Finder.app/Contents/Applications/AirDrop.app"
@@ -601,7 +601,7 @@ let cornerActions: [CornerAction] = [
         description: "Copy the current page url in safari.",
         iconName: "link",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let script = """
@@ -646,7 +646,7 @@ let cornerActions: [CornerAction] = [
         description: "Creates a new folder in Finder.",
         iconName: "folder.badge.plus",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
@@ -678,7 +678,7 @@ let cornerActions: [CornerAction] = [
         description: "Creates a new file in a user selected folder.",
         iconName: "doc.text",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let panel = NSOpenPanel()
@@ -726,7 +726,7 @@ let cornerActions: [CornerAction] = [
         description: "Open the most recently downloaded file.",
         iconName: "arrow.down.doc",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
@@ -759,7 +759,7 @@ let cornerActions: [CornerAction] = [
         description: "Create a zip archive for a specified folder.",
         iconName: "doc.zipper",
         category: .app,
-        requiresInput: true,
+        inputType: .folder,
         inputPrompt: "Enter Folder Path",
         perform: { input in
             guard let folderPath = input, !folderPath.isEmpty else {
@@ -802,7 +802,7 @@ let cornerActions: [CornerAction] = [
         description: "Opens Finder and Asks to Empty Trash",
         iconName: "trash",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
@@ -834,7 +834,7 @@ let cornerActions: [CornerAction] = [
         description: "Opens an app or hides it if already focused.",
         iconName: "square.grid.3x3",
         category: .template,
-        requiresInput: true,
+        inputType: .application,
         inputPrompt: "Enter Application Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
@@ -860,7 +860,7 @@ let cornerActions: [CornerAction] = [
         description: "Open a website in your default browser.",
         iconName: "globe",
         category: .template,
-        requiresInput: true,
+        inputType: .url,
         inputPrompt: "Enter Website URL",
         perform: { input in
             if let urlStr = input, let url = URL(string: urlStr) {
@@ -878,7 +878,7 @@ let cornerActions: [CornerAction] = [
         description: "Run an Apple Shortcut.",
         iconName: "sparkles",
         category: .template,
-        requiresInput: true,
+        inputType: .text,
         inputPrompt: "Enter Shortcut Name",
         perform: { input in
             guard let shortcutName = input, !shortcutName.isEmpty else {
@@ -918,7 +918,7 @@ let cornerActions: [CornerAction] = [
         description: "Simulate a keyboard shortcut",
         iconName: "keyboard",
         category: .template,
-        requiresInput: true,
+        inputType: .hotkey,
         inputPrompt: "Record Hotkey",
         perform: { input in
             guard let input = input, !input.isEmpty else {
@@ -949,7 +949,7 @@ let cornerActions: [CornerAction] = [
         description: "Open a folder in Finder.",
         iconName: "folder.fill",
         category: .template,
-        requiresInput: true,
+        inputType: .folder,
         inputPrompt: "Enter Folder Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
@@ -967,7 +967,7 @@ let cornerActions: [CornerAction] = [
         description: "Open a file in Finder.",
         iconName: "doc",
         category: .template,
-        requiresInput: true,
+        inputType: .file,
         inputPrompt: "Enter File Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
@@ -985,7 +985,7 @@ let cornerActions: [CornerAction] = [
         description: "Run an AppleScript file.",
         iconName: "curlybraces",
         category: .template,
-        requiresInput: true,
+        inputType: .file,
         inputPrompt: "Enter AppleScript Path",
         perform: { input in
             guard let path = input, !path.isEmpty else {
@@ -1024,7 +1024,7 @@ let cornerActions: [CornerAction] = [
         description: "Run a terminal command.",
         iconName: "terminal",
         category: .template,
-        requiresInput: true,
+        inputType: .text,
         inputPrompt: "",
         perform: { input in
             guard let command = input, !command.isEmpty else {
@@ -1050,8 +1050,8 @@ let cornerActions: [CornerAction] = [
         title: "Extract Text (OCR)",
         description: "Select a region of the screen to extract text",
         iconName: "text.viewfinder",
-        category: .tool,,
-        requiresInput: false,
+        category: .tool,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("ocr_capture.png")
@@ -1103,7 +1103,7 @@ let cornerActions: [CornerAction] = [
         description: "Pick a color and copy its hex code",
         iconName: "eyedropper",
         category: .tool,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let sampler = NSColorSampler()
@@ -1173,7 +1173,7 @@ let cornerActions: [CornerAction] = [
         description: "Receive count statistics for your last copied text.",
         iconName: "text.magnifyingglass",
         category: .tool,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let pasteboard = NSPasteboard.general
@@ -1239,7 +1239,7 @@ let cornerActions: [CornerAction] = [
         description: "Open the Emoji and Symbol viewer.",
         iconName: "smiley.fill",
         category: .tool,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1261,7 +1261,7 @@ let cornerActions: [CornerAction] = [
         description: "Get the current year progress",
         iconName: "clock.arrow.2.circlepath",
         category: .tool,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let calendar = Calendar.current
@@ -1290,8 +1290,8 @@ let cornerActions: [CornerAction] = [
         title: "Network Speed Test",
         description: "Run a network speed test.",
         iconName: "gauge",
-        category: .tool,,
-        requiresInput: false,
+        category: .tool,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let task = Process()
@@ -1376,7 +1376,7 @@ let cornerActions: [CornerAction] = [
         description: "Launch the macOS Screenshot utility.",
         iconName: "camera.viewfinder",
         category: .capture,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let path = "/System/Applications/Utilities/Screenshot.app"
@@ -1392,7 +1392,7 @@ let cornerActions: [CornerAction] = [
         description: "Captures a custom area of the screen.",
         iconName: "selection.pin.in.out",
         category: .capture,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1417,7 +1417,7 @@ let cornerActions: [CornerAction] = [
         description: "Captures the entire screen.",
         iconName: "rectangle.on.rectangle",
         category: .capture,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1442,7 +1442,7 @@ let cornerActions: [CornerAction] = [
         description: "Play previous media track",
         iconName: "backward.fill",
         category: .media,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let keyCodePrev = 18
@@ -1484,7 +1484,7 @@ let cornerActions: [CornerAction] = [
         description: "Play next media track",
         iconName: "forward.fill",
         category: .media,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let keyCodeNext = 17
@@ -1526,7 +1526,7 @@ let cornerActions: [CornerAction] = [
         description: "Decrease system volume by one step.",
         iconName: "speaker.wave.1.fill",
         category: .media,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let task = Process()
@@ -1544,7 +1544,7 @@ let cornerActions: [CornerAction] = [
         description: "Increase system volume by one step.",
         iconName: "speaker.wave.2.fill",
         category: .media,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let task = Process()
@@ -1562,7 +1562,7 @@ let cornerActions: [CornerAction] = [
         description: "Toggles system volume mute state.",
         iconName: "speaker.slash.circle.fill",
         category: .media,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let getTask = Process()
@@ -1604,7 +1604,7 @@ let cornerActions: [CornerAction] = [
         description: "Set system volume to a specific level.",
         iconName: "speaker.wave.2.fill",
         category: .media,
-        requiresInput: true,
+        inputType: .text,
         inputPrompt: "Enter a volume percentage (0–100):",
         perform: { input in
             guard let value = input, let percent = Double(value),
@@ -1635,7 +1635,7 @@ let cornerActions: [CornerAction] = [
         description: "Expand the active window to fill the desktop.",
         iconName: "rectangle.inset.fill",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1657,7 +1657,7 @@ let cornerActions: [CornerAction] = [
         description: "Restore the active window to it's previous size",
         iconName: "arrow.uturn.left.circle",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1679,7 +1679,7 @@ let cornerActions: [CornerAction] = [
         description: "Center the active window on the desktop.",
         iconName: "rectangle.center.inset.fill",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1701,7 +1701,7 @@ let cornerActions: [CornerAction] = [
         description: "Minimize the active window.",
         iconName: "minus.square.fill",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1723,8 +1723,7 @@ let cornerActions: [CornerAction] = [
         description: "Minimize all windows of the current app.",
         iconName: "rectangle.compress.vertical",
         category: .window,
-        requiresInput: false,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1746,7 +1745,7 @@ let cornerActions: [CornerAction] = [
         description: "Hide the active app.",
         iconName: "eye.slash.fill",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1768,7 +1767,7 @@ let cornerActions: [CornerAction] = [
         description: "Hide all apps except the active one.",
         iconName: "eye.slash.circle.fill",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1790,7 +1789,7 @@ let cornerActions: [CornerAction] = [
         description: "Show the desktop by hiding all windows.",
         iconName: "desktopcomputer",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -1815,7 +1814,7 @@ let cornerActions: [CornerAction] = [
         description: "Switch to the previous desktop.",
         iconName: "arrow.left.square",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -1845,7 +1844,7 @@ let cornerActions: [CornerAction] = [
         description: "Switch to the next desktop.",
         iconName: "arrow.right.square",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -1875,7 +1874,7 @@ let cornerActions: [CornerAction] = [
         description: "Toggle Media Playback",
         iconName: "playpause",
         category: .media,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let keyCodePlayPause = 16
@@ -1917,7 +1916,7 @@ let cornerActions: [CornerAction] = [
         description: "Copy the path to your most recent download.",
         iconName: "doc.on.clipboard",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let downloadsURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
@@ -1951,7 +1950,7 @@ let cornerActions: [CornerAction] = [
         description: "Blank action that does nothing",
         iconName: "nosign",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
         }
@@ -1963,7 +1962,7 @@ let cornerActions: [CornerAction] = [
         description: "Toggle Reader Mode in Safari.",
         iconName: "book",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app"
@@ -1998,7 +1997,7 @@ let cornerActions: [CornerAction] = [
         description: "Compose a new message in Messages",
         iconName: "message",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Messages.app"
@@ -2033,7 +2032,7 @@ let cornerActions: [CornerAction] = [
         description: "Open a new window for the focused app",
         iconName: "macwindow.on.rectangle",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -2055,7 +2054,7 @@ let cornerActions: [CornerAction] = [
         description: "Close a window for the focused app",
         iconName: "macwindow.and.cursorarrow",
         category: .window,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -2077,7 +2076,7 @@ let cornerActions: [CornerAction] = [
         description: "Opens album for currently playing song in Apple Music",
         iconName: "cursorarrow.click",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
@@ -2112,7 +2111,7 @@ let cornerActions: [CornerAction] = [
         description: "Stops Playback in Apple Music",
         iconName: "play.slash",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
@@ -2147,7 +2146,7 @@ let cornerActions: [CornerAction] = [
         description: "Opens Miniplayer in Apple Music",
         iconName: "rectangle.inset.bottomleading.filled",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
@@ -2182,7 +2181,7 @@ let cornerActions: [CornerAction] = [
         description: "Opens Fullscreen Player in Apple Music",
         iconName: "arrow.up.left.and.arrow.down.right",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
@@ -2219,7 +2218,7 @@ let cornerActions: [CornerAction] = [
         description: "Open Now Playing in Apple Music",
         iconName: "tv.music.note",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
@@ -2254,7 +2253,7 @@ let cornerActions: [CornerAction] = [
         description: "Open Lyrics Panel in Apple Music",
         iconName: "music.note.list",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let musicAppPath = "/System/Applications/Music.app"
@@ -2289,7 +2288,7 @@ let cornerActions: [CornerAction] = [
         description: "Open the Go To Folder dialog in Finder.",
         iconName: "folder",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let finderPath = "/System/Library/CoreServices/Finder.app"
@@ -2325,7 +2324,7 @@ let cornerActions: [CornerAction] = [
         description: "Focus the Dock",
         iconName: "rectangle.dock",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -2347,7 +2346,7 @@ let cornerActions: [CornerAction] = [
         description: "Open the Control Center",
         iconName: "switch.2",
         category: .system,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let src = CGEventSource(stateID: .hidSystemState)
@@ -2369,7 +2368,7 @@ let cornerActions: [CornerAction] = [
         description: "Create a New Contact in Apple Contacts",
         iconName: "person.crop.circle.badge.plus",
         category: .app,
-        requiresInput: false,
+        inputType: .none,
         inputPrompt: "",
         perform: { _ in
             let appPath = "/System/Applications/Contacts.app"
@@ -2404,7 +2403,7 @@ let cornerActions: [CornerAction] = [
         description: "Get the time until a date.",
         iconName: "calendar",
         category: .template,
-        requiresInput: true,
+        inputType: .text,
         inputPrompt: "Enter Date in yyyy-MM-dd format",
         perform: { input in
             guard let input = input, !input.isEmpty else {

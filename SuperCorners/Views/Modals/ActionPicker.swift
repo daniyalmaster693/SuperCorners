@@ -13,7 +13,7 @@ struct ActionLibraryView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @State private var searchText = ""
-    @State private var selectedTags: Set<String> = []
+    @State private var selectedCategories: Set<ActionCategory> = []
     @State private var selectedActionID: String?
     @State private var showTemplateModal = false
     @State private var templateInput = ""
@@ -24,10 +24,10 @@ struct ActionLibraryView: View {
     let corner: CornerPosition.Corner
     var onUpdate: () -> Void
 
-    let allTags: [String] = {
-        let tags = cornerActions.map { $0.tag }
-        return Array(Set(tags)).sorted()
-    }()
+    var allCategories: [ActionCategory] {
+        Array(Set(cornerActions.map { $0.category }))
+            .sorted { $0.rawValue < $1.rawValue }
+    }
 
     var filteredActions: [CornerAction] {
         let searchFiltered = searchText.isEmpty
@@ -37,11 +37,11 @@ struct ActionLibraryView: View {
                     action.description.lowercased().contains(searchText.lowercased())
             }
 
-        if selectedTags.isEmpty {
+        if selectedCategories.isEmpty {
             return searchFiltered
         } else {
             return searchFiltered.filter { action in
-                selectedTags.contains(action.tag)
+                selectedCategories.contains(action.category)
             }
         }
     }
@@ -75,21 +75,21 @@ struct ActionLibraryView: View {
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 6) {
-                    ForEach(allTags, id: \.self) { tag in
+                    ForEach(allCategories, id: \.self) { category in
                         Button(action: {
-                            if selectedTags.contains(tag) {
-                                selectedTags.remove(tag)
+                            if selectedCategories.contains(category) {
+                                selectedCategories.remove(category)
                             } else {
-                                selectedTags.insert(tag)
+                                selectedCategories.insert(category)
                             }
                         }) {
-                            Text(tag)
+                            Text(category.rawValue.capitalized)
                                 .font(.subheadline)
                                 .padding(.vertical, 4)
                                 .padding(.horizontal, 10)
                                 .background(
                                     Group {
-                                        if selectedTags.contains(tag) {
+                                        if selectedCategories.contains(category) {
                                             RoundedRectangle(cornerRadius: 10)
                                                 .fill(Color.accentColor.opacity(0.2))
                                                 .overlay(
@@ -106,7 +106,7 @@ struct ActionLibraryView: View {
                                         }
                                     }
                                 )
-                                .foregroundColor(selectedTags.contains(tag) ? .accentColor : .primary)
+                                .foregroundColor(selectedCategories.contains(category) ? .accentColor : .primary)
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
