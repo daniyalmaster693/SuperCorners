@@ -177,7 +177,7 @@ struct ActionLibraryView: View {
                        let selectedAction = cornerActions.first(where: { $0.id == selectedID })
 
                     {
-                        if selectedAction.requiresInput {
+                        if selectedAction.inputType != .none {
                             templateInput = ""
                             showTemplateModal = true
                         } else {
