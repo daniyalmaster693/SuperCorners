@@ -43,6 +43,12 @@ struct ActionSetEditor: View {
                                     let bundleID = Bundle(url: url)?.bundleIdentifier
                                            
                                     if let bundleID {
+                                        guard !actionSetManager.availableSets.contains(where: {
+                                            $0.targetBundleID?.caseInsensitiveCompare(bundleID) == .orderedSame
+                                        }) else {
+                                            return
+                                        }
+                                        
                                         ActionSetManager.shared.createSet(
                                             name: "\(appName) Actions",
                                             targetBundleID: bundleID
