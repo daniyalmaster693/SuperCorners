@@ -21,7 +21,7 @@ struct CornerView: View {
 
     @ObservedObject private var actionSetManager = ActionSetManager.shared
 
-    @State private var selectedActionSet: String = ActionSetManager.shared.actionSets[0].id
+    @AppStorage("selectedActionSet") private var selectedActionSet = "global"
     @State private var showActionSetEditor = false
 
     // Corner Variables
