@@ -114,4 +114,43 @@ class ActionSetManager: ObservableObject {
 
         saveConfig()
     }
+
+    func assignAction(
+        actionID: String,
+        input: String?,
+        position: CornerPosition.Corner,
+        setID: String
+    ) {
+        guard let index = actionSets.firstIndex(where: { $0.id == setID }) else {
+            return
+        }
+
+        let assignment = ActionAssignment(actionID: actionID, input: input)
+
+        switch position {
+        case .topLeft:
+            actionSets[index].corners.topLeft = assignment
+
+        case .topRight:
+            actionSets[index].corners.topRight = assignment
+
+        case .bottomLeft:
+            actionSets[index].corners.bottomLeft = assignment
+
+        case .bottomRight:
+            actionSets[index].corners.bottomRight = assignment
+
+        case .top:
+            actionSets[index].zones.top = assignment
+
+        case .left:
+            actionSets[index].zones.left = assignment
+
+        case .right:
+            actionSets[index].zones.right = assignment
+
+        case .bottom:
+            actionSets[index].zones.bottom = assignment
+        }
+    }
 }
