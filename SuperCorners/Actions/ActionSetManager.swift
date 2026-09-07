@@ -37,7 +37,7 @@ class ActionSetManager: ObservableObject {
                 actionSets = config.actionSets
                 return
             } catch {
-                print(error)
+                print("Failed to load config \(error)")
             }
         }
 
@@ -67,7 +67,16 @@ class ActionSetManager: ObservableObject {
         try FileManager.default.createDirectory(at: applicationSupportDirectory, withIntermediateDirectories: true)
     }
 
-    func saveConfig() {}
+    func saveConfig() {
+        do {
+            let config = ActionsConfig(actionSets: actionSets)
+            let data = try JSONEncoder().encode(config)
+
+            try data.write(to: configURL, options: .atomic)
+        } catch {
+            print("Failed to save config: \(error)")
+        }
+    }
 
     // Set Management
 
@@ -90,6 +99,7 @@ class ActionSetManager: ObservableObject {
         )
 
         actionSets.append(newSet)
+        saveConfig()
     }
 
     func deleteSet(id: String) {}

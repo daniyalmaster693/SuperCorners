@@ -152,6 +152,7 @@ struct ActionSetEditor: View {
             Divider()
 
             Button("Save") {
+                ActionSetManager.shared.saveConfig()
                 dismiss()
             }
             .keyboardShortcut(.defaultAction)
