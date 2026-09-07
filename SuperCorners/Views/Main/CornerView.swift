@@ -21,7 +21,7 @@ struct CornerView: View {
 
     @ObservedObject private var actionSetManager = ActionSetManager.shared
 
-    @State private var selectedActionSet: UUID = ActionSetManager.shared.availableSets[0].id
+    @State private var selectedActionSet: String = ActionSetManager.shared.actionSets[0].id
     @State private var showActionSetEditor = false
 
     // Corner Variables
@@ -33,9 +33,9 @@ struct CornerView: View {
 
     var body: some View {
         var currentSet: ActionSet {
-            actionSetManager.availableSets.first {
+            actionSetManager.actionSets.first {
                 $0.id == selectedActionSet
-            } ?? actionSetManager.availableSets[0]
+            } ?? actionSetManager.actionSets[0]
         }
 
         let topLeftTitle = titleForCorner(.topLeft, currentSet: currentSet)
@@ -185,7 +185,7 @@ struct CornerView: View {
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Picker("Active Set:", selection: $selectedActionSet) {
-                    ForEach(actionSetManager.availableSets) { set in
+                    ForEach(actionSetManager.actionSets) { set in
                         Text(set.name)
                             .tag(set.id)
                     }

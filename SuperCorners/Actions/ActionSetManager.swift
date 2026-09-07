@@ -17,7 +17,7 @@ class ActionSetManager: ObservableObject {
     }
 
     func loadDefaultConfig() {
-        guard let url = Bundle.main.url(forResource: "config", withExtension: "json"),
+        guard let url = Bundle.main.url(forResource: "default-config", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let config = try? JSONDecoder().decode(ActionsConfig.self, from: data)
         else {

@@ -43,16 +43,11 @@ struct ActionSetEditor: View {
                                     let bundleID = Bundle(url: url)?.bundleIdentifier
                                            
                                     if let bundleID {
-                                        guard !actionSetManager.availableSets.contains(where: {
+                                        guard !actionSetManager.actionSets.contains(where: {
                                             $0.targetBundleID?.caseInsensitiveCompare(bundleID) == .orderedSame
                                         }) else {
                                             return
                                         }
-                                        
-                                        ActionSetManager.shared.createSet(
-                                            name: "\(appName) Actions",
-                                            targetBundleID: bundleID
-                                        )
                                     }
                                 }
                             }) {
@@ -93,7 +88,7 @@ struct ActionSetEditor: View {
                 }
 
                 Section("Action Sets") {
-                    ForEach(actionSetManager.availableSets) { set in
+                    ForEach(actionSetManager.actionSets) { set in
                         HStack {
                             if let icon = applicationIcon(for: set.targetBundleID) {
                                 Image(nsImage: icon)
@@ -118,9 +113,7 @@ struct ActionSetEditor: View {
                             
                             if set.targetBundleID != nil {
                                 if #available(macOS 26.0, *) {
-                                    Button(action: {
-                                        ActionSetManager.shared.deleteSet(set)
-                                    }) {
+                                    Button(action: {}) {
                                         Image(systemName: "trash")
                                             .foregroundColor(.secondary)
                                     }
@@ -128,9 +121,7 @@ struct ActionSetEditor: View {
                                     .padding(.trailing, 4)
                                 }
                                 else {
-                                    Button(action: {
-                                        ActionSetManager.shared.deleteSet(set)
-                                    }) {
+                                    Button(action: {}) {
                                         Image(systemName: "trash")
                                             .foregroundColor(.secondary)
                                     }
