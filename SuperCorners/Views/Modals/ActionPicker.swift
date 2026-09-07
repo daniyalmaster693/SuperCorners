@@ -5,7 +5,6 @@
 //  Created by Daniyal Master on 2025-05-24.
 //
 
-import KeyboardShortcuts
 import SwiftUI
 
 struct ActionPicker: View {
@@ -20,9 +19,9 @@ struct ActionPicker: View {
     
     @State private var selectedActionID: String?
     
-    @State private var showTemplateModal = false
     @State private var templateInput = ""
-    
+    @State private var showTemplateModal = false
+
     let corner: CornerPosition.Corner
     let actionSetID: String
     var onUpdate: () -> Void
@@ -251,262 +250,13 @@ struct ActionPicker: View {
         .frame(minWidth: 250, minHeight: 450)
         .padding()
         .sheet(isPresented: $showTemplateModal) {
-            VStack(spacing: 8) {
-                Text(selectedAction?.inputPrompt ?? "Enter Input")
-                    .font(.title2)
-                    .padding(.top, 10)
-                    .padding(.bottom, 2)
-                    .bold()
-                
-                Text("Enter a valid action input to assign it")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .padding(.bottom, 20)
-                    .frame(maxWidth: 290)
-                
-                if selectedAction?.inputType == .application {
-                    HStack(spacing: 8) {
-                        TextField("Enter Action Input...", text: $templateInput)
-                            .textFieldStyle(.plain)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color(NSColor.controlBackgroundColor))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                            )
-                            .frame(maxWidth: 260)
-                        
-                        Button(action: {
-                            let panel = NSOpenPanel()
-                            panel.canChooseFiles = true
-                            panel.canChooseDirectories = false
-                            panel.allowsMultipleSelection = false
-                            panel.allowedContentTypes = [.application]
-                            panel.directoryURL = URL(fileURLWithPath: "/Applications")
-                            panel.title = "Select Application"
-                            panel.prompt = "Select"
-                            
-                            if panel.runModal() == .OK, let url = panel.url {
-                                templateInput = url.path
-                            }
-                        }) {
-                            Image(systemName: "folder")
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                    }
-                    .padding(.bottom, 20)
-                } else if selectedAction?.inputType == .folder {
-                    HStack(spacing: 8) {
-                        TextField("Enter Action Input...", text: $templateInput)
-                            .textFieldStyle(.plain)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color(NSColor.controlBackgroundColor))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                            )
-                            .frame(maxWidth: 260)
-                        
-                        Button(action: {
-                            let panel = NSOpenPanel()
-                            panel.canChooseFiles = false
-                            panel.canChooseDirectories = true
-                            panel.allowsMultipleSelection = false
-                            let lastPath = UserDefaults.standard.string(forKey: "lastChosenPath") ?? NSHomeDirectory()
-                            panel.directoryURL = URL(fileURLWithPath: lastPath)
-                            panel.title = "Select Folder"
-                            panel.prompt = "Select"
-                            
-                            if panel.runModal() == .OK, let url = panel.url {
-                                templateInput = url.path
-                                UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
-                            }
-                        }) {
-                            Image(systemName: "folder")
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                    }
-                    .padding(.bottom, 20)
-                } else if selectedAction?.inputType == .file {
-                    HStack(spacing: 8) {
-                        TextField("Enter Action Input...", text: $templateInput)
-                            .textFieldStyle(.plain)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color(NSColor.controlBackgroundColor))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                            )
-                            .frame(maxWidth: 260)
-                        
-                        Button(action: {
-                            let panel = NSOpenPanel()
-                            panel.canChooseFiles = true
-                            panel.canChooseDirectories = false
-                            panel.allowsMultipleSelection = false
-                            let lastPath = UserDefaults.standard.string(forKey: "lastChosenPath") ?? NSHomeDirectory()
-                            panel.directoryURL = URL(fileURLWithPath: lastPath)
-                            panel.title = "Select File"
-                            panel.prompt = "Select"
-                            
-                            if panel.runModal() == .OK, let url = panel.url {
-                                templateInput = url.path
-                                UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
-                            }
-                        }) {
-                            Image(systemName: "doc")
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                    }
-                    .padding(.bottom, 20)
-                } else if selectedAction?.inputType == .appleScript {
-                    HStack(spacing: 8) {
-                        TextField("Enter Action Input...", text: $templateInput)
-                            .textFieldStyle(.plain)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color(NSColor.controlBackgroundColor))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                            )
-                            .frame(maxWidth: 260)
-                        
-                        Button(action: {
-                            let panel = NSOpenPanel()
-                            panel.canChooseFiles = true
-                            panel.canChooseDirectories = false
-                            panel.allowsMultipleSelection = false
-                            panel.allowedContentTypes = [.appleScript]
-                            let lastPath = UserDefaults.standard.string(forKey: "lastChosenPath") ?? NSHomeDirectory()
-                            panel.directoryURL = URL(fileURLWithPath: lastPath)
-                            panel.title = "Select AppleScript"
-                            panel.prompt = "Select"
-                            
-                            if panel.runModal() == .OK, let url = panel.url {
-                                templateInput = url.path
-                                UserDefaults.standard.set(url.path, forKey: "lastChosenPath")
-                            }
-                        }) {
-                            Image(systemName: "doc")
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                    }
-                    .padding(.bottom, 20)
-                } else if selectedAction?.inputType == .hotkey {
-                    HStack(spacing: 8) {
-                        TextField("Hotkey Name...", text: $templateInput)
-                            .textFieldStyle(.plain)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color(NSColor.controlBackgroundColor))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                            )
-                            .frame(maxWidth: 300)
-                        
-                        let dynamicHotkeyName = KeyboardShortcuts.Name(templateInput.isEmpty ? "tempHotkey" : templateInput)
-                        KeyboardShortcuts.Recorder(for: dynamicHotkeyName)
-                    }
-                    .padding(.bottom, 20)
-                } else {
-                    HStack(spacing: 8) {
-                        TextField("Enter Action Input...", text: $templateInput)
-                            .textFieldStyle(.plain)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 10)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color(NSColor.controlBackgroundColor))
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-                            )
-                            .frame(maxWidth: 260)
-                        
-                        Button(action: {
-                            if let clipboardString = NSPasteboard.general.string(forType: .string) {
-                                templateInput = clipboardString
-                            }
-                        }) {
-                            Image(systemName: "clipboard")
-                                .frame(width: 30, height: 30)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                        
-                    }.padding(.bottom, 20)
-                }
-                
-                Divider().frame(maxWidth: 290)
-                
-                HStack {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                    .keyboardShortcut(.cancelAction)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Button("Assign") {
-                        if let selectedID = selectedActionID,
-                           let selectedAction = cornerActions.first(where: { $0.id == selectedID })
-                        {
-                            actionSetManager.assignAction(actionID: selectedAction.id, input: templateInput, position: corner, setID: actionSetID)
-                            
-                            actionSetManager.saveConfig()
-                            onUpdate()
-                            showTemplateModal = false
-                            dismiss()
-                        }
-                    }
-                    .keyboardShortcut(.defaultAction)
-                    .disabled(templateInput.trimmingCharacters(in: .whitespaces).isEmpty)
-                    .keyboardShortcut(.defaultAction)
-                    .frame(maxWidth: 375, alignment: .trailing)
-                }
-            }
-            .frame(maxWidth: 290, minHeight: 175)
-            .padding(.top, 15)
-            .padding()
-            .onAppear {
-                guard templateInput.isEmpty, let selectedAction else {
-                    return
-                }
-                
-                switch selectedAction.inputType {
-                case .url:
-                    templateInput = "https://"
-                case .application:
-                    templateInput = "Applications/"
-                case .folder, .file, .appleScript:
-                    let homePath = FileManager.default.homeDirectoryForCurrentUser.path
-                    templateInput = "\(homePath)/"
-                default:
-                    break
-                }
+            if let selectedAction {
+                TemplateModal(
+                    action: selectedAction,
+                    corner: corner,
+                    actionSetID: actionSetID,
+                    onUpdate: onUpdate
+                )
             }
         }
     }
