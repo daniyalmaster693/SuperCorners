@@ -16,6 +16,30 @@ class ActionSetManager: ObservableObject {
         loadDefaultConfig()
     }
 
+    private var applicationSupportDirectory: URL {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("SuperCorners", isDirectory: true)
+    }
+
+    private var configURL: URL {
+        applicationSupportDirectory.appendingPathComponent("config.json")
+    }
+
+    func loadConfig() {
+        let fileManager = FileManager.default
+
+        if fileManager.fileExists(atPath: configURL.path) {
+            do {
+                let data = try Data(contentsOf: configURL)
+                let config = try JSONDecoder().decode(ActionsConfig.self, from: data)
+
+                actionSets = config.actionSets
+                return
+            } catch {
+                print(error)
+            }
+        }
+    }
+
     func loadDefaultConfig() {
         guard let url = Bundle.main.url(forResource: "default-config", withExtension: "json"),
               let data = try? Data(contentsOf: url),
