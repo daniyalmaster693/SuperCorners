@@ -41,15 +41,12 @@ struct ActionSetEditor: View {
                                 if panel.runModal() == .OK, let url = panel.url {
                                     let appName = url.deletingPathExtension().lastPathComponent
                                     let bundleID = Bundle(url: url)?.bundleIdentifier
-                                           
+                                    
                                     if let bundleID {
-                                        guard !actionSetManager.actionSets.contains(where: {
-                                            $0.targetBundleID?.caseInsensitiveCompare(bundleID) == .orderedSame
-                                        }) else {
-                                            return
-                                        }
-                                        
-                                        ActionSetManager.shared.createSet(name: "\(appName) Actions", targetBundleID: bundleID)
+                                        actionSetManager.createSet(
+                                            name: "\(appName) Actions",
+                                            targetBundleID: bundleID
+                                        )
                                     }
                                 }
                             }) {
@@ -75,15 +72,12 @@ struct ActionSetEditor: View {
                                 if panel.runModal() == .OK, let url = panel.url {
                                     let appName = url.deletingPathExtension().lastPathComponent
                                     let bundleID = Bundle(url: url)?.bundleIdentifier
-                                           
+                                    
                                     if let bundleID {
-                                        guard !actionSetManager.actionSets.contains(where: {
-                                            $0.targetBundleID?.caseInsensitiveCompare(bundleID) == .orderedSame
-                                        }) else {
-                                            return
-                                        }
-                                        
-                                        ActionSetManager.shared.createSet(name: "\(appName) Actions", targetBundleID: bundleID)
+                                        actionSetManager.createSet(
+                                            name: "\(appName) Actions",
+                                            targetBundleID: bundleID
+                                        )
                                     }
                                 }
                             }) {
@@ -101,20 +95,20 @@ struct ActionSetEditor: View {
                 Section("Action Sets") {
                     ForEach(actionSetManager.actionSets) { set in
                         HStack {
-                            if let icon = applicationIcon(for: set.targetBundleID) {
-                                Image(nsImage: icon)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .cornerRadius(12)
-                                    .frame(width: 25, height: 25)
-                            }
-                            else {
+                            if set.targetBundleID == nil {
                                 Image(systemName: "globe")
                                     .resizable()
                                     .scaledToFit()
                                     .foregroundStyle(.secondary)
                                     .padding(.leading, 5)
                                     .frame(width: 22, height: 22)
+                            }
+                            else if let icon = applicationIcon(for: set.targetBundleID) {
+                                Image(nsImage: icon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(12)
+                                    .frame(width: 25, height: 25)
                             }
                         
                             Text(set.name)
@@ -152,7 +146,7 @@ struct ActionSetEditor: View {
             Divider()
 
             Button("Save") {
-                ActionSetManager.shared.saveConfig()
+                actionSetManager.saveConfig()
                 dismiss()
             }
             .keyboardShortcut(.defaultAction)

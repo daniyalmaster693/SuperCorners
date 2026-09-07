@@ -81,9 +81,14 @@ class ActionSetManager: ObservableObject {
     // Set Management
 
     func createSet(name: String, targetBundleID: String) {
+        guard !actionSets.contains(where: { $0.targetBundleID?.caseInsensitiveCompare(targetBundleID) == .orderedSame }) else {
+            return
+        }
+
         let newSet = ActionSet(
-            id: targetBundleID,
+            id: UUID().uuidString,
             name: name,
+            targetBundleID: targetBundleID,
             corners: CornerAssignments(
                 topLeft: ActionAssignment(actionID: "doNothing", input: nil),
                 topRight: ActionAssignment(actionID: "doNothing", input: nil),
