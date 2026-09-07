@@ -91,6 +91,8 @@ struct ActionPicker: View {
                 HStack(spacing: 6) {
                     ForEach(allCategories, id: \.self) { category in
                         Button(action: {
+                            showFavoritesOnly = false
+                            
                             if selectedCategories.contains(category) {
                                 selectedCategories.remove(category)
                             } else {
@@ -127,6 +129,10 @@ struct ActionPicker: View {
                     
                     Button(action: {
                         showFavoritesOnly.toggle()
+                        
+                        if showFavoritesOnly {
+                            selectedCategories.removeAll()
+                        }
                     }) {
                         Text("Favorites")
                             .font(.subheadline)
