@@ -1,0 +1,45 @@
+{
+  "actionSets": [
+    {
+      "id": "global",
+      "name": "Global Actions",
+      "targetBundleID": null,
+      "corners": {
+        "topLeft": {
+          "actionID": "screenSaver",
+          "input": null
+        },
+        "topRight": {
+          "actionID": "sleepDisplay",
+          "input": null
+        },
+        "bottomLeft": {
+          "actionID": "lockScreen",
+          "input": null
+        },
+        "bottomRight": {
+          "actionID": "spotlightSearch",
+          "input": null
+        }
+      },
+      "zones": {
+        "top": {
+          "actionID": "spotlightApps",
+          "input": null
+        },
+        "left": {
+          "actionID": "missionControl",
+          "input": null
+        },
+        "right": {
+          "actionID": "applicationWindows",
+          "input": null
+        },
+        "bottom": {
+          "actionID": "notificationCenter",
+          "input": null
+        }
+      }
+    }
+  ]
+}
