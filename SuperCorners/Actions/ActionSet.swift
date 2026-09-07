@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Config: Codable {
+struct ActionsConfig: Codable {
     var actionSets: [ActionSet]
 }
 
