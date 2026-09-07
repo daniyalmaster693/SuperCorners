@@ -60,29 +60,9 @@ struct SettingsView: View {
     @AppStorage("visualDismissTimer") private var visualDismissTimer: Double = 3.0
     @AppStorage("persistentVisualFeedback") var persistentVisualFeedback = false
 
-    @AppStorage("showToastNotifications") private var showToastNotification = true
+    @AppStorage("showToastNotifications") private var showToastNotification = false
     @AppStorage("dismissOnClick") private var dismissOnClick = true
-    @AppStorage("autoDismissTimer") private var autoDismissTimer: DismissTimer = .seconds3
-
-    enum DismissTimer: String, CaseIterable, Identifiable {
-        case seconds2 = "2 Seconds"
-        case seconds3 = "3 Seconds"
-        case seconds4 = "4 Seconds"
-        case seconds5 = "5 Seconds"
-        case seconds10 = "10 Seconds"
-
-        var id: String { self.rawValue }
-
-        var duration: TimeInterval {
-            switch self {
-            case .seconds2: return 2
-            case .seconds3: return 3
-            case .seconds4: return 4
-            case .seconds5: return 5
-            case .seconds10: return 10
-            }
-        }
-    }
+    @AppStorage("autoDismissTimer") private var autoDismissTimer: Double = 3.0
 
     @AppStorage("playSoundEffect") private var playSoundEffect = false
     @AppStorage("selectedSoundEffect") private var selectedSound: SoundEffect = .purr
@@ -446,17 +426,15 @@ struct SettingsView: View {
                             }
                         }
 
-                        HStack {
-                            Label("Auto Dismiss Timer", systemImage: "timer")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Picker("", selection: self.$autoDismissTimer) {
-                                ForEach(DismissTimer.allCases) { interval in
-                                    Text(interval.rawValue).tag(interval)
-                                }
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack {
+                                Image(systemName: "timer")
+                                    .foregroundColor(.primary)
+                                Text("Toast Duration: \(String(format: "%.1f", self.autoDismissTimer))")
+
+                                Slider(value: self.$autoDismissTimer, in: 3 ... 10.0, step: 0.5)
+                                    .disabled(!self.showToastNotification)
                             }
-                            .pickerStyle(.menu)
-                            .frame(width: 150)
                         }
                     }
                     .disabled(!self.showToastNotification)
