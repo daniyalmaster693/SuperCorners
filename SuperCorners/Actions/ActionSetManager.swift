@@ -153,4 +153,18 @@ class ActionSetManager: ObservableObject {
             actionSets[index].zones.bottom = assignment
         }
     }
+
+    func findActionSet(bundleID: String?) -> ActionSet? {
+        if let bundleID {
+            if let actionSet = actionSets.first(where: {
+                $0.targetBundleID?.caseInsensitiveCompare(bundleID) == .orderedSame
+            }) {
+                return actionSet
+            }
+        }
+
+        return actionSets.first(where: {
+            $0.targetBundleID == nil
+        })
+    }
 }
