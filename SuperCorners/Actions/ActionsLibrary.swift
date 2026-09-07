@@ -470,7 +470,7 @@ let cornerActions: [CornerAction] = [
         category: .app,
         inputType: .none,
         perform: { _ in
-            let appPath = "/System/Applications/Reminder.app"
+            let appPath = "/System/Applications/Reminders.app"
             let url = URL(fileURLWithPath: appPath)
             NSWorkspace.shared.openApplication(at: url, configuration: NSWorkspace.OpenConfiguration(), completionHandler: nil)
 
