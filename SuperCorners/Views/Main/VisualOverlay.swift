@@ -17,39 +17,9 @@ final class VisualOverlayManager {
 
     private init() {}
 
-    func show(in rect: CGRect) {
-        guard UserDefaults.standard.bool(forKey: "showVisualFeedback") else {
-            return
-        }
-
-        let keepPersistent = UserDefaults.standard.bool(forKey: "persistentVisualFeedback")
-        let duration = UserDefaults.standard.double(forKey: "visualFeedbackDuration")
-
-        guard !keepPersistent else {
-            return
-        }
-
-        showWindow(in: rect)
-        hideTask?.cancel()
-
-        hideTask = Task { [weak self] in
-            try? await Task.sleep(
-                for: .seconds(duration)
-            )
-
-            guard !Task.isCancelled else {
-                return
-            }
-
-            self?.hide()
-        }
-    }
-
-    private func showWindow(in rect: CGRect) {
-        window?.orderOut(nil)
-
+    private func createWindow() {
         let window = NSWindow(
-            contentRect: rect,
+            contentRect: .zero,
             styleMask: .borderless,
             backing: .buffered,
             defer: false
@@ -57,9 +27,11 @@ final class VisualOverlayManager {
 
         window.isOpaque = false
         window.backgroundColor = .clear
-        window.level = .floating
-        window.ignoresMouseEvents = true
         window.hasShadow = false
+        window.ignoresMouseEvents = true
+
+        window.level = .statusBar
+
         window.collectionBehavior = [
             .canJoinAllSpaces,
             .fullScreenAuxiliary
@@ -69,27 +41,30 @@ final class VisualOverlayManager {
             rootView: VisualOverlay()
         )
 
-        window.orderFrontRegardless()
-
         self.window = window
     }
 
-    func hide() {
-        hideTask?.cancel()
-        hideTask = nil
+    func show(in rect: CGRect) {
+        if window == nil {
+            createWindow()
+        }
 
+        window?.setFrame(rect, display: true)
+        window?.orderFrontRegardless()
+    }
+
+    func hide() {
         window?.orderOut(nil)
-        window = nil
     }
 }
 
 struct VisualOverlay: View {
     var body: some View {
         Rectangle()
-            .fill(Color.accentColor.opacity(0.3))
+            .fill(Color.red.opacity(0.3))
             .overlay(
                 Rectangle()
-                    .stroke(Color.accentColor, lineWidth: 2)
+                    .stroke(Color.red, lineWidth: 2)
             )
     }
 }
