@@ -8,17 +8,6 @@
 import AppKit
 import SwiftUI
 
-struct VisualOverlay: View {
-    var body: some View {
-        Rectangle()
-            .fill(Color.accentColor.opacity(0.3))
-            .overlay(
-                Rectangle()
-                    .stroke(Color.accentColor, lineWidth: 2)
-            )
-    }
-}
-
 @MainActor
 final class VisualOverlayManager {
     static let shared = VisualOverlayManager()
@@ -91,5 +80,16 @@ final class VisualOverlayManager {
 
         window?.orderOut(nil)
         window = nil
+    }
+}
+
+struct VisualOverlay: View {
+    var body: some View {
+        Rectangle()
+            .fill(Color.accentColor.opacity(0.3))
+            .overlay(
+                Rectangle()
+                    .stroke(Color.accentColor, lineWidth: 2)
+            )
     }
 }
