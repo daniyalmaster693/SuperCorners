@@ -16,6 +16,8 @@ class ActionSetManager: ObservableObject {
         loadConfig()
     }
 
+    // Config Management
+
     private var applicationSupportDirectory: URL {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("SuperCorners", isDirectory: true)
     }
@@ -64,4 +66,31 @@ class ActionSetManager: ObservableObject {
     private func createApplicationSupportDirectory() throws {
         try FileManager.default.createDirectory(at: applicationSupportDirectory, withIntermediateDirectories: true)
     }
+
+    func saveConfig() {}
+
+    // Set Management
+
+    func createSet(name: String, targetBundleID: String) {
+        let newSet = ActionSet(
+            id: targetBundleID,
+            name: name,
+            corners: CornerAssignments(
+                topLeft: ActionAssignment(actionID: "doNothing", input: nil),
+                topRight: ActionAssignment(actionID: "doNothing", input: nil),
+                bottomLeft: ActionAssignment(actionID: "doNothing", input: nil),
+                bottomRight: ActionAssignment(actionID: "doNothing", input: nil)
+            ),
+            zones: ZoneAssignments(
+                top: ActionAssignment(actionID: "doNothing", input: nil),
+                left: ActionAssignment(actionID: "doNothing", input: nil),
+                right: ActionAssignment(actionID: "doNothing", input: nil),
+                bottom: ActionAssignment(actionID: "doNothing", input: nil)
+            )
+        )
+
+        actionSets.append(newSet)
+    }
+
+    func deleteSet(id: String) {}
 }

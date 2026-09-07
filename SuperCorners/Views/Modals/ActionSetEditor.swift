@@ -48,6 +48,9 @@ struct ActionSetEditor: View {
                                         }) else {
                                             return
                                         }
+                                        
+                                        print(bundleID)
+                                        ActionSetManager.shared.createSet(name: "\(appName) Actions", targetBundleID: bundleID)
                                     }
                                 }
                             }) {
@@ -71,9 +74,19 @@ struct ActionSetEditor: View {
                                 panel.prompt = "Choose"
                                 
                                 if panel.runModal() == .OK, let url = panel.url {
+                                    let appName = url.deletingPathExtension().lastPathComponent
                                     let bundleID = Bundle(url: url)?.bundleIdentifier
                                            
-                                    print("Bundle ID: \(bundleID ?? "Unknown")")
+                                    if let bundleID {
+                                        guard !actionSetManager.actionSets.contains(where: {
+                                            $0.targetBundleID?.caseInsensitiveCompare(bundleID) == .orderedSame
+                                        }) else {
+                                            return
+                                        }
+                                        
+                                        print(bundleID)
+                                        ActionSetManager.shared.createSet(name: "\(appName) Actions", targetBundleID: bundleID)
+                                    }
                                 }
                             }) {
                                 HStack {
