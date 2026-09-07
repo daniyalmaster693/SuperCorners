@@ -107,11 +107,10 @@ struct SuperCornersApp: App {
                     let rightTitle = titleForCorner(.right, currentSet: currentSet)
                     let bottomTitle = titleForCorner(.bottom, currentSet: currentSet)
                     
-                    
                     Menu("Corners") {
                         if enableTopLeftCorner {
                             Button {
-                                //                            triggerCornerAction(for: .topLeft)
+                                triggerCornerAction(for: .topLeft)
                             } label: {
                                 HStack {
                                     Image(systemName: "inset.filled.topleft.rectangle")
@@ -122,7 +121,7 @@ struct SuperCornersApp: App {
                         
                         if enableTopRightCorner {
                             Button {
-                                //                            triggerCornerAction(for: .topRight)
+                                triggerCornerAction(for: .topRight)
                             } label: {
                                 HStack {
                                     Image(systemName: "inset.filled.topright.rectangle")
@@ -133,7 +132,7 @@ struct SuperCornersApp: App {
                         
                         if enableBottomLeftCorner {
                             Button {
-                                //                            triggerCornerAction(for: .bottomLeft)
+                                triggerCornerAction(for: .bottomLeft)
                             } label: {
                                 HStack {
                                     Image(systemName: "inset.filled.bottomleft.rectangle")
@@ -144,7 +143,7 @@ struct SuperCornersApp: App {
                         
                         if enableBottomRightCorner {
                             Button {
-                                //                            triggerCornerAction(for: .bottomRight)
+                                triggerCornerAction(for: .bottomRight)
                             } label: {
                                 HStack {
                                     Image(systemName: "inset.filled.bottomright.rectangle")
@@ -157,7 +156,7 @@ struct SuperCornersApp: App {
                     Menu("Zones") {
                         if enableTopZone {
                             Button {
-                                //                            triggerCornerAction(for: .top)
+                                triggerCornerAction(for: .top)
                             } label: {
                                 HStack {
                                     Image(systemName: "rectangle.topthird.inset.filled")
@@ -168,7 +167,7 @@ struct SuperCornersApp: App {
                         
                         if enableLeftZone {
                             Button {
-                                //                            triggerCornerAction(for: .left)
+                                triggerCornerAction(for: .left)
                             } label: {
                                 HStack {
                                     Image(systemName: "rectangle.leadingthird.inset.filled")
@@ -179,7 +178,7 @@ struct SuperCornersApp: App {
                         
                         if enableRightZone {
                             Button {
-                                //                            triggerCornerAction(for: .right)
+                                triggerCornerAction(for: .right)
                             } label: {
                                 HStack {
                                     Image(systemName: "rectangle.trailingthird.inset.filled")
@@ -190,7 +189,7 @@ struct SuperCornersApp: App {
                         
                         if enableBottomZone {
                             Button {
-                                //                            triggerCornerAction(for: .bottom)
+                                triggerCornerAction(for: .bottom)
                             } label: {
                                 HStack {
                                     Image(systemName: "rectangle.bottomthird.inset.filled")
