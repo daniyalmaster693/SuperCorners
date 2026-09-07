@@ -43,19 +43,6 @@ final class VisualOverlayManager {
 
         self.window = window
     }
-
-    func show(in rect: CGRect) {
-        if window == nil {
-            createWindow()
-        }
-
-        window?.setFrame(rect, display: true)
-        window?.orderFrontRegardless()
-    }
-
-    func hide() {
-        window?.orderOut(nil)
-    }
 }
 
 struct VisualOverlay: View {
