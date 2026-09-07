@@ -82,14 +82,13 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [x] Seperate trigger sensitivity for corners and zones
 - [x] Simulating keyboard shortcuts
 - [ ] Height based sensitivity for zones
-- [ ] Template action modal suggested actions
-- [ ] Allow assigning actions per focus mode
-- [ ] Allow assigning actions per app
-- [ ] Allow assigning actions per display
 - [ ] Visual overlay for corners and zones
+- [ ] Template action modal suggested actions
+- [ ] Allow assigning actions per app
+- [ ] Allow assigning actions per focus mode
+- [ ] Allow assigning actions per display
 - [ ] Secondary actions for triggered actions
 - [ ] Deep Link Support
-- [ ] Additional in app actions
 - [ ] Actions using selected item logic
 
 ...and more to come...
