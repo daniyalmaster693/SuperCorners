@@ -8,7 +8,7 @@
 import AppKit
 import SwiftUI
 
-struct IgnoredApplicationsView: View {
+struct IgnoredApplications: View {
     @Environment(\.dismiss) var dismiss
     @State private var searchText = ""
     @State private var installedApps: [URL] = []

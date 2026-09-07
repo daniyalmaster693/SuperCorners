@@ -430,7 +430,7 @@ struct SettingsView: View {
             }
             .formStyle(.grouped)
             .sheet(isPresented: self.$showIgnoredAppsModal) {
-                IgnoredApplicationsView()
+                IgnoredApplications()
             }
 
             Form {
