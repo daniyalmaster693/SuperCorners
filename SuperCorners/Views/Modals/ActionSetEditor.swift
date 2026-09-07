@@ -49,7 +49,6 @@ struct ActionSetEditor: View {
                                             return
                                         }
                                         
-                                        print(bundleID)
                                         ActionSetManager.shared.createSet(name: "\(appName) Actions", targetBundleID: bundleID)
                                     }
                                 }
@@ -84,7 +83,6 @@ struct ActionSetEditor: View {
                                             return
                                         }
                                         
-                                        print(bundleID)
                                         ActionSetManager.shared.createSet(name: "\(appName) Actions", targetBundleID: bundleID)
                                     }
                                 }
