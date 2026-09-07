@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AppConfig: Codable {
-    var actionSetes: [ActionSet]
+struct Config: Codable {
+    var actionSets: [ActionSet]
 }
 
 struct ActionSet: Codable, Identifiable {
