@@ -9,6 +9,8 @@ import KeyboardShortcuts
 import SwiftUI
 
 struct ActionLibraryView: View {
+    @ObservedObject private var actionSetManager = ActionSetManager.shared
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) var colorScheme
     
@@ -184,6 +186,8 @@ struct ActionLibraryView: View {
                             showTemplateModal = true
                         } else {
                             UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
+                            
+                            actionSetManager.saveConfig()
                             onUpdate()
                             dismiss()
                         }
@@ -427,6 +431,7 @@ struct ActionLibraryView: View {
                             UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
                             UserDefaults.standard.set(templateInput, forKey: "cornerInput_\(corner.rawValue)")
                             
+                            actionSetManager.saveConfig()
                             onUpdate()
                             showTemplateModal = false
                             dismiss()
