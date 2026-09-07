@@ -13,7 +13,7 @@ class ActionSetManager: ObservableObject {
     @Published var actionSets: [ActionSet] = []
 
     private init() {
-        loadDefaultConfig()
+        loadConfig()
     }
 
     private var applicationSupportDirectory: URL {
@@ -38,16 +38,30 @@ class ActionSetManager: ObservableObject {
                 print(error)
             }
         }
+
+        createConfig()
     }
 
-    func loadDefaultConfig() {
-        guard let url = Bundle.main.url(forResource: "default-config", withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let config = try? JSONDecoder().decode(ActionsConfig.self, from: data)
-        else {
-            fatalError("Failed to load default-config.json")
+    private func createConfig() {
+        guard let defaultURL = Bundle.main.url(forResource: "default-config", withExtension: "json") else {
+            fatalError("Could not find default-config.json")
         }
 
-        actionSets = config.actionSets
+        do {
+            let data = try Data(contentsOf: defaultURL)
+            let config = try JSONDecoder().decode(ActionsConfig.self, from: data)
+
+            actionSets = config.actionSets
+
+            try createApplicationSupportDirectory()
+
+            try data.write(to: configURL, options: .atomic)
+        } catch {
+            fatalError()
+        }
+    }
+
+    private func createApplicationSupportDirectory() throws {
+        try FileManager.default.createDirectory(at: applicationSupportDirectory, withIntermediateDirectories: true)
     }
 }
