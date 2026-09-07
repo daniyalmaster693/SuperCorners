@@ -174,7 +174,10 @@ struct CornerView: View {
                 .padding(.bottom, 10)
                 .sheet(isPresented: $showModal) {
                     if let selected = currentlySelectedCorner {
-                        ActionLibraryView(corner: mapSelectedToCorner(selected)) {
+                        ActionLibraryView(
+                            corner: mapSelectedToCorner(selected),
+                            actionSetID: selectedActionSet
+                        ) {
                             refreshID = UUID()
                         }
                     }

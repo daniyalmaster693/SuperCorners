@@ -21,6 +21,7 @@ struct ActionLibraryView: View {
     @State private var templateInput = ""
     
     let corner: CornerPosition.Corner
+    let actionSetID: String
     var onUpdate: () -> Void
     
     var allCategories: [ActionCategory] {
