@@ -102,7 +102,7 @@ struct SuperCornersApp: App {
 //                let rightTitle = titleForCorner(.right, currentSet: currentSet)
 //                let bottomTitle = titleForCorner(.bottom, currentSet: currentSet)
 //
-//                Menu("Corners") {
+            Menu("Corners") {
 //                    if enableTopLeftCorner {
 //                        Button {
 //                            triggerCornerAction(for: .topLeft)
@@ -146,9 +146,9 @@ struct SuperCornersApp: App {
 //                            }
 //                        }
 //                    }
-//                }
+            }
 //
-//                Menu("Zones") {
+            Menu("Zones") {
 //                    if enableTopZone {
 //                        Button {
 //                            triggerCornerAction(for: .top)
@@ -192,14 +192,14 @@ struct SuperCornersApp: App {
 //                            }
 //                        }
 //                    }
-//                }
+            }
 //
-//                Menu("Favorites") {
-//                    if favoriteActions.isEmpty {
-//                        Text("No Actions Favorited")
-//                            .foregroundColor(.secondary)
-//                            .padding(.vertical, 8)
-//                    } else {
+            Menu("Favorites") {
+                if favoriteActions.isEmpty {
+                    Text("No Actions Favorited")
+                        .foregroundColor(.secondary)
+                        .padding(.vertical, 8)
+                } else {
 //                        let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
 //
 //                        ForEach(sortedActions, id: \.id) { action in
@@ -211,34 +211,34 @@ struct SuperCornersApp: App {
 //                                    Text(action.title)
 //                                }
 //                            }
-//                        }
-//                    }
+                }
+            }
 //                }
-//
-//                Divider()
-//
-//                Button("Refresh") {
-//                    refreshID = UUID()
-//                }
-//                .keyboardShortcut("r")
-//
-//                Button("Preferences") {
-//                    NSApp.setActivationPolicy(.regular)
-//                    NSApp.activate(ignoringOtherApps: true)
-//
-//                    selectedTab = .settings
-//                }
-//                .keyboardShortcut(",")
-//
-//                Button("Check for Updates") {
-//                    updateManager.getUpdateData(manualCheck: true)
-//                }
-//                .keyboardShortcut("u")
-//
-//                Button("Quit") {
-//                    NSApplication.shared.terminate(nil)
-//                }
-//                .keyboardShortcut("q")
+
+            Divider()
+
+            Button("Refresh") {
+                refreshID = UUID()
+            }
+            .keyboardShortcut("r")
+
+            Button("Preferences") {
+                NSApp.setActivationPolicy(.regular)
+                NSApp.activate(ignoringOtherApps: true)
+
+                selectedTab = .settings
+            }
+            .keyboardShortcut(",")
+
+            Button("Check for Updates") {
+                updateManager.getUpdateData(manualCheck: true)
+            }
+            .keyboardShortcut("u")
+
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
+            }
+            .keyboardShortcut("q")
 //            }
 //            .id(refreshID)
         }
