@@ -187,7 +187,7 @@ struct ZoneView: View {
                 .padding(.bottom, 10)
                 .sheet(isPresented: $showModal) {
                     if let selected = currentlySelectedCorner {
-                        ActionLibraryView(
+                        ActionPicker(
                             corner: mapSelectedToCorner(selected),
                             actionSetID: selectedActionSet
                         ) {

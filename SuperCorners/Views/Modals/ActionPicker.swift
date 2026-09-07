@@ -8,7 +8,7 @@
 import KeyboardShortcuts
 import SwiftUI
 
-struct ActionLibraryView: View {
+struct ActionPicker: View {
     @ObservedObject private var actionSetManager = ActionSetManager.shared
     
     @Environment(\.dismiss) private var dismiss
