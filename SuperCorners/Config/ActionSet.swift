@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct AppConfig: Codable {
+    var actionSetes: [ActionSet]
+}
+
 struct ActionSet: Codable, Identifiable {
     var id: String
     var name: String
