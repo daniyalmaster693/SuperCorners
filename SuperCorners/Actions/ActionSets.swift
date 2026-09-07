@@ -8,135 +8,135 @@
 import AppKit
 import Foundation
 
-struct ActionAssignment: Codable {
+struct ActionAssignmentArray: Codable {
     var actionID: String
     var input: String?
 }
 
-struct ActionSet: Codable, Identifiable {
+struct ActionSetArray: Codable, Identifiable {
     var id: UUID = .init()
     var name: String
     var targetBundleID: String?
 
-    var topLeft: ActionAssignment
-    var topRight: ActionAssignment
-    var bottomLeft: ActionAssignment
-    var bottomRight: ActionAssignment
+    var topLeft: ActionAssignmentArray
+    var topRight: ActionAssignmentArray
+    var bottomLeft: ActionAssignmentArray
+    var bottomRight: ActionAssignmentArray
 
-    var top: ActionAssignment
-    var left: ActionAssignment
-    var right: ActionAssignment
-    var bottom: ActionAssignment
+    var top: ActionAssignmentArray
+    var left: ActionAssignmentArray
+    var right: ActionAssignmentArray
+    var bottom: ActionAssignmentArray
 }
 
 final class ActionSetManager: ObservableObject {
     static let shared = ActionSetManager()
 
-    @Published var availableSets: [ActionSet] = [
-        ActionSet(
+    @Published var availableSets: [ActionSetArray] = [
+        ActionSetArray(
             name: "Global Actions",
             targetBundleID: nil,
-            topLeft: ActionAssignment(
+            topLeft: ActionAssignmentArray(
                 actionID: "screenSaver",
                 input: nil
             ),
-            topRight: ActionAssignment(
+            topRight: ActionAssignmentArray(
                 actionID: "sleepDisplay",
                 input: nil
             ),
-            bottomLeft: ActionAssignment(
+            bottomLeft: ActionAssignmentArray(
                 actionID: "lockScreen",
                 input: nil
             ),
-            bottomRight: ActionAssignment(
+            bottomRight: ActionAssignmentArray(
                 actionID: "spotlightSearch",
                 input: nil
             ),
-            top: ActionAssignment(
+            top: ActionAssignmentArray(
                 actionID: "spotlightApps",
                 input: nil
             ),
-            left: ActionAssignment(
+            left: ActionAssignmentArray(
                 actionID: "missionControl",
                 input: nil
             ),
-            right: ActionAssignment(
+            right: ActionAssignmentArray(
                 actionID: "applicationWindows",
                 input: nil
             ),
-            bottom: ActionAssignment(
+            bottom: ActionAssignmentArray(
                 actionID: "notificationCenter",
                 input: nil
             ),
         ),
-        ActionSet(
+        ActionSetArray(
             name: "Safari Actions",
             targetBundleID: "com.apple.safari",
-            topLeft: ActionAssignment(
+            topLeft: ActionAssignmentArray(
                 actionID: "createEmail",
                 input: nil
             ),
-            topRight: ActionAssignment(
+            topRight: ActionAssignmentArray(
                 actionID: "createEvent",
                 input: nil
             ),
-            bottomLeft: ActionAssignment(
+            bottomLeft: ActionAssignmentArray(
                 actionID: "copyPage",
                 input: nil
             ),
-            bottomRight: ActionAssignment(
+            bottomRight: ActionAssignmentArray(
                 actionID: "readerMode",
                 input: nil
             ),
-            top: ActionAssignment(
+            top: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            left: ActionAssignment(
+            left: ActionAssignmentArray(
                 actionID: "openWebsite",
                 input: "https://menuscores.vercel.app"
             ),
-            right: ActionAssignment(
+            right: ActionAssignmentArray(
                 actionID: "openWebsite",
                 input: "https://supercorners.vercel.app"
             ),
-            bottom: ActionAssignment(
+            bottom: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
         ),
-        ActionSet(
+        ActionSetArray(
             name: "Finder Actions",
             targetBundleID: "com.apple.finder",
-            topLeft: ActionAssignment(
+            topLeft: ActionAssignmentArray(
                 actionID: "createFile",
                 input: nil
             ),
-            topRight: ActionAssignment(
+            topRight: ActionAssignmentArray(
                 actionID: "createFolder",
                 input: nil
             ),
-            bottomLeft: ActionAssignment(
+            bottomLeft: ActionAssignmentArray(
                 actionID: "openAirDrop",
                 input: nil
             ),
-            bottomRight: ActionAssignment(
+            bottomRight: ActionAssignmentArray(
                 actionID: "goToFolder",
                 input: nil
             ),
-            top: ActionAssignment(
+            top: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            left: ActionAssignment(
+            left: ActionAssignmentArray(
                 actionID: "openDownload",
                 input: nil
             ),
-            right: ActionAssignment(
+            right: ActionAssignmentArray(
                 actionID: "copyDownload",
                 input: nil
             ),
-            bottom: ActionAssignment(
+            bottom: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
@@ -146,38 +146,38 @@ final class ActionSetManager: ObservableObject {
     // Set Management
 
     func createSet(name: String, targetBundleID: String) {
-        let newSet = ActionSet(
+        let newSet = ActionSetArray(
             name: name,
             targetBundleID: targetBundleID,
-            topLeft: ActionAssignment(
+            topLeft: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            topRight: ActionAssignment(
+            topRight: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            bottomLeft: ActionAssignment(
+            bottomLeft: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            bottomRight: ActionAssignment(
+            bottomRight: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            top: ActionAssignment(
+            top: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            left: ActionAssignment(
+            left: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            right: ActionAssignment(
+            right: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             ),
-            bottom: ActionAssignment(
+            bottom: ActionAssignmentArray(
                 actionID: "doNothing",
                 input: nil
             )
@@ -186,7 +186,7 @@ final class ActionSetManager: ObservableObject {
         availableSets.append(newSet)
     }
 
-    func deleteSet(_ set: ActionSet) {
+    func deleteSet(_ set: ActionSetArray) {
         guard set.targetBundleID != nil else {
             return
         }
@@ -198,7 +198,7 @@ final class ActionSetManager: ObservableObject {
 }
 
 extension ActionSet {
-    func actionAssignment(for corner: CornerPosition.Corner) -> ActionAssignment {
+    func ActionAssignmentArray(for corner: CornerPosition.Corner) -> ActionAssignmentArray {
         switch corner {
         case .topLeft:
             return topLeft
