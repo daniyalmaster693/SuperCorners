@@ -13,6 +13,7 @@ struct SettingsView: View {
     // Settings Variables
 
     @StateObject private var updateManager = UpdateManager()
+
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
@@ -21,8 +22,8 @@ struct SettingsView: View {
     @AppStorage("enableModifierKey") private var enableModifierKey = false
     @AppStorage("enableCornerHover") private var enableCornerHover = true
     @AppStorage("enableCornerClick") private var enableCornerClick = false
+
     @AppStorage("selectedModifierKey") private var selectedModifier: ModifierKey = .command
-    @AppStorage("delayTimer") private var delayTimer: Double = 0.0
 
     enum ModifierKey: String, CaseIterable, Identifiable {
         case command = "Command"
@@ -33,6 +34,8 @@ struct SettingsView: View {
 
         var id: String { rawValue }
     }
+
+    @AppStorage("delayTimer") private var delayTimer: Double = 0.0
 
     // Enabled Triggers
 
