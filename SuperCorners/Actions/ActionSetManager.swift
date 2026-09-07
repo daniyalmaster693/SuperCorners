@@ -107,5 +107,11 @@ class ActionSetManager: ObservableObject {
         saveConfig()
     }
 
-    func deleteSet(id: String) {}
+    func deleteSet(id: String) {
+        actionSets.removeAll { set in
+            set.targetBundleID != nil && set.id == id
+        }
+
+        saveConfig()
+    }
 }

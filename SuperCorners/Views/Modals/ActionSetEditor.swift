@@ -118,7 +118,9 @@ struct ActionSetEditor: View {
                             
                             if set.targetBundleID != nil {
                                 if #available(macOS 26.0, *) {
-                                    Button(action: {}) {
+                                    Button(action: {
+                                        actionSetManager.deleteSet(id: set.id)
+                                    }) {
                                         Image(systemName: "trash")
                                             .foregroundColor(.secondary)
                                     }
@@ -126,7 +128,9 @@ struct ActionSetEditor: View {
                                     .padding(.trailing, 4)
                                 }
                                 else {
-                                    Button(action: {}) {
+                                    Button(action: {
+                                        actionSetManager.deleteSet(id: set.id)
+                                    }) {
                                         Image(systemName: "trash")
                                             .foregroundColor(.secondary)
                                     }
