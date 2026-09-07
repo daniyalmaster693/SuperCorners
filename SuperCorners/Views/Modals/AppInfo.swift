@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AppLinksView: View {
+struct AppInfo: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
     @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
