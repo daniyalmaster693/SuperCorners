@@ -79,8 +79,8 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [x] ~~Trigger Actions without any key presses~~
 - [x] ~~Trigger actions with menubar~~
 - [x] ~~Favorites Feature~~
-- [x] Seperate trigger sensitivity for corners and zones
-- [x] Simulating keyboard shortcuts
+- [x] ~~Seperate trigger sensitivity for corners and zones~~
+- [x] ~~Simulating keyboard shortcuts~~
 - [ ] Height based sensitivity for zones
 - [ ] Visual overlay for corners and zones
 - [ ] Template action modal suggested actions
