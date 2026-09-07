@@ -56,6 +56,10 @@ struct SettingsView: View {
     @State private var ignoredApps: [String] = []
     @State private var showIgnoredAppsModal = false
 
+    @AppStorage("showVisualFeedback") private var showVisualFeedback = true
+    @AppStorage("visualDismissTimer") private var visualDismissTimer: Double = 3.0
+    @AppStorage("persistentVisualFeedback") var persistentVisualFeedback = false
+
     @AppStorage("showToastNotifications") private var showToastNotification = true
     @AppStorage("dismissOnClick") private var dismissOnClick = true
     @AppStorage("autoDismissTimer") private var autoDismissTimer: DismissTimer = .seconds3
@@ -392,6 +396,36 @@ struct SettingsView: View {
                             newSound.play()
                         }
                     }
+                }
+
+                Section {
+                    Toggle(isOn: self.$showVisualFeedback) {
+                        HStack {
+                            Image(systemName: "circle.dashed")
+                                .foregroundColor(.primary)
+                            Text("Show Visual Overlay")
+                        }
+                    }
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "timer")
+                                .foregroundColor(.primary)
+                            Text("Overlay Duration: \(String(format: "%.1f", self.visualDismissTimer))")
+
+                            Slider(value: self.$visualDismissTimer, in: 3 ... 10.0, step: 0.5)
+                                .disabled(!self.showVisualFeedback)
+                        }
+                    }
+
+                    Toggle(isOn: self.$persistentVisualFeedback) {
+                        HStack {
+                            Image(systemName: "pin")
+                                .foregroundColor(.primary)
+                            Text("Keep Overlay Visible")
+                        }
+                    }
+                    .disabled(!self.showVisualFeedback)
                 }
 
                 Section {
