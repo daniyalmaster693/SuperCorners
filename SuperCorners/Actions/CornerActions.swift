@@ -58,19 +58,42 @@ func triggerCornerAction(for corner: CornerPosition.Corner) {
         guard enableBottomZone else { return }
     }
 
-    if let action = cornerActionBindings[corner] {
-        if let frontApp = NSWorkspace.shared.frontmostApplication,
-           let frontAppPath = frontApp.bundleURL?.path
-        {
-            if let data = UserDefaults.standard.data(forKey: "ignoredAppPaths"),
-               let ignoredPaths = try? JSONDecoder().decode([String].self, from: data),
-               ignoredPaths.contains(frontAppPath)
-            {
-                return
-            }
-        }
+    // Get the focused app info
 
-        let input = UserDefaults.standard.string(forKey: "cornerInput_\(corner.rawValue)")
-        action.perform(input)
+    guard let focusedApp = NSWorkspace.shared.frontmostApplication else {
+        return
     }
+
+    guard let bundleID = focusedApp.bundleIdentifier else {
+        return
+    }
+
+    // Ignored Applications Check
+
+    if let focusedAppPath = focusedApp.bundleURL?.path {
+        if let data = UserDefaults.standard.data(forKey: "ignoredAppPaths"),
+           let ignoredPaths = try? JSONDecoder().decode([String].self, from: data),
+           ignoredPaths.contains(focusedAppPath)
+        {
+            return
+        }
+    }
+
+    // Check for an app specfic set otherwise fallback to global set
+
+    guard let actionSet = ActionSetManager.shared.findActionSet(bundleID: bundleID) else {
+        return
+    }
+
+    // Find and Perform the Action
+
+    let assignment = actionSet.actionAssignment(for: corner)
+
+    guard let action = cornerActions.first(where: {
+        $0.id == assignment.actionID
+    }) else {
+        return
+    }
+
+    action.perform(assignment.input)
 }
