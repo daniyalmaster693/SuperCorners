@@ -21,7 +21,7 @@ class ActionSetManager: ObservableObject {
               let data = try? Data(contentsOf: url),
               let config = try? JSONDecoder().decode(ActionsConfig.self, from: data)
         else {
-            fatalError("Failed to load or decode default-config.json")
+            fatalError("Failed to load default-config.json")
         }
 
         actionSets = config.actionSets
