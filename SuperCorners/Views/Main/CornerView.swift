@@ -9,7 +9,6 @@ import AppKit
 import SwiftUI
 
 struct CornerView: View {
-    @State private var wallpaperImage: NSImage?
     @Environment(\.colorScheme) var colorScheme
 
     // Action Picker Variables
