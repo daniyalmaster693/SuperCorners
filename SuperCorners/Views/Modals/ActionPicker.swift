@@ -16,7 +16,10 @@ struct ActionPicker: View {
     
     @State private var searchText = ""
     @State private var selectedCategories: Set<ActionCategory> = []
+    @State private var showFavoritesOnly = false
+    
     @State private var selectedActionID: String?
+    
     @State private var showTemplateModal = false
     @State private var templateInput = ""
     
@@ -33,17 +36,23 @@ struct ActionPicker: View {
         let searchFiltered = searchText.isEmpty
             ? cornerActions
             : cornerActions.filter { action in
-                action.title.lowercased().contains(searchText.lowercased()) ||
-                    action.description.lowercased().contains(searchText.lowercased())
+                action.title.localizedCaseInsensitiveContains(searchText) ||
+                    action.description.localizedCaseInsensitiveContains(searchText)
             }
         
-        if selectedCategories.isEmpty {
-            return searchFiltered
-        } else {
-            return searchFiltered.filter { action in
+        let categoryFiltered = selectedCategories.isEmpty
+            ? searchFiltered
+            : searchFiltered.filter { action in
                 selectedCategories.contains(action.category)
             }
+
+        if showFavoritesOnly {
+            return categoryFiltered.filter { action in
+                favoriteActionIDs[action.id] != nil
+            }
         }
+
+        return categoryFiltered
     }
     
     var selectedAction: CornerAction? {
@@ -115,6 +124,36 @@ struct ActionPicker: View {
                         }
                         .buttonStyle(PlainButtonStyle())
                     }
+                    
+                    Button(action: {
+                        showFavoritesOnly.toggle()
+                    }) {
+                        Text("Favorites")
+                            .font(.subheadline)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 10)
+                            .background(
+                                Group {
+                                    if showFavoritesOnly {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color.accentColor.opacity(0.2))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
+                                            )
+                                    } else {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color(NSColor.controlBackgroundColor))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(Color.secondary.opacity(0.15), lineWidth: 1)
+                                            )
+                                    }
+                                }
+                            )
+                            .foregroundColor(showFavoritesOnly ? .accentColor : .primary)
+                    }
+                    .buttonStyle(PlainButtonStyle())
                 }
             }
             .frame(maxWidth: 325)
