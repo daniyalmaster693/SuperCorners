@@ -350,7 +350,7 @@ struct SettingsView: View {
                             .padding(.leading, 25)
                             .padding(.bottom, 10)
 
-                        Slider(value: self.$zoneTriggerSensitivity, in: 3 ... 10.0, step: 0.5)
+                        Slider(value: self.$zoneTriggerSensitivity, in: 3 ... 8.0, step: 0.5)
                     }
                 }
 
