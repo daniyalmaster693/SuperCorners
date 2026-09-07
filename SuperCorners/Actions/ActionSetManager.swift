@@ -12,7 +12,9 @@ class ActionSetManager: ObservableObject {
 
     @Published var actionSets: [ActionSet] = []
 
-//    private init() {}
+    private init() {
+        loadDefaultConfig()
+    }
 
     func loadDefaultConfig() {
         guard let url = Bundle.main.url(forResource: "config", withExtension: "json"),
