@@ -205,20 +205,20 @@ struct SuperCornersApp: App {
                                 .foregroundColor(.secondary)
                                 .padding(.vertical, 8)
                         } else {
-                            //                        let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
-                            //
-                            //                        ForEach(sortedActions, id: \.id) { action in
-                            //                            Button {
-                            //                                action.perform(nil)
-                            //                            } label: {
-                            //                                HStack {
-                            //                                    Image(systemName: action.iconName)
-                            //                                    Text(action.title)
-                            //                                }
-                            //                            }
+                            let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
+                            
+                            ForEach(sortedActions, id: \.id) { action in
+                                Button {
+                                    action.perform(nil)
+                                } label: {
+                                    HStack {
+                                        Image(systemName: action.iconName)
+                                        Text(action.title)
+                                    }
+                                }
+                            }
                         }
                     }
-                    //                }
                     
                     Divider()
                     
