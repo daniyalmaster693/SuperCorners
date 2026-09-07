@@ -10,27 +10,7 @@ import SwiftUI
 
 class ToastWindowController {
     @AppStorage("showToastNotifications") var showToastNotifications = true
-    @AppStorage("autoDismissTimer") var autoDismissTimer: DismissTimer = .seconds3
-
-    enum DismissTimer: String, CaseIterable, Identifiable {
-        case seconds2 = "2 Seconds"
-        case seconds3 = "3 Seconds"
-        case seconds4 = "4 Seconds"
-        case seconds5 = "5 Seconds"
-        case seconds10 = "10 Seconds"
-
-        var id: String { rawValue }
-
-        var duration: TimeInterval {
-            switch self {
-            case .seconds2: return 2
-            case .seconds3: return 3
-            case .seconds4: return 4
-            case .seconds5: return 5
-            case .seconds10: return 10
-            }
-        }
-    }
+    @AppStorage("autoDismissTimer") private var autoDismissTimer: Double = 3.0
 
     private var panel: NSPanel?
     private var timer: Timer?
@@ -71,7 +51,7 @@ class ToastWindowController {
             panel.alphaValue = 0
             panel.orderFrontRegardless()
 
-            let displayDuration = duration ?? autoDismissTimer.duration
+            let displayDuration = duration ?? autoDismissTimer
 
             NSAnimationContext.runAnimationGroup({ context in
                 context.duration = 0.3
