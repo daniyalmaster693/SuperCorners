@@ -186,7 +186,7 @@ struct ActionLibraryView: View {
                             templateInput = ""
                             showTemplateModal = true
                         } else {
-                            UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
+                            actionSetManager.assignAction(actionID: selectedAction.id, input: nil, position: corner, setID: actionSetID)
                             
                             actionSetManager.saveConfig()
                             onUpdate()
@@ -429,8 +429,7 @@ struct ActionLibraryView: View {
                         if let selectedID = selectedActionID,
                            let selectedAction = cornerActions.first(where: { $0.id == selectedID })
                         {
-                            UserDefaults.standard.set(selectedAction.id, forKey: "cornerBinding_\(corner.rawValue)")
-                            UserDefaults.standard.set(templateInput, forKey: "cornerInput_\(corner.rawValue)")
+                            actionSetManager.assignAction(actionID: selectedAction.id, input: templateInput, position: corner, setID: actionSetID)
                             
                             actionSetManager.saveConfig()
                             onUpdate()
