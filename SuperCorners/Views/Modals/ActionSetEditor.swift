@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import KeyboardShortcuts
 import SwiftUI
 
 struct ActionSetEditor: View {
@@ -65,10 +66,6 @@ struct ActionSetEditor: View {
                                 }
                                 
                                 HStack {
-                                    Text("Activation")
-                                        .foregroundStyle(.secondary)
-                                        .padding(.leading, 5)
-                                    
                                     Picker(
                                         "Method",
                                         selection: Binding(
@@ -94,9 +91,7 @@ struct ActionSetEditor: View {
                                                     method: newMethod,
                                                     trigger: set.activation.trigger,
                                                     modifierKey: modifierKey,
-                                                    keyboardShortcut: newMethod == .keyboardShortcut
-                                                        ? set.activation.keyboardShortcut
-                                                        : nil
+                                                    keyboardShortcut: set.activation.keyboardShortcut
                                                 )
                                             }
                                         )
@@ -136,6 +131,15 @@ struct ActionSetEditor: View {
                                             }
                                         }
                                         .labelsHidden()
+                                    }
+                                    
+                                    if set.activation.method == .keyboardShortcut,
+                                       let shortcutName = set.activation.keyboardShortcut
+                                    {
+                                        KeyboardShortcuts.Recorder(
+                                            "",
+                                            name: KeyboardShortcuts.Name(shortcutName)
+                                        )
                                     }
                                     
                                     Picker(
