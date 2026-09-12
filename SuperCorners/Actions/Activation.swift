@@ -112,5 +112,35 @@ class ActivationManager {
         }
 
         let actionSets = ActionSetManager.shared.findActionSets(bundleID: frontMostApp.bundleIdentifier)
+
+        guard let actionSet = actionSets.first(where: { actionSet in
+            let activation = actionSet.activation
+
+            guard activation.trigger == trigger else {
+                return false
+            }
+
+            switch activation.method {
+            case .none:
+                return modifierFlags.isEmpty
+
+            case .modifier:
+                guard let modifierKey = activation.modifierKey,
+                      let requiredFlag = modifierKey.flag
+                else {
+                    return false
+                }
+
+                return modifierFlags.contains(requiredFlag)
+
+            case .keyboardShortcut:
+                return false
+            }
+
+        }) else {
+            return
+        }
+
+        getCornerMousePosition(actionSet: actionSet)
     }
 }
