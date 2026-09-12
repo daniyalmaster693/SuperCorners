@@ -8,7 +8,10 @@
 import AppKit
 import SwiftUI
 
-func triggerCornerAction(for corner: CornerPosition.Corner) {
+func triggerCornerAction(
+    for corner: CornerPosition.Corner,
+    actionSet: ActionSet
+) {
     let assignment = actionSet.actionAssignment(for: corner)
 
     guard let action = cornerActions.first(where: {
