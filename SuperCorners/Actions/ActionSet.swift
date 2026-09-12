@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct ActionsConfig: Codable {
     var actionSets: [ActionSet]
@@ -65,6 +66,18 @@ enum ActivationMethod: String, Codable, CaseIterable {
 enum ActivationTrigger: String, Codable, CaseIterable {
     case hover
     case click
+}
+
+extension ModifierKey {
+    var flag: NSEvent.ModifierFlags? {
+        switch self {
+        case .command: return .command
+        case .option: return .option
+        case .control: return .control
+        case .shift: return .shift
+        case .capsLock: return .capsLock
+        }
+    }
 }
 
 extension ActionSet {

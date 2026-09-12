@@ -8,18 +8,6 @@
 import KeyboardShortcuts
 import SwiftUI
 
-extension ModifierKey {
-    var flag: NSEvent.ModifierFlags? {
-        switch self {
-        case .command: return .command
-        case .option: return .option
-        case .control: return .control
-        case .shift: return .shift
-        case .capsLock: return .capsLock
-        }
-    }
-}
-
 var localCornerMonitor: Any?
 var globalCornerMonitor: Any?
 
