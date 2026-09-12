@@ -183,7 +183,7 @@ struct ActionSetEditor: View {
             .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding()
-        .padding(.top, 7)
+        .frame(minWidth: 250, minHeight: 490)
     }
 
     private func applicationIcon(for bundleID: String?) -> NSImage? {
