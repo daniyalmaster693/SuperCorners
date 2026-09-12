@@ -11,11 +11,16 @@ import KeyboardShortcuts
 class ActivationManager {
     static let shared = ActivationManager()
 
-    private var mouseMonitor: Any?
-    private var clickMonitor: Any?
-    private var modifierFlags: Any?
+    private var localMouseMonitor: Any?
+    private var globalMouseMonitor: Any?
 
-    private var currentFlags: NSEvent.ModifierFlags = []
+    private var localClickMonitor: Any?
+    private var globalClickMonitor: Any?
+
+    private var localModifierMonitor: Any?
+    private var globalModifierMonitor: Any?
+
+    private var modifierFlags: NSEvent.ModifierFlags = []
 
     private init() {}
 
@@ -29,20 +34,37 @@ class ActivationManager {
     }
 
     func stop() {
-        if let mouseMonitor {
-            NSEvent.removeMonitor(mouseMonitor)
-            self.mouseMonitor = nil
+        if let localMouseMonitor {
+            NSEvent.removeMonitor(localMouseMonitor)
+            self.localMouseMonitor = nil
         }
 
-        if let clickMonitor {
-            NSEvent.removeMonitor(clickMonitor)
-            self.clickMonitor = nil
+        if let globalMouseMonitor {
+            NSEvent.removeMonitor(globalMouseMonitor)
+            self.globalMouseMonitor = nil
         }
 
-        if let modifierFlags {
-            NSEvent.removeMonitor(modifierFlags)
-            self.modifierFlags = nil
+        if let localClickMonitor {
+            NSEvent.removeMonitor(localClickMonitor)
+            self.localClickMonitor = nil
         }
+
+        if let globalClickMonitor {
+            NSEvent.removeMonitor(globalClickMonitor)
+            self.globalClickMonitor = nil
+        }
+
+        if let localModifierMonitor {
+            NSEvent.removeMonitor(localModifierMonitor)
+            self.localModifierMonitor = nil
+        }
+
+        if let globalModifierMonitor {
+            NSEvent.removeMonitor(globalModifierMonitor)
+            self.globalModifierMonitor = nil
+        }
+
+        modifierFlags = []
     }
 
     private func mouseEventMonitor() {}
