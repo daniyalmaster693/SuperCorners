@@ -73,28 +73,44 @@ class ActivationManager {
 
     private func mouseEventMonitor() {
         localMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: .mouseMoved) { [weak self] event in
+            self?.actionActivation(trigger: .hover)
             return event
         }
 
         globalMouseMonitor = NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved) { [weak self] _ in
+            self?.actionActivation(trigger: .hover)
         }
     }
 
     private func clickEventMonitor() {
         localClickMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
+            self?.actionActivation(trigger: .click)
             return event
         }
 
         globalClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDown) { [weak self] _ in
+            self?.actionActivation(trigger: .click)
         }
     }
 
     private func modifierEventMonitor() {
         localModifierMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [weak self] event in
+            self?.modifierFlags = event.modifierFlags
             return event
         }
 
-        globalModifierMonitor = NSEvent.addGlobalMonitorForEvents(matching: .flagsChanged) { [weak self] _ in
+        globalModifierMonitor = NSEvent.addGlobalMonitorForEvents(
+            matching: .flagsChanged
+        ) { [weak self] event in
+            self?.modifierFlags = event.modifierFlags
         }
+    }
+
+    private func actionActivation(trigger: ActivationTrigger) {
+        guard let frontMostApp = NSWorkspace.shared.frontmostApplication else {
+            return
+        }
+
+        let actionSets = ActionSetManager.shared.findActionSets(bundleID: frontMostApp.bundleIdentifier)
     }
 }
