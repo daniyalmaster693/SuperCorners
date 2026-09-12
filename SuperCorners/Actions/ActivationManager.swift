@@ -21,6 +21,7 @@ class ActivationManager {
     private var globalModifierMonitor: Any?
 
     private var modifierFlags: NSEvent.ModifierFlags = []
+    private var activeKeyboardShortcut: String?
 
     private init() {}
 
@@ -33,6 +34,7 @@ class ActivationManager {
         clickEventMonitor()
 
         modifierEventMonitor()
+        keyboardShortcutMonitor()
     }
 
     func stop() {
@@ -67,6 +69,7 @@ class ActivationManager {
         }
 
         modifierFlags = []
+        activeKeyboardShortcut = nil
     }
 
     // Event Monitors
@@ -106,6 +109,30 @@ class ActivationManager {
         }
     }
 
+    private func keyboardShortcutMonitor() {
+        let actionSets = ActionSetManager.shared.actionSets
+
+        for actionSet in actionSets {
+            guard actionSet.activation.method == .keyboardShortcut,
+                  let shortcutName = actionSet.activation.keyboardShortcut
+            else {
+                continue
+            }
+
+            let name = KeyboardShortcuts.Name(shortcutName)
+
+            KeyboardShortcuts.onKeyDown(for: name) { [weak self] in
+                self?.activeKeyboardShortcut = shortcutName
+            }
+
+            KeyboardShortcuts.onKeyUp(for: name) { [weak self] in
+                self?.activeKeyboardShortcut = nil
+            }
+        }
+    }
+
+    // Activation
+
     private func actionActivation(trigger: ActivationTrigger) {
         guard let frontMostApp = NSWorkspace.shared.frontmostApplication else {
             return
@@ -134,7 +161,7 @@ class ActivationManager {
                 return modifierFlags.contains(requiredFlag)
 
             case .keyboardShortcut:
-                return false
+                return activeKeyboardShortcut == activation.keyboardShortcut
             }
 
         }) else {
