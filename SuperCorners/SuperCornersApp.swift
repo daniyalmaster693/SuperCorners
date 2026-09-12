@@ -51,9 +51,10 @@ struct SuperCornersApp: App {
                 }
             }
         }
-//        DispatchQueue.main.async {
-//            activateCornerHotkey()
-//        }
+
+        DispatchQueue.main.async {
+            ActivationManager.shared.start()
+        }
     }
 
     func updateActivationPolicy() {
