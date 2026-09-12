@@ -255,7 +255,13 @@ struct ActionPicker: View {
                     action: selectedAction,
                     corner: corner,
                     actionSetID: actionSetID,
-                    onUpdate: onUpdate
+                    onUpdate: {
+                        showTemplateModal = false
+                        selectedActionID = nil
+                        
+                        onUpdate()
+                        dismiss()
+                    }
                 )
             }
         }

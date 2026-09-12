@@ -10,7 +10,6 @@ import SwiftUI
 
 struct TemplateModal: View {
     @ObservedObject private var actionSetManager = ActionSetManager.shared
-    @Environment(\.dismiss) private var dismiss
     
     @State private var templateInput = ""
 
@@ -234,7 +233,7 @@ struct TemplateModal: View {
             
             HStack {
                 Button("Cancel") {
-                    dismiss()
+                    onUpdate()
                 }
                 .keyboardShortcut(.cancelAction)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -249,7 +248,6 @@ struct TemplateModal: View {
                         
                     actionSetManager.saveConfig()
                     onUpdate()
-                    dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(templateInput.trimmingCharacters(in: .whitespaces).isEmpty)

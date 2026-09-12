@@ -14,7 +14,6 @@ struct CornerView: View {
     // Action Picker Variables
 
     @State private var showModal = false
-    @State private var refreshID = UUID()
 
     // Action Set Info
 
@@ -177,14 +176,11 @@ struct CornerView: View {
                         ActionPicker(
                             corner: mapSelectedToCorner(selected),
                             actionSetID: selectedActionSet
-                        ) {
-                            refreshID = UUID()
-                        }
+                        ) {}
                     }
                 }
             }
         }
-        .id(refreshID)
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Picker("Active Set:", selection: $selectedActionSet) {
