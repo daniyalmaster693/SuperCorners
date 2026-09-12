@@ -11,7 +11,7 @@ import SwiftUI
 struct ActionSetEditor: View {
     @ObservedObject private var actionSetManager = ActionSetManager.shared
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         VStack(spacing: 6) {
             Form {
@@ -22,12 +22,12 @@ struct ActionSetEditor: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.secondary)
-                        
+
                         Text("Select App")
                             .padding(.leading, 5)
-                        
+
                         Spacer()
-                        
+
                         if #available(macOS 26.0, *) {
                             Button(action: {
                                 let panel = NSOpenPanel()
@@ -37,11 +37,11 @@ struct ActionSetEditor: View {
                                 panel.allowedContentTypes = [.application]
                                 panel.title = "Select Application"
                                 panel.prompt = "Choose"
-                                
+
                                 if panel.runModal() == .OK, let url = panel.url {
                                     let appName = url.deletingPathExtension().lastPathComponent
                                     let bundleID = Bundle(url: url)?.bundleIdentifier
-                                    
+
                                     if let bundleID {
                                         actionSetManager.createSet(
                                             name: "\(appName) Actions",
@@ -68,11 +68,11 @@ struct ActionSetEditor: View {
                                 panel.allowedContentTypes = [.application]
                                 panel.title = "Select Application"
                                 panel.prompt = "Choose"
-                                
+
                                 if panel.runModal() == .OK, let url = panel.url {
                                     let appName = url.deletingPathExtension().lastPathComponent
                                     let bundleID = Bundle(url: url)?.bundleIdentifier
-                                    
+
                                     if let bundleID {
                                         actionSetManager.createSet(
                                             name: "\(appName) Actions",
@@ -111,12 +111,12 @@ struct ActionSetEditor: View {
                                         .cornerRadius(12)
                                         .frame(width: 25, height: 25)
                                 }
-                                
+
                                 Text(set.name)
                                     .padding(.leading, 5)
-                                
+
                                 Spacer()
-                                
+
                                 if set.targetBundleID != nil {
                                     if #available(macOS 26.0, *) {
                                         Button(action: {
@@ -139,6 +139,107 @@ struct ActionSetEditor: View {
                                     }
                                 }
                             }
+
+                            HStack {
+                                Text("Activation")
+                                    .foregroundStyle(.secondary)
+                                    .padding(.leading, 5)
+
+                                Picker(
+                                    "Method",
+                                    selection: Binding(
+                                        get: {
+                                            set.activation.method
+                                        },
+                                        set: { newMethod in
+                                            let modifierKey: ModifierKey?
+
+                                            switch newMethod {
+                                            case .none:
+                                                modifierKey = nil
+
+                                            case .modifier:
+                                                modifierKey = set.activation.modifierKey ?? .command
+
+                                            case .keyboardShortcut:
+                                                modifierKey = nil
+                                            }
+
+                                            actionSetManager.updateActivation(
+                                                setID: set.id,
+                                                method: newMethod,
+                                                trigger: set.activation.trigger,
+                                                modifierKey: modifierKey,
+                                                keyboardShortcut: newMethod == .keyboardShortcut
+                                                    ? set.activation.keyboardShortcut
+                                                    : nil
+                                            )
+                                        }
+                                    )
+                                ) {
+                                    Text("None")
+                                        .tag(ActivationMethod.none)
+
+                                    Text("Modifier")
+                                        .tag(ActivationMethod.modifier)
+
+                                    Text("Keyboard Shortcut")
+                                        .tag(ActivationMethod.keyboardShortcut)
+                                }
+                                .labelsHidden()
+
+                                if set.activation.method == .modifier {
+                                    Picker(
+                                        "Modifier",
+                                        selection: Binding(
+                                            get: {
+                                                set.activation.modifierKey ?? .command
+                                            },
+                                            set: { newModifier in
+                                                actionSetManager.updateActivation(
+                                                    setID: set.id,
+                                                    method: set.activation.method,
+                                                    trigger: set.activation.trigger,
+                                                    modifierKey: newModifier,
+                                                    keyboardShortcut: set.activation.keyboardShortcut
+                                                )
+                                            }
+                                        )
+                                    ) {
+                                        ForEach(ModifierKey.allCases) { modifier in
+                                            Text(modifier.rawValue)
+                                                .tag(modifier)
+                                        }
+                                    }
+                                    .labelsHidden()
+                                }
+
+                                Picker(
+                                    "Trigger",
+                                    selection: Binding(
+                                        get: {
+                                            set.activation.trigger
+                                        },
+                                        set: { newTrigger in
+                                            actionSetManager.updateActivation(
+                                                setID: set.id,
+                                                method: set.activation.method,
+                                                trigger: newTrigger,
+                                                modifierKey: set.activation.modifierKey,
+                                                keyboardShortcut: set.activation.keyboardShortcut
+                                            )
+                                        }
+                                    )
+                                ) {
+                                    Text("Hover")
+                                        .tag(ActivationTrigger.hover)
+
+                                    Text("Click")
+                                        .tag(ActivationTrigger.click)
+                                }
+                                .labelsHidden()
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                 }
@@ -160,7 +261,7 @@ struct ActionSetEditor: View {
         .padding()
         .padding(.top, 7)
     }
-    
+
     private func applicationIcon(for bundleID: String?) -> NSImage? {
         guard let bundleID else {
             return nil
