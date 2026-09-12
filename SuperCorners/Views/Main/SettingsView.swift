@@ -17,17 +17,25 @@ struct SettingsView: View {
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
-    // Behavior Settings
-
-    @AppStorage("delayTimer") private var delayTimer: Double = 0.0
+    // Trigger Settings
 
     @AppStorage("cornerTriggerSensitivity") private var cornerTriggerSensitivity: Double = 7.0
     @AppStorage("zoneTriggerSensitivity") private var zoneTriggerSensitivity: Double = 7.0
+
+    // Behavior Settings
+
+    @AppStorage("delayTimer") private var delayTimer: Double = 0.0
+    @AppStorage("disableInFullScreen") var disableInFullScreen = false
+
+    @AppStorage("playSoundEffect") private var playSoundEffect = false
+    @AppStorage("selectedSoundEffect") private var selectedSound: SoundEffect = .purr
 
     // Ignored applications list
 
     @State private var ignoredApps: [String] = []
     @State private var showIgnoredAppsModal = false
+
+    // Visual Settings
 
     @AppStorage("showVisualFeedback") private var showVisualFeedback = true
     @AppStorage("persistentVisualFeedback") var persistentVisualFeedback = false
@@ -36,9 +44,6 @@ struct SettingsView: View {
     @AppStorage("showToastNotifications") private var showToastNotification = false
     @AppStorage("dismissOnClick") private var dismissOnClick = true
     @AppStorage("autoDismissTimer") private var autoDismissTimer: Double = 3.0
-
-    @AppStorage("playSoundEffect") private var playSoundEffect = false
-    @AppStorage("selectedSoundEffect") private var selectedSound: SoundEffect = .purr
 
     enum SoundEffect: String, CaseIterable, Identifiable {
         case basso = "Basso"
@@ -178,6 +183,16 @@ struct SettingsView: View {
                             Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))s")
 
                             Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
+                        }
+                    }
+                }
+
+                Section {
+                    Toggle(isOn: self.$disableInFullScreen) {
+                        HStack {
+                            Image(systemName: "arrow.up.left.and.arrow.down.right")
+                                .foregroundColor(.primary)
+                            Text("Disable in Full Screen")
                         }
                     }
                 }
