@@ -81,8 +81,10 @@ class ActionSetManager: ObservableObject {
     // Set Management
 
     func createSet(name: String, targetBundleID: String) {
+        let id = UUID().uuidString
+
         let newSet = ActionSet(
-            id: UUID().uuidString,
+            id: id,
             name: name,
             targetBundleID: targetBundleID,
             corners: CornerAssignments(
@@ -97,7 +99,7 @@ class ActionSetManager: ObservableObject {
                 right: ActionAssignment(actionID: "doNothing", input: nil),
                 bottom: ActionAssignment(actionID: "doNothing", input: nil)
             ),
-            activation: SetActivation(method: .none, trigger: .hover)
+            activation: SetActivation(method: .none, trigger: .hover, keyboardShortcutName: "actionSet_\(id)")
         )
 
         actionSets.append(newSet)
@@ -158,7 +160,7 @@ class ActionSetManager: ObservableObject {
         method: ActivationMethod,
         trigger: ActivationTrigger,
         modifierKey: ModifierKey?,
-        keyboardShortcut: String?
+        keyboardShortcutName: String?
     ) {
         guard let index = actionSets.firstIndex(where: { $0.id == setID }) else {
             return
@@ -168,7 +170,7 @@ class ActionSetManager: ObservableObject {
             method: method,
             trigger: trigger,
             modifierKey: modifierKey,
-            keyboardShortcut: keyboardShortcut
+            keyboardShortcutName: keyboardShortcutName
         )
 
         saveConfig()
