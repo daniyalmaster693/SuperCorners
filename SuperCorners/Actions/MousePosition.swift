@@ -14,7 +14,6 @@ func getCornerMousePosition(actionSet: ActionSet) {
     @AppStorage("cornerTriggerSensitivity") var cornerTriggerSensitivity = 5.0
     @AppStorage("zoneTriggerSensitivity") var zoneTriggerSensitivity = 5.0
 
-    @AppStorage("disableInFullScreen") var disableInFullScreen = false
     @AppStorage("playSoundEffect") var playSoundEffect = false
     @AppStorage("selectedSoundEffect") var selectedSound: SoundEffect = .purr
 
