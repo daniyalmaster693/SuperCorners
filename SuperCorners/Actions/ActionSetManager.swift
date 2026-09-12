@@ -96,7 +96,8 @@ class ActionSetManager: ObservableObject {
                 left: ActionAssignment(actionID: "doNothing", input: nil),
                 right: ActionAssignment(actionID: "doNothing", input: nil),
                 bottom: ActionAssignment(actionID: "doNothing", input: nil)
-            )
+            ),
+            activation: SetActivation(method: .none, trigger: .hover)
         )
 
         actionSets.append(newSet)

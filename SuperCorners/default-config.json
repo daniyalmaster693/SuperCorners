@@ -39,6 +39,12 @@
           "actionID": "notificationCenter",
           "input": null
         }
+      },
+      "activation": {
+        "method": "none",
+        "trigger": "hover",
+        "modifierKey": null,
+        "keyboardShortcut": null
       }
     }
   ]

@@ -8,16 +8,6 @@
 import KeyboardShortcuts
 import SwiftUI
 
-enum ModifierKey: String, CaseIterable, Identifiable {
-    case command = "Command"
-    case option = "Option"
-    case control = "Control"
-    case shift = "Shift"
-    case capsLock = "CapsLock"
-
-    var id: String { rawValue }
-}
-
 extension ModifierKey {
     var flag: NSEvent.ModifierFlags? {
         switch self {

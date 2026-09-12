@@ -17,6 +17,7 @@ struct ActionSet: Codable, Identifiable {
     var targetBundleID: String?
     var corners: CornerAssignments
     var zones: ZoneAssignments
+    var activation: SetActivation
 }
 
 struct CornerAssignments: Codable {
@@ -36,6 +37,34 @@ struct ZoneAssignments: Codable {
 struct ActionAssignment: Codable {
     var actionID: String
     var input: String?
+}
+
+struct SetActivation: Codable {
+    var method: ActivationMethod
+    var trigger: ActivationTrigger
+    var modifierKey: ModifierKey?
+    var keyboardShortcut: String?
+}
+
+enum ModifierKey: String, Codable, CaseIterable, Identifiable {
+    case command = "Command"
+    case option = "Option"
+    case control = "Control"
+    case shift = "Shift"
+    case capsLock = "CapsLock"
+
+    var id: String { rawValue }
+}
+
+enum ActivationMethod: String, Codable, CaseIterable {
+    case none
+    case modifier
+    case keyboardShortcut
+}
+
+enum ActivationTrigger: String, Codable, CaseIterable {
+    case hover
+    case click
 }
 
 extension ActionSet {
