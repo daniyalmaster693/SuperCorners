@@ -24,6 +24,8 @@ class ActivationManager {
 
     private init() {}
 
+    // Initalize and Deinitalize Monitors
+
     func start() {
         stop()
 
@@ -66,6 +68,8 @@ class ActivationManager {
 
         modifierFlags = []
     }
+
+    // Event Monitors
 
     private func mouseEventMonitor() {
         localMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: .mouseMoved) { [weak self] event in
