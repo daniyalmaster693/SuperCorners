@@ -23,13 +23,6 @@ struct ZoneView: View {
     @State private var showActionSetCreator = false
     @State private var showActionSetEditor = false
 
-    // Zone Variables
-
-    @AppStorage("enableTopZone") var enableTopZone = true
-    @AppStorage("enableLeftZone") var enableLeftZone = true
-    @AppStorage("enableRightZone") var enableRightZone = true
-    @AppStorage("enableBottomZone") var enableBottomZone = true
-
     var body: some View {
         var currentSet: ActionSet {
             actionSetManager.actionSets.first {
@@ -78,103 +71,95 @@ struct ZoneView: View {
                                 .aspectRatio(16 / 9, contentMode: .fit)
                                 .cornerRadius(12)
                                 .overlay(alignment: .top) {
-                                    if enableTopZone {
-                                        if #available(macOS 26.0, *) {
-                                            Button(topTitle) {
-                                                currentlySelectedCorner = .top
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.glass)
-                                            .padding(8)
+                                    if #available(macOS 26.0, *) {
+                                        Button(topTitle) {
+                                            currentlySelectedCorner = .top
+                                            showModal = true
                                         }
-                                        else {
-                                            Button(topTitle) {
-                                                currentlySelectedCorner = .top
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .padding(8)
+                                        .buttonStyle(.glass)
+                                        .padding(8)
+                                    }
+                                    else {
+                                        Button(topTitle) {
+                                            currentlySelectedCorner = .top
+                                            showModal = true
                                         }
+                                        .buttonStyle(.bordered)
+                                        .padding(8)
                                     }
                                 }
                                 .overlay(alignment: .bottom) {
-                                    if enableBottomZone {
-                                        if #available(macOS 26.0, *) {
-                                            Button(bottomTitle) {
-                                                currentlySelectedCorner = .bottom
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.glass)
-                                            .padding(8)
+                                    if #available(macOS 26.0, *) {
+                                        Button(bottomTitle) {
+                                            currentlySelectedCorner = .bottom
+                                            showModal = true
                                         }
-                                        else {
-                                            Button(bottomTitle) {
-                                                currentlySelectedCorner = .bottom
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .padding(8)
+                                        .buttonStyle(.glass)
+                                        .padding(8)
+                                    }
+                                    else {
+                                        Button(bottomTitle) {
+                                            currentlySelectedCorner = .bottom
+                                            showModal = true
                                         }
+                                        .buttonStyle(.bordered)
+                                        .padding(8)
                                     }
                                 }
                                 .overlay(alignment: .leading) {
-                                    if enableLeftZone {
-                                        if #available(macOS 26.0, *) {
-                                            VStack {
-                                                Spacer()
-                                                Button(leftTitle) {
-                                                    currentlySelectedCorner = .left
-                                                    showModal = true
-                                                }
-                                                .buttonStyle(.glass)
-                                                .padding(.trailing, 10)
-                                                .padding(8)
-                                                Spacer()
+                                    if #available(macOS 26.0, *) {
+                                        VStack {
+                                            Spacer()
+                                            Button(leftTitle) {
+                                                currentlySelectedCorner = .left
+                                                showModal = true
                                             }
+                                            .buttonStyle(.glass)
+                                            .padding(.trailing, 10)
+                                            .padding(8)
+                                            Spacer()
                                         }
-                                        else {
-                                            VStack {
-                                                Spacer()
-                                                Button(leftTitle) {
-                                                    currentlySelectedCorner = .left
-                                                    showModal = true
-                                                }
-                                                .buttonStyle(.bordered)
-                                                .padding(.trailing, 10)
-                                                .padding(8)
-                                                Spacer()
+                                    }
+                                    else {
+                                        VStack {
+                                            Spacer()
+                                            Button(leftTitle) {
+                                                currentlySelectedCorner = .left
+                                                showModal = true
                                             }
+                                            .buttonStyle(.bordered)
+                                            .padding(.trailing, 10)
+                                            .padding(8)
+                                            Spacer()
                                         }
                                     }
                                 }
                                 .overlay(alignment: .trailing) {
-                                    if enableRightZone {
-                                        if #available(macOS 26.0, *) {
-                                            VStack {
-                                                Spacer()
-                                                Button(rightTitle) {
-                                                    currentlySelectedCorner = .right
-                                                    showModal = true
-                                                }
-                                                .buttonStyle(.glass)
-                                                .padding(.leading, 10)
-                                                .padding(8)
-                                                Spacer()
+                                    if #available(macOS 26.0, *) {
+                                        VStack {
+                                            Spacer()
+                                            Button(rightTitle) {
+                                                currentlySelectedCorner = .right
+                                                showModal = true
                                             }
+                                            .buttonStyle(.glass)
+                                            .padding(.leading, 10)
+                                            .padding(8)
+                                            Spacer()
                                         }
+                                    }
 
-                                        else {
-                                            VStack {
-                                                Spacer()
-                                                Button(rightTitle) {
-                                                    currentlySelectedCorner = .right
-                                                    showModal = true
-                                                }
-                                                .buttonStyle(.bordered)
-                                                .padding(.leading, 10)
-                                                .padding(8)
-                                                Spacer()
+                                    else {
+                                        VStack {
+                                            Spacer()
+                                            Button(rightTitle) {
+                                                currentlySelectedCorner = .right
+                                                showModal = true
                                             }
+                                            .buttonStyle(.bordered)
+                                            .padding(.leading, 10)
+                                            .padding(8)
+                                            Spacer()
                                         }
                                     }
                                 }

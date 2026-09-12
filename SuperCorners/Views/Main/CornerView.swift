@@ -23,13 +23,6 @@ struct CornerView: View {
     @State private var showActionSetCreator = false
     @State private var showActionSetEditor = false
 
-    // Corner Variables
-
-    @AppStorage("enableTopLeftCorner") var enableTopLeftCorner = true
-    @AppStorage("enableTopRightCorner") var enableTopRightCorner = true
-    @AppStorage("enableBottomLeftCorner") var enableBottomLeftCorner = true
-    @AppStorage("enableBottomRightCorner") var enableBottomRightCorner = true
-
     var body: some View {
         var currentSet: ActionSet {
             actionSetManager.actionSets.first {
@@ -78,84 +71,76 @@ struct CornerView: View {
                                 .aspectRatio(16 / 9, contentMode: .fit)
                                 .cornerRadius(12)
                                 .overlay(alignment: .topLeading) {
-                                    if enableTopLeftCorner {
-                                        if #available(macOS 26.0, *) {
-                                            Button(topLeftTitle) {
-                                                currentlySelectedCorner = .topLeft
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.glass)
-                                            .padding(8)
-
-                                        } else {
-                                            Button(topLeftTitle) {
-                                                currentlySelectedCorner = .topLeft
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .padding(8)
+                                    if #available(macOS 26.0, *) {
+                                        Button(topLeftTitle) {
+                                            currentlySelectedCorner = .topLeft
+                                            showModal = true
                                         }
+                                        .buttonStyle(.glass)
+                                        .padding(8)
+
+                                    } else {
+                                        Button(topLeftTitle) {
+                                            currentlySelectedCorner = .topLeft
+                                            showModal = true
+                                        }
+                                        .buttonStyle(.bordered)
+                                        .padding(8)
                                     }
                                 }
                                 .overlay(alignment: .topTrailing) {
-                                    if enableTopRightCorner {
-                                        if #available(macOS 26.0, *) {
-                                            Button(topRightTitle) {
-                                                currentlySelectedCorner = .topRight
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.glass)
-                                            .padding(8)
-
-                                        } else {
-                                            Button(topRightTitle) {
-                                                currentlySelectedCorner = .topRight
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .padding(8)
+                                    if #available(macOS 26.0, *) {
+                                        Button(topRightTitle) {
+                                            currentlySelectedCorner = .topRight
+                                            showModal = true
                                         }
+                                        .buttonStyle(.glass)
+                                        .padding(8)
+
+                                    } else {
+                                        Button(topRightTitle) {
+                                            currentlySelectedCorner = .topRight
+                                            showModal = true
+                                        }
+                                        .buttonStyle(.bordered)
+                                        .padding(8)
                                     }
                                 }
                                 .overlay(alignment: .bottomLeading) {
-                                    if enableBottomLeftCorner {
-                                        if #available(macOS 26.0, *) {
-                                            Button(bottomLeftTitle) {
-                                                currentlySelectedCorner = .bottomLeft
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.glass)
-                                            .padding(8)
+                                    if #available(macOS 26.0, *) {
+                                        Button(bottomLeftTitle) {
+                                            currentlySelectedCorner = .bottomLeft
+                                            showModal = true
                                         }
+                                        .buttonStyle(.glass)
+                                        .padding(8)
+                                    }
 
-                                        else {
-                                            Button(bottomLeftTitle) {
-                                                currentlySelectedCorner = .bottomLeft
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .padding(8)
+                                    else {
+                                        Button(bottomLeftTitle) {
+                                            currentlySelectedCorner = .bottomLeft
+                                            showModal = true
                                         }
+                                        .buttonStyle(.bordered)
+                                        .padding(8)
                                     }
                                 }
                                 .overlay(alignment: .bottomTrailing) {
-                                    if enableBottomRightCorner {
-                                        if #available(macOS 26.0, *) {
-                                            Button(bottomRightTitle) {
-                                                currentlySelectedCorner = .bottomRight
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.glass)
-                                            .padding(8)
-
-                                        } else {
-                                            Button(bottomRightTitle) {
-                                                currentlySelectedCorner = .bottomRight
-                                                showModal = true
-                                            }
-                                            .buttonStyle(.bordered)
-                                            .padding(8)
+                                    if #available(macOS 26.0, *) {
+                                        Button(bottomRightTitle) {
+                                            currentlySelectedCorner = .bottomRight
+                                            showModal = true
                                         }
+                                        .buttonStyle(.glass)
+                                        .padding(8)
+
+                                    } else {
+                                        Button(bottomRightTitle) {
+                                            currentlySelectedCorner = .bottomRight
+                                            showModal = true
+                                        }
+                                        .buttonStyle(.bordered)
+                                        .padding(8)
                                     }
                                 }
                         }
