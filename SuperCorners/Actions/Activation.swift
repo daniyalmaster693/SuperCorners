@@ -8,7 +8,7 @@
 import AppKit
 import KeyboardShortcuts
 
-final class ActivationManager {
+class ActivationManager {
     static let shared = ActivationManager()
 
     private var mouseMonitor: Any?
@@ -18,4 +18,36 @@ final class ActivationManager {
     private var currentFlags: NSEvent.ModifierFlags = []
 
     private init() {}
+
+    func start() {
+        stop()
+
+        mouseEventMonitor()
+        clickEventMonitor()
+
+        modifierEventMonitor()
+    }
+
+    func stop() {
+        if let mouseMonitor {
+            NSEvent.removeMonitor(mouseMonitor)
+            self.mouseMonitor = nil
+        }
+
+        if let clickMonitor {
+            NSEvent.removeMonitor(clickMonitor)
+            self.clickMonitor = nil
+        }
+
+        if let modifierFlags {
+            NSEvent.removeMonitor(modifierFlags)
+            self.modifierFlags = nil
+        }
+    }
+
+    private func mouseEventMonitor() {}
+
+    private func clickEventMonitor() {}
+
+    private func modifierEventMonitor() {}
 }
