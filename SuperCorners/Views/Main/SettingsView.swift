@@ -17,18 +17,6 @@ struct SettingsView: View {
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
-    // Enabled Triggers
-
-    @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
-    @AppStorage("enableTopRightCorner") private var enableTopRightCorner = true
-    @AppStorage("enableBottomLeftCorner") private var enableBottomLeftCorner = true
-    @AppStorage("enableBottomRightCorner") private var enableBottomRightCorner = true
-
-    @AppStorage("enableTopZone") private var enableTopZone = true
-    @AppStorage("enableLeftZone") private var enableLeftZone = true
-    @AppStorage("enableRightZone") private var enableRightZone = true
-    @AppStorage("enableBottomZone") private var enableBottomZone = true
-
     // Behavior Settings
 
     @AppStorage("delayTimer") private var delayTimer: Double = 0.0
@@ -139,71 +127,6 @@ struct SettingsView: View {
                             self.updateManager.getUpdateData(manualCheck: true)
                         }
                         .buttonStyle(.bordered)
-                    }
-                }
-            }
-            .formStyle(.grouped)
-
-            Form {
-                Section("Triggers") {
-                    Toggle(isOn: self.$enableTopLeftCorner) {
-                        HStack {
-                            Image(systemName: "inset.filled.topleft.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Top Left Corner")
-                        }
-                    }
-                    Toggle(isOn: self.$enableTopRightCorner) {
-                        HStack {
-                            Image(systemName: "inset.filled.topright.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Top Right Corner")
-                        }
-                    }
-                    Toggle(isOn: self.$enableBottomLeftCorner) {
-                        HStack {
-                            Image(systemName: "inset.filled.bottomleft.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Bottom Left Corner")
-                        }
-                    }
-                    Toggle(isOn: self.$enableBottomRightCorner) {
-                        HStack {
-                            Image(systemName: "inset.filled.bottomright.rectangle")
-                                .foregroundColor(.primary)
-                            Text("Bottom Right Corner")
-                        }
-                    }
-                }
-
-                Section {
-                    Toggle(isOn: self.$enableTopZone) {
-                        HStack {
-                            Image(systemName: "rectangle.topthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Text("Top Zone")
-                        }
-                    }
-                    Toggle(isOn: self.$enableLeftZone) {
-                        HStack {
-                            Image(systemName: "rectangle.leadingthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Text("Left Zone")
-                        }
-                    }
-                    Toggle(isOn: self.$enableRightZone) {
-                        HStack {
-                            Image(systemName: "rectangle.trailingthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Text("Right Zone")
-                        }
-                    }
-                    Toggle(isOn: self.$enableBottomZone) {
-                        HStack {
-                            Image(systemName: "rectangle.bottomthird.inset.filled")
-                                .foregroundColor(.primary)
-                            Text("Bottom Zone")
-                        }
                     }
                 }
             }

@@ -18,33 +18,21 @@ enum SelectedTab: String {
 struct SuperCornersApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     private let updateManager = UpdateManager()
-    
+
     @ObservedObject private var actionSetManager = ActionSetManager.shared
-    
+
     @Environment(\.openWindow) private var openWindow
     @State private var selectedTab: SelectedTab = .corners
-    
+
     // Settings Variables
-    
+
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
-    // Corner and Zone Variables
-    
-    @AppStorage("enableTopLeftCorner") var enableTopLeftCorner = true
-    @AppStorage("enableTopRightCorner") var enableTopRightCorner = true
-    @AppStorage("enableBottomLeftCorner") var enableBottomLeftCorner = true
-    @AppStorage("enableBottomRightCorner") var enableBottomRightCorner = true
-
-    @AppStorage("enableTopZone") var enableTopZone = true
-    @AppStorage("enableLeftZone") var enableLeftZone = true
-    @AppStorage("enableRightZone") var enableRightZone = true
-    @AppStorage("enableBottomZone") var enableBottomZone = true
-    
     // Menubar Variables
-    
+
     @State private var refreshID = UUID()
-    
+
     // Request Accessibility Permission
 
     init() {
@@ -67,14 +55,14 @@ struct SuperCornersApp: App {
 //            activateCornerHotkey()
 //        }
     }
-    
+
     func updateActivationPolicy() {
         DispatchQueue.main.async {
             NSApp.setActivationPolicy(showInDock ? .regular : .accessory)
             NSApp.activate(ignoringOtherApps: true)
         }
     }
-    
+
     var body: some Scene {
         WindowGroup(id: "main") {
             if #available(macOS 15.0, *) {
@@ -91,10 +79,10 @@ struct SuperCornersApp: App {
                     }
             }
         }
-        
+
         MenuBarExtra("Menu", systemImage: "rectangle.3.group", isInserted: $showMenuBarExtra) {
-            let currentSet = ActionSetManager.shared.findActionSets(bundleID: NSWorkspace.shared.frontmostApplication?.bundleIdentifier)
-            
+//            let currentSet = ActionSetManager.shared.findActionSets(bundleID: NSWorkspace.shared.frontmostApplication?.bundleIdentifier)
+
             VStack {
 //                if let currentSet {
 //                    let topLeftTitle = titleForCorner(.topLeft, currentSet: currentSet)
@@ -108,7 +96,6 @@ struct SuperCornersApp: App {
 //                    let bottomTitle = titleForCorner(.bottom, currentSet: currentSet)
 //
 //                    Menu("Corners") {
-//                        if enableTopLeftCorner {
 //                            Button {
 //                                triggerCornerAction(for: .topLeft)
 //                            } label: {
@@ -116,10 +103,8 @@ struct SuperCornersApp: App {
 //                                    Image(systemName: "inset.filled.topleft.rectangle")
 //                                    Text(topLeftTitle)
 //                                }
-//                            }
 //                        }
 //
-//                        if enableTopRightCorner {
 //                            Button {
 //                                triggerCornerAction(for: .topRight)
 //                            } label: {
@@ -128,9 +113,8 @@ struct SuperCornersApp: App {
 //                                    Text(topRightTitle)
 //                                }
 //                            }
-//                        }
 //
-//                        if enableBottomLeftCorner {
+
 //                            Button {
 //                                triggerCornerAction(for: .bottomLeft)
 //                            } label: {
@@ -139,9 +123,9 @@ struct SuperCornersApp: App {
 //                                    Text(bottomLeftTitle)
 //                                }
 //                            }
-//                        }
+
 //
-//                        if enableBottomRightCorner {
+
 //                            Button {
 //                                triggerCornerAction(for: .bottomRight)
 //                            } label: {
@@ -150,11 +134,11 @@ struct SuperCornersApp: App {
 //                                    Text(bottomRightTitle)
 //                                }
 //                            }
-//                        }
+
 //                    }
 //
 //                    Menu("Zones") {
-//                        if enableTopZone {
+
 //                            Button {
 //                                triggerCornerAction(for: .top)
 //                            } label: {
@@ -163,9 +147,9 @@ struct SuperCornersApp: App {
 //                                    Text(topTitle)
 //                                }
 //                            }
-//                        }
+
 //
-//                        if enableLeftZone {
+
 //                            Button {
 //                                triggerCornerAction(for: .left)
 //                            } label: {
@@ -174,9 +158,9 @@ struct SuperCornersApp: App {
 //                                    Text(leftTitle)
 //                                }
 //                            }
-//                        }
+
 //
-//                        if enableRightZone {
+
 //                            Button {
 //                                triggerCornerAction(for: .right)
 //                            } label: {
@@ -185,9 +169,9 @@ struct SuperCornersApp: App {
 //                                    Text(rightTitle)
 //                                }
 //                            }
-//                        }
+
 //
-//                        if enableBottomZone {
+
 //                            Button {
 //                                triggerCornerAction(for: .bottom)
 //                            } label: {
@@ -195,7 +179,6 @@ struct SuperCornersApp: App {
 //                                    Image(systemName: "rectangle.bottomthird.inset.filled")
 //                                    Text(bottomTitle)
 //                                }
-//                            }
 //                        }
 //                    }
 //
@@ -257,14 +240,14 @@ struct SuperCornersApp: App {
                     Label("Preferences", systemImage: "gear")
                 }
                 .keyboardShortcut(",")
-                
+
                 Button {
                     updateManager.getUpdateData(manualCheck: true)
                 } label: {
                     Label("Check for Updates", systemImage: "gear.badge")
                 }
             }
-            
+
             CommandGroup(after: .sidebar) {
                 Button {
                     selectedTab = .corners
@@ -287,34 +270,34 @@ struct SuperCornersApp: App {
                 }
                 .keyboardShortcut("3")
             }
-            
+
             CommandGroup(replacing: .help) {
                 Button("SuperCorners Help") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/blob/main/GettingStarted.md") {
                         NSWorkspace.shared.open(url)
                     }
                 }
-                
+
                 Divider()
-                
+
                 Button("Feedback") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/issues/new") {
                         NSWorkspace.shared.open(url)
                     }
                 }
-                
+
                 Button("Changelog") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners/releases") {
                         NSWorkspace.shared.open(url)
                     }
                 }
-                
+
                 Button("Website") {
                     if let url = URL(string: "https://supercorners.vercel.app") {
                         NSWorkspace.shared.open(url)
                     }
                 }
-                
+
                 Button("Repository") {
                     if let url = URL(string: "https://github.com/daniyalmaster693/SuperCorners") {
                         NSWorkspace.shared.open(url)
