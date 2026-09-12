@@ -67,9 +67,30 @@ class ActivationManager {
         modifierFlags = []
     }
 
-    private func mouseEventMonitor() {}
+    private func mouseEventMonitor() {
+        localMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: .mouseMoved) { [weak self] event in
+            return event
+        }
 
-    private func clickEventMonitor() {}
+        globalMouseMonitor = NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved) { [weak self] _ in
+        }
+    }
 
-    private func modifierEventMonitor() {}
+    private func clickEventMonitor() {
+        localClickMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { [weak self] event in
+            return event
+        }
+
+        globalClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDown) { [weak self] _ in
+        }
+    }
+
+    private func modifierEventMonitor() {
+        localModifierMonitor = NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) { [weak self] event in
+            return event
+        }
+
+        globalModifierMonitor = NSEvent.addGlobalMonitorForEvents(matching: .flagsChanged) { [weak self] _ in
+        }
+    }
 }
