@@ -133,7 +133,7 @@ struct SettingsView: View {
             .formStyle(.grouped)
 
             Form {
-                Section("Behavior") {
+                Section("Activation") {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "dot.circle.and.cursorarrow")
@@ -166,8 +166,11 @@ struct SettingsView: View {
                         Slider(value: self.$zoneTriggerSensitivity, in: 3 ... 8.0, step: 0.5)
                     }
                 }
+            }
+            .formStyle(.grouped)
 
-                Section {
+            Form {
+                Section("Behavior") {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "timer")
@@ -218,8 +221,14 @@ struct SettingsView: View {
                         }
                     }
                 }
+            }
+            .formStyle(.grouped)
+            .sheet(isPresented: self.$showIgnoredAppsModal) {
+                IgnoredApplications()
+            }
 
-                Section {
+            Form {
+                Section("Visual") {
                     Toggle(isOn: self.$showVisualFeedback) {
                         HStack {
                             Image(systemName: "circle.dashed")
@@ -282,9 +291,6 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
-            .sheet(isPresented: self.$showIgnoredAppsModal) {
-                IgnoredApplications()
-            }
 
             Form {
                 Section("Text Extractor") {
