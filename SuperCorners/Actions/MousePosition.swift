@@ -14,7 +14,6 @@ func getCornerMousePosition(actionSet: ActionSet) {
     @AppStorage("cornerTriggerSensitivity") var cornerTriggerSensitivity = 5.0
     @AppStorage("zoneTriggerSensitivity") var zoneTriggerSensitivity = 5.0
 
-    @AppStorage("disableInFullScreen") var disableInFullScreen = false
     @AppStorage("playSoundEffect") var playSoundEffect = false
     @AppStorage("selectedSoundEffect") var selectedSound: SoundEffect = .purr
 
@@ -42,18 +41,6 @@ func getCornerMousePosition(actionSet: ActionSet) {
     }
 
     let mousePosition: NSPoint = NSEvent.mouseLocation
-
-    if disableInFullScreen {
-        for window in NSApplication.shared.windows {
-            if window.styleMask.contains(.fullScreen) {
-                let windowFrame = window.frame
-                if windowFrame.contains(mousePosition) {
-                    lastCorner = nil
-                    return
-                }
-            }
-        }
-    }
 
     for screen in NSScreen.screens {
         let corners: [CornerPosition.Corner] = [.topLeft, .topRight, .bottomLeft, .bottomRight, .top, .left, .right, .bottom]

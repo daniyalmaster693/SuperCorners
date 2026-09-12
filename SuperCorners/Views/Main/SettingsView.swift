@@ -23,7 +23,6 @@ struct SettingsView: View {
     @AppStorage("zoneTriggerSensitivity") private var zoneTriggerSensitivity: Double = 7.0
 
     @AppStorage("delayTimer") private var delayTimer: Double = 0.0
-    @AppStorage("disableInFullScreen") var disableInFullScreen = false
 
     // Ignored applications list
 
@@ -178,16 +177,6 @@ struct SettingsView: View {
                             Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))s")
 
                             Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
-                        }
-                    }
-                }
-
-                Section {
-                    Toggle(isOn: self.$disableInFullScreen) {
-                        HStack {
-                            Image(systemName: "arrow.up.left.and.arrow.down.right")
-                                .foregroundColor(.primary)
-                            Text("Disable in Full Screen")
                         }
                     }
                 }
