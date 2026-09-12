@@ -94,47 +94,49 @@ struct ActionSetEditor: View {
 
                 Section("Action Sets") {
                     ForEach(actionSetManager.actionSets) { set in
-                        HStack {
-                            if set.targetBundleID == nil {
-                                Image(systemName: "globe")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundStyle(.secondary)
-                                    .padding(.leading, 5)
-                                    .frame(width: 22, height: 22)
-                            }
-                            else if let icon = applicationIcon(for: set.targetBundleID) {
-                                Image(nsImage: icon)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .cornerRadius(12)
-                                    .frame(width: 25, height: 25)
-                            }
-                        
-                            Text(set.name)
-                                .padding(.leading, 5)
-                            
-                            Spacer()
-                            
-                            if set.targetBundleID != nil {
-                                if #available(macOS 26.0, *) {
-                                    Button(action: {
-                                        actionSetManager.deleteSet(id: set.id)
-                                    }) {
-                                        Image(systemName: "trash")
-                                            .foregroundColor(.secondary)
-                                    }
-                                    .buttonStyle(.glass)
-                                    .padding(.trailing, 4)
+                        VStack {
+                            HStack {
+                                if set.targetBundleID == nil {
+                                    Image(systemName: "globe")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundStyle(.secondary)
+                                        .padding(.leading, 5)
+                                        .frame(width: 22, height: 22)
                                 }
-                                else {
-                                    Button(action: {
-                                        actionSetManager.deleteSet(id: set.id)
-                                    }) {
-                                        Image(systemName: "trash")
-                                            .foregroundColor(.secondary)
+                                else if let icon = applicationIcon(for: set.targetBundleID) {
+                                    Image(nsImage: icon)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .cornerRadius(12)
+                                        .frame(width: 25, height: 25)
+                                }
+                                
+                                Text(set.name)
+                                    .padding(.leading, 5)
+                                
+                                Spacer()
+                                
+                                if set.targetBundleID != nil {
+                                    if #available(macOS 26.0, *) {
+                                        Button(action: {
+                                            actionSetManager.deleteSet(id: set.id)
+                                        }) {
+                                            Image(systemName: "trash")
+                                                .foregroundColor(.secondary)
+                                        }
+                                        .buttonStyle(.glass)
+                                        .padding(.trailing, 4)
                                     }
-                                    .padding(.trailing, 4)
+                                    else {
+                                        Button(action: {
+                                            actionSetManager.deleteSet(id: set.id)
+                                        }) {
+                                            Image(systemName: "trash")
+                                                .foregroundColor(.secondary)
+                                        }
+                                        .padding(.trailing, 4)
+                                    }
                                 }
                             }
                         }

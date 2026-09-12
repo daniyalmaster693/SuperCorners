@@ -149,6 +149,29 @@ class ActionSetManager: ObservableObject {
         case .bottom:
             actionSets[index].zones.bottom = assignment
         }
+
+        saveConfig()
+    }
+
+    func updateActivation(
+        setID: String,
+        method: ActivationMethod,
+        trigger: ActivationTrigger,
+        modifierKey: ModifierKey?,
+        keyboardShortcut: String?
+    ) {
+        guard let index = actionSets.firstIndex(where: { $0.id == setID }) else {
+            return
+        }
+
+        actionSets[index].activation = SetActivation(
+            method: method,
+            trigger: trigger,
+            modifierKey: modifierKey,
+            keyboardShortcut: keyboardShortcut
+        )
+
+        saveConfig()
     }
 
     func findActionSets(bundleID: String?) -> [ActionSet] {
