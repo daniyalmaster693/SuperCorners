@@ -181,6 +181,14 @@ struct CornerView: View {
                 }
             }
         }
+        .onChange(of: actionSetManager.actionSets.map(\.id)) { _ in
+            guard actionSetManager.actionSets.contains(where: {
+                $0.id == selectedActionSet
+            }) else {
+                selectedActionSet = "global"
+                return
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .automatic) {
                 Picker("Active Set:", selection: $selectedActionSet) {
