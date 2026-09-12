@@ -17,26 +17,6 @@ struct SettingsView: View {
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
-    // Modifier Key Picker
-
-    @AppStorage("enableModifierKey") private var enableModifierKey = false
-    @AppStorage("enableCornerHover") private var enableCornerHover = true
-    @AppStorage("enableCornerClick") private var enableCornerClick = false
-
-    @AppStorage("selectedModifierKey") private var selectedModifier: ModifierKey = .command
-
-    enum ModifierKey: String, CaseIterable, Identifiable {
-        case command = "Command"
-        case option = "Option"
-        case control = "Control"
-        case shift = "Shift"
-        case capsLock = "Caps Lock"
-
-        var id: String { rawValue }
-    }
-
-    @AppStorage("delayTimer") private var delayTimer: Double = 0.0
-
     // Enabled Triggers
 
     @AppStorage("enableTopLeftCorner") private var enableTopLeftCorner = true
@@ -50,6 +30,8 @@ struct SettingsView: View {
     @AppStorage("enableBottomZone") private var enableBottomZone = true
 
     // Behavior Settings
+
+    @AppStorage("delayTimer") private var delayTimer: Double = 0.0
 
     @AppStorage("cornerTriggerSensitivity") private var cornerTriggerSensitivity: Double = 7.0
     @AppStorage("zoneTriggerSensitivity") private var zoneTriggerSensitivity: Double = 7.0
@@ -228,85 +210,6 @@ struct SettingsView: View {
             .formStyle(.grouped)
 
             Form {
-                Section("Activation") {
-                    Toggle(isOn: self.$enableModifierKey) {
-                        HStack {
-                            Image(systemName: "command")
-                                .foregroundColor(.primary)
-                            Text("Modifier Key")
-                        }
-                    }
-
-                    HStack {
-                        Label("Activation Modifier", systemImage: "square.grid.2x2")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Picker("", selection: self.$selectedModifier) {
-                            ForEach(ModifierKey.allCases) { key in
-                                Text(key.rawValue).tag(key)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .disabled(!self.enableModifierKey)
-                        .frame(width: 150)
-                    }
-                }
-
-                Section {
-                    HStack {
-                        Label("Activation Shortcut", systemImage: "rectangle.leftthird.inset.filled")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        KeyboardShortcuts.Recorder(for: .cornerActivation)
-                            .frame(width: 130)
-                    }
-                }
-
-                Section {
-                    Toggle(isOn: Binding(
-                        get: { self.enableCornerHover },
-                        set: { newValue in
-                            self.enableCornerHover = newValue
-                            if newValue { self.enableCornerClick = false }
-                        }
-                    )) {
-                        HStack {
-                            Image(systemName: "hand.point.up.left")
-                                .foregroundColor(.primary)
-                            Text("Trigger Actions on Corner Hover")
-                        }
-                    }
-
-                    Toggle(isOn: Binding(
-                        get: { self.enableCornerClick },
-                        set: { newValue in
-                            self.enableCornerClick = newValue
-                            if newValue { self.enableCornerHover = false }
-                        }
-                    )) {
-                        HStack {
-                            Image(systemName: "hand.tap")
-                                .foregroundColor(.primary)
-                            Text("Trigger Actions on Corner Click")
-                        }
-                    }
-                }
-
-                Section {
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Image(systemName: "timer")
-                                .foregroundColor(.primary)
-                            Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))s")
-
-                            Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
-                        }
-                    }
-                }
-            }
-            .formStyle(.grouped)
-
-            Form {
                 Section("Behavior") {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
@@ -338,6 +241,18 @@ struct SettingsView: View {
                             .padding(.bottom, 10)
 
                         Slider(value: self.$zoneTriggerSensitivity, in: 3 ... 8.0, step: 0.5)
+                    }
+                }
+
+                Section {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "timer")
+                                .foregroundColor(.primary)
+                            Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))s")
+
+                            Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
+                        }
                     }
                 }
 
