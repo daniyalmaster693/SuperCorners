@@ -844,7 +844,7 @@ let cornerActions: [CornerAction] = [
     CornerAction(
         id: "openWebsite",
         title: "Open a Website",
-        description: "Open a website in your default browser.",
+        description: "Open a website or deeplink.",
         iconName: "globe",
         category: .template,
         inputType: .url,
