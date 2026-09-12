@@ -22,20 +22,15 @@ struct SettingsView: View {
     @AppStorage("cornerTriggerSensitivity") private var cornerTriggerSensitivity: Double = 7.0
     @AppStorage("zoneTriggerSensitivity") private var zoneTriggerSensitivity: Double = 7.0
 
-    // Behavior Settings
-
     @AppStorage("delayTimer") private var delayTimer: Double = 0.0
     @AppStorage("disableInFullScreen") var disableInFullScreen = false
-
-    @AppStorage("playSoundEffect") private var playSoundEffect = false
-    @AppStorage("selectedSoundEffect") private var selectedSound: SoundEffect = .purr
 
     // Ignored applications list
 
     @State private var ignoredApps: [String] = []
     @State private var showIgnoredAppsModal = false
 
-    // Visual Settings
+    // Feedback Settings
 
     @AppStorage("showVisualFeedback") private var showVisualFeedback = true
     @AppStorage("persistentVisualFeedback") var persistentVisualFeedback = false
@@ -44,6 +39,9 @@ struct SettingsView: View {
     @AppStorage("showToastNotifications") private var showToastNotification = false
     @AppStorage("dismissOnClick") private var dismissOnClick = true
     @AppStorage("autoDismissTimer") private var autoDismissTimer: Double = 3.0
+
+    @AppStorage("playSoundEffect") private var playSoundEffect = false
+    @AppStorage("selectedSoundEffect") private var selectedSound: SoundEffect = .purr
 
     enum SoundEffect: String, CaseIterable, Identifiable {
         case basso = "Basso"
@@ -138,7 +136,7 @@ struct SettingsView: View {
             .formStyle(.grouped)
 
             Form {
-                Section("Activation") {
+                Section("Trigger") {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "dot.circle.and.cursorarrow")
@@ -171,11 +169,8 @@ struct SettingsView: View {
                         Slider(value: self.$zoneTriggerSensitivity, in: 3 ... 8.0, step: 0.5)
                     }
                 }
-            }
-            .formStyle(.grouped)
 
-            Form {
-                Section("Behavior") {
+                Section {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "timer")
@@ -208,42 +203,11 @@ struct SettingsView: View {
                         .buttonStyle(.bordered)
                     }
                 }
-
-                Section {
-                    Toggle(isOn: self.$playSoundEffect) {
-                        HStack {
-                            Image(systemName: "speaker.wave.2")
-                                .foregroundColor(.primary)
-                            Text("Play Sound Effect on Trigger")
-                        }
-                    }
-
-                    HStack {
-                        Label("Choose Sound Effect", systemImage: "waveform")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Picker("", selection: self.$selectedSound) {
-                            ForEach(SoundEffect.allCases) { sound in
-                                Text(sound.rawValue).tag(sound)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .disabled(!self.playSoundEffect)
-                        .frame(width: 150)
-                    }.onChange(of: self.selectedSound) { newSound in
-                        if self.playSoundEffect {
-                            newSound.play()
-                        }
-                    }
-                }
             }
             .formStyle(.grouped)
-            .sheet(isPresented: self.$showIgnoredAppsModal) {
-                IgnoredApplications()
-            }
 
             Form {
-                Section("Visual") {
+                Section("Feedback") {
                     Toggle(isOn: self.$showVisualFeedback) {
                         HStack {
                             Image(systemName: "circle.dashed")
@@ -304,11 +268,43 @@ struct SettingsView: View {
                     }
                     .disabled(!self.showToastNotification)
                 }
+
+                Section {
+                    Toggle(isOn: self.$playSoundEffect) {
+                        HStack {
+                            Image(systemName: "speaker.wave.2")
+                                .foregroundColor(.primary)
+                            Text("Play Sound Effect on Trigger")
+                        }
+                    }
+
+                    HStack {
+                        Label("Choose Sound Effect", systemImage: "waveform")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: self.$selectedSound) {
+                            ForEach(SoundEffect.allCases) { sound in
+                                Text(sound.rawValue).tag(sound)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .disabled(!self.playSoundEffect)
+                        .frame(width: 150)
+                    }
+                    .onChange(of: self.selectedSound) { newSound in
+                        if self.playSoundEffect {
+                            newSound.play()
+                        }
+                    }
+                }
             }
             .formStyle(.grouped)
+            .sheet(isPresented: self.$showIgnoredAppsModal) {
+                IgnoredApplications()
+            }
 
             Form {
-                Section("Text Extractor") {
+                Section("Actions") {
                     Toggle(isOn: self.$showRecentText) {
                         HStack {
                             Image(systemName: "rectangle.stack")
@@ -318,7 +314,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Section("Color Picker") {
+                Section {
                     HStack {
                         Label("Color Format", systemImage: "paintpalette")
                             .foregroundColor(.primary)
