@@ -44,7 +44,7 @@ struct SetActivation: Codable {
     var method: ActivationMethod
     var trigger: ActivationTrigger
     var modifierKey: ModifierKey?
-    var keyboardShortcutName: String?
+    var keyboardShortcut: String?
 }
 
 enum ModifierKey: String, Codable, CaseIterable, Identifiable {

@@ -99,7 +99,7 @@ class ActionSetManager: ObservableObject {
                 right: ActionAssignment(actionID: "doNothing", input: nil),
                 bottom: ActionAssignment(actionID: "doNothing", input: nil)
             ),
-            activation: SetActivation(method: .none, trigger: .hover, keyboardShortcutName: "actionSet_\(id)")
+            activation: SetActivation(method: .none, trigger: .hover, keyboardShortcut: "actionSet_\(id)")
         )
 
         actionSets.append(newSet)
@@ -160,7 +160,7 @@ class ActionSetManager: ObservableObject {
         method: ActivationMethod,
         trigger: ActivationTrigger,
         modifierKey: ModifierKey?,
-        keyboardShortcutName: String?
+        keyboardShortcut: String?
     ) {
         guard let index = actionSets.firstIndex(where: { $0.id == setID }) else {
             return
@@ -170,7 +170,7 @@ class ActionSetManager: ObservableObject {
             method: method,
             trigger: trigger,
             modifierKey: modifierKey,
-            keyboardShortcutName: keyboardShortcutName
+            keyboardShortcut: keyboardShortcut
         )
 
         saveConfig()

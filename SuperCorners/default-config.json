@@ -44,7 +44,7 @@
         "method": "none",
         "trigger": "hover",
         "modifierKey": null,
-        "keyboardShortcutName": "actionSet_global"
+        "keyboardShortcut": "actionSet_global"
       }
     }
   ]
