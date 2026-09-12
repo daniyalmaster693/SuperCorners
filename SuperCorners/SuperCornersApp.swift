@@ -82,153 +82,145 @@ struct SuperCornersApp: App {
         }
 
         MenuBarExtra("Menu", systemImage: "rectangle.3.group", isInserted: $showMenuBarExtra) {
-//            let currentSet = ActionSetManager.shared.findActionSets(bundleID: NSWorkspace.shared.frontmostApplication?.bundleIdentifier)
+            let currentSet = ActionSetManager.shared.findActionSets(
+                bundleID: NSWorkspace.shared.frontmostApplication?.bundleIdentifier
+            )
+            .first
 
             VStack {
-//                if let currentSet {
-//                    let topLeftTitle = titleForCorner(.topLeft, currentSet: currentSet)
-//                    let topRightTitle = titleForCorner(.topRight, currentSet: currentSet)
-//                    let bottomLeftTitle = titleForCorner(.bottomLeft, currentSet: currentSet)
-//                    let bottomRightTitle = titleForCorner(.bottomRight, currentSet: currentSet)
-//
-//                    let topTitle = titleForCorner(.top, currentSet: currentSet)
-//                    let leftTitle = titleForCorner(.left, currentSet: currentSet)
-//                    let rightTitle = titleForCorner(.right, currentSet: currentSet)
-//                    let bottomTitle = titleForCorner(.bottom, currentSet: currentSet)
-//
-//                    Menu("Corners") {
-//                            Button {
-//                                triggerCornerAction(for: .topLeft)
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "inset.filled.topleft.rectangle")
-//                                    Text(topLeftTitle)
-//                                }
-//                        }
-//
-//                            Button {
-//                                triggerCornerAction(for: .topRight)
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "inset.filled.topright.rectangle")
-//                                    Text(topRightTitle)
-//                                }
-//                            }
-//
+                if let currentSet {
+                    let topLeftTitle = titleForCorner(.topLeft, currentSet: currentSet)
+                    let topRightTitle = titleForCorner(.topRight, currentSet: currentSet)
+                    let bottomLeftTitle = titleForCorner(.bottomLeft, currentSet: currentSet)
+                    let bottomRightTitle = titleForCorner(.bottomRight, currentSet: currentSet)
 
-//                            Button {
-//                                triggerCornerAction(for: .bottomLeft)
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "inset.filled.bottomleft.rectangle")
-//                                    Text(bottomLeftTitle)
-//                                }
-//                            }
+                    let topTitle = titleForCorner(.top, currentSet: currentSet)
+                    let leftTitle = titleForCorner(.left, currentSet: currentSet)
+                    let rightTitle = titleForCorner(.right, currentSet: currentSet)
+                    let bottomTitle = titleForCorner(.bottom, currentSet: currentSet)
 
-//
+                    Menu("Corners") {
+                        Button {
+                            triggerCornerAction(for: .topLeft, actionSet: currentSet)
+                        } label: {
+                            HStack {
+                                Image(systemName: "inset.filled.topleft.rectangle")
+                                Text(topLeftTitle)
+                            }
+                        }
 
-//                            Button {
-//                                triggerCornerAction(for: .bottomRight)
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "inset.filled.bottomright.rectangle")
-//                                    Text(bottomRightTitle)
-//                                }
-//                            }
+                        Button {
+                            triggerCornerAction(for: .topRight, actionSet: currentSet)
+                        } label: {
+                            HStack {
+                                Image(systemName: "inset.filled.topright.rectangle")
+                                Text(topRightTitle)
+                            }
+                        }
 
-//                    }
-//
-//                    Menu("Zones") {
+                        Button {
+                            triggerCornerAction(for: .bottomLeft, actionSet: currentSet)
+                        } label: {
+                            HStack {
+                                Image(systemName: "inset.filled.bottomleft.rectangle")
+                                Text(bottomLeftTitle)
+                            }
+                        }
 
-//                            Button {
-//                                triggerCornerAction(for: .top)
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "rectangle.topthird.inset.filled")
-//                                    Text(topTitle)
-//                                }
-//                            }
+                        Button {
+                            triggerCornerAction(for: .bottomRight, actionSet: currentSet)
+                        } label: {
+                            HStack {
+                                Image(systemName: "inset.filled.bottomright.rectangle")
+                                Text(bottomRightTitle)
+                            }
+                        }
+                    }
 
-//
+                    Menu("Zones") {
+                        Button {
+                            triggerCornerAction(for: .top, actionSet: currentSet)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.topthird.inset.filled")
+                                Text(topTitle)
+                            }
+                        }
 
-//                            Button {
-//                                triggerCornerAction(for: .left)
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "rectangle.leadingthird.inset.filled")
-//                                    Text(leftTitle)
-//                                }
-//                            }
+                        Button {
+                            triggerCornerAction(for: .left, actionSet: currentSet)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.leadingthird.inset.filled")
+                                Text(leftTitle)
+                            }
+                        }
 
-//
+                        Button {
+                            triggerCornerAction(for: .right, actionSet: currentSet)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.trailingthird.inset.filled")
+                                Text(rightTitle)
+                            }
+                        }
 
-//                            Button {
-//                                triggerCornerAction(for: .right)
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "rectangle.trailingthird.inset.filled")
-//                                    Text(rightTitle)
-//                                }
-//                            }
+                        Button {
+                            triggerCornerAction(for: .bottom, actionSet: currentSet)
+                        } label: {
+                            HStack {
+                                Image(systemName: "rectangle.bottomthird.inset.filled")
+                                Text(bottomTitle)
+                            }
+                        }
+                    }
 
-//
+                    Menu("Favorites") {
+                        if favoriteActions.isEmpty {
+                            Text("No Actions Favorited")
+                                .foregroundColor(.secondary)
+                                .padding(.vertical, 8)
+                        } else {
+                            let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
 
-//                            Button {
-//                                triggerCornerAction(for: .bottom)
-//                            } label: {
-//                                HStack {
-//                                    Image(systemName: "rectangle.bottomthird.inset.filled")
-//                                    Text(bottomTitle)
-//                                }
-//                        }
-//                    }
-//
-//                    Menu("Favorites") {
-//                        if favoriteActions.isEmpty {
-//                            Text("No Actions Favorited")
-//                                .foregroundColor(.secondary)
-//                                .padding(.vertical, 8)
-//                        } else {
-//                            let sortedActions = favoriteActions.values.sorted { $0.id < $1.id }
-//
-//                            ForEach(sortedActions, id: \.id) { action in
-//                                Button {
-//                                    action.perform(nil)
-//                                } label: {
-//                                    HStack {
-//                                        Image(systemName: action.iconName)
-//                                        Text(action.title)
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//
-//                    Divider()
-//
-//                    Button("Refresh") {
-//                        refreshID = UUID()
-//                    }
-//                    .keyboardShortcut("r")
-//
-//                    Button("Preferences") {
-//                        NSApp.setActivationPolicy(.regular)
-//                        NSApp.activate(ignoringOtherApps: true)
-//
-//                        selectedTab = .settings
-//                    }
-//                    .keyboardShortcut(",")
-//
-//                    Button("Check for Updates") {
-//                        updateManager.getUpdateData(manualCheck: true)
-//                    }
-//                    .keyboardShortcut("u")
-//
-//                    Button("Quit") {
-//                        NSApplication.shared.terminate(nil)
-//                    }
-//                    .keyboardShortcut("q")
-//                }
+                            ForEach(sortedActions, id: \.id) { action in
+                                Button {
+                                    action.perform(nil)
+                                } label: {
+                                    HStack {
+                                        Image(systemName: action.iconName)
+                                        Text(action.title)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    Divider()
+
+                    Button("Refresh") {
+                        refreshID = UUID()
+                    }
+                    .keyboardShortcut("r")
+
+                    Button("Preferences") {
+                        NSApp.setActivationPolicy(.regular)
+                        NSApp.activate(ignoringOtherApps: true)
+
+                        selectedTab = .settings
+                    }
+                    .keyboardShortcut(",")
+
+                    Button("Check for Updates") {
+                        updateManager.getUpdateData(manualCheck: true)
+                    }
+                    .keyboardShortcut("u")
+
+                    Button("Quit") {
+                        NSApplication.shared.terminate(nil)
+                    }
+                    .keyboardShortcut("q")
+                }
             }
             .id(refreshID)
         }
