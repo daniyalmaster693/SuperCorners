@@ -29,10 +29,6 @@ struct SuperCornersApp: App {
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
 
-    // Menubar Variables
-
-    @State private var refreshID = UUID()
-
     // Request Accessibility Permission
 
     init() {
@@ -82,10 +78,9 @@ struct SuperCornersApp: App {
         }
 
         MenuBarExtra("Menu", systemImage: "rectangle.3.group", isInserted: $showMenuBarExtra) {
-            let currentSet = ActionSetManager.shared.findActionSets(
+            let currentSet = actionSetManager.findActionSets(
                 bundleID: NSWorkspace.shared.frontmostApplication?.bundleIdentifier
-            )
-            .first
+            ).first
 
             VStack {
                 if let currentSet {
@@ -198,11 +193,6 @@ struct SuperCornersApp: App {
 
                     Divider()
 
-                    Button("Refresh") {
-                        refreshID = UUID()
-                    }
-                    .keyboardShortcut("r")
-
                     Button("Preferences") {
                         NSApp.setActivationPolicy(.regular)
                         NSApp.activate(ignoringOtherApps: true)
@@ -222,7 +212,6 @@ struct SuperCornersApp: App {
                     .keyboardShortcut("q")
                 }
             }
-            .id(refreshID)
         }
 
         .commands {
