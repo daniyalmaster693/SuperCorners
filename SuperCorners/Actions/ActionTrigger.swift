@@ -61,7 +61,7 @@ func triggerCornerAction(for corner: CornerPosition.Corner) {
 
     // Check for an app specfic set otherwise fallback to global set
 
-    guard let actionSet = ActionSetManager.shared.findActionSet(bundleID: bundleID) else {
+    guard let actionSet = ActionSetManager.shared.findActionSets(bundleID: bundleID) else {
         return
     }
 

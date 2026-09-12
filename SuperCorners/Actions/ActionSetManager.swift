@@ -151,17 +151,19 @@ class ActionSetManager: ObservableObject {
         }
     }
 
-    func findActionSet(bundleID: String?) -> ActionSet? {
+    func findActionSets(bundleID: String?) -> [ActionSet] {
         if let bundleID {
-            if let actionSet = actionSets.first(where: {
+            let appSets = actionSets.filter {
                 $0.targetBundleID?.caseInsensitiveCompare(bundleID) == .orderedSame
-            }) {
-                return actionSet
+            }
+
+            if !appSets.isEmpty {
+                return appSets
             }
         }
 
-        return actionSets.first(where: {
+        return actionSets.filter {
             $0.targetBundleID == nil
-        })
+        }
     }
 }
