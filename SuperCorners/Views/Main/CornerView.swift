@@ -19,8 +19,9 @@ struct CornerView: View {
     // Action Set Info
 
     @ObservedObject private var actionSetManager = ActionSetManager.shared
-
     @AppStorage("selectedActionSet") private var selectedActionSet = "global"
+
+    @State private var showActionSetCreator = false
     @State private var showActionSetEditor = false
 
     // Corner Variables
@@ -197,11 +198,23 @@ struct CornerView: View {
 
             ToolbarItem(placement: .automatic) {
                 Button(action: {
+                    showActionSetCreator = true
+                }) {
+                    Image(systemName: "plus")
+                }
+                .help("Create an Action Set")
+                .sheet(isPresented: $showActionSetCreator) {
+                    ActionSetCreator()
+                }
+            }
+
+            ToolbarItem(placement: .automatic) {
+                Button(action: {
                     showActionSetEditor = true
                 }) {
                     Image(systemName: "slider.horizontal.3")
                 }
-                .help("Edit Action Sets")
+                .help("Edit an Action Set")
                 .sheet(isPresented: $showActionSetEditor) {
                     ActionSetEditor()
                 }
