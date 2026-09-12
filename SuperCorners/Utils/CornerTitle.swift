@@ -27,8 +27,18 @@ func titleForCorner(_ corner: CornerPosition.Corner, currentSet: ActionSet) -> S
         }
 
     case "openWebsite":
-        if let input, let url = URL(string: input), let host = url.host {
-            return host.prefix(1).uppercased() + host.dropFirst()
+        if let input,
+           let url = URL(string: input)
+        {
+            if url.scheme == "http" || url.scheme == "https" {
+                return url.host ?? input
+            }
+
+            if input.hasPrefix("raycast://extensions") {
+                return url.lastPathComponent
+            }
+
+            return url.scheme?.capitalized ?? input
         }
 
     case "runShortcut":
