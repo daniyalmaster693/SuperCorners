@@ -43,6 +43,36 @@ final class VisualOverlayManager {
 
         self.window = window
     }
+
+    func show(in rect: CGRect) {
+        if window == nil {
+            createWindow()
+        }
+
+        window?.setFrame(rect, display: true)
+        window?.orderFrontRegardless()
+
+        hideTask?.cancel()
+
+        let duration = UserDefaults.standard.object(forKey: "visualDismissTimer") as? Double ?? 3.0
+
+        hideTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(duration))
+
+            guard !Task.isCancelled else {
+                return
+            }
+
+            self?.hide()
+        }
+    }
+
+    func hide() {
+        hideTask?.cancel()
+        hideTask = nil
+
+        window?.orderOut(nil)
+    }
 }
 
 struct VisualOverlay: View {
