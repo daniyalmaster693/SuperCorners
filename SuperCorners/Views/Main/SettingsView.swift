@@ -32,7 +32,6 @@ struct SettingsView: View {
     // Feedback Settings
 
     @AppStorage("showVisualFeedback") private var showVisualFeedback = true
-    @AppStorage("persistentVisualFeedback") var persistentVisualFeedback = false
     @AppStorage("visualDismissTimer") private var visualDismissTimer: Double = 3.0
 
     @AppStorage("showToastNotifications") private var showToastNotification = false
@@ -204,15 +203,6 @@ struct SettingsView: View {
                             Text("Show Visual Overlay")
                         }
                     }
-
-                    Toggle(isOn: self.$persistentVisualFeedback) {
-                        HStack {
-                            Image(systemName: "pin")
-                                .foregroundColor(.primary)
-                            Text("Keep Overlay Visible")
-                        }
-                    }
-                    .disabled(!self.showVisualFeedback)
 
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
