@@ -80,7 +80,7 @@ class ActionSetManager: ObservableObject {
 
     // Set Management
 
-    func createSet(name: String, targetBundleID: String) {
+    func createSet(name: String, targetBundleID: String? = nil) {
         let id = UUID().uuidString
 
         let newSet = ActionSet(
