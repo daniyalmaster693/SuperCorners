@@ -14,7 +14,7 @@ struct ActionSetCreator: View {
 
     @State private var actionSetType: ActionSetType = .global
 
-    @State private var selectedAppName: String?
+    @State private var actionSetName = ""
     @State private var selectedBundleID: String?
 
     enum ActionSetType: String, CaseIterable {
@@ -70,7 +70,6 @@ struct ActionSetCreator: View {
                                     panel.prompt = "Choose"
 
                                     if panel.runModal() == .OK, let url = panel.url {
-                                        selectedAppName = url.deletingPathExtension().lastPathComponent
                                         selectedBundleID = Bundle(url: url)?.bundleIdentifier
                                     }
                                 }) {
@@ -93,7 +92,6 @@ struct ActionSetCreator: View {
                                     panel.prompt = "Choose"
 
                                     if panel.runModal() == .OK, let url = panel.url {
-                                        selectedAppName = url.deletingPathExtension().lastPathComponent
                                         selectedBundleID = Bundle(url: url)?.bundleIdentifier
                                     }
                                 }) {
@@ -106,6 +104,17 @@ struct ActionSetCreator: View {
                                 .padding(.trailing, 4)
                             }
                         }
+                    }
+
+                    HStack {
+                        Text("Action Set Name")
+                            .padding(.leading, 5)
+
+                        Spacer()
+
+                        TextField("", text: $actionSetName)
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 200)
                     }
                 }
             }
@@ -126,13 +135,13 @@ struct ActionSetCreator: View {
                 Button("Create Set") {
                     if actionSetType == .global {
                         actionSetManager.createSet(
-                            name: "Global Actions",
-                            targetBundleID: nil
+                            name: actionSetName,
+                            targetBundleID: nil
                         )
                         dismiss()
-                    } else if let selectedAppName, let selectedBundleID {
+                    } else if let selectedBundleID {
                         actionSetManager.createSet(
-                            name: "\(selectedAppName) Actions",
+                            name: actionSetName,
                             targetBundleID: selectedBundleID
                         )
                         dismiss()
