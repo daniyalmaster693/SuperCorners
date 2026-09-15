@@ -118,7 +118,7 @@ class ActionSetManager: ObservableObject {
 
     func deleteSet(id: String) {
         actionSets.removeAll { set in
-            set.targetBundleID != nil && set.id == id
+            set.id != "global" && set.id == id
         }
 
         saveConfig()

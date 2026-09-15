@@ -200,7 +200,7 @@ struct ActionSetCreator: View {
                             targetBundleID: selectedBundleID,
                             activationMethod: activationMethod,
                             activationTrigger: activationTrigger,
-                            modifierKey: modifierKey
+                            modifierKey: modifierKey
                         )
 
                         dismiss()

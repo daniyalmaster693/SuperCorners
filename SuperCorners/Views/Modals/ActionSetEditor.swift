@@ -42,7 +42,7 @@ struct ActionSetEditor: View {
                                     
                                     Spacer()
                                     
-                                    if set.targetBundleID != nil {
+                                    if set.id != "global" {
                                         if #available(macOS 26.0, *) {
                                             Button(action: {
                                                 actionSetManager.deleteSet(id: set.id)
