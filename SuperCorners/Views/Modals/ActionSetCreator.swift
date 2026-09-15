@@ -105,7 +105,9 @@ struct ActionSetCreator: View {
                             }
                         }
                     }
+                }
 
+                Section("Customize your Action Set") {
                     HStack {
                         Text("Action Set Name")
                             .padding(.leading, 5)
@@ -120,10 +122,10 @@ struct ActionSetCreator: View {
             }
             .formStyle(.grouped)
             .padding(.horizontal, -12)
-            .frame(maxWidth: 470, maxHeight: 240, alignment: .center)
+            .frame(maxWidth: 470, minHeight: 240, alignment: .center)
             .padding(.top, 7)
 
-            Divider().frame(maxWidth: 470)
+            Divider().frame(maxWidth: 470)
 
             HStack {
                 Button("Cancel") {
@@ -136,7 +138,7 @@ struct ActionSetCreator: View {
                     if actionSetType == .global {
                         actionSetManager.createSet(
                             name: actionSetName,
-                            targetBundleID: nil
+                            targetBundleID: nil
                         )
                         dismiss()
                     } else if let selectedBundleID {
@@ -147,6 +149,7 @@ struct ActionSetCreator: View {
                         dismiss()
                     }
                 }
+                .disabled(actionSetName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 .keyboardShortcut(.defaultAction)
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
