@@ -56,13 +56,22 @@ struct ActionSetCreator: View {
 
                     if actionSetType == .application {
                         HStack {
-                            Image(systemName: "plus.app")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.secondary)
+                            if selectedBundleID == nil {
+                                Image(systemName: "globe")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundStyle(.secondary)
+                                    .padding(.leading, 5)
+                                    .frame(width: 22, height: 22)
+                            } else if let icon = applicationIcon(for: selectedBundleID) {
+                                Image(nsImage: icon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(12)
+                                    .frame(width: 25, height: 25)
+                            }
 
-                            Text("Select App")
+                            Text(selectedAppName)
                                 .padding(.leading, 5)
 
                             Spacer()
@@ -117,31 +126,7 @@ struct ActionSetCreator: View {
                     }
                 }
 
-                if actionSetType == .application {
-                    Section("Customize your Action Set") {
-                        HStack {
-                            if selectedBundleID == nil {
-                                Image(systemName: "globe")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundStyle(.secondary)
-                                    .padding(.leading, 5)
-                                    .frame(width: 22, height: 22)
-                            } else if let icon = applicationIcon(for: selectedBundleID) {
-                                Image(nsImage: icon)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .cornerRadius(12)
-                                    .frame(width: 25, height: 25)
-                            }
-
-                            Text(selectedAppName)
-                                .padding(.leading, 5)
-                        }
-                    }
-                }
-
-                Section {
+                Section("Customize your Action Set") {
                     HStack {
                         Text("Action Set Name")
                             .padding(.leading, 5)
