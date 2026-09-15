@@ -14,6 +14,9 @@ struct ActionSetCreator: View {
 
     @State private var actionSetType: ActionSetType = .global
 
+    @State private var selectedAppName: String?
+    @State private var selectedBundleID: String?
+
     enum ActionSetType: String, CaseIterable {
         case global = "Global"
         case application = "Application"
@@ -67,15 +70,8 @@ struct ActionSetCreator: View {
                                     panel.prompt = "Choose"
 
                                     if panel.runModal() == .OK, let url = panel.url {
-                                        let appName = url.deletingPathExtension().lastPathComponent
-                                        let bundleID = Bundle(url: url)?.bundleIdentifier
-
-                                        if let bundleID {
-                                            actionSetManager.createSet(
-                                                name: "\(appName) Actions",
-                                                targetBundleID: bundleID
-                                            )
-                                        }
+                                        selectedAppName = url.deletingPathExtension().lastPathComponent
+                                        selectedBundleID = Bundle(url: url)?.bundleIdentifier
                                     }
                                 }) {
                                     HStack {
@@ -97,15 +93,8 @@ struct ActionSetCreator: View {
                                     panel.prompt = "Choose"
 
                                     if panel.runModal() == .OK, let url = panel.url {
-                                        let appName = url.deletingPathExtension().lastPathComponent
-                                        let bundleID = Bundle(url: url)?.bundleIdentifier
-
-                                        if let bundleID {
-                                            actionSetManager.createSet(
-                                                name: "\(appName) Actions",
-                                                targetBundleID: bundleID
-                                            )
-                                        }
+                                        selectedAppName = url.deletingPathExtension().lastPathComponent
+                                        selectedBundleID = Bundle(url: url)?.bundleIdentifier
                                     }
                                 }) {
                                     HStack {
@@ -122,18 +111,41 @@ struct ActionSetCreator: View {
             }
             .formStyle(.grouped)
             .padding(.horizontal, -12)
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(maxWidth: 470, maxHeight: 240, alignment: .center)
             .padding(.top, 7)
 
-            Divider()
+            Divider().frame(maxWidth: 470)
 
-            Button("Done") {
-                dismiss()
+            HStack {
+                Button("Cancel") {
+                    dismiss()
+                }
+                .keyboardShortcut(.cancelAction)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Button("Create Set") {
+                    if actionSetType == .global {
+                        actionSetManager.createSet(
+                            name: "Global Actions",
+                            targetBundleID: nil
+                        )
+                        dismiss()
+                    } else if let selectedAppName, let selectedBundleID {
+                        actionSetManager.createSet(
+                            name: "\(selectedAppName) Actions",
+                            targetBundleID: selectedBundleID
+                        )
+                        dismiss()
+                    }
+                }
+                .keyboardShortcut(.defaultAction)
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .keyboardShortcut(.defaultAction)
-            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding(.horizontal, 3)
+            .frame(maxWidth: 470)
         }
         .padding()
         .padding(.top, 7)
+        .frame(minWidth: 470, minHeight: 240)
     }
 }
