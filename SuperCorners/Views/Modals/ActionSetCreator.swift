@@ -148,7 +148,6 @@ struct ActionSetCreator: View {
 
                         TextField("", text: $actionSetName)
                             .textFieldStyle(.roundedBorder)
-                            .frame(width: 200)
                     }
 
                     HStack {
