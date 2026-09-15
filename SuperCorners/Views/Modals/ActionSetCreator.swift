@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import KeyboardShortcuts
 import SwiftUI
 
 struct ActionSetCreator: View {
@@ -14,7 +15,12 @@ struct ActionSetCreator: View {
 
     @State private var actionSetType: ActionSetType = .global
 
+    @State private var activationMethod: ActivationMethod = .none
+    @State private var activationTrigger: ActivationTrigger = .hover
+    @State private var modifierKey: ModifierKey = .command
+
     @State private var actionSetName = ""
+    @State private var actionSetID = UUID().uuidString
     @State private var selectedBundleID: String?
 
     enum ActionSetType: String, CaseIterable {
@@ -118,6 +124,47 @@ struct ActionSetCreator: View {
                             .textFieldStyle(.roundedBorder)
                             .frame(width: 200)
                     }
+
+                    HStack {
+                        Picker("", selection: $activationMethod) {
+                            Text("None")
+                                .tag(ActivationMethod.none)
+
+                            Text("Modifier")
+                                .tag(ActivationMethod.modifier)
+
+                            Text("Keyboard Shortcut")
+                                .tag(ActivationMethod.keyboardShortcut)
+                        }
+                        .labelsHidden()
+
+                        if activationMethod == .modifier {
+                            Picker("", selection: $modifierKey) {
+                                ForEach(ModifierKey.allCases) { modifier in
+                                    Text(modifier.rawValue)
+                                        .tag(modifier)
+                                }
+                            }
+                            .labelsHidden()
+                        }
+
+                        if activationMethod == .keyboardShortcut {
+                            KeyboardShortcuts.Recorder(
+                                "",
+                                name: KeyboardShortcuts.Name("actionSet_\(actionSetID)")
+                            )
+                        }
+
+                        Picker("", selection: $activationTrigger) {
+                            Text("Hover")
+                                .tag(ActivationTrigger.hover)
+
+                            Text("Click")
+                                .tag(ActivationTrigger.click)
+                        }
+
+                        .labelsHidden()
+                    }
                 }
             }
             .formStyle(.grouped)
@@ -125,7 +172,7 @@ struct ActionSetCreator: View {
             .frame(maxWidth: 470, minHeight: 240, alignment: .center)
             .padding(.top, 7)
 
-            Divider().frame(maxWidth: 470)
+            Divider().frame(maxWidth: 470)
 
             HStack {
                 Button("Cancel") {
@@ -137,15 +184,25 @@ struct ActionSetCreator: View {
                 Button("Create Set") {
                     if actionSetType == .global {
                         actionSetManager.createSet(
+                            id: actionSetID,
                             name: actionSetName,
-                            targetBundleID: nil
+                            targetBundleID: nil,
+                            activationMethod: activationMethod,
+                            activationTrigger: activationTrigger,
+                            modifierKey: modifierKey
                         )
+
                         dismiss()
                     } else if let selectedBundleID {
                         actionSetManager.createSet(
+                            id: actionSetID,
                             name: actionSetName,
-                            targetBundleID: selectedBundleID
+                            targetBundleID: selectedBundleID,
+                            activationMethod: activationMethod,
+                            activationTrigger: activationTrigger,
+                            modifierKey: modifierKey
                         )
+
                         dismiss()
                     }
                 }

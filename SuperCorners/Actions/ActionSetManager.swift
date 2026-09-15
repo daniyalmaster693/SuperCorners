@@ -80,9 +80,14 @@ class ActionSetManager: ObservableObject {
 
     // Set Management
 
-    func createSet(name: String, targetBundleID: String? = nil) {
-        let id = UUID().uuidString
-
+    func createSet(
+        id: String,
+        name: String,
+        targetBundleID: String? = nil,
+        activationMethod: ActivationMethod = .none,
+        activationTrigger: ActivationTrigger = .hover,
+        modifierKey: ModifierKey? = nil
+    ) {
         let newSet = ActionSet(
             id: id,
             name: name,
@@ -99,7 +104,12 @@ class ActionSetManager: ObservableObject {
                 right: ActionAssignment(actionID: "doNothing", input: nil),
                 bottom: ActionAssignment(actionID: "doNothing", input: nil)
             ),
-            activation: SetActivation(method: .none, trigger: .hover, keyboardShortcut: "actionSet_\(id)")
+            activation: SetActivation(
+                method: activationMethod,
+                trigger: activationTrigger,
+                modifierKey: modifierKey,
+                keyboardShortcut: "actionSet_\(id)"
+            )
         )
 
         actionSets.append(newSet)
