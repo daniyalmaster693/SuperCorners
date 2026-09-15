@@ -117,8 +117,8 @@ struct ActionSetCreator: View {
                     }
                 }
 
-                Section("Customize your Action Set") {
-                    if actionSetType == .application {
+                if actionSetType == .application {
+                    Section("Customize your Action Set") {
                         HStack {
                             if selectedBundleID == nil {
                                 Image(systemName: "globe")
@@ -139,7 +139,9 @@ struct ActionSetCreator: View {
                                 .padding(.leading, 5)
                         }
                     }
+                }
 
+                Section {
                     HStack {
                         Text("Action Set Name")
                             .padding(.leading, 5)
