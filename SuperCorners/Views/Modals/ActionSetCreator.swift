@@ -15,13 +15,15 @@ struct ActionSetCreator: View {
 
     @State private var actionSetType: ActionSetType = .global
 
-    @State private var activationMethod: ActivationMethod = .none
-    @State private var activationTrigger: ActivationTrigger = .hover
-    @State private var modifierKey: ModifierKey = .command
+    @State private var selectedAppName = "Choose Application"
+    @State private var selectedBundleID: String?
 
     @State private var actionSetName = ""
     @State private var actionSetID = UUID().uuidString
-    @State private var selectedBundleID: String?
+
+    @State private var activationMethod: ActivationMethod = .none
+    @State private var activationTrigger: ActivationTrigger = .hover
+    @State private var modifierKey: ModifierKey = .command
 
     enum ActionSetType: String, CaseIterable {
         case global = "Global"
@@ -76,6 +78,7 @@ struct ActionSetCreator: View {
                                     panel.prompt = "Choose"
 
                                     if panel.runModal() == .OK, let url = panel.url {
+                                        selectedAppName = url.deletingPathExtension().lastPathComponent
                                         selectedBundleID = Bundle(url: url)?.bundleIdentifier
                                     }
                                 }) {
@@ -98,6 +101,7 @@ struct ActionSetCreator: View {
                                     panel.prompt = "Choose"
 
                                     if panel.runModal() == .OK, let url = panel.url {
+                                        selectedAppName = url.deletingPathExtension().lastPathComponent
                                         selectedBundleID = Bundle(url: url)?.bundleIdentifier
                                     }
                                 }) {
@@ -114,6 +118,28 @@ struct ActionSetCreator: View {
                 }
 
                 Section("Customize your Action Set") {
+                    if actionSetType == .application {
+                        HStack {
+                            if selectedBundleID == nil {
+                                Image(systemName: "globe")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundStyle(.secondary)
+                                    .padding(.leading, 5)
+                                    .frame(width: 22, height: 22)
+                            } else if let icon = applicationIcon(for: selectedBundleID) {
+                                Image(nsImage: icon)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(12)
+                                    .frame(width: 25, height: 25)
+                            }
+
+                            Text(selectedAppName)
+                                .padding(.leading, 5)
+                        }
+                    }
+
                     HStack {
                         Text("Action Set Name")
                             .padding(.leading, 5)
@@ -216,5 +242,19 @@ struct ActionSetCreator: View {
         .padding()
         .padding(.top, 7)
         .frame(minWidth: 470, minHeight: 240)
+    }
+
+    private func applicationIcon(for bundleID: String?) -> NSImage? {
+        guard let bundleID else {
+            return nil
+        }
+
+        guard let appURL = NSWorkspace.shared.urlForApplication(
+            withBundleIdentifier: bundleID
+        ) else {
+            return nil
+        }
+
+        return NSWorkspace.shared.icon(forFile: appURL.path)
     }
 }
