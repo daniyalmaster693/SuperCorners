@@ -22,12 +22,14 @@
 ## Features
 
 - **Additional Zones** - Trigger actions when moving your mouse the middle of any screen edge.
+- **Action Sets** - Configure your actions on a per app basis for maximum control
 - **Launch Apps** - Launch apps directly from corners and zones.
 - **Run Shortcuts** - Run shortcuts directly from corners and zones.
 - **Open Files and Folders** - Open Files and Folders directly from corners and zones.
 - **Run Apple Scripts** - Run apple scripts directly from corners and zones.
 - **Open Websites** - Open Websites directly from corners and zones.
 - **In App Actions** - Trigger in app actions directly from corners and zones.
+- **Trigger Hotkeys** - Simulate hotkeys directly from corners and zones.
 - **System Commands** - Run system commands directly from your screen corners and zones.
 - **Tools** - Access useful tools from your screen corners and zones.
 - **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
@@ -81,10 +83,10 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [x] ~~Favorites Feature~~
 - [x] ~~Seperate trigger sensitivity for corners and zones~~
 - [x] ~~Simulating keyboard shortcuts~~
-- [ ] Height based sensitivity for zones
-- [ ] Visual overlay for corners and zones
-- [ ] Template action modal suggested actions
-- [ ] Allow assigning actions per app
+- [x] ~~Height based sensitivity for zones~~
+- [x] ~~Visual overlay for corners and zones~~
+- [x] ~~Template action modal suggested actions~~
+- [x] ~~Allow assigning actions per app~~
 - [ ] Allow assigning actions per focus mode
 - [ ] Allow assigning actions per display
 - [ ] Secondary actions for triggered actions
