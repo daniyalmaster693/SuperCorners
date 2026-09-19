@@ -16,7 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         let hasShownTour = UserDefaults.standard.bool(forKey: "hasShownTour")
 
-        if !hasShownTour {
+        if hasShownTour {
             NSApp.setActivationPolicy(.regular)
             NSApp.activate(ignoringOtherApps: true)
 
@@ -25,11 +25,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     TourPage(imageName: "tour-welcome", title: "Welcome to SuperCorners", description: "Supercharge your Mac's Corners"),
                     TourPage(imageName: "tour-zones", title: "More Ways to Trigger", description: "Go beyond the corners with 4 additional zones at each edge of your display."),
                     TourPage(imageName: "tour-actions", title: "Powerful Actions", description: "Trigger over 50 different actions to enable powerful workflows."),
-                    TourPage(imageName: "tour-activation", title: "Customizable Activation", description: "Optionally choose between modifier keys, keyboard shortcuts, hovering or clicking."),
+                    TourPage(imageName: "tour-sets", title: "Action Sets", description: "Set actions on a per app basis for maximum control."),
                     TourPage(imageName: "tour-accessibility", title: "Enable Accessibility Permissions", description: "Give SuperCorners accessibility permission for the best experience."),
                     TourPage(imageName: "tour-default", title: "Disable Default Hot Corners", description: "Disable the built in hot corners feature for the best experience."),
                 ],
-                width: 900,
+                width: 800,
                 continueButtonTitle: "Continue",
                 finishButtonTitle: "Get Started",
                 onFinish: {
