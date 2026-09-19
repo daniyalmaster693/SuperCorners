@@ -23,11 +23,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             tour.present(
                 pages: [
                     TourPage(imageName: "tour-welcome", title: "Welcome to SuperCorners", description: "Supercharge your Mac's Corners"),
-                    TourPage(imageName: "tour-zones", title: "More Ways to Trigger", description: "Go beyond the corners with 4 additional zones at each edge of your display."),
-                    TourPage(imageName: "tour-actions", title: "Powerful Actions", description: "Trigger over 50 different actions to enable powerful workflows."),
-                    TourPage(imageName: "tour-sets", title: "Action Sets", description: "Set actions on a per app basis for maximum control."),
-                    TourPage(imageName: "tour-accessibility", title: "Enable Accessibility Permissions", description: "Give SuperCorners accessibility permission for the best experience."),
-                    TourPage(imageName: "tour-default", title: "Disable Default Hot Corners", description: "Disable the built in hot corners feature for the best experience."),
+                    TourPage(imageName: "tour-zones", title: "More Ways to Trigger", description: "Go beyond the corners with 4 additional zones at each display edge."),
+                    TourPage(imageName: "tour-actions", title: "Powerful Actions", description: "Trigger over 70 different actions to enable powerful workflows."),
+                    TourPage(imageName: "tour-sets", title: "Custom Action Sets", description: "Set actions per app with different activation methods."),
+                    TourPage(imageName: "tour-accessibility", title: "Enable Accessibility Permissions", description: "Enable accessiblty permission to allow SuperCorners to perform system actions."),
+                    TourPage(imageName: "tour-default", title: "Disable Default Hot Corners", description: "Disable macOS Hot Corners to prevent conflicts with SuperCorners."),
                 ],
                 width: 800,
                 continueButtonTitle: "Continue",
