@@ -24,17 +24,16 @@
 - **Additional Zones** - Trigger actions when moving your mouse the middle of any screen edge.
 - **Action Sets** - Configure your actions on a per app basis for maximum control
 - **Launch Apps** - Launch apps directly from corners and zones.
-- **Run Shortcuts** - Run shortcuts directly from corners and zones.
-- **Open Files and Folders** - Open Files and Folders directly from corners and zones.
-- **Run Apple Scripts** - Run apple scripts directly from corners and zones.
-- **Open Websites** - Open Websites directly from corners and zones.
-- **In App Actions** - Trigger in app actions directly from corners and zones.
 - **Trigger Hotkeys** - Simulate hotkeys directly from corners and zones.
 - **System Commands** - Run system commands directly from your screen corners and zones.
+- **Run Shortcuts** - Run shortcuts directly from corners and zones.
+- **In App Actions** - Trigger in app actions directly from corners and zones.
+- **Open Websites** - Open Websites directly from corners and zones.
+- **Open Files and Folders** - Open Files and Folders directly from corners and zones.
+- **Run Apple Scripts** - Run apple scripts directly from corners and zones.
 - **Tools** - Access useful tools from your screen corners and zones.
-- **Menubar Component** - Access your corner and zone actions right from the menubar for instant control.
-- **Visual Feedback** - Optionally choose to enable subtle toast notifications which appear briefly as visual feedback for actions.
-- **Configurable** - Disable any corner or zone and control app behaviors from the settings tab.
+- **Visual Feedback** - Optionally choose to enable subtle toast notifications or a visual overlay when triggering corners or zones.
+- **Configurable** - Configure app behaviors like activation methods, sensitivity, delay and more.
 - **Lightweight & Native** - Built with Swift and SwiftUI for a seamless experience that feels well integrated with macOS.
 
 ...and more...
