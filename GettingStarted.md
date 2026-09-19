@@ -28,6 +28,8 @@
 - You can choose between creating a global action set or for a specific app.
 - You can name your set, and configure it's activation behaviors. This is seperate for each sets, allowing you to create multiple global or per app sets that use different activation methods.
 
+**(Note: If your are updating from an older version before v2.0.0, your action configuration will not be carried over.)**
+
 <img src="/Assets/Screenshots/SuperCorners-8.png" width="100%" alt="Creating Action Sets"/><br/>
 
 ### 5. Editing Action Sets
