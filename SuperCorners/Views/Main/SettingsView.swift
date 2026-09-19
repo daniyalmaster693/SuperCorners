@@ -130,9 +130,26 @@ struct SettingsView: View {
                         .buttonStyle(.bordered)
                     }
                 }
-                
+
                 Section {
-                    
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Label("SuperCorners Config", systemImage: "dot.circle.and.cursorarrow")
+                                .foregroundColor(.primary)
+
+                            Spacer()
+
+                            Button("Reveal in Finder") {
+                                ActionSetManager.shared.getConfigPath()
+                            }
+                        }
+
+                        Text("View and edit the JSON configuration file used to store your action sets and their settings.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.bottom, 10)
+                    }
                 }
             }
             .formStyle(.grouped)
