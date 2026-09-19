@@ -158,7 +158,15 @@ class ActivationManager {
                     return false
                 }
 
-                return modifierFlags.contains(requiredFlag)
+                let activeModifiers = modifierFlags.intersection([
+                    .command,
+                    .option,
+                    .control,
+                    .shift,
+                    .capsLock
+                ])
+
+                return activeModifiers == requiredFlag
 
             case .keyboardShortcut:
                 return activeKeyboardShortcut == activation.keyboardShortcut
