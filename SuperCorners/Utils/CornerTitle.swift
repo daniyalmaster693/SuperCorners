@@ -38,6 +38,10 @@ func titleForCorner(_ corner: CornerPosition.Corner, currentSet: ActionSet) -> S
                 return url.lastPathComponent
             }
 
+            if input.hasPrefix("tinycast://extensions") {
+                return url.lastPathComponent
+            }
+
             return url.scheme?.capitalized ?? input
         }
 
