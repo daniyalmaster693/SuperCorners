@@ -130,6 +130,10 @@ struct SettingsView: View {
                         .buttonStyle(.bordered)
                     }
                 }
+                
+                Section {
+                    
+                }
             }
             .formStyle(.grouped)
 

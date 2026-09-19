@@ -5,6 +5,7 @@
 //  Created by Daniyal Master on 2026-09-07.
 //
 
+import AppKit
 import Foundation
 
 class ActionSetManager: ObservableObject {
@@ -76,6 +77,16 @@ class ActionSetManager: ObservableObject {
         } catch {
             print("Failed to save config: \(error)")
         }
+    }
+
+    func getConfigPath() {
+        let fileManager = FileManager.default
+
+        if !fileManager.fileExists(atPath: configURL.path) {
+            return
+        }
+
+        NSWorkspace.shared.activateFileViewerSelecting([configURL])
     }
 
     // Set Management
