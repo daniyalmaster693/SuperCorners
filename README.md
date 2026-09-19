@@ -67,9 +67,9 @@ xattr -dr com.apple.quarantine /Applications/SuperCorners.app
 ## Usage
 
 1. Launch **SuperCorners**.
-2. Grant Necessary Permissions (**Accessibility permission must be enabled for the app to work correctly**).
+2. Grant Necessary Permissions (**Accessibility permission is required for certain system actions to function correctly**).
 3. Trigger corners and zones by moving your mouse to a corner or the middle of a screen edge. You can also optionally choose to require a modifier key or keyboard shortcut to prevent accidental activation.
-4. Additional behaviors can be configured in the settings tab, such as the sensitivity, an action delay, toast messages, sound effects, and more.
+4. Additional behaviors can be configured in the settings tab, such as the sensitivity, an action delay, toast messages, visual overlays, sound effects, and more.
 
 For more information visit the [Getting Started Guide](./GettingStarted.md)
 
