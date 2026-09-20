@@ -31,6 +31,7 @@ final class VisualOverlayManager {
         window.ignoresMouseEvents = true
 
         window.level = .statusBar
+        window.alphaValue = 0
 
         window.collectionBehavior = [
             .canJoinAllSpaces,
@@ -56,6 +57,11 @@ final class VisualOverlayManager {
         window?.setFrame(rect, display: true)
         window?.orderFrontRegardless()
 
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.2
+            window?.animator().alphaValue = 1
+        }
+
         hideTask?.cancel()
 
         let duration = UserDefaults.standard.object(forKey: "visualDismissTimer") as? Double ?? 3.0
@@ -75,7 +81,10 @@ final class VisualOverlayManager {
         hideTask?.cancel()
         hideTask = nil
 
-        window?.orderOut(nil)
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.2
+            window?.animator().alphaValue = 0
+        }
     }
 }
 
