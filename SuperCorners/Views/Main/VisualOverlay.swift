@@ -45,6 +45,10 @@ final class VisualOverlayManager {
     }
 
     func show(in rect: CGRect) {
+        guard UserDefaults.standard.bool(forKey: "showVisualFeedback") else {
+            return
+        }
+
         if window == nil {
             createWindow()
         }
