@@ -93,8 +93,10 @@ func getCornerMousePosition(actionSet: ActionSet) {
                 if corner != lastCorner {
                     lastCorner = corner
 
-                    Task { @MainActor in
-                        VisualOverlayManager.shared.show(in: hitZone)
+                    if actionSet.actionAssignment(for: corner).actionID != "doNothing" {
+                        Task { @MainActor in
+                            VisualOverlayManager.shared.show(in: hitZone)
+                        }
                     }
 
                     if delayTimer > 0.0 {
