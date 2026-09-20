@@ -42,6 +42,14 @@ func titleForCorner(_ corner: CornerPosition.Corner, currentSet: ActionSet) -> S
                 return url.lastPathComponent
             }
 
+            if input.hasPrefix("alfred://") {
+                return url.lastPathComponent
+            }
+
+            if input.hasPrefix("alfredpreferences://") {
+                return url.lastPathComponent
+            }
+
             return url.scheme?.capitalized ?? input
         }
 
