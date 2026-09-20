@@ -42,6 +42,7 @@ struct SettingsView: View {
         case green = "Green"
         case blue = "Blue"
         case purple = "Purple"
+        case pink = "Pink"
         case white = "White"
 
         var id: String { self.rawValue }

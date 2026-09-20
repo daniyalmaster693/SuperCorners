@@ -80,12 +80,37 @@ final class VisualOverlayManager {
 }
 
 struct VisualOverlay: View {
+    @AppStorage("visualOverlayColor") private var visualOverlayColor = "Red"
+
+    private var overlayColor: Color {
+        switch visualOverlayColor {
+        case "Red":
+            return .red
+        case "Orange":
+            return .orange
+        case "Yellow":
+            return .yellow
+        case "Green":
+            return .green
+        case "Blue":
+            return .blue
+        case "Purple":
+            return .purple
+        case "Pink":
+            return .pink
+        case "White":
+            return .white
+        default:
+            return .red
+        }
+    }
+
     var body: some View {
         Rectangle()
-            .fill(Color.red.opacity(0.3))
+            .fill(overlayColor.opacity(0.3))
             .overlay(
                 Rectangle()
-                    .stroke(Color.red, lineWidth: 2)
+                    .stroke(overlayColor, lineWidth: 2)
             )
     }
 }
