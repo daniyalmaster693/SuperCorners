@@ -2,14 +2,14 @@
 
 ### 1. Triggering Actions
 
-- Trigger actions by moving your mouse toward a screen corner or the middle of the any edge.
-- You can customize the activation methods and sensitivity in the Settings tab.
+- Trigger actions by moving your mouse toward a screen corner or the middle of any edge.
+- You can customize the trigger delay and sensitivity in the Settings tab. You can configure activation methods for each action set from the action set editor.
 
 <img src="/Assets/Screenshots/SuperCorners-1.png" width="100%" alt="Triggering Actions"/><br/>
 
 ### 2. Assigning Actions
 
-- To assign an action to a corner or zone, click the corresponding button in the either the Corner or Zone Tab in the main app. This will open the action picker.
+- To assign an action to a corner or zone, click the corresponding button in the Corner or Zone Tab. This will open the action picker.
 - To assign an action from the action picker, click on an action and then click the done button. Thats it!
 
 <img src="/Assets/Screenshots/SuperCorners-6.png" width="100%" alt="Assigning Actions"/><br/>
@@ -26,7 +26,7 @@
 
 - Actions sets can be created by clicking the plus button in the toolbar from the corner or zone tab.
 - You can choose between creating a global action set or for a specific app.
-- You can name your set, and configure it's activation behaviors. This is seperate for each sets, allowing you to create multiple global or per app sets that use different activation methods.
+- You can name your set, and configure it's activation behaviors. This is seperate for each set, allowing you to create multiple global or per app sets that use different activation methods.
 
 **(Note: If your are updating from an older version before v2.0.0, your action configuration will not be carried over.)**
 
