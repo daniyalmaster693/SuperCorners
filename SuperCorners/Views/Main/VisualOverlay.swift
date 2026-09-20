@@ -58,7 +58,8 @@ final class VisualOverlayManager {
         window?.orderFrontRegardless()
 
         NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.2
+            context.duration = 0.3
+            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
             window?.animator().alphaValue = 1
         }
 
@@ -82,7 +83,8 @@ final class VisualOverlayManager {
         hideTask = nil
 
         NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.2
+            context.duration = 0.3
+            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
             window?.animator().alphaValue = 0
         }
     }
