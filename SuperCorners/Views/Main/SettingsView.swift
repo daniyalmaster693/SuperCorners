@@ -33,6 +33,19 @@ struct SettingsView: View {
 
     @AppStorage("showVisualFeedback") private var showVisualFeedback = false
     @AppStorage("visualDismissTimer") private var visualDismissTimer: Double = 3.0
+    @AppStorage("visualOverlayColor") private var visualOverlayColor: OverlayColor = .red
+
+    enum OverlayColor: String, CaseIterable, Identifiable {
+        case red = "Red"
+        case orange = "Orange"
+        case yellow = "Yellow"
+        case green = "Green"
+        case blue = "Blue"
+        case purple = "Purple"
+        case white = "White"
+
+        var id: String { self.rawValue }
+    }
 
     @AppStorage("showToastNotifications") private var showToastNotification = false
     @AppStorage("dismissOnClick") private var dismissOnClick = true
@@ -234,6 +247,21 @@ struct SettingsView: View {
                             Slider(value: self.$visualDismissTimer, in: 3 ... 10.0, step: 0.5)
                                 .disabled(!self.showVisualFeedback)
                         }
+                    }
+
+                    HStack {
+                        Label("Overlay Color", systemImage: "eyedropper")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Picker("", selection: self.$visualOverlayColor) {
+                            ForEach(OverlayColor.allCases) { color in
+                                Text(color.rawValue)
+                                    .tag(color)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .disabled(!self.showVisualFeedback)
+                        .frame(width: 150)
                     }
                 }
 
