@@ -86,11 +86,13 @@ For more information visit the [Getting Started Guide](./GettingStarted.md)
 - [x] ~~Height based sensitivity for zones~~
 - [x] ~~Visual overlay for corners and zones~~
 - [x] ~~Template action modal suggested actions~~
-- [x] ~~Allow assigning actions per app~~
-- [ ] Allow assigning actions per focus mode
-- [ ] Allow assigning actions per display
+- [x] ~~Template Action Inputs for button titles~~
+- [x] ~~Visual Overlay for corner and zone triggers~~
+- [x] ~~Per App triggers for Action Sets~~
+- [ ] Focus Mode triggers for Action Sets
+- [ ] Per Display configuration for Action Sets
+- [ ] Time and Day triggers for Action Sets
 - [ ] Secondary actions for triggered actions
-- [ ] Deep Link Support
 - [ ] Actions using selected item logic
 
 ...and more to come...
