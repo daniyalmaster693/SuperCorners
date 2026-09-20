@@ -245,17 +245,6 @@ struct SettingsView: View {
                         }
                     }
 
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Image(systemName: "timer")
-                                .foregroundColor(.primary)
-                            Text("Overlay Duration: \(String(format: "%.1f", self.visualDismissTimer))")
-
-                            Slider(value: self.$visualDismissTimer, in: 3 ... 10.0, step: 0.5)
-                                .disabled(!self.showVisualFeedback)
-                        }
-                    }
-
                     HStack {
                         Label("Overlay Color", systemImage: "eyedropper")
                             .foregroundColor(.primary)
@@ -269,6 +258,17 @@ struct SettingsView: View {
                         .pickerStyle(.menu)
                         .disabled(!self.showVisualFeedback)
                         .frame(width: 150)
+                    }
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: "timer")
+                                .foregroundColor(.primary)
+                            Text("Overlay Duration: \(String(format: "%.1f", self.visualDismissTimer))")
+
+                            Slider(value: self.$visualDismissTimer, in: 3 ... 10.0, step: 0.5)
+                                .disabled(!self.showVisualFeedback)
+                        }
                     }
                 }
 
