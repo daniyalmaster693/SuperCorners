@@ -70,7 +70,7 @@ xattr -dr com.apple.quarantine /Applications/SuperCorners.app
 2. Grant Necessary Permissions (**Accessibility permission is required for certain system actions to function correctly**).
 3. Trigger corners and zones by moving your mouse to a corner or the middle of a screen edge. You can also optionally choose to require a modifier key or keyboard shortcut to prevent accidental activation.
 4. You can create action sets to assign actions globally or on a per app basis. Each set has its own unique activation settings, allowing you to create multiple sets for global use or per app. Action sets are stored in a `.json` config file which is created on first launch. You can locate this file by clicking the reveal in finder button found in the settings tab.
-5. Additional behaviors can be configured in the settings tab, such as sensitivity, action delay, toast messages, visual overlays, sound effects, and more.
+5. Additional behaviors can be configured in the settings tab, such as sensitivity, trigger delay, toast messages, visual overlays, sound effects, and more.
 
 For more information visit the [Getting Started Guide](./GettingStarted.md)
 
