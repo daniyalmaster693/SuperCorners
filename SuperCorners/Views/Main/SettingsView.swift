@@ -31,7 +31,7 @@ struct SettingsView: View {
 
     // Feedback Settings
 
-    @AppStorage("showVisualFeedback") private var showVisualFeedback = true
+    @AppStorage("showVisualFeedback") private var showVisualFeedback = false
     @AppStorage("visualDismissTimer") private var visualDismissTimer: Double = 3.0
 
     @AppStorage("showToastNotifications") private var showToastNotification = false
