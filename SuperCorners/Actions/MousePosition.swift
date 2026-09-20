@@ -99,6 +99,12 @@ func getCornerMousePosition(actionSet: ActionSet) {
 
                     if delayTimer > 0.0 {
                         DispatchQueue.main.asyncAfter(deadline: .now() + delayTimer) {
+                            let currentMousePosition = NSEvent.mouseLocation
+
+                            guard hitZone.contains(currentMousePosition) else {
+                                return
+                            }
+
                             triggerCornerAction(
                                 for: corner,
                                 actionSet: actionSet
