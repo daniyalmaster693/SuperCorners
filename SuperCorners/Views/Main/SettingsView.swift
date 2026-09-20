@@ -208,10 +208,16 @@ struct SettingsView: View {
                         HStack {
                             Image(systemName: "timer")
                                 .foregroundColor(.primary)
-                            Text("Action Delay Timer: \(String(format: "%.1f", self.delayTimer))s")
-
-                            Slider(value: self.$delayTimer, in: 0 ... 5.0, step: 0.5)
+                            Text("Trigger Delay Timer: \(String(format: "%.1f", self.delayTimer))s")
                         }
+
+                        Text("Controls how long the mouse must be active over a corner or zone before triggering an action")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.bottom, 10)
+
+                        Slider(value: self.$delayTimer, in: 0 ... 8.0, step: 0.5)
                     }
                 }
 
