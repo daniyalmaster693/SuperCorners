@@ -6,7 +6,6 @@
 //
 
 import AppKit
-import KeyboardShortcuts
 import SwiftUI
 
 struct ActionSetEditor: View {
@@ -101,9 +100,6 @@ struct ActionSetEditor: View {
                                         
                                         Text("Modifier")
                                             .tag(ActivationMethod.modifier)
-                                        
-                                        Text("Keyboard Shortcut")
-                                            .tag(ActivationMethod.keyboardShortcut)
                                     }
                                     .labelsHidden()
                                     
@@ -131,15 +127,6 @@ struct ActionSetEditor: View {
                                             }
                                         }
                                         .labelsHidden()
-                                    }
-                                    
-                                    if set.activation.method == .keyboardShortcut,
-                                       let shortcutName = set.activation.keyboardShortcut
-                                    {
-                                        KeyboardShortcuts.Recorder(
-                                            "",
-                                            name: KeyboardShortcuts.Name(shortcutName)
-                                        )
                                     }
                                     
                                     Picker(

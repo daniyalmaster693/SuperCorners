@@ -6,7 +6,6 @@
 //
 
 import AppKit
-import KeyboardShortcuts
 import SwiftUI
 
 struct ActionSetCreator: View {
@@ -144,9 +143,6 @@ struct ActionSetCreator: View {
 
                             Text("Modifier")
                                 .tag(ActivationMethod.modifier)
-
-                            Text("Keyboard Shortcut")
-                                .tag(ActivationMethod.keyboardShortcut)
                         }
                         .labelsHidden()
 
@@ -158,13 +154,6 @@ struct ActionSetCreator: View {
                                 }
                             }
                             .labelsHidden()
-                        }
-
-                        if activationMethod == .keyboardShortcut {
-                            KeyboardShortcuts.Recorder(
-                                "",
-                                name: KeyboardShortcuts.Name("actionSet_\(actionSetID)")
-                            )
                         }
 
                         Picker("", selection: $activationTrigger) {
