@@ -67,51 +67,51 @@ func activation() {
 
     // Activation using Modifer + Hover
 
-//    if actionSets.contains(where: {
-//        $0.activation.trigger == .hover &&
-//            $0.activation.method == .modifier
-//    }) {
-//        if localHoverMonitor == nil {
-//            localHoverMonitor = NSEvent.addLocalMonitorForEvents(
-//                matching: .mouseMoved
-//            ) { event in
-//                setActivation(method: .modifier, trigger: .hover)
-//                return event
-//            }
-//        }
-//
-//        if globalHoverMonitor == nil {
-//            globalHoverMonitor = NSEvent.addGlobalMonitorForEvents(
-//                matching: .mouseMoved
-//            ) { _ in
-//                setActivation(method: .modifier, trigger: .hover)
-//            }
-//        }
-//    }
+    if actionSets.contains(where: {
+        $0.activation.method == .modifier &&
+            $0.activation.trigger == .hover
+    }) {
+        if localHoverMonitor == nil {
+            localHoverMonitor = NSEvent.addLocalMonitorForEvents(
+                matching: .mouseMoved
+            ) { event in
+                setActivation(method: .modifier, trigger: .hover)
+                return event
+            }
+        }
+
+        if globalHoverMonitor == nil {
+            globalHoverMonitor = NSEvent.addGlobalMonitorForEvents(
+                matching: .mouseMoved
+            ) { _ in
+                setActivation(method: .modifier, trigger: .hover)
+            }
+        }
+    }
 
     // Activation using Modifer + Click
 
-//    if actionSets.contains(where: {
-//        $0.activation.trigger == .click &&
-//            $0.activation.method == .modifier
-//    }) {
-//        if localClickMonitor == nil {
-//            localClickMonitor = NSEvent.addLocalMonitorForEvents(
-//                matching: .leftMouseDown
-//            ) { event in
-//                setActivation(method: .modifier, trigger: .click)
-//                return event
-//            }
-//        }
-//
-//        if globalClickMonitor == nil {
-//            globalClickMonitor = NSEvent.addGlobalMonitorForEvents(
-//                matching: .leftMouseDown
-//            ) { _ in
-//                setActivation(method: .modifier, trigger: .click)
-//            }
-//        }
-//    }
+    if actionSets.contains(where: {
+        $0.activation.method == .modifier &&
+            $0.activation.trigger == .click
+    }) {
+        if localClickMonitor == nil {
+            localClickMonitor = NSEvent.addLocalMonitorForEvents(
+                matching: .leftMouseDown
+            ) { event in
+                setActivation(method: .modifier, trigger: .click)
+                return event
+            }
+        }
+
+        if globalClickMonitor == nil {
+            globalClickMonitor = NSEvent.addGlobalMonitorForEvents(
+                matching: .leftMouseDown
+            ) { _ in
+                setActivation(method: .modifier, trigger: .click)
+            }
+        }
+    }
 
     // Activation using Keyboard Shortcut + Hover
 
@@ -134,6 +134,15 @@ private func setActivation(method: ActivationMethod, trigger: ActivationTrigger)
             $0.activation.trigger == trigger
     }) else {
         return
+    }
+
+    if method == .modifier {
+        guard let modifierKey = actionSet.activation.modifierKey,
+              let requiredFlag = modifierKey.flag,
+              NSEvent.modifierFlags.contains(requiredFlag)
+        else {
+            return
+        }
     }
 
     getCornerMousePosition(actionSet: actionSet)
