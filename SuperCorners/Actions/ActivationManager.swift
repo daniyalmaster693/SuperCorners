@@ -37,131 +37,107 @@ func activation() {
         }
     }
 
-    // Activation Using Hover
-
-    if actionSets.contains(where: {
-        $0.activation.trigger == .hover &&
-            $0.activation.method == .none
-    }) {
-        if localHoverMonitor == nil {
-            localHoverMonitor = NSEvent.addLocalMonitorForEvents(
-                matching: .mouseMoved
-            ) { event in
-                setActivation(method: .none, trigger: .hover)
-                return event
-            }
-        }
-
-        if globalHoverMonitor == nil {
-            globalHoverMonitor = NSEvent.addGlobalMonitorForEvents(
-                matching: .mouseMoved
-            ) { _ in
+    if localHoverMonitor == nil {
+        localHoverMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: .mouseMoved
+        ) { event in
+            if actionSets.contains(where: {
+                $0.activation.method == .none && $0.activation.trigger == .hover
+            }) {
                 setActivation(method: .none, trigger: .hover)
             }
-        }
-    }
 
-    // Activation Using Click
-
-    if actionSets.contains(where: {
-        $0.activation.trigger == .click &&
-            $0.activation.method == .none
-    }) {
-        if localClickMonitor == nil {
-            localClickMonitor = NSEvent.addLocalMonitorForEvents(
-                matching: .leftMouseDown
-            ) { event in
-                setActivation(method: .none, trigger: .click)
-                return event
-            }
-        }
-
-        if globalClickMonitor == nil {
-            globalClickMonitor = NSEvent.addGlobalMonitorForEvents(
-                matching: .leftMouseDown
-            ) { _ in
-                setActivation(method: .none, trigger: .click)
-            }
-        }
-    }
-
-    // Activation using Modifer + Hover
-
-    if actionSets.contains(where: {
-        $0.activation.method == .modifier &&
-            $0.activation.trigger == .hover
-    }) {
-        if localHoverMonitor == nil {
-            localHoverMonitor = NSEvent.addLocalMonitorForEvents(
-                matching: .mouseMoved
-            ) { event in
-                setActivation(method: .modifier, trigger: .hover)
-                return event
-            }
-        }
-
-        if globalHoverMonitor == nil {
-            globalHoverMonitor = NSEvent.addGlobalMonitorForEvents(
-                matching: .mouseMoved
-            ) { _ in
+            if actionSets.contains(where: {
+                $0.activation.method == .modifier && $0.activation.trigger == .hover
+            }) {
                 setActivation(method: .modifier, trigger: .hover)
             }
-        }
-    }
 
-    // Activation using Modifer + Click
-
-    if actionSets.contains(where: {
-        $0.activation.method == .modifier &&
-            $0.activation.trigger == .click
-    }) {
-        if localClickMonitor == nil {
-            localClickMonitor = NSEvent.addLocalMonitorForEvents(
-                matching: .leftMouseDown
-            ) { event in
-                setActivation(method: .modifier, trigger: .click)
-                return event
+            if actionSets.contains(where: {
+                $0.activation.method == .keyboardShortcut && $0.activation.trigger == .hover
+            }) {
+                setActivation(method: .keyboardShortcut, trigger: .hover)
             }
-        }
 
-        if globalClickMonitor == nil {
-            globalClickMonitor = NSEvent.addGlobalMonitorForEvents(
-                matching: .leftMouseDown
-            ) { _ in
-                setActivation(method: .modifier, trigger: .click)
-            }
-        }
-    }
-
-    // Activation using Keyboard Shortcut + Hover
-
-    if actionSets.contains(where: {
-        $0.activation.method == .keyboardShortcut &&
-            $0.activation.trigger == .hover
-    }) {
-        localHoverMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
-            setActivation(method: .keyboardShortcut, trigger: .hover)
             return event
         }
+    }
 
-        globalHoverMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
-            setActivation(method: .keyboardShortcut, trigger: .hover)
+    if localClickMonitor == nil {
+        localClickMonitor = NSEvent.addLocalMonitorForEvents(
+            matching: .leftMouseDown
+        ) { event in
+            if actionSets.contains(where: {
+                $0.activation.method == .none && $0.activation.trigger == .click
+
+            }) {
+                setActivation(method: .none, trigger: .click)
+            }
+
+            if actionSets.contains(where: {
+                $0.activation.method == .modifier && $0.activation.trigger == .click
+
+            }) {
+                setActivation(method: .modifier, trigger: .click)
+            }
+
+            if actionSets.contains(where: {
+                $0.activation.method == .keyboardShortcut && $0.activation.trigger == .click
+            }) {
+                setActivation(method: .keyboardShortcut, trigger: .click)
+            }
+
+            return event
         }
     }
 
-    // Activation using Keyboard Shortcut + Click
+    if globalHoverMonitor == nil {
+        globalHoverMonitor = NSEvent.addGlobalMonitorForEvents(
+            matching: .mouseMoved
+        ) { _ in
+            if actionSets.contains(where: {
+                $0.activation.method == .none && $0.activation.trigger == .hover
+            }) {
+                setActivation(method: .none, trigger: .hover)
+            }
 
-    if actionSets.contains(where: {
-        $0.activation.method == .keyboardShortcut &&
-            $0.activation.trigger == .click
-    }) {
-        localClickMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown]) { event in
-            setActivation(method: .keyboardShortcut, trigger: .click)
-            return event
+            if actionSets.contains(where: {
+                $0.activation.method == .modifier && $0.activation.trigger == .hover
+            }) {
+                setActivation(method: .modifier, trigger: .hover)
+            }
+
+            if actionSets.contains(where: {
+                $0.activation.method == .keyboardShortcut && $0.activation.trigger == .hover
+            }) {
+                setActivation(method: .keyboardShortcut, trigger: .hover)
+            }
         }
+    }
 
-        globalClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown]) { _ in
-            setActivation(method: .keyboardShortcut, trigger: .click)
+    if globalClickMonitor == nil {
+        globalClickMonitor = NSEvent.addGlobalMonitorForEvents(
+            matching: .leftMouseDown
+        ) { _ in
+            if actionSets.contains(where: {
+                $0.activation.method == .none && $0.activation.trigger == .click
+
+            }) {
+                setActivation(method: .none, trigger: .click)
+            }
+
+            if actionSets.contains(where: {
+                $0.activation.method == .modifier && $0.activation.trigger == .click
+
+            }) {
+                setActivation(method: .modifier, trigger: .click)
+            }
+
+            if actionSets.contains(where: {
+                $0.activation.method == .keyboardShortcut && $0.activation.trigger == .click
+            }) {
+                setActivation(method: .keyboardShortcut, trigger: .click)
+            }
         }
     }
 }
