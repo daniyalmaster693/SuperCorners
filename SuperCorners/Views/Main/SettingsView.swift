@@ -134,6 +134,25 @@ struct SettingsView: View {
                             Text("Show in Menu Bar")
                         }
                     }
+                }
+
+                Section {
+                    Toggle(isOn: self.$autoUpdate) {
+                        HStack {
+                            Image(systemName: "clock.arrow.2.circlepath")
+                                .foregroundColor(.primary)
+                            Text("Automatically Check for Updates")
+                        }
+                    }
+                    .onChange(of: self.autoUpdate) { isEnabled in
+                        if isEnabled {
+                            self.updateManager.startTimer {
+                                self.updateManager.getUpdateData()
+                            }
+                        } else {
+                            self.updateManager.stopTimer()
+                        }
+                    }
 
                     HStack {
                         Label("Updates", systemImage: "arrow.2.circlepath")
@@ -143,14 +162,6 @@ struct SettingsView: View {
                             self.updateManager.getUpdateData(manualCheck: true)
                         }
                         .buttonStyle(.bordered)
-                    }
-                    
-                    Toggle(isOn: self.$autoUpdate) {
-                        HStack {
-                            Image(systemName: "clock.arrow.2.circlepath")
-                                .foregroundColor(.primary)
-                            Text("Automatically Check for Updates")
-                        }
                     }
                 }
 
