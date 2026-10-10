@@ -13,6 +13,7 @@ struct SettingsView: View {
     // Settings Variables
 
     @StateObject private var updateManager = UpdateManager()
+    @AppStorage("autoUpdate") private var autoUpdate = true
 
     @AppStorage("showInDock") private var showInDock = true
     @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
@@ -142,6 +143,14 @@ struct SettingsView: View {
                             self.updateManager.getUpdateData(manualCheck: true)
                         }
                         .buttonStyle(.bordered)
+                    }
+                    
+                    Toggle(isOn: self.$autoUpdate) {
+                        HStack {
+                            Image(systemName: "clock.arrow.2.circlepath")
+                                .foregroundColor(.primary)
+                            Text("Automatically Check for Updates")
+                        }
                     }
                 }
 
