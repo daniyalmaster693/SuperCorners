@@ -14,8 +14,28 @@ private var globalHoverMonitor: Any?
 private var localClickMonitor: Any?
 private var globalClickMonitor: Any?
 
+private var activeKeyboardShortcuts: Set<String> = []
+
 func activation() {
     let actionSets = ActionSetManager.shared.actionSets
+
+    for actionSet in actionSets
+        where actionSet.activation.method == .keyboardShortcut
+    {
+        guard let shortcutName = actionSet.activation.keyboardShortcut else {
+            continue
+        }
+
+        let name = KeyboardShortcuts.Name(shortcutName)
+
+        KeyboardShortcuts.onKeyDown(for: name) {
+            activeKeyboardShortcuts.insert(shortcutName)
+        }
+
+        KeyboardShortcuts.onKeyUp(for: name) {
+            activeKeyboardShortcuts.remove(shortcutName)
+        }
+    }
 
     // Activation Using Hover
 
@@ -115,7 +135,35 @@ func activation() {
 
     // Activation using Keyboard Shortcut + Hover
 
+    if actionSets.contains(where: {
+        $0.activation.method == .keyboardShortcut &&
+            $0.activation.trigger == .hover
+    }) {
+        localHoverMonitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved]) { event in
+            setActivation(method: .keyboardShortcut, trigger: .hover)
+            return event
+        }
+
+        globalHoverMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.mouseMoved]) { _ in
+            setActivation(method: .keyboardShortcut, trigger: .hover)
+        }
+    }
+
     // Activation using Keyboard Shortcut + Click
+
+    if actionSets.contains(where: {
+        $0.activation.method == .keyboardShortcut &&
+            $0.activation.trigger == .click
+    }) {
+        localClickMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown]) { event in
+            setActivation(method: .keyboardShortcut, trigger: .click)
+            return event
+        }
+
+        globalClickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown]) { _ in
+            setActivation(method: .keyboardShortcut, trigger: .click)
+        }
+    }
 }
 
 private func setActivation(method: ActivationMethod, trigger: ActivationTrigger) {
@@ -140,6 +188,14 @@ private func setActivation(method: ActivationMethod, trigger: ActivationTrigger)
         guard let modifierKey = actionSet.activation.modifierKey,
               let requiredFlag = modifierKey.flag,
               NSEvent.modifierFlags.contains(requiredFlag)
+        else {
+            return
+        }
+    }
+
+    if method == .keyboardShortcut {
+        guard let shortcutName = actionSet.activation.keyboardShortcut,
+              activeKeyboardShortcuts.contains(shortcutName)
         else {
             return
         }
