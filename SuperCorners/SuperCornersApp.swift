@@ -98,37 +98,45 @@ struct SuperCornersApp: App {
                         Button {
                             triggerCornerAction(for: .topLeft, actionSet: currentSet)
                         } label: {
-                            HStack {
-                                Image(systemName: "inset.filled.topleft.rectangle")
+                            Label {
                                 Text(topLeftTitle)
+                            } icon: {
+                                Image(systemName: "inset.filled.topleft.rectangle")
                             }
+                            .labelStyle(.titleAndIcon)
                         }
 
                         Button {
                             triggerCornerAction(for: .topRight, actionSet: currentSet)
                         } label: {
-                            HStack {
-                                Image(systemName: "inset.filled.topright.rectangle")
+                            Label {
                                 Text(topRightTitle)
+                            } icon: {
+                                Image(systemName: "inset.filled.topright.rectangle")
                             }
+                            .labelStyle(.titleAndIcon)
                         }
 
                         Button {
                             triggerCornerAction(for: .bottomLeft, actionSet: currentSet)
                         } label: {
-                            HStack {
-                                Image(systemName: "inset.filled.bottomleft.rectangle")
+                            Label {
                                 Text(bottomLeftTitle)
+                            } icon: {
+                                Image(systemName: "inset.filled.bottomleft.rectangle")
                             }
+                            .labelStyle(.titleAndIcon)
                         }
 
                         Button {
                             triggerCornerAction(for: .bottomRight, actionSet: currentSet)
                         } label: {
-                            HStack {
-                                Image(systemName: "inset.filled.bottomright.rectangle")
+                            Label {
                                 Text(bottomRightTitle)
+                            } icon: {
+                                Image(systemName: "inset.filled.bottomright.rectangle")
                             }
+                            .labelStyle(.titleAndIcon)
                         }
                     }
 
@@ -136,37 +144,45 @@ struct SuperCornersApp: App {
                         Button {
                             triggerCornerAction(for: .top, actionSet: currentSet)
                         } label: {
-                            HStack {
-                                Image(systemName: "rectangle.topthird.inset.filled")
+                            Label {
                                 Text(topTitle)
+                            } icon: {
+                                Image(systemName: "rectangle.topthird.inset.filled")
                             }
+                            .labelStyle(.titleAndIcon)
                         }
 
                         Button {
                             triggerCornerAction(for: .left, actionSet: currentSet)
                         } label: {
-                            HStack {
-                                Image(systemName: "rectangle.leadingthird.inset.filled")
+                            Label {
                                 Text(leftTitle)
+                            } icon: {
+                                Image(systemName: "rectangle.leadingthird.inset.filled")
                             }
+                            .labelStyle(.titleAndIcon)
                         }
 
                         Button {
                             triggerCornerAction(for: .right, actionSet: currentSet)
                         } label: {
-                            HStack {
-                                Image(systemName: "rectangle.trailingthird.inset.filled")
+                            Label {
                                 Text(rightTitle)
+                            } icon: {
+                                Image(systemName: "rectangle.trailingthird.inset.filled")
                             }
+                            .labelStyle(.titleAndIcon)
                         }
 
                         Button {
                             triggerCornerAction(for: .bottom, actionSet: currentSet)
                         } label: {
-                            HStack {
-                                Image(systemName: "rectangle.bottomthird.inset.filled")
+                            Label {
                                 Text(bottomTitle)
+                            } icon: {
+                                Image(systemName: "rectangle.bottomthird.inset.filled")
                             }
+                            .labelStyle(.titleAndIcon)
                         }
                     }
 
@@ -182,10 +198,12 @@ struct SuperCornersApp: App {
                                 Button {
                                     action.perform(nil)
                                 } label: {
-                                    HStack {
-                                        Image(systemName: action.iconName)
+                                    Label {
                                         Text(action.title)
+                                    } icon: {
+                                        Image(systemName: action.iconName)
                                     }
+                                    .labelStyle(.titleAndIcon)
                                 }
                             }
                         }
