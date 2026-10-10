@@ -49,7 +49,7 @@ struct SuperCornersApp: App {
         }
 
         DispatchQueue.main.async {
-            activation()
+            cornerActivation()
         }
     }
 

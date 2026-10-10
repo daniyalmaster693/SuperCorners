@@ -8,56 +8,29 @@
 import KeyboardShortcuts
 import SwiftUI
 
-private var localHoverMonitor: Any?
-private var globalHoverMonitor: Any?
+var localHoverMonitor: Any?
+var globalHoverMonitor: Any?
 
-private var localClickMonitor: Any?
-private var globalClickMonitor: Any?
+var localClickMonitor: Any?
+var globalClickMonitor: Any?
 
-private var activeKeyboardShortcuts: Set<String> = []
+private let supportedModifierFlags: NSEvent.ModifierFlags = [
+    .command,
+    .option,
+    .control,
+    .shift,
+    .capsLock
+]
 
-func activation() {
-    let actionSets = ActionSetManager.shared.actionSets
-
-    for actionSet in actionSets
-        where actionSet.activation.method == .keyboardShortcut
-    {
-        guard let shortcutName = actionSet.activation.keyboardShortcut else {
-            continue
-        }
-
-        let name = KeyboardShortcuts.Name(shortcutName)
-
-        KeyboardShortcuts.onKeyDown(for: name) {
-            activeKeyboardShortcuts.insert(shortcutName)
-        }
-
-        KeyboardShortcuts.onKeyUp(for: name) {
-            activeKeyboardShortcuts.remove(shortcutName)
-        }
-    }
-
+func cornerActivation() {
     if localHoverMonitor == nil {
         localHoverMonitor = NSEvent.addLocalMonitorForEvents(
             matching: .mouseMoved
         ) { event in
-            if actionSets.contains(where: {
-                $0.activation.method == .none && $0.activation.trigger == .hover
-            }) {
-                setActivation(method: .none, trigger: .hover)
-            }
-
-            if actionSets.contains(where: {
-                $0.activation.method == .modifier && $0.activation.trigger == .hover
-            }) {
-                setActivation(method: .modifier, trigger: .hover)
-            }
-
-            if actionSets.contains(where: {
-                $0.activation.method == .keyboardShortcut && $0.activation.trigger == .hover
-            }) {
-                setActivation(method: .keyboardShortcut, trigger: .hover)
-            }
+            setActivation(
+                trigger: .hover,
+                modifierFlags: event.modifierFlags
+            )
 
             return event
         }
@@ -67,25 +40,10 @@ func activation() {
         localClickMonitor = NSEvent.addLocalMonitorForEvents(
             matching: .leftMouseDown
         ) { event in
-            if actionSets.contains(where: {
-                $0.activation.method == .none && $0.activation.trigger == .click
-
-            }) {
-                setActivation(method: .none, trigger: .click)
-            }
-
-            if actionSets.contains(where: {
-                $0.activation.method == .modifier && $0.activation.trigger == .click
-
-            }) {
-                setActivation(method: .modifier, trigger: .click)
-            }
-
-            if actionSets.contains(where: {
-                $0.activation.method == .keyboardShortcut && $0.activation.trigger == .click
-            }) {
-                setActivation(method: .keyboardShortcut, trigger: .click)
-            }
+            setActivation(
+                trigger: .click,
+                modifierFlags: event.modifierFlags
+            )
 
             return event
         }
@@ -94,55 +52,27 @@ func activation() {
     if globalHoverMonitor == nil {
         globalHoverMonitor = NSEvent.addGlobalMonitorForEvents(
             matching: .mouseMoved
-        ) { _ in
-            if actionSets.contains(where: {
-                $0.activation.method == .none && $0.activation.trigger == .hover
-            }) {
-                setActivation(method: .none, trigger: .hover)
-            }
-
-            if actionSets.contains(where: {
-                $0.activation.method == .modifier && $0.activation.trigger == .hover
-            }) {
-                setActivation(method: .modifier, trigger: .hover)
-            }
-
-            if actionSets.contains(where: {
-                $0.activation.method == .keyboardShortcut && $0.activation.trigger == .hover
-            }) {
-                setActivation(method: .keyboardShortcut, trigger: .hover)
-            }
+        ) { event in
+            setActivation(
+                trigger: .hover,
+                modifierFlags: event.modifierFlags
+            )
         }
     }
 
     if globalClickMonitor == nil {
         globalClickMonitor = NSEvent.addGlobalMonitorForEvents(
             matching: .leftMouseDown
-        ) { _ in
-            if actionSets.contains(where: {
-                $0.activation.method == .none && $0.activation.trigger == .click
-
-            }) {
-                setActivation(method: .none, trigger: .click)
-            }
-
-            if actionSets.contains(where: {
-                $0.activation.method == .modifier && $0.activation.trigger == .click
-
-            }) {
-                setActivation(method: .modifier, trigger: .click)
-            }
-
-            if actionSets.contains(where: {
-                $0.activation.method == .keyboardShortcut && $0.activation.trigger == .click
-            }) {
-                setActivation(method: .keyboardShortcut, trigger: .click)
-            }
+        ) { event in
+            setActivation(
+                trigger: .click,
+                modifierFlags: event.modifierFlags
+            )
         }
     }
 }
 
-private func setActivation(method: ActivationMethod, trigger: ActivationTrigger) {
+private func setActivation(trigger: ActivationTrigger, modifierFlags: NSEvent.ModifierFlags) {
     guard let bundleID = NSWorkspace.shared
         .frontmostApplication?.bundleIdentifier
     else {
@@ -153,28 +83,35 @@ private func setActivation(method: ActivationMethod, trigger: ActivationTrigger)
         bundleID: bundleID
     )
 
-    guard let actionSet = actionSets.first(where: {
-        $0.activation.method == method &&
-            $0.activation.trigger == trigger
+    let heldModifiers = modifierFlags.intersection(
+        supportedModifierFlags
+    )
+
+    guard let actionSet = actionSets.first(where: { actionSet in
+        let activation = actionSet.activation
+
+        guard activation.trigger == trigger else {
+            return false
+        }
+
+        switch activation.method {
+            case .none:
+                return heldModifiers.isEmpty
+
+            case .modifier:
+                guard let modifierKey = activation.modifierKey,
+                      let requiredFlag = modifierKey.flag
+                else {
+                    return false
+                }
+
+                return heldModifiers == requiredFlag
+
+            case .keyboardShortcut:
+                return false
+        }
     }) else {
         return
-    }
-
-    if method == .modifier {
-        guard let modifierKey = actionSet.activation.modifierKey,
-              let requiredFlag = modifierKey.flag,
-              NSEvent.modifierFlags.contains(requiredFlag)
-        else {
-            return
-        }
-    }
-
-    if method == .keyboardShortcut {
-        guard let shortcutName = actionSet.activation.keyboardShortcut,
-              activeKeyboardShortcuts.contains(shortcutName)
-        else {
-            return
-        }
     }
 
     getCornerMousePosition(actionSet: actionSet)
