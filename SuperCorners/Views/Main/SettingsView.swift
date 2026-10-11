@@ -30,6 +30,9 @@ struct SettingsView: View {
     @AppStorage("ignoredAppPaths") private var ignoredAppPathsData: Data = .init()
     @State private var ignoredApps: [String] = []
 
+    @State private var selectedAppName = "Choose Application"
+    @State private var selectedBundleID: String?
+
     let safariIcon: NSImage? = {
         let workspace = NSWorkspace.shared
         if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.safari") {
@@ -301,76 +304,24 @@ struct SettingsView: View {
                         Divider()
 
                         HStack {
-                            if let notesIcon {
-                                Image(nsImage: notesIcon)
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
+                            Button("Add Application...") {
+                                let panel = NSOpenPanel()
+                                panel.canChooseFiles = true
+                                panel.canChooseDirectories = false
+                                panel.allowsMultipleSelection = false
+                                panel.allowedContentTypes = [.application]
+                                panel.title = "Select Application"
+                                panel.prompt = "Choose"
+
+                                if panel.runModal() == .OK, let url = panel.url {
+                                    self.selectedAppName = url.deletingPathExtension().lastPathComponent
+                                    self.selectedBundleID = Bundle(url: url)?.bundleIdentifier
+                                }
                             }
+                            .controlSize(.regular)
+                            .padding(.vertical, 3)
+                            .padding(.horizontal, 3)
 
-                            Text("Notes")
-
-                            Spacer()
-
-                            Button(action: {}) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        .padding(.vertical, 3)
-                        .padding(.horizontal, 3)
-
-                        Divider()
-
-                        HStack {
-                            if let musicIcon {
-                                Image(nsImage: musicIcon)
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }
-
-                            Text("Music")
-
-                            Spacer()
-
-                            Button(action: {}) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        .padding(.vertical, 3)
-                        .padding(.horizontal, 3)
-
-                        Divider()
-
-                        HStack {
-                            if let finderIcon {
-                                Image(nsImage: finderIcon)
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }
-
-                            Text("Finder")
-
-                            Spacer()
-
-                            Button(action: {}) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        .padding(.vertical, 3)
-                        .padding(.horizontal, 3)
-
-                        Divider()
-
-                        HStack {
-                            Button("Add Application...") {}
-                                .controlSize(.regular)
-                                .padding(.vertical, 3)t ad
-                                .padding(.horizontal, 3)
                             Spacer()
                         }
                     }
