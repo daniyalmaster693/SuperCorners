@@ -166,7 +166,7 @@ struct SettingsView: View {
                 Section("Config") {
                     VStack(alignment: .leading) {
                         HStack {
-                            Label("SuperCorners Config", systemImage: "dot.circle.and.cursorarrow")
+                            Label("SuperCorners Config", systemImage: "doc.badge.gearshape")
                                 .foregroundColor(.primary)
 
                             Spacer()
