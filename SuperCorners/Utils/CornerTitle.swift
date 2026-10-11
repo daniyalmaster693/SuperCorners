@@ -84,6 +84,17 @@ func titleForCorner(_ corner: CornerPosition.Corner, currentSet: ActionSet) -> S
             return "Open \(lastComponent.prefix(1).uppercased() + lastComponent.dropFirst())"
         }
 
+    case "runTerminalCommand":
+        if let input, !input.isEmpty {
+            let command = input
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .components(separatedBy: .whitespacesAndNewlines)
+                .first ?? ""
+
+            let commandName = URL(fileURLWithPath: command).lastPathComponent
+            return commandName.isEmpty ? action.title : commandName
+        }
+
     case "dateCountdown":
         if let input, !input.isEmpty {
             return "Countdown to \(input)"
