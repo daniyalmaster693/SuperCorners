@@ -93,20 +93,35 @@ func getCornerMousePosition(actionSet: ActionSet) {
                 if corner != lastCorner {
                     lastCorner = corner
 
-                    if actionSet.actionAssignment(for: corner).actionID != "doNothing" {
-                        Task { @MainActor in
-                            VisualOverlayManager.shared.show(in: hitZone)
+                    if !isFrontmostAppIgnored() {
+                        if actionSet.actionAssignment(for: corner).actionID != "doNothing" {
+                            Task { @MainActor in
+                                VisualOverlayManager.shared.show(in: hitZone)
+                            }
                         }
                     }
 
-                    if delayTimer > 0.0 {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + delayTimer) {
-                            let currentMousePosition = NSEvent.mouseLocation
+                    if !isFrontmostAppIgnored() {
+                        if delayTimer > 0.0 {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + delayTimer) {
+                                let currentMousePosition = NSEvent.mouseLocation
 
-                            guard hitZone.contains(currentMousePosition) else {
-                                return
+                                guard hitZone.contains(currentMousePosition),
+                                      !isFrontmostAppIgnored()
+                                else {
+                                    return
+                                }
+
+                                triggerCornerAction(
+                                    for: corner,
+                                    actionSet: actionSet
+                                )
+
+                                if playSoundEffect {
+                                    NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
+                                }
                             }
-
+                        } else {
                             triggerCornerAction(
                                 for: corner,
                                 actionSet: actionSet
@@ -115,15 +130,6 @@ func getCornerMousePosition(actionSet: ActionSet) {
                             if playSoundEffect {
                                 NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
                             }
-                        }
-                    } else {
-                        triggerCornerAction(
-                            for: corner,
-                            actionSet: actionSet
-                        )
-
-                        if playSoundEffect {
-                            NSSound(named: NSSound.Name(selectedSound.rawValue))?.play()
                         }
                     }
                 }
@@ -137,4 +143,19 @@ func getCornerMousePosition(actionSet: ActionSet) {
     Task { @MainActor in
         VisualOverlayManager.shared.hide()
     }
+}
+
+private func isFrontmostAppIgnored() -> Bool {
+    guard let frontmostAppPath = NSWorkspace.shared.frontmostApplication?.bundleURL?.path else {
+        return false
+    }
+
+    @AppStorage("ignoredAppPaths") var ignoredAppPathsData: Data = .init()
+
+    let ignoredAppPaths = (try? JSONDecoder().decode(
+        [String].self,
+        from: ignoredAppPathsData
+    )) ?? []
+
+    return ignoredAppPaths.contains(frontmostAppPath)
 }
