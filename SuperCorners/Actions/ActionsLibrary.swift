@@ -1035,10 +1035,12 @@ let cornerActions: [CornerAction] = [
                 let output = String(decoding: data, as: UTF8.self)
                     .trimmingCharacters(in: .whitespacesAndNewlines)
 
-                if process.terminationStatus == 0 {
-                    showSuccessToast(output.isEmpty ? "Action Completed" : output)
-                } else {
-                    showErrorToast(output.isEmpty ? "Action Failed" : output)
+                DispatchQueue.main.async {
+                    if process.terminationStatus == 0 {
+                        showSuccessToast(output.isEmpty ? "Action Completed" : output)
+                    } else {
+                        showErrorToast(output.isEmpty ? "Action Failed" : output)
+                    }
                 }
             } catch {
                 showErrorToast(error.localizedDescription)
