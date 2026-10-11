@@ -198,7 +198,7 @@ struct ZoneView: View {
                 .help("Choose an Action Set")
             }
 
-            ToolbarItem(placement: .automatic) {
+            ToolbarItemGroup(placement: .automatic) {
                 Button(action: {
                     showActionSetCreator = true
                 }) {
@@ -208,9 +208,7 @@ struct ZoneView: View {
                 .sheet(isPresented: $showActionSetCreator) {
                     ActionSetCreator()
                 }
-            }
 
-            ToolbarItem(placement: .automatic) {
                 Button(action: {
                     showActionSetEditor = true
                 }) {
@@ -220,9 +218,9 @@ struct ZoneView: View {
                 .sheet(isPresented: $showActionSetEditor) {
                     ActionSetEditor()
                 }
-            }
 
-            ToolbarItem(placement: .automatic) {
+                Spacer()
+
                 Button(action: {
                     ActionSetManager.shared.getConfigPath()
                 }) {

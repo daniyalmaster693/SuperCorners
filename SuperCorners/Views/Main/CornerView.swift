@@ -178,7 +178,7 @@ struct CornerView: View {
                 .help("Choose an Action Set")
             }
 
-            ToolbarItem(placement: .automatic) {
+            ToolbarItemGroup(placement: .automatic) {
                 Button(action: {
                     showActionSetCreator = true
                 }) {
@@ -188,9 +188,7 @@ struct CornerView: View {
                 .sheet(isPresented: $showActionSetCreator) {
                     ActionSetCreator()
                 }
-            }
 
-            ToolbarItem(placement: .automatic) {
                 Button(action: {
                     showActionSetEditor = true
                 }) {
@@ -200,9 +198,9 @@ struct CornerView: View {
                 .sheet(isPresented: $showActionSetEditor) {
                     ActionSetEditor()
                 }
-            }
 
-            ToolbarItem(placement: .automatic) {
+                Spacer()
+
                 Button(action: {
                     ActionSetManager.shared.getConfigPath()
                 }) {
