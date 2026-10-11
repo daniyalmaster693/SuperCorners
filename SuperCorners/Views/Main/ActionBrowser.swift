@@ -95,210 +95,235 @@ struct ActionBrowserView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
-                VStack {
-                    Text("System Actions")
-                        .font(.title2)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
-                    
-                    Text("Browse a set of essential system utilities and controls you can trigger instantly.")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.category == .system }) { action in
-                                ActionCard(action: action)
+                if !filteredItems(cornerActions).filter({ $0.category == .system }).isEmpty {
+                    VStack {
+                        Text("System Actions")
+                            .font(.title2)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                            
+                        Text("Browse a set of essential system utilities and controls you can trigger instantly.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 16) {
+                                ForEach(filteredItems(cornerActions).filter { $0.category == .system }) { action in
+                                    ActionCard(action: action)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 6)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 6)
-                        .padding(.bottom, 20)
+                            
+                        Divider()
+                            .padding(.horizontal)
                     }
                 }
-    
-                Divider()
-                    .padding(.horizontal)
-                
-                VStack {
-                    Text("App Actions")
-                        .font(.title2)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
                     
-                    Text("Trigger in App Actions")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.category == .app }) { action in
-                                ActionCard(action: action)
+                if !filteredItems(cornerActions).filter({ $0.category == .app }).isEmpty {
+                    VStack {
+                        Text("App Actions")
+                            .font(.title2)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                            
+                        Text("Trigger in App Actions")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 16) {
+                                ForEach(filteredItems(cornerActions).filter { $0.category == .app }) { action in
+                                    ActionCard(action: action)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 6)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 6)
-                        .padding(.bottom, 20)
+                            
+                        Divider()
+                            .padding(.horizontal)
                     }
-                    
-                    Divider()
-                        .padding(.horizontal)
                 }
-                
-                VStack {
-                    Text("Template Actions")
-                        .font(.title2)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
                     
-                    Text("Configure these actions for custom websites, apps, and more.")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.category == .template }) { action in
-                                ActionCard(action: action)
+                if !filteredItems(cornerActions).filter({ $0.category == .template }).isEmpty {
+                    VStack {
+                        Text("Template Actions")
+                            .font(.title2)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                            
+                        Text("Configure these actions for custom websites, apps, and more.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 16) {
+                                ForEach(filteredItems(cornerActions).filter { $0.category == .template }) { action in
+                                    ActionCard(action: action)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 6)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 6)
-                        .padding(.bottom, 20)
+                            
+                        Divider()
+                            .padding(.horizontal)
                     }
-            
-                    Divider()
-                        .padding(.horizontal)
                 }
-                
-                VStack {
-                    Text("Tools")
-                        .font(.title2)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
                     
-                    Text("A collection of built in utilites for quick access to useful system features")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.category == .tool }) { action in
-                                ActionCard(action: action)
+                if !filteredItems(cornerActions).filter({ $0.category == .tool }).isEmpty {
+                    VStack {
+                        Text("Tools")
+                            .font(.title2)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                            
+                        Text("A collection of built in utilites for quick access to useful system features")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 16) {
+                                ForEach(filteredItems(cornerActions).filter { $0.category == .tool }) { action in
+                                    ActionCard(action: action)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 6)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 6)
-                        .padding(.bottom, 20)
+                            
+                        Divider()
+                            .padding(.horizontal)
                     }
-                    
-                    Divider()
-                        .padding(.horizontal)
                 }
-                
-                VStack {
-                    Text("Capture")
-                        .font(.title2)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
                     
-                    Text("Capture your screen with screenshot tools.")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.category == .capture }) { action in
-                                ActionCard(action: action)
+                if !filteredItems(cornerActions).filter({ $0.category == .capture }).isEmpty {
+                    VStack {
+                        Text("Capture")
+                            .font(.title2)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                            
+                        Text("Capture your screen with screenshot tools.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 16) {
+                                ForEach(filteredItems(cornerActions).filter { $0.category == .capture }) { action in
+                                    ActionCard(action: action)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 6)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 6)
-                        .padding(.bottom, 20)
+                            
+                        Divider()
+                            .padding(.horizontal)
                     }
-                    
-                    Divider()
-                        .padding(.horizontal)
                 }
-                
-                VStack {
-                    Text("Media")
-                        .font(.title2)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
                     
-                    Text("Control your Mac’s sound and playback settings.")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.category == .media }) { action in
-                                ActionCard(action: action)
+                if !filteredItems(cornerActions).filter({ $0.category == .media }).isEmpty {
+                    VStack {
+                        Text("Media")
+                            .font(.title2)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                            
+                        Text("Control your Mac’s sound and playback settings.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 16) {
+                                ForEach(filteredItems(cornerActions).filter { $0.category == .media }) { action in
+                                    ActionCard(action: action)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 6)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 6)
-                        .padding(.bottom, 20)
+                            
+                        Divider()
+                            .padding(.horizontal)
                     }
-                    
-                    Divider()
-                        .padding(.horizontal)
                 }
-                
-                VStack {
-                    Text("Window Management")
-                        .font(.title2)
-                        .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top)
-                        .padding(.horizontal)
                     
-                    Text("Organize, move, or resize windows to improve your multitasking flow.")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                    
-                    ScrollView(.horizontal) {
-                        HStack(spacing: 16) {
-                            ForEach(filteredItems(cornerActions).filter { $0.category == .window }) { action in
-                                ActionCard(action: action)
+                if !filteredItems(cornerActions).filter({ $0.category == .window }).isEmpty {
+                    VStack {
+                        Text("Window Management")
+                            .font(.title2)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.top)
+                            .padding(.horizontal)
+                            
+                        Text("Organize, move, or resize windows to improve your multitasking flow.")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            
+                        ScrollView(.horizontal) {
+                            HStack(spacing: 16) {
+                                ForEach(filteredItems(cornerActions).filter { $0.category == .window }) { action in
+                                    ActionCard(action: action)
+                                }
                             }
+                            .padding(.horizontal)
+                            .padding(.top, 6)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .padding(.top, 6)
-                        .padding(.bottom, 20)
+                            
+                        Divider()
+                            .padding(.horizontal)
                     }
-                    
-                    Divider()
-                        .padding(.horizontal)
                 }
             }
             .padding(.leading, 6)
+            .toolbar {
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.secondary)
+
+                    TextField("Search Actions", text: $searchText)
+                        .textFieldStyle(.plain)
+                        .frame(width: 130)
+                }
+                .padding(.horizontal, 10)
+            }
         }
     }
 }
