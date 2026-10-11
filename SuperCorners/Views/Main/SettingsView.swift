@@ -296,6 +296,7 @@ struct SettingsView: View {
                             .buttonStyle(.plain)
                         }
                         .padding(.vertical, 3)
+                        .padding(.horizontal, 3)
 
                         Divider()
 
@@ -317,6 +318,7 @@ struct SettingsView: View {
                             .buttonStyle(.plain)
                         }
                         .padding(.vertical, 3)
+                        .padding(.horizontal, 3)
 
                         Divider()
 
@@ -338,6 +340,7 @@ struct SettingsView: View {
                             .buttonStyle(.plain)
                         }
                         .padding(.vertical, 3)
+                        .padding(.horizontal, 3)
 
                         Divider()
 
@@ -359,12 +362,15 @@ struct SettingsView: View {
                             .buttonStyle(.plain)
                         }
                         .padding(.vertical, 3)
+                        .padding(.horizontal, 3)
 
                         Divider()
 
                         HStack {
                             Button("Add Application...") {}
                                 .controlSize(.regular)
+                                .padding(.vertical, 3)t ad
+                                .padding(.horizontal, 3)
                             Spacer()
                         }
                     }
