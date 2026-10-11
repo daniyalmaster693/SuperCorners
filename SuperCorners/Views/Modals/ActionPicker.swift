@@ -70,6 +70,7 @@ struct ActionPicker: View {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
+                
                 TextField("Search Actions", text: $searchText)
                     .textFieldStyle(.plain)
             }

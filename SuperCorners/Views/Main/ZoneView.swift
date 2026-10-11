@@ -227,9 +227,6 @@ struct ZoneView: View {
                     Image(systemName: "doc.badge.gearshape")
                 }
                 .help("Locate Config")
-                .sheet(isPresented: $showActionSetCreator) {
-                    ActionSetCreator()
-                }
             }
         }
     }
