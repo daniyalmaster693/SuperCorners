@@ -134,27 +134,6 @@ struct SettingsView: View {
                     }
                 }
 
-                Section {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Label("SuperCorners Config", systemImage: "dot.circle.and.cursorarrow")
-                                .foregroundColor(.primary)
-
-                            Spacer()
-
-                            Button("Reveal in Finder") {
-                                ActionSetManager.shared.getConfigPath()
-                            }
-                        }
-
-                        Text("View and edit the JSON configuration file used to store your action sets and their settings.")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .padding(.leading, 25)
-                            .padding(.bottom, 10)
-                    }
-                }
-
                 Section("Updates") {
                     Toggle(isOn: self.$autoUpdate) {
                         HStack {
@@ -183,11 +162,32 @@ struct SettingsView: View {
                         .buttonStyle(.bordered)
                     }
                 }
+
+                Section("Config") {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Label("SuperCorners Config", systemImage: "dot.circle.and.cursorarrow")
+                                .foregroundColor(.primary)
+
+                            Spacer()
+
+                            Button("Reveal in Finder") {
+                                ActionSetManager.shared.getConfigPath()
+                            }
+                        }
+
+                        Text("View and edit the JSON configuration file used to store your action sets and their settings.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .padding(.leading, 25)
+                            .padding(.bottom, 10)
+                    }
+                }
             }
             .formStyle(.grouped)
 
             Form {
-                Section("Trigger") {
+                Section("Trigger Behaviors") {
                     VStack(alignment: .leading, spacing: 6) {
                         HStack {
                             Image(systemName: "dot.circle.and.cursorarrow")
@@ -305,7 +305,7 @@ struct SettingsView: View {
             .formStyle(.grouped)
 
             Form {
-                Section("Feedback") {
+                Section("Visual Overlay") {
                     Toggle(isOn: self.$showVisualFeedback) {
                         HStack {
                             Image(systemName: "circle.dashed")
@@ -341,7 +341,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Section {
+                Section("Toasts") {
                     Toggle(isOn: self.$showToastNotification) {
                         HStack {
                             Image(systemName: "bell.badge")
@@ -373,7 +373,7 @@ struct SettingsView: View {
                     .disabled(!self.showToastNotification)
                 }
 
-                Section {
+                Section("Sound") {
                     Toggle(isOn: self.$playSoundEffect) {
                         HStack {
                             Image(systemName: "speaker.wave.2")
@@ -405,7 +405,7 @@ struct SettingsView: View {
             .formStyle(.grouped)
 
             Form {
-                Section("Actions") {
+                Section("Text Extractor") {
                     Toggle(isOn: self.$showRecentText) {
                         HStack {
                             Image(systemName: "rectangle.stack")
@@ -415,7 +415,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Section {
+                Section("Color Picker") {
                     HStack {
                         Label("Color Format", systemImage: "paintpalette")
                             .foregroundColor(.primary)
