@@ -1022,11 +1022,26 @@ let cornerActions: [CornerAction] = [
             process.launchPath = "/bin/zsh"
             process.arguments = ["-c", command]
 
+            let outputPipe = Pipe()
+            process.standardOutput = outputPipe
+            process.standardError = outputPipe
+
             do {
                 try process.run()
-                showSuccessToast()
+
+                process.waitUntilExit()
+
+                let data = outputPipe.fileHandleForReading.readDataToEndOfFile()
+                let output = String(decoding: data, as: UTF8.self)
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+
+                if process.terminationStatus == 0 {
+                    showSuccessToast(output.isEmpty ? "Action Completed" : output)
+                } else {
+                    showErrorToast(output.isEmpty ? "Action Failed" : output)
+                }
             } catch {
-                showErrorToast("Failed to run command")
+                showErrorToast(error.localizedDescription)
             }
         }
     ),
