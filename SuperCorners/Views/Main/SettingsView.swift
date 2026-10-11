@@ -30,41 +30,6 @@ struct SettingsView: View {
     @AppStorage("ignoredAppPaths") private var ignoredAppPathsData: Data = .init()
     @State private var ignoredApps: [String] = []
 
-    @State private var selectedAppName = "Choose Application"
-    @State private var selectedBundleID: String?
-
-    let safariIcon: NSImage? = {
-        let workspace = NSWorkspace.shared
-        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.safari") {
-            return workspace.icon(forFile: appURL.path)
-        }
-        return nil
-    }()
-
-    let notesIcon: NSImage? = {
-        let workspace = NSWorkspace.shared
-        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.notes") {
-            return workspace.icon(forFile: appURL.path)
-        }
-        return nil
-    }()
-
-    let musicIcon: NSImage? = {
-        let workspace = NSWorkspace.shared
-        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.music") {
-            return workspace.icon(forFile: appURL.path)
-        }
-        return nil
-    }()
-
-    let finderIcon: NSImage? = {
-        let workspace = NSWorkspace.shared
-        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.finder") {
-            return workspace.icon(forFile: appURL.path)
-        }
-        return nil
-    }()
-
     // Feedback Settings
 
     @AppStorage("showVisualFeedback") private var showVisualFeedback = false
@@ -130,8 +95,6 @@ struct SettingsView: View {
 
         var id: String { self.rawValue }
     }
-
-    // Settings View
 
     var body: some View {
         ScrollView {
@@ -281,27 +244,36 @@ struct SettingsView: View {
             Form {
                 Section("Ignored Applications") {
                     VStack {
-                        HStack {
-                            if let safariIcon {
-                                Image(nsImage: safariIcon)
+                        ForEach(Array(self.ignoredApps.enumerated()), id: \.offset) { index, appPath0 in
+                            let appPath = appPath0
+                            let url = URL(fileURLWithPath: appPath)
+                            let appName = url.deletingPathExtension().lastPathComponent
+                            let icon = NSWorkspace.shared.icon(forFile: appPath)
+
+                            HStack {
+                                Image(nsImage: icon)
                                     .resizable()
                                     .frame(width: 24, height: 24)
+
+                                Text(appName)
+                                    .foregroundColor(.primary)
+
+                                Spacer()
+
+                                Button(action: {
+                                    self.ignoredApps.remove(at: index)
+                                    self.saveIgnoredApps()
+                                }) {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.secondary)
+                                }
+                                .buttonStyle(.plain)
                             }
+                            .padding(.vertical, 3)
+                            .padding(.horizontal, 3)
 
-                            Text("Safari")
-
-                            Spacer()
-
-                            Button(action: {}) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.secondary)
-                            }
-                            .buttonStyle(.plain)
+                            Divider()
                         }
-                        .padding(.vertical, 3)
-                        .padding(.horizontal, 3)
-
-                        Divider()
 
                         HStack {
                             Button("Add Application...") {
@@ -314,8 +286,11 @@ struct SettingsView: View {
                                 panel.prompt = "Choose"
 
                                 if panel.runModal() == .OK, let url = panel.url {
-                                    self.selectedAppName = url.deletingPathExtension().lastPathComponent
-                                    self.selectedBundleID = Bundle(url: url)?.bundleIdentifier
+                                    let path = url.path
+                                    if !self.ignoredApps.contains(path) {
+                                        self.ignoredApps.append(path)
+                                        self.saveIgnoredApps()
+                                    }
                                 }
                             }
                             .controlSize(.regular)
@@ -464,6 +439,18 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
+        }
+    }
+
+    private func loadIgnoredApps() {
+        if let decoded = try? JSONDecoder().decode([String].self, from: ignoredAppPathsData) {
+            self.ignoredApps = decoded
+        }
+    }
+
+    private func saveIgnoredApps() {
+        if let encoded = try? JSONEncoder().encode(ignoredApps) {
+            self.ignoredAppPathsData = encoded
         }
     }
 }
