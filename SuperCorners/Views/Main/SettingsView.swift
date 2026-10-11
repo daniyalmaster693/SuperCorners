@@ -27,8 +27,40 @@ struct SettingsView: View {
 
     // Ignored applications list
 
+    @AppStorage("ignoredAppPaths") private var ignoredAppPathsData: Data = .init()
     @State private var ignoredApps: [String] = []
-    @State private var showIgnoredAppsModal = false
+
+    let safariIcon: NSImage? = {
+        let workspace = NSWorkspace.shared
+        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.safari") {
+            return workspace.icon(forFile: appURL.path)
+        }
+        return nil
+    }()
+
+    let notesIcon: NSImage? = {
+        let workspace = NSWorkspace.shared
+        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.notes") {
+            return workspace.icon(forFile: appURL.path)
+        }
+        return nil
+    }()
+
+    let musicIcon: NSImage? = {
+        let workspace = NSWorkspace.shared
+        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.music") {
+            return workspace.icon(forFile: appURL.path)
+        }
+        return nil
+    }()
+
+    let finderIcon: NSImage? = {
+        let workspace = NSWorkspace.shared
+        if let appURL = workspace.urlForApplication(withBundleIdentifier: "com.apple.finder") {
+            return workspace.icon(forFile: appURL.path)
+        }
+        return nil
+    }()
 
     // Feedback Settings
 
@@ -240,18 +272,6 @@ struct SettingsView: View {
                         Slider(value: self.$delayTimer, in: 0 ... 8.0, step: 0.5)
                     }
                 }
-
-                Section {
-                    HStack {
-                        Label("Ignored Applications", systemImage: "rectangle.slash")
-                            .foregroundColor(.primary)
-                        Spacer()
-                        Button("Configure") {
-                            self.showIgnoredAppsModal = true
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                }
             }
             .formStyle(.grouped)
 
@@ -354,9 +374,6 @@ struct SettingsView: View {
                 }
             }
             .formStyle(.grouped)
-            .sheet(isPresented: self.$showIgnoredAppsModal) {
-                IgnoredApplications()
-            }
 
             Form {
                 Section("Actions") {
