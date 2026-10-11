@@ -27,7 +27,7 @@ struct SettingsView: View {
 
     // Ignored applications list
 
-    @AppStorage("ignoredAppPaths") private var ignoredAppPathsData: Data = .init()
+    @AppStorage("ignoredAppPaths") private var ignoredAppPaths: Data = .init()
     @State private var ignoredApps: [String] = []
 
     // Feedback Settings
@@ -440,17 +440,20 @@ struct SettingsView: View {
             }
             .formStyle(.grouped)
         }
+        .onAppear {
+            self.loadIgnoredApps()
+        }
     }
 
     private func loadIgnoredApps() {
-        if let decoded = try? JSONDecoder().decode([String].self, from: ignoredAppPathsData) {
+        if let decoded = try? JSONDecoder().decode([String].self, from: ignoredAppPaths) {
             self.ignoredApps = decoded
         }
     }
 
     private func saveIgnoredApps() {
         if let encoded = try? JSONEncoder().encode(ignoredApps) {
-            self.ignoredAppPathsData = encoded
+            self.ignoredAppPaths = encoded
         }
     }
 }
