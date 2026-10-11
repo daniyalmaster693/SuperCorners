@@ -276,6 +276,103 @@ struct SettingsView: View {
             .formStyle(.grouped)
 
             Form {
+                Section("Ignored Applications") {
+                    VStack {
+                        HStack {
+                            if let safariIcon {
+                                Image(nsImage: safariIcon)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                            }
+
+                            Text("Safari")
+
+                            Spacer()
+
+                            Button(action: {}) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.vertical, 3)
+
+                        Divider()
+
+                        HStack {
+                            if let notesIcon {
+                                Image(nsImage: notesIcon)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                            }
+
+                            Text("Notes")
+
+                            Spacer()
+
+                            Button(action: {}) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.vertical, 3)
+
+                        Divider()
+
+                        HStack {
+                            if let musicIcon {
+                                Image(nsImage: musicIcon)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                            }
+
+                            Text("Music")
+
+                            Spacer()
+
+                            Button(action: {}) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.vertical, 3)
+
+                        Divider()
+
+                        HStack {
+                            if let finderIcon {
+                                Image(nsImage: finderIcon)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                            }
+
+                            Text("Finder")
+
+                            Spacer()
+
+                            Button(action: {}) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(.vertical, 3)
+
+                        Divider()
+
+                        HStack {
+                            Button("Add Application...") {}
+                                .controlSize(.regular)
+                            Spacer()
+                        }
+                    }
+                }
+            }
+            .formStyle(.grouped)
+
+            Form {
                 Section("Feedback") {
                     Toggle(isOn: self.$showVisualFeedback) {
                         HStack {
